@@ -1,0 +1,346 @@
+# Build terminal applications with R
+
+`termr` is an R framework for interactive, keyboard-driven terminal user
+interfaces. Compose applications from widgets and layouts, handle typed
+events, and inspect data in a full-screen terminal interface.
+
+## Install from GitHub
+
+`termr` requires R 4.1 or newer and is not yet published on CRAN.
+Install the GitHub installer once, then install termr from its
+repository:
+
+``` r
+
+install.packages("remotes")
+remotes::install_github("menshikovs/termr")
+```
+
+The package declares its runtime imports in `DESCRIPTION`; its
+installation command installs those package dependencies. No
+package-specific `SystemRequirements` are declared.
+
+## Start building
+
+- [Getting
+  started](https://github.com/menshikovs/termr/blob/main/docs/getting-started.md)
+- [Verified application
+  recipes](https://github.com/menshikovs/termr/tree/main/docs/agent-recipes)
+- [Headless
+  testing](https://github.com/menshikovs/termr/blob/main/docs/testing.md)
+- [API
+  stability](https://github.com/menshikovs/termr/blob/main/docs/stability.md)
+
+The [function
+reference](https://menshikovs.github.io/termr/reference/index.md) is
+generated from the package’s documented exports. The
+[changelog](https://menshikovs.github.io/termr/news/index.md) is
+generated from
+[`NEWS.md`](https://github.com/menshikovs/termr/blob/main/NEWS.md).
+
+## Guides
+
+The project’s Markdown guides remain maintained in the source repository
+and are linked here rather than copied into the generated site:
+
+- [Widgets](https://github.com/menshikovs/termr/blob/main/docs/widgets.md)
+- [Layouts](https://github.com/menshikovs/termr/blob/main/docs/layout.md)
+- [Events](https://github.com/menshikovs/termr/blob/main/docs/events.md)
+- [Styling](https://github.com/menshikovs/termr/blob/main/docs/styling.md)
+- [Data
+  tools](https://github.com/menshikovs/termr/blob/main/docs/data.md)
+- [SQL
+  workflows](https://github.com/menshikovs/termr/blob/main/docs/sql.md)
+- [API
+  stability](https://github.com/menshikovs/termr/blob/main/docs/stability.md)
+
+See the [GitHub repository](https://github.com/menshikovs/termr) for
+source, issues, examples, and contribution information.
+
+# Package index
+
+## All functions
+
+- [`Animation`](https://menshikovs.github.io/termr/reference/Animation.md)
+  : Animation handle
+- [`App`](https://menshikovs.github.io/termr/reference/App-class.md) :
+  Application
+- [`Button`](https://menshikovs.github.io/termr/reference/Button-class.md)
+  : Button widget
+- [`Checkbox`](https://menshikovs.github.io/termr/reference/Checkbox-class.md)
+  : Checkbox widget
+- [`DataProfile`](https://menshikovs.github.io/termr/reference/DataProfile-class.md)
+  : DataProfile widget
+- [`DataTable`](https://menshikovs.github.io/termr/reference/DataTable-class.md)
+  : DataTable widget
+- [`Event`](https://menshikovs.github.io/termr/reference/Event.md)
+  [`KeyEvent`](https://menshikovs.github.io/termr/reference/Event.md)
+  [`ResizeEvent`](https://menshikovs.github.io/termr/reference/Event.md)
+  [`PasteEvent`](https://menshikovs.github.io/termr/reference/Event.md)
+  [`FocusEvent`](https://menshikovs.github.io/termr/reference/Event.md)
+  [`BlurEvent`](https://menshikovs.github.io/termr/reference/Event.md)
+  [`MountEvent`](https://menshikovs.github.io/termr/reference/Event.md)
+  [`UnmountEvent`](https://menshikovs.github.io/termr/reference/Event.md)
+  [`MessageEvent`](https://menshikovs.github.io/termr/reference/Event.md)
+  [`MouseEvent`](https://menshikovs.github.io/termr/reference/Event.md)
+  : Events
+- [`Grid`](https://menshikovs.github.io/termr/reference/Grid.md) : Grid
+  container
+- [`Horizontal`](https://menshikovs.github.io/termr/reference/Horizontal-class.md)
+  : Horizontal container
+- [`Input`](https://menshikovs.github.io/termr/reference/Input-class.md)
+  : Input widget
+- [`KeyValue`](https://menshikovs.github.io/termr/reference/KeyValue-class.md)
+  : KeyValue widget
+- [`Label`](https://menshikovs.github.io/termr/reference/Label-class.md)
+  : Label widget
+- [`LogView`](https://menshikovs.github.io/termr/reference/LogView-class.md)
+  : LogView widget
+- [`MarkdownView`](https://menshikovs.github.io/termr/reference/MarkdownView-class.md)
+  : MarkdownView widget
+- [`Metric`](https://menshikovs.github.io/termr/reference/Metric-class.md)
+  : Metric widget
+- [`ModalScreen`](https://menshikovs.github.io/termr/reference/ModalScreen.md)
+  : Modal screen
+- [`OptionList`](https://menshikovs.github.io/termr/reference/OptionList-class.md)
+  : OptionList widget
+- [`Panel`](https://menshikovs.github.io/termr/reference/Panel-class.md)
+  : Panel widget
+- [`ProcessView`](https://menshikovs.github.io/termr/reference/ProcessView-class.md)
+  : ProcessView widget
+- [`ProgressBar`](https://menshikovs.github.io/termr/reference/ProgressBar-class.md)
+  : ProgressBar widget
+- [`PropertyGrid`](https://menshikovs.github.io/termr/reference/PropertyGrid-class.md)
+  : PropertyGrid widget
+- [`RadioButton`](https://menshikovs.github.io/termr/reference/RadioButton.md)
+  : RadioButton widget
+- [`RadioSet`](https://menshikovs.github.io/termr/reference/RadioSet-class.md)
+  : RadioSet widget
+- [`Rule`](https://menshikovs.github.io/termr/reference/Rule-class.md) :
+  Rule widget
+- [`Screen`](https://menshikovs.github.io/termr/reference/Screen.md) :
+  Screen widget
+- [`ScreenBuffer`](https://menshikovs.github.io/termr/reference/ScreenBuffer.md)
+  : Virtual screen (framebuffer)
+- [`ScrollView`](https://menshikovs.github.io/termr/reference/ScrollView-class.md)
+  : ScrollView widget
+- [`Select`](https://menshikovs.github.io/termr/reference/Select-class.md)
+  : Select widget
+- [`Sparkline`](https://menshikovs.github.io/termr/reference/Sparkline-class.md)
+  : Sparkline widget
+- [`Spinner`](https://menshikovs.github.io/termr/reference/Spinner-class.md)
+  : Spinner widget
+- [`SplitPane`](https://menshikovs.github.io/termr/reference/SplitPane-class.md)
+  : SplitPane widget
+- [`StatusBar`](https://menshikovs.github.io/termr/reference/StatusBar-class.md)
+  : StatusBar widget
+- [`TabPane`](https://menshikovs.github.io/termr/reference/TabPane.md) :
+  TabPane widget
+- [`Tabs`](https://menshikovs.github.io/termr/reference/Tabs-class.md) :
+  Tabs widget
+- [`TextArea`](https://menshikovs.github.io/termr/reference/TextArea-class.md)
+  : TextArea widget
+- [`Timer`](https://menshikovs.github.io/termr/reference/Timer.md) :
+  Timer handle
+- [`Toast`](https://menshikovs.github.io/termr/reference/Toast.md) :
+  Toast widget
+- [`TreeNode`](https://menshikovs.github.io/termr/reference/TreeNode.md)
+  : Tree node
+- [`TreeView`](https://menshikovs.github.io/termr/reference/TreeView-class.md)
+  : TreeView widget
+- [`Vertical`](https://menshikovs.github.io/termr/reference/Vertical-class.md)
+  : Vertical container
+- [`Widget`](https://menshikovs.github.io/termr/reference/Widget-class.md)
+  : Widget base class
+- [`Worker`](https://menshikovs.github.io/termr/reference/Worker.md) :
+  Worker handle
+- [`animate()`](https://menshikovs.github.io/termr/reference/animate.md)
+  : Animate a widget field
+- [`app()`](https://menshikovs.github.io/termr/reference/app.md) :
+  Create an application
+- [`bind()`](https://menshikovs.github.io/termr/reference/bind.md) : Key
+  bindings
+- [`browse_data()`](https://menshikovs.github.io/termr/reference/browse_data.md)
+  [`data_browser()`](https://menshikovs.github.io/termr/reference/browse_data.md)
+  : Browse a data frame in the terminal
+- [`button()`](https://menshikovs.github.io/termr/reference/button.md) :
+  Button
+- [`cell()`](https://menshikovs.github.io/termr/reference/cell.md) : A
+  single terminal cell
+- [`checkbox()`](https://menshikovs.github.io/termr/reference/checkbox.md)
+  : Checkbox
+- [`column()`](https://menshikovs.github.io/termr/reference/column.md) :
+  Column options for data tables
+- [`command()`](https://menshikovs.github.io/termr/reference/command.md)
+  : Commands
+- [`current_app()`](https://menshikovs.github.io/termr/reference/current_app.md)
+  : The running app
+- [`data_profile()`](https://menshikovs.github.io/termr/reference/data_profile.md)
+  : Compact vector profile
+- [`data_table()`](https://menshikovs.github.io/termr/reference/data_table.md)
+  : Data table
+- [`db_connection()`](https://menshikovs.github.io/termr/reference/db_connection.md)
+  : Wrap a DBI connection for use by termr SQL widgets
+- [`db_explorer()`](https://menshikovs.github.io/termr/reference/db_explorer.md)
+  : Database explorer widget
+- [`db_metadata()`](https://menshikovs.github.io/termr/reference/db_metadata.md)
+  : Create a DBI metadata interface
+- [`db_query_source()`](https://menshikovs.github.io/termr/reference/db_query_source.md)
+  : Create a lazy DBI query source
+- [`db_table_source()`](https://menshikovs.github.io/termr/reference/db_table_source.md)
+  : Create a lazy source for a SQLite table
+- [`diff_screen()`](https://menshikovs.github.io/termr/reference/diff_screen.md)
+  : Compare two screen buffers
+- [`dropdown()`](https://menshikovs.github.io/termr/reference/dropdown.md)
+  : Drop-down select
+- [`grid_layout()`](https://menshikovs.github.io/termr/reference/grid_layout.md)
+  : Grid container
+- [`input()`](https://menshikovs.github.io/termr/reference/input.md) :
+  Single-line text input
+- [`inspect_signal()`](https://menshikovs.github.io/termr/reference/inspect_signal.md)
+  : Inspect one node in the experimental signal graph
+- [`inspect_widget()`](https://menshikovs.github.io/termr/reference/inspect_widget.md)
+  : Inspect a widget
+- [`json_view()`](https://menshikovs.github.io/termr/reference/json_view.md)
+  : Collapsible viewer for R list-like data
+- [`key_event()`](https://menshikovs.github.io/termr/reference/key_event.md)
+  : Create a key event
+- [`key_value()`](https://menshikovs.github.io/termr/reference/key_value.md)
+  : Key/value list
+- [`knit_termr()`](https://menshikovs.github.io/termr/reference/knit_termr.md)
+  : Render a static representation for knitr or Quarto
+- [`label()`](https://menshikovs.github.io/termr/reference/label.md) :
+  Text label
+- [`log_view()`](https://menshikovs.github.io/termr/reference/log_view.md)
+  : Log view
+- [`markdown_view()`](https://menshikovs.github.io/termr/reference/markdown_view.md)
+  : Markdown view
+- [`metric()`](https://menshikovs.github.io/termr/reference/metric.md) :
+  Metric
+- [`modal()`](https://menshikovs.github.io/termr/reference/modal.md)
+  [`confirm_dialog()`](https://menshikovs.github.io/termr/reference/modal.md)
+  [`alert_dialog()`](https://menshikovs.github.io/termr/reference/modal.md)
+  : Modal screens and dialogs
+- [`motion_reduced()`](https://menshikovs.github.io/termr/reference/motion_reduced.md)
+  : Reduced motion
+- [`on()`](https://menshikovs.github.io/termr/reference/on.md) : Event
+  handlers
+- [`option_list()`](https://menshikovs.github.io/termr/reference/option_list.md)
+  : Option list
+- [`panel()`](https://menshikovs.github.io/termr/reference/panel.md) :
+  Panel
+- [`patch_to_ansi()`](https://menshikovs.github.io/termr/reference/patch_to_ansi.md)
+  : Convert a screen patch to ANSI escape sequences
+- [`process_view()`](https://menshikovs.github.io/termr/reference/process_view.md)
+  : Process view
+- [`progress_bar()`](https://menshikovs.github.io/termr/reference/progress_bar.md)
+  : Progress bar
+- [`property_grid()`](https://menshikovs.github.io/termr/reference/property_grid.md)
+  : Key/value property inspector
+- [`r_highlighter()`](https://menshikovs.github.io/termr/reference/r_highlighter.md)
+  : Lightweight R syntax highlighter
+- [`radio_set()`](https://menshikovs.github.io/termr/reference/radio_set.md)
+  [`radio_button()`](https://menshikovs.github.io/termr/reference/radio_set.md)
+  : Radio buttons
+- [`reactive()`](https://menshikovs.github.io/termr/reference/reactive.md)
+  : Reactive state fields
+- [`record_view()`](https://menshikovs.github.io/termr/reference/record_view.md)
+  : View one record
+- [`region()`](https://menshikovs.github.io/termr/reference/region.md) :
+  Screen regions
+- [`register_layout()`](https://menshikovs.github.io/termr/reference/register_layout.md)
+  : Register an experimental custom container layout
+- [`render_html()`](https://menshikovs.github.io/termr/reference/render_html.md)
+  : Render a styled HTML fragment
+- [`render_markdown()`](https://menshikovs.github.io/termr/reference/render_markdown.md)
+  : Render a terminal frame as a Markdown code block
+- [`render_svg()`](https://menshikovs.github.io/termr/reference/render_svg.md)
+  : Render a static frame as SVG
+- [`render_text()`](https://menshikovs.github.io/termr/reference/render_text.md)
+  [`render_lines()`](https://menshikovs.github.io/termr/reference/render_text.md)
+  : Render a widget tree as plain text
+- [`render_widget()`](https://menshikovs.github.io/termr/reference/render_widget.md)
+  : Render widgets to a virtual screen
+- [`rule()`](https://menshikovs.github.io/termr/reference/rule.md) :
+  Rule (separator)
+- [`run()`](https://menshikovs.github.io/termr/reference/run.md) : Run
+  an application
+- [`run_example()`](https://menshikovs.github.io/termr/reference/run_example.md)
+  : Run a bundled example app
+- [`run_worker()`](https://menshikovs.github.io/termr/reference/run_worker.md)
+  [`run_process()`](https://menshikovs.github.io/termr/reference/run_worker.md)
+  : Background workers and subprocesses
+- [`screen_buffer()`](https://menshikovs.github.io/termr/reference/screen_buffer.md)
+  : Create a virtual screen buffer
+- [`screen_snapshot()`](https://menshikovs.github.io/termr/reference/screen_snapshot.md)
+  : Create a deterministic screen snapshot
+- [`screen_snapshot_json()`](https://menshikovs.github.io/termr/reference/screen_snapshot_json.md)
+  : Serialize a screen snapshot as JSON
+- [`scroll_view()`](https://menshikovs.github.io/termr/reference/scroll_view.md)
+  : Scrollable container
+- [`set_timeout()`](https://menshikovs.github.io/termr/reference/set_timeout.md)
+  [`set_interval()`](https://menshikovs.github.io/termr/reference/set_timeout.md)
+  : Timers
+- [`signal()`](https://menshikovs.github.io/termr/reference/signals.md)
+  [`computed()`](https://menshikovs.github.io/termr/reference/signals.md)
+  [`watch()`](https://menshikovs.github.io/termr/reference/signals.md)
+  [`dispose()`](https://menshikovs.github.io/termr/reference/signals.md)
+  [`batch()`](https://menshikovs.github.io/termr/reference/signals.md)
+  [`peek()`](https://menshikovs.github.io/termr/reference/signals.md)
+  [`untracked()`](https://menshikovs.github.io/termr/reference/signals.md)
+  [`update_signal()`](https://menshikovs.github.io/termr/reference/signals.md)
+  : Reactive values, computed values and watchers
+- [`span()`](https://menshikovs.github.io/termr/reference/span.md)
+  [`c(`*`<termr_text>`*`)`](https://menshikovs.github.io/termr/reference/span.md)
+  : Styled text
+- [`sparkline()`](https://menshikovs.github.io/termr/reference/sparkline.md)
+  : Sparkline
+- [`spinner()`](https://menshikovs.github.io/termr/reference/spinner.md)
+  : Spinner
+- [`split_pane()`](https://menshikovs.github.io/termr/reference/split_pane.md)
+  : Split pane
+- [`sql_editor()`](https://menshikovs.github.io/termr/reference/sql_editor.md)
+  : SQL editor widget
+- [`sql_highlighter()`](https://menshikovs.github.io/termr/reference/sql_highlighter.md)
+  : SQL syntax highlighter
+- [`status_bar()`](https://menshikovs.github.io/termr/reference/status_bar.md)
+  : One-line status bar
+- [`strip_ansi()`](https://menshikovs.github.io/termr/reference/strip_ansi.md)
+  : Remove ANSI escape sequences from a string
+- [`style()`](https://menshikovs.github.io/termr/reference/style.md) :
+  Widget styles
+- [`stylesheet()`](https://menshikovs.github.io/termr/reference/stylesheet.md)
+  [`stylesheet_file()`](https://menshikovs.github.io/termr/reference/stylesheet.md)
+  : Stylesheets
+- [`table_filter()`](https://menshikovs.github.io/termr/reference/table_filter.md)
+  : Create a DataTable column filter
+- [`table_source()`](https://menshikovs.github.io/termr/reference/table_source.md)
+  : Create an experimental lazy table source
+- [`tabs()`](https://menshikovs.github.io/termr/reference/tabs.md)
+  [`tab()`](https://menshikovs.github.io/termr/reference/tabs.md) : Tabs
+- [`terminal_capabilities()`](https://menshikovs.github.io/termr/reference/terminal_capabilities.md)
+  : Terminal capabilities
+- [`termr_theme()`](https://menshikovs.github.io/termr/reference/termr_theme.md)
+  : Themes
+- [`test_app()`](https://menshikovs.github.io/termr/reference/test_app.md)
+  : Test an app without a terminal
+- [`text_area()`](https://menshikovs.github.io/termr/reference/text_area.md)
+  : Multi-line text editor
+- [`tree_node()`](https://menshikovs.github.io/termr/reference/tree_node.md)
+  : Tree nodes
+- [`tree_view()`](https://menshikovs.github.io/termr/reference/tree_view.md)
+  : Tree view
+- [`unregister_layout()`](https://menshikovs.github.io/termr/reference/unregister_layout.md)
+  : Remove an experimental custom layout
+- [`vertical()`](https://menshikovs.github.io/termr/reference/vertical.md)
+  [`horizontal()`](https://menshikovs.github.io/termr/reference/vertical.md)
+  : Layout containers
+- [`widget()`](https://menshikovs.github.io/termr/reference/widget.md) :
+  Define a custom widget type
+- [`widget_snapshot()`](https://menshikovs.github.io/termr/reference/widget_snapshot.md)
+  : Snapshot the safe, structural parts of a widget tree
+- [`widget_snapshot_json()`](https://menshikovs.github.io/termr/reference/widget_snapshot_json.md)
+  : Serialize a structural widget snapshot as JSON
+- [`write_rendered()`](https://menshikovs.github.io/termr/reference/write_rendered.md)
+  : Write a static rendering to a UTF-8 file
+

@@ -53,7 +53,7 @@ on("button.pressed", "#hello", function(event, app) {
 #> {
 #>     app$query_one("#output")$update("Hello!")
 #> }
-#> <environment: 0x555bf6f5d8f0>
+#> <environment: 0x55e75bdecc88>
 #> 
 #> attr(,"class")
 #> [1] "termr_handler"

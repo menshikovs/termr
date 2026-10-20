@@ -5,7 +5,7 @@ highlight (sending "option_list.highlighted"); Enter or a click selects
 label.'><meta property="og:description" content='A scrollable list of choices. Up/Down/Page Up/Page Down/Home/End move the
 highlight (sending "option_list.highlighted"); Enter or a click selects
 ("option_list.selected"). event$data has index, value and
-label.'><meta property="og:image" content="https://raw.githubusercontent.com/41929424/termr/main/docs/images/widget-showcase.png"><meta property="og:image:alt" content="termr terminal interface with widgets, metrics, and a data table"></head><body>
+label.'><meta property="og:image" content="https://menshikovs.github.io/termr/widget-showcase.png"><meta property="og:image:alt" content="termr terminal interface with widgets, metrics, and a data table"><meta name="google-site-verification" content="y-1CU_OpfbxmAGDGQm3qi8Xc9RcalnzCOzJ3CZ2VA_o"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -21,7 +21,15 @@ label.'><meta property="og:image" content="https://raw.githubusercontent.com/419
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="external-link nav-link" href="https://github.com/menshikovs/termr/blob/main/docs/getting-started.md">Get started</a></li>
+      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/getting-started.html">Get started</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Tutorials</h6></li>
+    <li><a class="dropdown-item" href="../articles/getting-started.html">Build a Terminal UI in R with termr</a></li>
+    <li><a class="dropdown-item" href="../articles/terminal-dashboards.html">Building Interactive Terminal Dashboards in R</a></li>
+    <li><a class="dropdown-item" href="../articles/testing-terminal-ui.html">Testing Terminal UI Applications in R</a></li>
+  </ul></li>
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
 <li class="nav-item dropdown">
@@ -29,12 +37,12 @@ label.'><meta property="og:image" content="https://raw.githubusercontent.com/419
   <ul class="dropdown-menu" aria-labelledby="dropdown-guides"><li><a class="external-link dropdown-item" href="https://github.com/menshikovs/termr/tree/main/docs">Widgets, layout, events, and styling</a></li>
     <li><a class="external-link dropdown-item" href="https://github.com/menshikovs/termr/blob/main/docs/data.md">Data tools</a></li>
     <li><a class="external-link dropdown-item" href="https://github.com/menshikovs/termr/blob/main/docs/sql.md">SQL workflows</a></li>
-    <li><a class="external-link dropdown-item" href="https://github.com/menshikovs/termr/blob/main/docs/testing.md">Headless testing</a></li>
+    <li><a class="dropdown-item" href="../articles/testing-terminal-ui.html">Headless testing</a></li>
     <li><a class="external-link dropdown-item" href="https://github.com/menshikovs/termr/blob/main/docs/stability.md">API stability</a></li>
     <li><a class="external-link dropdown-item" href="https://github.com/menshikovs/termr/tree/main/docs/agent-recipes">Agent recipes</a></li>
     <li><a class="external-link dropdown-item" href="https://github.com/menshikovs/termr/blob/main/docs/search-console.md">Search Console setup</a></li>
   </ul></li>
-      </ul><ul class="navbar-nav"><li class="nav-item"><a class="external-link nav-link" href="https://github.com/41929424/termr/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+      </ul><ul class="navbar-nav"><li class="nav-item"><a class="external-link nav-link" href="https://github.com/menshikovs/termr/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul></div>
 
 
@@ -44,7 +52,7 @@ label.'><meta property="og:image" content="https://raw.githubusercontent.com/419
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Option list</h1>
-      <small class="dont-index">Source: <a href="https://github.com/41929424/termr/blob/main/R/widget-list.R" class="external-link"><code>R/widget-list.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/menshikovs/termr/blob/main/R/widget-list.R" class="external-link"><code>R/widget-list.R</code></a></small>
       <div class="d-none name"><code>option_list.Rd</code></div>
     </div>
 

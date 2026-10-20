@@ -1,8 +1,33 @@
-# Build terminal applications with R
+# termr — Reactive Terminal UI Framework for R
 
-`termr` is an R framework for interactive, keyboard-driven terminal user
-interfaces. Compose applications from widgets and layouts, handle typed
-events, and inspect data in a full-screen terminal interface.
+termr is a reactive terminal user interface (TUI) framework for R. Build
+keyboard-driven dashboards, data explorers and analytical tools from
+reusable widgets and layouts. Handle events in R while termr manages
+terminal input, layout and incremental rendering; test interactions
+without opening a terminal.
+
+## Quick start
+
+After installation, save this as `hello.R` and run `Rscript hello.R` in
+a real terminal:
+
+``` r
+
+library(termr)
+
+application <- app(
+  vertical(label("Hello from termr"), button("Quit", id = "quit")),
+  on("button.pressed", "#quit", function(event, app) app$exit()),
+  bind("escape", "quit")
+)
+run(application)
+```
+
+Press Enter on the button or Escape to exit. IDE consoles are not
+terminal hosts; use a terminal tab for interactive applications. The
+[getting started
+tutorial](https://menshikovs.github.io/termr/articles/getting-started.md)
+adds a form and a headless keyboard test using stable APIs.
 
 ## Installation
 
@@ -37,12 +62,14 @@ package-specific `SystemRequirements` are declared.
 
 ## Start building
 
-- [Getting
-  started](https://github.com/menshikovs/termr/blob/main/docs/getting-started.md)
+- [Build a terminal UI in
+  R](https://menshikovs.github.io/termr/articles/getting-started.md)
+- [Build interactive terminal
+  dashboards](https://menshikovs.github.io/termr/articles/terminal-dashboards.md)
 - [Verified application
   recipes](https://github.com/menshikovs/termr/tree/main/docs/agent-recipes)
-- [Headless
-  testing](https://github.com/menshikovs/termr/blob/main/docs/testing.md)
+- [Test terminal
+  applications](https://menshikovs.github.io/termr/articles/testing-terminal-ui.md)
 - [API
   stability](https://github.com/menshikovs/termr/blob/main/docs/stability.md)
 
@@ -55,8 +82,8 @@ generated from
 
 ## Guides
 
-The project’s Markdown guides remain maintained in the source repository
-and are linked here rather than copied into the generated site:
+The tutorials above run on this site. Detailed source guides remain
+available in the repository:
 
 - [Widgets](https://github.com/menshikovs/termr/blob/main/docs/widgets.md)
 - [Layouts](https://github.com/menshikovs/termr/blob/main/docs/layout.md)
@@ -68,6 +95,26 @@ and are linked here rather than copied into the generated site:
   workflows](https://github.com/menshikovs/termr/blob/main/docs/sql.md)
 - [API
   stability](https://github.com/menshikovs/termr/blob/main/docs/stability.md)
+
+## Data explorers and SQL workflows
+
+[`data_table()`](https://menshikovs.github.io/termr/reference/data_table.md)
+provides keyboard navigation, sorting and selection for in-memory data.
+Combine it with metrics and event handlers in a [terminal
+dashboard](https://menshikovs.github.io/termr/articles/terminal-dashboards.md),
+or use
+[`browse_data()`](https://menshikovs.github.io/termr/reference/browse_data.md)
+for direct exploration. Database adapters, lazy sources and
+[`sql_editor()`](https://menshikovs.github.io/termr/reference/sql_editor.md)
+are experimental; DBI integrations remain optional and queries are
+synchronous. See the [SQL
+guide](https://github.com/menshikovs/termr/blob/main/docs/sql.md).
+
+Core application construction, layouts, events, in-memory tables and
+basic headless testing are stable. The reactive graph, workers, database
+tools and static export remain experimental. Consult the [stability
+policy](https://github.com/menshikovs/termr/blob/main/docs/stability.md)
+before depending on advanced features.
 
 See the [GitHub repository](https://github.com/menshikovs/termr) for
 source, issues, examples, and contribution information.

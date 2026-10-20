@@ -7,14 +7,13 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/41929424/termr/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/menshikovs/termr/blob/main/DESCRIPTION)
 
-Mensikovs A (2026). *termr: Modern Reactive Terminal Applications with
-Data Workflows*. R package version 1.0.1,
-<https://menshikovs.github.io/termr/>.
+Mensikovs A (2026). *termr: Reactive Terminal UI Framework for R*. R
+package version 1.0.1, <https://menshikovs.github.io/termr/>.
 
     @Manual{,
-      title = {termr: Modern Reactive Terminal Applications with Data Workflows},
+      title = {termr: Reactive Terminal UI Framework for R},
       author = {Akims Mensikovs},
       year = {2026},
       note = {R package version 1.0.1},

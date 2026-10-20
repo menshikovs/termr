@@ -432,9 +432,9 @@ with a focus on data-oriented applications.
 - [`grid_layout()`](https://menshikovs.github.io/termr/reference/grid_layout.md)
   with fixed/auto/fr/percent tracks, gaps and spans.
 - Grapheme clusters (UAX
-  [\#29](https://github.com/41929424/termr/issues/29), via PCRE2 in base
-  R): emoji ZWJ sequences, flags, skin tones and combining marks are
-  single characters everywhere.
+  [\#29](https://github.com/menshikovs/termr/issues/29), via PCRE2 in
+  base R): emoji ZWJ sequences, flags, skin tones and combining marks
+  are single characters everywhere.
 - Dirty-region repaints: when the layout is unchanged only the rows of
   changed widgets are repainted (a randomised test checks they always
   equal a full repaint). Layout caches are now invalidated per widget

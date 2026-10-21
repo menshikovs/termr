@@ -69,6 +69,7 @@
 <div class="page-header"><h1 id="termr--reactive-terminal-ui-framework-for-r">termr — Reactive Terminal UI Framework for R<a class="anchor" aria-label="anchor" href="#termr--reactive-terminal-ui-framework-for-r"></a>
 </h1></div>
 <p>termr is a reactive terminal user interface (TUI) framework for R. Build keyboard-driven dashboards, data explorers and analytical tools from reusable widgets and layouts. Handle events in R while termr manages terminal input, layout and incremental rendering; test interactions without opening a terminal.</p>
+<p><a href="https://CRAN.R-project.org/package=termr" class="external-link"><img src="https://www.r-pkg.org/badges/version/termr" alt="CRAN status"></a></p>
 <div class="section level2">
 <h2 id="quick-start">Quick start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
 </h2>
@@ -87,8 +88,19 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p><code>termr</code> requires R 4.1 or newer and is not currently published on CRAN. R-universe provides an R package repository that works with the standard <code><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages()</a></code> function. Install termr and its dependencies with:</p>
+<p><code>termr</code> requires R 4.1 or newer.</p>
+<div class="section level3">
+<h3 id="cran-recommended-stable-release">CRAN (recommended stable release)<a class="anchor" aria-label="anchor" href="#cran-recommended-stable-release"></a>
+</h3>
+<p>Install the latest stable release from <a href="https://CRAN.R-project.org/package=termr" class="external-link">CRAN</a>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"termr"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="r-universe-alternative">R-universe (alternative)<a class="anchor" aria-label="anchor" href="#r-universe-alternative"></a>
+</h3>
+<p>R-universe provides an R package repository that works with the standard <code><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages()</a></code> function. Install termr and its dependencies with:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span></span>
 <span>  <span class="st">"termr"</span>,</span>
 <span>  repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
@@ -96,11 +108,16 @@
 <span>    <span class="st">"https://cloud.r-project.org"</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="github-development-version">GitHub (development version)<a class="anchor" aria-label="anchor" href="#github-development-version"></a>
+</h3>
 <p>For the development version, install <code>remotes</code> and then install from GitHub:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"menshikovs/termr"</span><span class="op">)</span></span></code></pre></div>
 <p>The package declares its runtime imports in <code>DESCRIPTION</code>; its installation command installs those package dependencies. No package-specific <code>SystemRequirements</code> are declared.</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="start-building">Start building<a class="anchor" aria-label="anchor" href="#start-building"></a>
@@ -134,7 +151,8 @@
 </div>
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
-<ul class="list-unstyled"><li><a href="https://github.com/menshikovs/termr/" class="external-link">Browse source code</a></li>
+<ul class="list-unstyled"><li><a href="https://cloud.r-project.org/package=termr" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/menshikovs/termr/" class="external-link">Browse source code</a></li>
 <li><a href="https://github.com/menshikovs/termr/issues" class="external-link">Report a bug</a></li>
 </ul></div>
 

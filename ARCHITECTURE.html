@@ -199,7 +199,7 @@
 <div class="section level2">
 <h2 id="static-output-and-headless-testing">Static output and headless testing<a class="anchor" aria-label="anchor" href="#static-output-and-headless-testing"></a></h2>
 <p>The headless driver uses an input queue, simulated clock and ANSI interpreter with the normal App event loop. <code><a href="reference/test_app.html">test_app()</a></code> exposes a Pilot for input, focus, resize and worker tests without a real terminal.</p>
-<p>The static path (<code>export.R</code>, <code>testing.R</code>) lays out and paints one frame into a ScreenBuffer without terminal IO or an app event loop. An unattached root widget is temporarily wrapped in a Screen, then detached on exit; layout assigns regions for the requested size. Text, Markdown, styled HTML and SVG use this buffer; optional jsonlite serializes screen/structural snapshots, and optional knitr supplies as-is Markdown/HTML for reports. Static rendering does not advance timers or start workers. See <a href="docs/export.html">static export</a> and <a href="docs/testing.html">testing</a>.</p>
+<p>The static path (<code>export.R</code>, <code>testing.R</code>) lays out and paints one frame into a ScreenBuffer without terminal IO or an app event loop. An unattached root widget is temporarily wrapped in a Screen, then detached on exit; layout assigns regions for the requested size. Text, Markdown, styled HTML and SVG use this buffer; optional jsonlite serializes screen/structural snapshots, and optional knitr supplies as-is Markdown/HTML for reports. Static rendering does not advance timers or start workers. See <a href="https://github.com/menshikovs/termr/blob/main/docs/export.md" class="external-link">static export</a> and <a href="https://github.com/menshikovs/termr/blob/main/docs/testing.md" class="external-link">testing</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="extension-points">Extension points<a class="anchor" aria-label="anchor" href="#extension-points"></a></h2>
@@ -234,7 +234,7 @@
 </tr><tr><td>Accessibility</td>
 <td>theme flags <code>mono</code> / <code>strong_focus</code> in <code>resolve_style()</code> and <code>computed_style()</code>; <code><a href="reference/motion_reduced.html">motion_reduced()</a></code>
 </td>
-</tr></tbody></table><p>This contributor table includes internal implementation hooks as well as public protocols. External packages should follow <a href="docs/extensions.html">Extensions</a> and the <a href="docs/stability.html">stability classification</a>; direct access to registries, parsers or dirty-region helpers is internal.</p>
+</tr></tbody></table><p>This contributor table includes internal implementation hooks as well as public protocols. External packages should follow <a href="https://github.com/menshikovs/termr/blob/main/docs/extensions.md" class="external-link">Extensions</a> and the <a href="https://github.com/menshikovs/termr/blob/main/docs/stability.md" class="external-link">stability classification</a>; direct access to registries, parsers or dirty-region helpers is internal.</p>
 </div>
 </div>
 

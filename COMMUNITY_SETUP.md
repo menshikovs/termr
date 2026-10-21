@@ -27,8 +27,8 @@ Recheck current state before configuring; this is a dated observation.
     reporting**. Confirm the [private report
     form](https://github.com/menshikovs/termr/security/advisories/new)
     is available. Update the dated disabled-status paragraph in
-    [SECURITY.md](https://menshikovs.github.io/SECURITY.md) after
-    enabling it.
+    [SECURITY.md](https://github.com/menshikovs/termr/blob/main/SECURITY.md)
+    after enabling it.
 2.  Keep **Discussions** enabled under **Settings \> General \>
     Features** for questions, usage help, and early ideas. Keep Issues
     enabled for bug reports and concrete proposals.
@@ -48,11 +48,11 @@ guide](https://docs.github.com/en/code-security/security-advisories/working-with
   require PRs for external changes. Avoid overlapping or contradictory
   protection rules.
 - Require successful checks from the existing [R-CMD-check
-  workflow](https://menshikovs.github.io/termr/workflows/R-CMD-check.yaml):
+  workflow](https://github.com/menshikovs/termr/blob/main/.github/workflows/R-CMD-check.yaml):
   the six OS/R matrix jobs, `CRAN incoming (R-devel, built tarball)`,
   `SQL integration (DBI + SQLite)`, both `PTY integration` jobs, and
   `Windows input regressions`. Require the
-  [pkgdown](https://menshikovs.github.io/termr/workflows/pkgdown.yaml)
+  [pkgdown](https://github.com/menshikovs/termr/blob/main/.github/workflows/pkgdown.yaml)
   build for documentation validation as well. Select the exact check
   names displayed on a recent PR; do not guess their workflow prefixes.
   All these workflows run on ordinary PRs to `main`.

@@ -75,7 +75,7 @@ column(label = "Score", width = 8, align = "right",
 #> $formatter
 #> function (x) 
 #> sprintf("%.1f", x)
-#> <environment: 0x5646d8a70ba0>
+#> <environment: 0x5641901cbc08>
 #> 
 #> $min_width
 #> NULL

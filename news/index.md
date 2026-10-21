@@ -2,8 +2,11 @@
 
 ## termr 1.0.1
 
-CRAN resubmission following the initial 1.0.0 submission (not published
-on CRAN).
+CRAN release: 2026-10-21
+
+First CRAN release, published on
+[CRAN](https://CRAN.R-project.org/package=termr) on 2026-10-21. The
+initial 1.0.0 submission was not released on CRAN.
 
 - Revise DESCRIPTION wording to resolve incoming spell-check notes.
 - Bound expensive deterministic stress/property workloads on CRAN to

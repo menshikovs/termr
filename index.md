@@ -6,6 +6,9 @@ reusable widgets and layouts. Handle events in R while termr manages
 terminal input, layout and incremental rendering; test interactions
 without opening a terminal.
 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/termr)](https://CRAN.R-project.org/package=termr)
+
 ## Quick start
 
 After installation, save this as `hello.R` and run `Rscript hello.R` in
@@ -31,7 +34,20 @@ adds a form and a headless keyboard test using stable APIs.
 
 ## Installation
 
-`termr` requires R 4.1 or newer and is not currently published on CRAN.
+`termr` requires R 4.1 or newer.
+
+### CRAN (recommended stable release)
+
+Install the latest stable release from
+[CRAN](https://CRAN.R-project.org/package=termr):
+
+``` r
+
+install.packages("termr")
+```
+
+### R-universe (alternative)
+
 R-universe provides an R package repository that works with the standard
 [`install.packages()`](https://rdrr.io/r/utils/install.packages.html)
 function. Install termr and its dependencies with:
@@ -46,6 +62,8 @@ install.packages(
   )
 )
 ```
+
+### GitHub (development version)
 
 For the development version, install `remotes` and then install from
 GitHub:

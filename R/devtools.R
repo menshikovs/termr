@@ -2,7 +2,7 @@
 
 #' Inspect a widget
 #'
-#' Collects what termr knows about a widget: type, id, classes, region,
+#' Collects what termr knows about a widget: type, id, classes, region, focus and focus-chain position,
 #' states, reactive state values, computed style, matching stylesheet
 #' rules, bindings, parent and children. Printing the result gives a
 #' readable report.
@@ -20,6 +20,10 @@ inspect_widget <- function(x, selector = NULL) {
   if (!is_widget(widget)) stop("`x` must be a widget, or give a selector.", call. = FALSE)
   st <- widget$computed_style()
   app <- widget$app
+  focus_chain <- if (is.null(app)) list() else app$focus_chain()
+  focus_position <- if (length(focus_chain)) {
+    match(TRUE, vapply(focus_chain, identical, logical(1), widget), nomatch = 0L)
+  } else 0L
   rules <- character()
   if (!is.null(app)) {
     for (sheet in app$stylesheets) {
@@ -41,6 +45,9 @@ inspect_widget <- function(x, selector = NULL) {
       displayed = widget$is_displayed(),
       enabled = widget$is_enabled(),
       focusable = widget$focusable,
+      focused = !is.null(app) && identical(app$focused, widget),
+      focus_order = if (focus_position == 0L) NA_integer_ else as.integer(focus_position),
+      focus_count = as.integer(length(focus_chain)),
       states = widget$pseudo_states(),
       state = state[order(names(state))],
       style = st[c("width", "height", "margin", "padding", "border", "layout", "align", "valign",
@@ -69,6 +76,8 @@ print.termr_inspection <- function(x, ...) {
   line("types", paste(x$class_chain, collapse = " < "))
   line("region", show(x$region))
   line("visible", sprintf("%s (displayed: %s), enabled: %s, focusable: %s", x$visible, x$displayed, x$enabled, x$focusable))
+  order <- if (is.na(x$focus_order)) "n/a" else paste0(x$focus_order, " of ", x$focus_count)
+  line("focus", sprintf("focused: %s, order: %s", x$focused, order))
   line("states", show(x$states))
   line("parent", x$parent)
   line("children", if (length(x$children)) paste(x$children, collapse = ", ") else "-")

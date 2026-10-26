@@ -7,6 +7,9 @@ test_that("inspect_widget reports type, state, style and rules", {
   expect_identical(info$type, "Button")
   expect_identical(info$classes, "primary")
   expect_true("focus" %in% info$states)
+  expect_true(info$focused)
+  expect_identical(info$focus_order, 1L)
+  expect_identical(info$focus_count, 1L)
   expect_identical(info$style$border, "double")
   expect_identical(info$stylesheet_rules, "Button.primary")
   expect_identical(info$state$label, "Save")
@@ -14,7 +17,20 @@ test_that("inspect_widget reports type, state, style and rules", {
   out <- capture.output(print(info))
   expect_match(out[[1]], "<Button #save>")
   expect_true(any(grepl("rules:", out)))
+  expect_true(any(grepl("focused: TRUE, order: 1 of 1", out, fixed = TRUE)))
   expect_error(inspect_widget(42), "must be a widget")
+})
+
+test_that("inspect_widget reports hidden widgets outside the focus order", {
+  hidden <- button("Hidden", id = "hidden")
+  hidden$visible <- FALSE
+  a <- app(vertical(button("Visible", id = "visible"), hidden))
+  pilot <- test_app(a, 30, 6)
+  info <- inspect_widget(a, "#hidden")
+  expect_false(info$focused)
+  expect_true(is.na(info$focus_order))
+  expect_identical(info$focus_count, 1L)
+  expect_false(info$displayed)
 })
 
 test_that("the event log records dispatched events only when enabled", {

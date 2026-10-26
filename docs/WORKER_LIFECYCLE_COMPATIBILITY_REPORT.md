@@ -556,6 +556,24 @@ inspected `main` commit; it retains the strict test invocation and does not
 substitute unrelated tests. This consumer comparison remains unresolved until
 the consumer publishes its suite.
 
+Commit `929fe298471aeeb93d38d2c10f764e6cce1b748e` triggered
+[run 40315356760](https://github.com/menshikovs/termr/actions/runs/40315356760),
+which created four jobs. All three platform jobs passed the 32-expectation
+CRAN and development contracts and the CRAN real-child probe. The consumer job
+again failed because the pinned source lacks `tests/test_codex_launcher.py`.
+The first deterministic-test attempt was itself invalid: the fixture slept for
+60 seconds between signal checks. Ubuntu did not produce the signal-handler
+acknowledgement before the grace deadline. macOS and Windows reached the
+handler, but the natural-exit test also slept for 60 seconds before checking
+the release file; both were killed by escalation instead of exiting naturally.
+Their diagnostics recorded `cancel_escalated=TRUE` and exit status `-9` on
+macOS and `15` on Windows. These failures identify fixture synchronization
+defects, not a confirmed worker regression. The corrected fixtures use a
+20-millisecond cooperative polling loop and the natural-exit test releases the
+child immediately after cancellation is accepted. That correction is pending
+the next hosted run. The original 0.054-second run still has no recorded
+termination reason; the corrected deadline test is intended to establish it.
+
 `actionlint` was not installed. A local `go install` attempt failed because
 the build network was blocked (`proxy.golang.org` connection refused) and Go's
 telemetry path was not writable. PyYAML parsing and structural checks passed
@@ -567,17 +585,19 @@ substitute for the actual runs linked above.
 
 | Platform/job | CRAN 1.0.1 and development contract | Real-child baseline probe | Lifecycle suite | Classification |
 |---|---|---|---|---|
-| Ubuntu | Pass / pass (32 expectations each) in 40313778899; CRAN probe pass | Pass in 40313778899 | One failure in 40313778899: the 0.054s early completion cannot establish graceful exit versus escalation; new diagnostic test pending | Unresolved pending synchronized rerun |
-| Windows | Pass / pass in 40311845330, 40312594293 and 40313778899; CRAN probe pass | Pass in all three runs | Pass in all three; 2 explicit Windows skips | Applicable Windows lifecycle behavior passed; two POSIX signal cases are unsupported on Windows |
-| macOS | Pass / pass in 40311845330, 40312594293 and 40313778899; CRAN probe pass | Pass in all three runs | Pass in all three; no skips | Applicable macOS lifecycle behavior passed |
-| Ubuntu R-Knowledge-MCP | Package installs succeeded in 40313778899; test source pinned to `8f01870558263283ba197dc215d0f1ab5ad864af` | Not applicable | No tests ran; pytest exit 4 because the pinned consumer revision lacks the requested file | Unresolved: consumer tests are not present on public branches or PRs |
+| Ubuntu | Pass / pass (32 expectations each) in 40313778899 and 40315356760; CRAN probe passed in both | Pass in both runs | Run 40313778899 failed the 0.100s minimum (actual 0.054s); run 40315356760 failed the handler acknowledgement and natural-exit fixture | No confirmed implementation defect; corrected short-polling fixture pending. Original termination reason unresolved |
+| Windows | Pass / pass in runs 40311845330, 40312594293, 40313778899 and 40315356760; CRAN probe pass | Pass in all four runs | Run 40315356760 failed the natural-exit fixture: its 60s sleep caused escalation (`exit_status=15`); 2 explicit Windows skips | Test-fixture defect confirmed; corrected release synchronization pending. Two POSIX signal cases remain unsupported on Windows |
+| macOS | Pass / pass in runs 40311845330, 40312594293, 40313778899 and 40315356760; CRAN probe pass | Pass in all four runs | Run 40315356760 failed the natural-exit fixture: its 60s sleep caused escalation (`exit_status=-9`); no skips | Test-fixture defect confirmed; corrected release synchronization pending |
+| Ubuntu R-Knowledge-MCP | Package installs succeeded in 40315356760; test source pinned to `8f01870558263283ba197dc215d0f1ab5ad864af` | Not applicable | No tests ran; pytest exit 4 because the pinned consumer revision lacks the requested file | Unresolved: consumer tests are not present on public branches or PRs |
 
 The [R-CMD-check workflow](https://github.com/menshikovs/termr/actions/workflows/R-CMD-check.yaml)
 has push filters for `main`, `master` and `develop-*`, plus an unfiltered
-`pull_request` trigger. At this report revision no draft pull request has been
-created, so there is no feature-branch R-CMD-check run yet. A draft PR from this
-branch triggers its matrix: Ubuntu release, oldrel-1, R 4.1 and devel; macOS
-release; and Windows release. The dedicated
+`pull_request` trigger. No draft pull request could be created from the
+available GitHub connection: repository write APIs returned HTTP 403
+`Resource not accessible by integration`, the browser session was signed out,
+and no GitHub CLI is installed. Therefore there is no feature-branch R-CMD-check
+run. A draft PR from this branch should trigger its matrix: Ubuntu release,
+oldrel-1, R 4.1 and devel; macOS release; and Windows release. The dedicated
 [worker lifecycle workflow](https://github.com/menshikovs/termr/actions/workflows/worker-lifecycle-compatibility.yaml)
 runs real child probes and lifecycle tests on all three operating systems.
 The Ubuntu termination reason, consumer suite availability and feature-branch

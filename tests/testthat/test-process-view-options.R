@@ -57,7 +57,8 @@ test_that("opt-in ProcessView cancellation is non-blocking and reports one finis
   pilot <- process_view_test_pilot(application)
   on.exit(pilot$stop(), add = TRUE)
 
-  expect_true(pilot$wait_for(function(app) "READY" %in% view$output, timeout = 10))
+  pilot$wait_for(function(app) "READY" %in% view$output, timeout = 10)
+  expect_true("READY" %in% view$output)
   started <- proc.time()[["elapsed"]]
   view$cancel()
   expect_lt(proc.time()[["elapsed"]] - started, 1)
@@ -66,7 +67,8 @@ test_that("opt-in ProcessView cancellation is non-blocking and reports one finis
   view$cancel()
   expect_lt(proc.time()[["elapsed"]] - repeated, 1)
   expect_identical(view$state, "stopping")
-  expect_true(pilot$wait_for(function(app) identical(view$state, "cancelled"), timeout = 10))
+  pilot$wait_for(function(app) identical(view$state, "cancelled"), timeout = 10)
+  expect_identical(view$state, "cancelled")
   pilot$step()
   expect_length(finished, 1L)
   expect_identical(finished[[1]]$state, "cancelled")
@@ -94,11 +96,13 @@ test_that("opt-in restart waits for the old worker before starting the next run"
     unlink(marker)
   }, add = TRUE)
 
-  expect_true(pilot$wait_for(function(app) file.exists(marker), timeout = 10))
+  pilot$wait_for(function(app) file.exists(marker), timeout = 10)
+  expect_true(file.exists(marker))
   expect_true("READY" %in% view$output)
   view$restart()
   expect_identical(view$state, "stopping")
-  expect_true(pilot$wait_for(function(app) identical(view$state, "completed"), timeout = 15))
+  pilot$wait_for(function(app) identical(view$state, "completed"), timeout = 15)
+  expect_identical(view$state, "completed")
   pilot$step()
   expect_true(any(grepl("SECOND", view$output, fixed = TRUE)))
   expect_length(finished, 2L)
@@ -111,12 +115,13 @@ test_that("ProcessView forwards optional parent supervision and bounds its outpu
   skip_on_cran()
   view <- process_view(
     process_view_test_rscript(),
-    c("--vanilla", "-e", "cat(paste0(seq_len(10), '\\n'))"),
+    c("--vanilla", "-e", "writeLines(as.character(seq_len(10)))"),
     max_lines = 3L, supervision = "parent"
   )
   pilot <- process_view_test_pilot(app(view))
   on.exit(pilot$stop(), add = TRUE)
-  expect_true(pilot$wait_for(function(app) identical(view$state, "completed"), timeout = 15))
+  pilot$wait_for(function(app) identical(view$state, "completed"), timeout = 15)
+  expect_identical(view$state, "completed")
   expect_identical(view$output, c("8", "9", "10"))
   expect_identical(view$exit_status, 0L)
   view$clear_output()

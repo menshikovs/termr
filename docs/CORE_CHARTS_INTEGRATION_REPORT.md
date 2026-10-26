@@ -78,35 +78,40 @@ The same `termr::test_app(...); pilot$app$run_worker(...)` startup probe against
 
 ## H. Platform support and CI
 
-Implementation commit: `08f69319ea156fb307fc7a5523ac6de9cc9e6308` (`feat: integrate native charts`). The push-triggered [GitHub Actions run 40354621821](https://github.com/menshikovs/termr/actions/runs/40354621821) checked that commit and created 11 jobs. At 2026-10-26 16:18 UTC, 9 jobs had completed successfully and 2 remained in progress at `r-lib/actions/setup-r@v2`. The in-progress jobs had no downloadable logs, so they are pending rather than passing or failing.
+Implementation commit: `08f69319ea156fb307fc7a5523ac6de9cc9e6308` (`feat: integrate native charts`). The [implementation CI run 40354621821](https://github.com/menshikovs/termr/actions/runs/40354621821) created 11 jobs. Nine completed successfully. Ubuntu release and oldrel-1 were cancelled at the job's 45-minute timeout, not by test assertions: both logs end with `The operation was canceled` at 16:43 UTC, about 45 minutes after job start. The release check had just started; oldrel-1 was running `testthat.R`. There were no reported test failures from these cancelled jobs.
+
+The documentation-only commit `5289e82e148a9da38337388d26466b8945ceed0a` triggered [run 40358189097](https://github.com/menshikovs/termr/actions/runs/40358189097). At 2026-10-26 16:50 UTC, 10 of 11 jobs had completed successfully with no failures. Ubuntu release and oldrel-1 both passed there. Ubuntu devel remained in `setup-r-dependencies`; it had not produced a result yet. Since the only change from the implementation commit was this report, the completed run 2 results apply to the same chart source.
 
 | Platform / job | Actual result |
 |---|---|
-| Ubuntu, R 4.1 | R CMD check and extended regression suite passed. Check ended with 2 NOTEs: installed size 5.1 MB and non-standard top-level files. Testthat: 8,459 passed, 0 failed, 0 warnings, 4 skipped. |
-| Ubuntu, R devel | R CMD check and extended regression suite passed with 1 NOTE for non-standard top-level files. Testthat: 8,459 passed, 0 failed, 0 warnings, 4 skipped. |
-| Ubuntu, R release | Pending at setup-r; no check or test result is available. |
-| Ubuntu, R oldrel-1 | Pending at setup-r; no check or test result is available. |
-| macOS, R release | R CMD check and extended regression suite passed with 1 NOTE for non-standard top-level files. Testthat: 8,459 passed, 0 failed, 0 warnings, 4 skipped. |
-| Windows, R release | R CMD check and extended regression suite passed with 1 NOTE for non-standard top-level files. Testthat: 8,452 passed, 0 failed, 0 warnings, 5 skipped. |
+| Ubuntu, R 4.1 | R CMD check and extended suite passed in run 1 and run 2. Check had 2 NOTEs: installed size 5.1 MB and non-standard top-level files. Testthat: 8,459 passed, 0 failed, 0 warnings, 4 skipped. |
+| Ubuntu, R release | Run 1 reached the 45-minute job timeout during check startup. Passed R CMD check and extended suite in run 2 with 1 NOTE. Testthat: 8,459 passed, 0 failed, 0 warnings, 4 skipped. |
+| Ubuntu, R oldrel-1 | Run 1 reached the 45-minute timeout during testthat. Passed R CMD check and extended suite in run 2 with 1 NOTE. Testthat: 8,459 passed, 0 failed, 0 warnings, 4 skipped. |
+| Ubuntu, R devel | Passed R CMD check and extended suite in run 1 with 1 NOTE. Testthat: 8,459 passed, 0 failed, 0 warnings, 4 skipped. Run 2 was still installing dependencies at the status snapshot above. |
+| macOS, R release | Passed R CMD check and extended suite in both runs with 1 NOTE. Testthat: 8,459 passed, 0 failed, 0 warnings, 4 skipped. |
+| Windows, R release | Passed R CMD check and extended suite in both runs with 1 NOTE. Testthat: 8,452 passed, 0 failed, 0 warnings, 5 skipped. |
 | R-devel CRAN incoming tarball | `R CMD check --as-cran` passed with 1 NOTE and no ERROR or WARNING. |
 | PTY integration | Ubuntu and macOS jobs passed. |
 | Windows input regressions | Passed. |
 | SQL integration (DBI + SQLite) | Passed. |
 
-The notes were not suppressed. The non-standard top-level file note names AGENTS.md, CODE_OF_CONDUCT.md, CONTRIBUTING.md, README.zh-CN.md, and SECURITY.md. The installed-size note appeared on Ubuntu R 4.1. No completed `R CMD check` job reported an ERROR or WARNING. A local Windows 11 sandbox check previously failed in processx because child pipes were denied with system error 5; the same probe failed against installed CRAN termr 1.0.1, while the hosted Windows check and regression suite passed.
+The notes were not suppressed. The non-standard top-level note names AGENTS.md, CODE_OF_CONDUCT.md, CONTRIBUTING.md, README.zh-CN.md, and SECURITY.md. The installed-size note appeared on Ubuntu R 4.1. No completed `R CMD check` reported an ERROR or WARNING. The Windows 11 local sandbox processx error 5 was reproduced against installed CRAN termr 1.0.1; hosted Windows lifecycle and process tests passed in CI.
 
-The published CRAN termr 1.0.1 API comparison remains positive: all 155 common exports and their formals are unchanged, and exactly five chart exports were added. The original termrcharts source at commit `361556778c7fc6e93a46b485a7cdefd1e5f15231` passed its untouched suite locally; coexistence probes passed in both package attachment orders, all five constructors rendered, and constructor formals match. The dependency graph has no cycle: termr does not depend on termrcharts.
+The implementation workflow matrix timeout was increased from 45 to 60 minutes after the two run 1 jobs exhausted the old limit during dependency setup and check execution. This changes only the CI time budget; it does not skip checks or alter package behavior. Validation of that timeout adjustment is pending the next workflow run.
+
+The CRAN termr 1.0.1 API comparison remains positive: all 155 common exports and their formals are unchanged, and exactly five chart exports were added. The original termrcharts source at commit `361556778c7fc6e93a46b485a7cdefd1e5f15231` passed its untouched suite locally; coexistence probes passed in both package attachment orders, all five constructors rendered, and constructor formals match. The dependency graph has no cycle: termr does not depend on termrcharts.
 
 ## I. Known limitations
 
-- The Ubuntu release and oldrel-1 jobs remain unresolved at setup-r. Their logs are unavailable while the jobs are running; no cause or test outcome is inferred.
+- Ubuntu devel had not completed the second run at the recorded status snapshot. No outcome is inferred for that pending job.
 - The R 4.1 installed-size NOTE was not compared with CRAN 1.0.1 under the same R 4.1 runner, so whether that NOTE is newly introduced remains unresolved. It is a NOTE, not an ERROR or WARNING.
-- Passing PTY integration jobs are evidence for terminal integration checks, not a cross-terminal visual certification of chart appearance. Unicode, color, and chart layout have not been manually compared across terminal emulators.
+- The first run's cold setup exceeded the 45-minute matrix job timeout on two Ubuntu configurations. The longer timeout has not yet been exercised by CI.
+- Passing PTY integration jobs are evidence for terminal integration checks, not cross-terminal visual certification of chart appearance. Unicode, color, and chart layout have not been manually compared across terminal emulators.
 - Performance measurements are headless and coarse-grained; memory includes package and test harness overhead.
 - Box plots and the other excluded termrcharts chart families remain outside this integration.
 
 ## J. Release readiness
 
-The five chart widgets and their documented exports are implemented. Local and CI API evidence found no removed or changed CRAN 1.0.1 exports or formals. Original termrcharts compatibility probes and the completed Ubuntu R 4.1/devel, Windows, macOS, R-devel incoming, PTY, Windows input, and SQL jobs found no confirmed chart regression.
+The five chart widgets and their documented exports are implemented. Local and CI API evidence found no removed or changed CRAN 1.0.1 exports or formals. Original termrcharts compatibility probes and the completed R CMD check/regression jobs on Ubuntu, Windows, and macOS found no confirmed chart regression.
 
-**Stage 3B is not yet complete or ready to merge.** The implementation commit has broad passing evidence, including hosted Windows subprocess tests, but the Ubuntu release and oldrel-1 jobs have not completed. The R 4.1 installed-size NOTE also remains un-compared against the CRAN baseline on the same runner. Reassess readiness after both Ubuntu jobs finish and the size-note baseline is understood.
+**Stage 3B is not yet complete or ready to merge.** The implementation and report runs provide passing evidence across all release platforms, but Ubuntu devel on run 2 and the new 60-minute timeout remain unverified. The R 4.1 installed-size NOTE also remains un-compared against the CRAN baseline on the same runner. Reassess after the pending R-devel job and the timeout-adjusted workflow complete.

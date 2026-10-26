@@ -4,7 +4,7 @@ Generated from the checked-in `NAMESPACE`, top-level definitions in `R/`, and cu
 
 ## Scope and counting
 
-- Explicit `export()` symbols: **155**.
+- Explicit `export()` symbols: **160**.
 - Registered S3 methods: **29** (listed separately; they are registrations, not `export(name)` directives).
 - Exported symbols without a matching Rd alias: **0**.
 - Exports without an Rd usage section: **0**.
@@ -73,6 +73,7 @@ Generated from the checked-in `NAMESPACE`, top-level definitions in `R/`, and cu
 | `animate` | function | [animation.R](../R/animation.R#L164) | [yes](../man/animate.Rd) | yes | yes | docs, tests |
 | `app` | function | [app.R](../R/app.R#L1183) | [yes](../man/app.Rd) | yes | yes | README, docs, examples, tests |
 | `batch` | function | [signals.R](../R/signals.R#L290) | [yes](../man/signals.Rd) | yes | yes | README, docs, examples, tests |
+| `bar_chart` | function | [chart-api.R](../R/chart-api.R#L186) | [yes](../man/bar_chart.Rd) | yes | yes | README, docs, examples, tests |
 | `bind` | function | [bindings.R](../R/bindings.R#L27) | [yes](../man/bind.Rd) | yes | yes | docs, examples, tests |
 | `browse_data` | function | [browse-data.R](../R/browse-data.R#L26) | [yes](../man/browse_data.Rd) | yes | yes | README, docs, examples |
 | `button` | function | [widget-button.R](../R/widget-button.R#L127) | [yes](../man/button.Rd) | yes | yes | README, docs, examples, tests |
@@ -95,6 +96,8 @@ Generated from the checked-in `NAMESPACE`, top-level definitions in `R/`, and cu
 | `dispose` | function | [signals.R](../R/signals.R#L275) | [yes](../man/signals.Rd) | yes | yes | docs, tests |
 | `dropdown` | function | [widget-controls.R](../R/widget-controls.R#L386) | [yes](../man/dropdown.Rd) | yes | yes | README, docs, examples, tests |
 | `grid_layout` | function | [widget-containers.R](../R/widget-containers.R#L81) | [yes](../man/grid_layout.Rd) | yes | yes | docs, examples, tests |
+| `heatmap_chart` | function | [chart-heatmap-api.R](../R/chart-heatmap-api.R#L32) | [yes](../man/heatmap_chart.Rd) | yes | yes | README, docs, examples, tests |
+| `histogram` | function | [chart-api.R](../R/chart-api.R#L227) | [yes](../man/histogram.Rd) | yes | yes | README, docs, examples, tests |
 | `horizontal` | function | [widget-containers.R](../R/widget-containers.R#L114) | [yes](../man/vertical.Rd) | yes | yes | README, docs, examples, tests |
 | `input` | function | [widget-input.R](../R/widget-input.R#L479) | [yes](../man/input.Rd) | yes | yes | README, docs, examples, tests |
 | `inspect_signal` | helper | [signals.R](../R/signals.R#L334) | [yes](../man/inspect_signal.Rd) | yes | no | docs, tests |
@@ -104,6 +107,7 @@ Generated from the checked-in `NAMESPACE`, top-level definitions in `R/`, and cu
 | `key_value` | function | [widget-display.R](../R/widget-display.R#L553) | [yes](../man/key_value.Rd) | yes | yes | README, docs, examples, tests |
 | `knit_termr` | function | [export.R](../R/export.R#L268) | [yes](../man/knit_termr.Rd) | yes | no | docs, tests |
 | `label` | function | [widget-label.R](../R/widget-label.R#L63) | [yes](../man/label.Rd) | yes | yes | README, docs, examples, tests |
+| `line_chart` | function | [chart-api.R](../R/chart-api.R#L71) | [yes](../man/line_chart.Rd) | yes | yes | README, docs, examples, tests |
 | `log_view` | function | [widget-log.R](../R/widget-log.R#L141) | [yes](../man/log_view.Rd) | yes | yes | README, docs, examples, tests |
 | `markdown_view` | function | [markdown.R](../R/markdown.R#L457) | [yes](../man/markdown_view.Rd) | yes | yes | README, docs, examples, tests |
 | `metric` | function | [widget-display.R](../R/widget-display.R#L484) | [yes](../man/metric.Rd) | yes | yes | README, docs, examples, tests |
@@ -135,6 +139,7 @@ Generated from the checked-in `NAMESPACE`, top-level definitions in `R/`, and cu
 | `run_example` | function | [examples.R](../R/examples.R#L9) | [yes](../man/run_example.Rd) | yes | yes | README, docs, examples, tests |
 | `run_process` | function | [workers.R](../R/workers.R#L386) | [yes](../man/run_worker.Rd) | yes | yes | README, docs, tests |
 | `run_worker` | function | [workers.R](../R/workers.R#L370) | [yes](../man/run_worker.Rd) | yes | yes | README, docs, examples, tests |
+| `scatter_chart` | function | [chart-api.R](../R/chart-api.R#L98) | [yes](../man/scatter_chart.Rd) | yes | yes | README, docs, examples, tests |
 | `screen_buffer` | helper | [screen-buffer.R](../R/screen-buffer.R#L263) | [yes](../man/screen_buffer.Rd) | yes | yes | examples, tests |
 | `screen_snapshot` | helper | [export.R](../R/export.R#L82) | [yes](../man/screen_snapshot.Rd) | yes | yes | docs, tests |
 | `screen_snapshot_json` | helper | [export.R](../R/export.R#L98) | [yes](../man/screen_snapshot_json.Rd) | yes | no | docs, tests |

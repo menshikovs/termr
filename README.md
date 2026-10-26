@@ -59,6 +59,8 @@ to be stable. To inspect a data frame directly, call `browse_data(mtcars)`.
 
 - **Compose applications:** build a widget tree, handle typed events and
   commands, and bind displayed values to reactive state.
+- **Visualize data:** use native line, scatter, bar, histogram and heatmap
+  widgets alongside tables and controls; chart data can be replaced in place.
 - **Keep data work visible:** inspect rows and records, show metrics and
   progress, and run long computations in background R workers.
 - **Test the interface:** drive the event loop and renderer headlessly with
@@ -90,6 +92,11 @@ Compose forms and dashboards with controls, tabs, split panes, scroll views,
 trees, Markdown, metrics and sparklines. Add generated help, modal dialogs,
 notifications and a command palette. Stylesheets and themes include
 monochrome/`NO_COLOR`, high contrast and reduced motion.
+
+Native charts compose with these widgets and use the same focus, resize,
+theme and headless testing paths. See the [native charts guide](docs/charts.md)
+and run `Rscript -e 'termr::run_example("native-charts-dashboard")'` for a
+table-and-chart dashboard with live updates.
 
 ![termr widget showcase with tabs, metrics, progress and a sparkline](https://raw.githubusercontent.com/menshikovs/termr/main/docs/images/widget-showcase.png)
 

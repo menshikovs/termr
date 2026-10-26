@@ -61,6 +61,8 @@ NEWS and in [migration notes](migration-to-1.0.md).
   `write_rendered()`.
 - Diagnostic and low-level rendering APIs such as `inspect_widget()`,
   `inspect_signal()`, `patch_to_ansi()`, and `diff_screen()`.
+- Native chart constructors and each chart widget's `$update_data()` method
+  are experimental for the initial integration; see [Native charts](charts.md).
 
 Optional packages such as DBI, RSQLite, jsonlite and knitr remain optional;
 they are not runtime dependencies.

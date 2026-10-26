@@ -6,6 +6,8 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.github$
+^\.agents$
+^\.serena$
 ^\.gitattributes$
 ^docs$
 ^site$

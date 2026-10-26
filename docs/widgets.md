@@ -61,6 +61,7 @@ Ctrl+Delete (words), Ctrl+U/K, Ctrl+C/X/V with the app clipboard.
 | Widget | Notes |
 |--------|-------|
 | `data_table(df, ...)` | see [data.md](data.md) |
+| `line_chart()`, `scatter_chart()`, `bar_chart()`, `histogram()`, `heatmap_chart()` | focusable terminal charts; see [charts.md](charts.md) |
 | `tree_view(tree_node(...))` | lazy `loader =`; `tree.node_selected`, `_expanded`, `_collapsed`, `_activated` |
 | `status_bar(left, center, right)` | one-line three-region status display |
 | `property_grid(data)` | scrollable, read-only key/value inspector; values wrap |

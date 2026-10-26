@@ -4,7 +4,8 @@ test_that("all examples are listed", {
   expect_setequal(run_example(), c("buffer-demo", "counter", "dataframe-browser", "file-tree", "form", "hello",
                                    "keys", "kitchen-sink", "model-monitor", "system-monitor", "data-explorer",
                                    "task-runner", "terminal-dashboard", "editor", "accessibility-demo", "custom-widget",
-                                   "sql-workspace", "database-explorer", "export-report", "data-workbench"))
+                                   "sql-workspace", "database-explorer", "export-report", "data-workbench",
+                                   "native-charts-dashboard"))
   expect_error(run_example("nope"), "Unknown example")
 })
 
@@ -15,6 +16,16 @@ test_that("the hello example greets the user", {
   pilot$press("tab", "enter")
   expect_identical(pilot$query_one("#result")$text, "Hello, Ada")
   expect_snapshot(pilot$snapshot())
+})
+
+test_that("the native chart dashboard builds and refreshes its data", {
+  pilot <- test_app(load_example("native-charts-dashboard"), 110, 32)
+  on.exit(pilot$stop(), add = TRUE)
+  before <- pilot$screen_text()
+  pilot$press("r")
+  expect_false(identical(before, pilot$screen_text()))
+  expect_true(any(grepl("Signal", pilot$screen_text(), fixed = TRUE)))
+  pilot$stop()
 })
 
 test_that("the form example greets, clears and quits", {

@@ -11,7 +11,9 @@ Description: Build interactive terminal user interfaces (TUIs) in R using
     while a headless driver supports deterministic application tests.
     Advanced features include experimental reactive graph APIs, lazy table
     sources, SQL editing, optional database tools, background R workers and
-    static text, Markdown, HTML, SVG and JSON exports.
+    static text, Markdown, HTML, SVG and JSON exports. Native line,
+    scatter, bar, histogram and heatmap widgets support interactive terminal
+    data displays without another charting package.
 License: MIT + file LICENSE
 URL: https://menshikovs.github.io/termr/, https://github.com/menshikovs/termr
 BugReports: https://github.com/menshikovs/termr/issues
@@ -22,6 +24,7 @@ Depends:
     R (>= 4.1.0)
 Imports:
     codetools,
+    graphics,
     grDevices,
     R6,
     processx,

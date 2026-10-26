@@ -1,3 +1,11 @@
+# Development version
+
+* Add native line, scatter, bar, histogram and heatmap widgets with keyboard
+  and mouse selection, viewport-aware rendering and in-place data updates.
+* Add a table-and-chart dashboard example and chart rendering, interaction,
+  update and validation coverage. The new chart APIs remain experimental
+  pending cross-platform release verification.
+
 # termr 1.0.1
 
 First CRAN release, published on [CRAN](https://CRAN.R-project.org/package=termr)

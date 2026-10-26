@@ -412,136 +412,127 @@ they use `skip_on_cran()`; the dedicated workflow sets `NOT_CRAN=true` and
 
 ## H. External consumer testing
 
-The R-Knowledge-MCP repository is available at
-`C:/programming_pj/cran-mcp`. Its R launcher tests are in
-`benchmarks/codex_r/launcher/tests/testthat`; the Python wrapper marks the
-launcher suite Linux-only because it needs POSIX signals/PTY behavior. The
-consumer repository was not modified.
+The public [R-Knowledge-MCP repository](https://github.com/menshikovs/R-Knowledge-MCP)
+was checked out cleanly by the CI workflow. Its `main` tree does not contain
+`tests/test_codex_launcher.py` or the launcher test suite referenced by the
+workflow. In runs [40310186089](https://github.com/menshikovs/termr/actions/runs/40310186089)
+and [40311845330](https://github.com/menshikovs/termr/actions/runs/40311845330),
+pytest exited 4 with `file or directory not found`; no consumer test ran. The
+local consumer checkout's launcher files are untracked and cannot establish
+compatibility of the public repository. The consumer comparison remains
+unresolved and needs a committed, unmodified launcher suite at an agreed path.
+No consumer repository files were changed.
 
-Ran `testthat::test_dir('C:/programming_pj/cran-mcp/benchmarks/codex_r/launcher/tests/testthat', reporter='summary')`
-twice, once with `R_LIBS` pointing to the isolated CRAN 1.0.1 package and once
-with it pointing to the staged development package. In both runs the
-`test-app.R` and `test-b1.R` files skipped because Windows does not provide the
-required POSIX signals. The `test-core.R` process wrapper test failed because
-processx was denied pipe creation (system error 5) while trying to launch `sh`;
-the other runnable `test-core.R` assertions passed. Thus the side-by-side
-consumer compatibility test is inconclusive here, not a pass.
-
-The local consumer checkout already had unrelated modified and untracked files
-before this task; no files in that repository were changed here. The local
-`test_dir()` runs used that existing working tree. The CI job below checks out
-the public repository's `main` branch in a clean job directory.
-
-The consumer repository is public and available at
-[menshikovs/R-Knowledge-MCP](https://github.com/menshikovs/R-Knowledge-MCP).
-The new `r_knowledge_mcp_launcher` job checks out that repository without
-modifications on Ubuntu and is configured to run its existing headless and
-POSIX launcher tests against both isolated package versions. The branch's
-Actions run created no jobs, so neither consumer comparison ran.
-
-Reproduction on a supported POSIX host: set `R_LIBS` first to the isolated
-CRAN 1.0.1 library and run
-`Rscript -e "testthat::test_dir('benchmarks/codex_r/launcher/tests/testthat', reporter='summary')"`;
-then install this checkout into a separate library, point `R_LIBS` to that
-library and run the same command. Keep the consumer repository untouched and
-do not start its live benchmark trials for this compatibility check.
+Earlier local `testthat::test_dir()` runs against the local consumer checkout
+were inconclusive: its headless UI tests skipped on Windows because POSIX
+signals are unavailable, and the process wrapper failed to create a processx
+pipe with system error 5. Other runnable assertions passed. These local runs do
+not replace the missing clean-repository CI comparison.
 
 ## I. Remaining limitations
 
-* Real process tests, including non-blocking cancellation, graceful cleanup,
-  callback/event races, forced escalation, temporary-file removal, app
-  shutdown and processx supervision, need a supported host where child-process
-  pipes can be created. The development-branch Actions run created no jobs, so
-  none of these behaviors has CI evidence on Ubuntu, Windows or macOS yet.
-* Unix SIGINT/SIGTERM/SIGHUP/SIGKILL tests and PTY restoration were not run
-  here. Windows lifecycle integration was blocked at process spawn. No
-  platform-specific lifecycle result can be inferred from the failed,
-  jobless Actions run.
-* Processx parent-death supervision covers registered direct children only;
-  arbitrary grandchildren may survive parent death. PID reuse is not proven
-  impossible by processx's PID-based helper, so no stronger guarantee is
-  claimed. Windows Defender/antivirus can block the helper.
-* An interrupt may be ignored or unsupported by the child; async cancellation
-  then escalates to forced termination at the deadline. No cleanup callback can
-  run after SIGKILL.
-* The installed CRAN package's metadata is the available source evidence; the
-  archived source tarball could not be downloaded in this network-restricted
-  environment, and no CRAN tarball checksum was recorded.
-* The external consumer's real launcher tests are POSIX-only and could not
-  establish side-by-side behavior on this Windows host. Its new CI comparison
-  is pending.
+* Ubuntu run 40311845330 passed package installation, both CRAN/development
+  compatibility contracts, and the required real-child synchronous
+  cancellation probe. Its lifecycle suite had one failure at
+  `test-worker-lifecycle.R:219`: the cancellation became terminal after 0.055
+  seconds, below the test's 0.1-second minimum for the 0.15-second escalation
+  case. The child may have exited on SIGINT before escalation; the logs do not
+  establish whether the child fixture handled or ignored that signal as
+  intended. This remains unresolved; no test was weakened.
+* Windows and macOS run 40311845330 passed the shared contracts, CRAN real-child
+  cancellation probe, and all applicable lifecycle tests. Windows explicitly
+  skipped two POSIX signal cases (`graceful cancellation allows child cleanup`
+  and `processx supervision cleans the direct child after parent signals`),
+  both reported as unsupported on Windows. macOS had no lifecycle skips.
+* Direct-child and descendant cleanup assertions passed on the hosted runners.
+  Parent supervision is tested for registered direct children only; arbitrary
+  grandchildren are not guaranteed to be terminated. PID reuse is not proven
+  impossible by processx's PID-based helper, and Windows Defender/antivirus can
+  block its helper.
+* The external consumer comparison cannot run until its public repository
+  contains the referenced launcher test suite. Its current CI failure is a
+  missing test path, not evidence for or against termr behavior.
+* The feature branch has no pull request, so the R-CMD-check workflow did not
+  run for these changes. Its unfiltered `pull_request` trigger includes pull
+  requests from this feature branch. The most recent executed cross-platform
+  validation is the dedicated lifecycle workflow, not a branch R CMD check.
+* The prior local R CMD check showed Unicode renderer and screen-position
+  failures plus database translation warnings that reproduced against CRAN
+  1.0.1 in the same environment. Those remain pre-existing, environment-
+  sensitive results and have not been re-evaluated on the hosted runners here.
 
 ## J. GitHub Actions evidence for the development branch
 
-The branch head is `5f3833358adb9b7c446e7e47512017875535b1f0`. GitHub lists one
-Actions run for that commit: [worker lifecycle compatibility, run 40307104360](https://github.com/menshikovs/termr/actions/runs/40307104360),
-created 2026-10-26 10:23:58 UTC and completed with conclusion `failure`. The
-run record exposes zero jobs; the jobs endpoint returned `total_count: 0`, the
-commit check-runs endpoint returned zero check runs, the artifact list was
-empty, and the run-logs endpoint returned 404. There are therefore no runner
-step logs or test outputs or validation annotations to inspect. Static
-validation identified an invalid expression placement in that workflow:
-`${{ runner.temp }}` was referenced in both jobs' job-level `env` blocks.
-GitHub's [context-availability table](https://docs.github.com/en/actions/reference/workflows-and-actions/contexts#context-availability)
-does not permit `runner` in `jobs.<job_id>.env`, while it does permit `runner`
-in `jobs.<job_id>.steps.env`. The two library paths have been moved to a
-step-level initializer, which exports them through `GITHUB_ENV` for subsequent
-steps. The pushed fix is commit `ce921b095de49ba76d754fd235b77c4f08acb130`.
-The new [run 40309289545](https://github.com/menshikovs/termr/actions/runs/40309289545)
-created four jobs, and the initializer succeeded on all four runners. GitHub
-exposed no validation annotation for the original jobless run, so the exact
-rejection text remains unavailable.
+The original head was `5f3833358adb9b7c446e7e47512017875535b1f0`.
+[Run 40307104360](https://github.com/menshikovs/termr/actions/runs/40307104360)
+failed with zero jobs, zero check runs, no artifacts, and no available run
+logs (the logs endpoint returned 404). GitHub provided no validation
+annotation or explicit rejection text. Static inspection identified the
+startup defect: `${{ runner.temp }}` appeared in both jobs' job-level `env`
+blocks. GitHub's [context-availability table](https://docs.github.com/en/actions/reference/workflows-and-actions/contexts#context-availability)
+does not permit `runner` in `jobs.<job_id>.env`, but permits it in
+`jobs.<job_id>.steps.env`. Commit
+`ce921b095de49ba76d754fd235b77c4f08acb130` moved the paths into a step-level
+initializer which writes them to `GITHUB_ENV`. Run 40309289545 created four
+jobs and confirmed the initializer succeeded on all four runners.
 
-The first jobs that reached package tests exposed a test-harness mismatch.
-Windows and macOS installed both packages successfully and passed the 32
-expectation shared API contract against CRAN 1.0.1 and development. Their strict
-probe then stopped before spawning a child because the baseline script requires
-`Repository=CRAN` and `RemoteType=standard`. The workflow used
-`remotes::install_version()`, which removes `RemoteType` and `RemoteUrl` from
-installed metadata ([remotes implementation](https://github.com/r-lib/remotes/blob/main/R/install-version.R)).
+The first jobful run, [40309289545](https://github.com/menshikovs/termr/actions/runs/40309289545),
+passed the 32-expectation shared API/synchronous contract against both CRAN
+1.0.1 and development on Windows and macOS. The strict real-child probe then
+stopped before spawning because `remotes::install_version()` removes
+`RemoteType` metadata. This was a CI provenance assumption, not a lifecycle
+failure ([remotes implementation](https://github.com/r-lib/remotes/blob/main/R/install-version.R)).
 
-Commit `089ce0ef076e4752cd5d57ffbc3d29ca66518491` changed the baseline install
-to `remotes::install_url()` for that exact archive, but run
-[40310186089](https://github.com/menshikovs/termr/actions/runs/40310186089)
-showed that direct `download.file()` calls could not open the archive URL on
-Windows and macOS. `install_url()` logged the download failure but returned
-without installing the baseline, so the subsequent CRAN contract failed with
-“there is no package called termr.” This run did not reach lifecycle tests.
+Run [40310186089](https://github.com/menshikovs/termr/actions/runs/40310186089)
+created four jobs. The Ubuntu, Windows and macOS logs show the attempted direct
+CRAN archive download failed with `cannot open URL`; the baseline package was
+therefore absent and compatibility tests did not run. The Ubuntu consumer job
+failed with pytest exit 4 because its clean checkout lacks
+`tests/test_codex_launcher.py`.
 
-The current workflow change uses `install.packages()` with a named CRAN
-repository, then immediately asserts version 1.0.1 plus `Repository=CRAN` and
-`RemoteType=standard`. The baseline script's strict provenance check remains
-unchanged. This fails closed if CRAN no longer serves version 1.0.1 or if the
-isolated CRAN install is missing. The new run is pending.
+Commit `b7d2b16cd2e54850bcfe71b264ee1625bd9f1579` changed the baseline fetch to
+`install.packages()` from the named CRAN repository index. Run
+[40311322090](https://github.com/menshikovs/termr/actions/runs/40311322090)
+confirmed that CRAN 1.0.1 downloaded and installed on all three platforms, but
+the post-install assertion incorrectly required `RemoteType=standard`. Base
+`install.packages()` records `Repository=CRAN` without `RemoteType`, so all
+three jobs stopped before contracts or lifecycle tests.
+
+Commit `be8f2ef17c3fb87f07604eb81ab3f1836faead70` keeps the exact version and
+`Repository=CRAN` checks, and accepts absent `RemoteType` while rejecting a
+present non-standard value. In [run 40311845330](https://github.com/menshikovs/termr/actions/runs/40311845330),
+all four jobs started. Windows and macOS completed successfully. Ubuntu
+completed its CRAN and development contracts and real-child baseline probe, but
+its lifecycle suite had the single escalation-timing failure detailed above.
+The consumer job failed because the launcher test path is absent from public
+`main`. These results provide real subprocess evidence on all three platforms
+and establish shared CRAN 1.0.1 compatibility on all three; they do not yet
+establish a clean all-platform lifecycle pass.
 
 `actionlint` was not installed. A local `go install` attempt failed because
-the build network is blocked (`proxy.golang.org` connection refused) and Go's
-telemetry path was not writable. PyYAML parsing and assertions for the
-preserved OS matrix, runner-context placement, and `pull_request` trigger
-passed. Manual expression review against GitHub's context table found no other
-unsupported context placements in the two workflows. This does not substitute
-for a new Actions run.
+the build network was blocked (`proxy.golang.org` connection refused) and Go's
+telemetry path was not writable. PyYAML parsing and structural checks passed
+for the preserved Ubuntu/macOS/Windows matrix, step-level `runner.temp`
+contexts, isolated CRAN/development libraries, strict real-process probe, and
+`pull_request` trigger. Manual review against GitHub's context table found no
+other unsupported context placements. This static validation is not a
+substitute for the actual runs linked above.
 
-| Job/platform | Run 40309289545 result | Classification / evidence |
-|---|---|---|
-| Ubuntu lifecycle | In progress when this report was updated | Path export passed; lifecycle and process results pending |
-| Windows lifecycle | Failed at strict baseline metadata validation | Path export, package installs, and both 32-expectation API contracts passed; child probe was not reached |
-| macOS lifecycle | Failed at the same strict baseline metadata validation | Path export, package installs, and both API contracts passed; child probe was not reached |
-| Ubuntu R-Knowledge-MCP | In progress when this report was updated | Path export passed; CRAN/development consumer comparisons pending |
+| Platform/job | CRAN 1.0.1 and development contract | Real-child baseline probe | Lifecycle suite | Classification |
+|---|---|---|---|---|
+| Ubuntu | Pass / pass (32 expectations each) | Pass | One failure: escalation elapsed 0.055s, expected at least 0.1s | Unresolved cancellation/escalation behavior; all other lifecycle assertions in the run completed |
+| Windows | Pass / pass (32 expectations each) | Pass | Pass; 2 explicit POSIX signal skips | Applicable Windows lifecycle behavior passed; skipped cases are unsupported on Windows |
+| macOS | Pass / pass (32 expectations each) | Pass | Pass; no skips | Applicable macOS lifecycle behavior passed |
+| Ubuntu R-Knowledge-MCP | Not applicable; both package installs succeeded | Not applicable | No tests ran; pytest exit 4 due missing file | Consumer comparison unresolved due missing public test suite |
 
-The existing [R-CMD-check workflow](https://github.com/menshikovs/termr/actions/workflows/R-CMD-check.yaml)
-has push triggers only for `main`, `master` and `develop-*`, plus an unfiltered
-`pull_request` trigger. The feature branch has no pull request, so that
-workflow did not run for this head; a PR whose head is this feature branch
-will trigger it. Earlier successful R-CMD-check runs on `main` predate
-this commit and are not evidence for these changes. The configured matrix
-covers Ubuntu R release, oldrel-1, 4.1 and devel, macOS release, and Windows
-release when triggered. The separate [worker lifecycle compatibility
-workflow](https://github.com/menshikovs/termr/actions/workflows/worker-lifecycle-compatibility.yaml)
-is intended to compare CRAN 1.0.1 and development on all three operating
-systems, require real-child probes, run lifecycle tests, and run the unmodified
-R-Knowledge-MCP launcher checks on Ubuntu. Its workflow configuration alone
-does not establish that any of those checks passed.
+The [R-CMD-check workflow](https://github.com/menshikovs/termr/actions/workflows/R-CMD-check.yaml)
+has push filters for `main`, `master` and `develop-*`, plus an unfiltered
+`pull_request` trigger. No pull request exists for this branch, so there is no
+R-CMD-check run for this head. A pull request from this feature branch will
+trigger its matrix: Ubuntu release, oldrel-1, R 4.1 and devel; macOS release;
+and Windows release. The dedicated [worker lifecycle workflow](https://github.com/menshikovs/termr/actions/workflows/worker-lifecycle-compatibility.yaml)
+now runs real child probes and lifecycle tests on all three operating systems,
+but its Ubuntu escalation failure and the consumer suite path remain open.
 
 ## K. Breaking-change assessment
 
@@ -564,13 +555,15 @@ does not establish that any of those checks passed.
 8. **Were existing application tests affected?** The new tests do not remove or
    weaken existing tests. All 50 Unicode renderer failures, the screen
    out-of-buffer error, and the two database warnings reproduced identically
-   against CRAN 1.0.1 in the Windows comparison. Real process behavior and
-   cross-platform R CMD check results still lack usable CI evidence.
+  against CRAN 1.0.1 in the prior Windows comparison. The dedicated hosted
+  runs now exercise real processes on all three platforms; Windows and macOS
+  pass their applicable lifecycle cases, while Ubuntu has one unresolved
+  escalation-timing failure. No feature-branch R CMD check has run.
 9. **Is migration required?** No. Existing applications retain their behavior
    without code changes.
-10. **Is this safe for a backward-compatible CRAN update?** No. The shared API
-    contract passes against CRAN 1.0.1 and development locally, but real
-    lifecycle tests, a clean R CMD check on supported platforms, and the
-    consumer workflow remain pending. The only branch Actions run failed
-    before exposing any jobs or logs. Processx supervision's identity and
-    descendant limits remain explicit.
+10. **Is this safe for a backward-compatible CRAN update?** Not yet. The
+    shared API contract passes against CRAN 1.0.1 and development on all three
+    operating systems. Windows and macOS lifecycle suites pass; Ubuntu has one
+    unresolved escalation-timing failure. Feature-branch R CMD check and the
+    external consumer comparison are still unverified. Processx supervision's
+    identity and descendant limits remain explicit.

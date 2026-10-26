@@ -199,7 +199,7 @@ test_that("graceful cancellation allows child cleanup while the event loop stays
   expect_lt(ticks, 1000L)
 })
 
-test_that("a child that does not exit after SIGINT is killed at the grace deadline", {
+test_that("a child that remains alive after an interrupt is killed at the grace deadline", {
   skip_on_cran()
   marker <- tempfile("termr-interrupt-handled-")
   script <- tempfile("termr-unresponsive-child-", fileext = ".R")
@@ -229,7 +229,13 @@ test_that("a child that does not exit after SIGINT is killed at the grace deadli
   pilot$wait_for(function(app) !worker$is_running(), timeout = 8)
   private <- worker$.__enclos_env__$private
   expect_identical(worker$state, "cancelled")
-  expect_true(file.exists(marker), info = private$last_diagnostics)
+  # processx sends POSIX SIGINT on Unix. On Windows it uses CTRL+BREAK, which
+  # does not provide the same handler acknowledgement contract; the assertions
+  # below still require the process to survive until, and be killed after, the
+  # requested grace deadline.
+  if (.Platform$OS.type != "windows") {
+    expect_true(file.exists(marker), info = private$last_diagnostics)
+  }
   expect_true(is.numeric(private$cancel_escalated_at), info = private$last_diagnostics)
   expect_true(private$cancel_escalated_at >= deadline, info = private$last_diagnostics)
   expect_match(private$last_diagnostics, "cancel_escalated=TRUE")

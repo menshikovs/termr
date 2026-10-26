@@ -162,8 +162,10 @@ test_that("graceful cancellation allows child cleanup while the event loop stays
   marker <- tempfile("termr-graceful-marker-")
   script <- tempfile("termr-graceful-child-", fileext = ".R")
   writeLines(c(
-    'cat("READY\\n"); flush(stdout())',
-    "tryCatch(Sys.sleep(60), interrupt = function(e) {",
+    "tryCatch({",
+    '  cat("READY\\n"); flush(stdout())',
+    "  Sys.sleep(60)",
+    "}, interrupt = function(e) {",
     sprintf("  writeLines('cleaned', %s)", deparse(marker)),
     "  quit(save = 'no', status = 0L, runLast = FALSE)",
     "})"
@@ -197,16 +199,19 @@ test_that("graceful cancellation allows child cleanup while the event loop stays
   expect_lt(ticks, 1000L)
 })
 
-test_that("a child that ignores SIGINT is killed at the grace deadline", {
+test_that("a child that does not exit after SIGINT is killed at the grace deadline", {
   skip_on_cran()
   marker <- tempfile("termr-interrupt-handled-")
   script <- tempfile("termr-unresponsive-child-", fileext = ".R")
   writeLines(c(
-    'cat("READY\\n"); flush(stdout())',
     sprintf("interrupt_marker <- %s", deparse(marker)),
-    'repeat(tryCatch(Sys.sleep(0.02), interrupt = function(e) {',
+    "tryCatch({",
+    '  cat("READY\\n"); flush(stdout())',
+    "  Sys.sleep(60)",
+    "}, interrupt = function(e) {",
     '  writeLines("handled", interrupt_marker)',
-    "}))"
+    "  repeat Sys.sleep(60)",
+    "})"
   ), script)
   on.exit(unlink(c(marker, script), force = TRUE), add = TRUE)
 
@@ -233,18 +238,23 @@ test_that("a child that ignores SIGINT is killed at the grace deadline", {
 test_that("a natural child exit during a cancellation request is not escalated", {
   skip_on_cran()
   release <- tempfile("termr-cancel-natural-release-")
+  received <- tempfile("termr-cancel-natural-received-")
   script <- tempfile("termr-cancel-natural-child-", fileext = ".R")
   writeLines(c(
-    'cat("READY\\n"); flush(stdout())',
     sprintf("release <- %s", deparse(release)),
-    "repeat {",
-    '  tryCatch(Sys.sleep(0.02), interrupt = function(e) {',
-    '    cat("CANCEL_RECEIVED\\n"); flush(stdout())',
-    "  })",
-    '  if (file.exists(release)) quit(save = "no", status = 0L, runLast = FALSE)',
-    "}"
+    sprintf("received <- %s", deparse(received)),
+    "tryCatch({",
+    '  cat("READY\\n"); flush(stdout())',
+    "  Sys.sleep(60)",
+    "}, interrupt = function(e) {",
+    '  writeLines("handled", received)',
+    "  repeat {",
+    "    Sys.sleep(0.02)",
+    '    if (file.exists(release)) quit(save = "no", status = 0L, runLast = FALSE)',
+    "  }",
+    "})"
   ), script)
-  on.exit(unlink(c(release, script), force = TRUE), add = TRUE)
+  on.exit(unlink(c(release, received, script), force = TRUE), add = TRUE)
 
   application <- app(label("x"))
   pilot <- test_app(application, 20, 2)
@@ -257,6 +267,7 @@ test_that("a natural child exit during a cancellation request is not escalated",
 
   expect_true(worker$request_cancel(grace = 5))
   expect_true(worker$cancel_requested)
+  pilot$wait_for(function(app) file.exists(received), timeout = 5)
   writeLines("exit naturally", release)
   pilot$wait_for(function(app) !worker$is_running(), timeout = 8)
   private <- worker$.__enclos_env__$private

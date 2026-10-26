@@ -591,6 +591,37 @@ Windows-only POSIX signal skips). Therefore that local run did not exercise the
 corrected deadline comparison. The Windows hosted job also retained its two
 explicit POSIX signal skips.
 
+Commit `b987c1b27275c819b3e37e702b2c194e93e8fb8e` triggered
+[run 40317213183](https://github.com/menshikovs/termr/actions/runs/40317213183).
+Windows passed all applicable lifecycle tests, both CRAN/development contracts,
+and the CRAN real-child probe. Ubuntu and macOS reproduced a second fixture
+race: the test child printed `READY` before installing its `tryCatch`
+interrupt handler. SIGINT could therefore arrive in the gap, and the Rscript
+exited with status 1 (`Execution halted`) before the expected handling or
+graceful release. Ubuntu recorded four failed assertions in the escalation
+case (`cancel_escalated=FALSE`) and one natural-exit assertion; macOS recorded
+one natural-exit assertion. These logs do not show premature worker escalation;
+the child had already exited on SIGINT. The tests now place readiness inside
+the protected expression, keep the escalation child alive from its handler,
+and wait for the natural-exit child's handler marker before releasing it.
+This correction is local and needs a new hosted run. The original 0.054-second
+failure still has no termination-reason diagnostic, so that historical run
+cannot be classified conclusively.
+
+A complete local `R CMD check --no-manual --as-cran` was run on a built source
+archive at commit `4439320dbe08a50a398e409b7d3ac3ff0e508923`, using Windows 11,
+R 4.5.2, and with inherited invalid `C.UTF-8` locale variables removed. It
+completed with **1 ERROR, 4 NOTEs, and no R CMD check WARNING**; testthat reported
+17 failures, 0 warnings, 49 skips and 4470 passes. All 17 failures were child
+pipe creation denied by Windows system error 5: one direct processx UTF-8 pipe
+test could not start `cmd.exe`, and 16 worker bootstrap/worker tests could not
+start `Rscript.exe`. The failures occurred in processx pipe creation before
+worker behavior could run and match the sandbox restriction seen in focused
+tests. They are environment failures, not confirmed package regressions. The
+four NOTEs were caused by unavailable network URL checks, the archived hidden
+`.agents` directory, inability to verify current time, and missing Pandoc / top
+level files. This local check is not a passing cross-platform CRAN check.
+
 `actionlint` was not installed. A local `go install` attempt failed because
 the build network was blocked (`proxy.golang.org` connection refused) and Go's
 telemetry path was not writable. PyYAML parsing and structural checks passed
@@ -602,23 +633,25 @@ substitute for the actual runs linked above.
 
 | Platform/job | CRAN 1.0.1 and development contract | Real-child baseline probe | Lifecycle suite | Classification |
 |---|---|---|---|---|
-| Ubuntu | Pass / pass (32 expectations each) in 40313778899, 40315356760 and 40316152671; CRAN probe passed in all three | Pass in all three | Run 40313778899 failed the 0.100s minimum (actual 0.054s); run 40315356760 exposed fixture sleeps; run 40316152671 reached the acknowledgement and escalation timestamp but errored before deadline comparison because of unsupported `info=` on `expect_gte()` | No confirmed implementation defect; corrected assertion is pending. Original termination reason remains unresolved |
-| Windows | Pass / pass in runs 40311845330, 40312594293, 40313778899, 40315356760 and 40316152671; CRAN probe pass | Pass in all five runs | Run 40315356760 showed the natural-exit fixture escalating (`exit_status=15`); run 40316152671 reached the acknowledgement and escalation timestamp but hit the same testthat argument error; 2 Windows skips | Fixture defect and test assertion error confirmed; corrected deadline assertion pending. Two POSIX signal cases are unsupported on Windows |
-| macOS | Pass / pass in runs 40311845330, 40312594293, 40313778899, 40315356760 and 40316152671; CRAN probe pass | Pass in all five runs | Run 40315356760 showed the natural-exit fixture escalating (`exit_status=-9`); run 40316152671 reached the acknowledgement and escalation timestamp but hit the same testthat argument error | Fixture defect and test assertion error confirmed; corrected deadline assertion pending |
-| Ubuntu R-Knowledge-MCP | Package installs succeeded in 40315356760; test source pinned to `8f01870558263283ba197dc215d0f1ab5ad864af` | Not applicable | No tests ran; pytest exit 4 because the pinned consumer revision lacks the requested file | Unresolved: consumer tests are not present on public branches or PRs |
+| Ubuntu | Pass / pass (32 expectations each) through 40317213183; CRAN probe passed | Pass in run 40317213183 | Run 40317213183: 4 escalation assertions and 1 natural-exit assertion failed because SIGINT arrived before the fixture's handler was installed; run 40316152671 had the unsupported testthat argument error; run 40313778899 had the 0.054s timing assertion | Confirmed test-fixture synchronization defects; current fixture correction pending. No implementation defect established. Original timing cause remains unresolved |
+| Windows | Pass / pass in runs 40311845330, 40312594293, 40313778899, 40315356760, 40316152671 and 40317213183; CRAN probe passed in all six | Pass in all six | Run 40317213183 passed all applicable lifecycle tests; two POSIX signal tests are skipped on Windows | Applicable lifecycle tests pass; two POSIX-only signal/supervision cases unsupported on Windows |
+| macOS | Pass / pass through 40317213183; CRAN probe passed | Pass in run 40317213183 | Run 40317213183: one natural-exit assertion failed because SIGINT arrived before the fixture handler; run 40316152671 had the unsupported testthat argument error | Confirmed test-fixture synchronization defect; corrected fixture pending. No implementation defect established |
+| Ubuntu R-Knowledge-MCP | Pinned source revision `8f01870558263283ba197dc215d0f1ab5ad864af` | Not applicable | Run 40315356760 failed pytest with missing `tests/test_codex_launcher.py`; later pinned runs had not reached the test step while dependency setup was in progress | Unresolved: required consumer tests were not found in public branches/PRs and have not run against either package |
 
 The [R-CMD-check workflow](https://github.com/menshikovs/termr/actions/workflows/R-CMD-check.yaml)
 has push filters for `main`, `master` and `develop-*`, plus an unfiltered
 `pull_request` trigger. No draft pull request could be created from the
 available GitHub connection: repository write APIs returned HTTP 403
-`Resource not accessible by integration`, the browser session was signed out,
-and no GitHub CLI is installed. Therefore there is no feature-branch R-CMD-check
-run. A draft PR from this branch should trigger its matrix: Ubuntu release,
+`Resource not accessible by integration`; a second GitHub connector reported
+`Authentication Failed: Requires authentication`; the browser session was
+signed out, and no GitHub CLI is installed. Therefore there is no
+feature-branch R-CMD-check run. A draft PR from this branch should trigger its
+matrix: Ubuntu release,
 oldrel-1, R 4.1 and devel; macOS release; and Windows release. The dedicated
 [worker lifecycle workflow](https://github.com/menshikovs/termr/actions/workflows/worker-lifecycle-compatibility.yaml)
 runs real child probes and lifecycle tests on all three operating systems.
-The Ubuntu termination reason, consumer suite availability and feature-branch
-R CMD check remain open.
+The corrected Ubuntu/macOS fixture synchronization, consumer suite availability,
+and feature-branch R CMD check remain open.
 
 ## K. Breaking-change assessment
 
@@ -642,14 +675,17 @@ R CMD check remain open.
    weaken existing tests. All 50 Unicode renderer failures, the screen
    out-of-buffer error, and the two database warnings reproduced identically
   against CRAN 1.0.1 in the prior Windows comparison. The dedicated hosted
-  runs now exercise real processes on all three platforms; Windows and macOS
-  pass their applicable lifecycle cases, while Ubuntu has one unresolved
-  escalation-timing failure. No feature-branch R CMD check has run.
+  runs now exercise real processes on all three platforms. Windows passed its
+  applicable lifecycle suite; Ubuntu and macOS exposed a fixture race in the
+  SIGINT synchronization, with a deterministic fixture correction awaiting CI.
+  The local R CMD check's processx pipe failures are caused by the Windows
+  sandbox denying process creation. No feature-branch R CMD check has run.
 9. **Is migration required?** No. Existing applications retain their behavior
    without code changes.
 10. **Is this safe for a backward-compatible CRAN update?** Not yet. The
     shared API contract passes against CRAN 1.0.1 and development on all three
-    operating systems. Windows and macOS lifecycle suites pass; Ubuntu has one
-    unresolved escalation-timing failure. Feature-branch R CMD check and the
-    external consumer comparison are still unverified. Processx supervision's
-    identity and descendant limits remain explicit.
+    operating systems. Windows passed its applicable lifecycle suite; the
+    corrected Ubuntu/macOS fixtures have not yet passed on hosted runners.
+    Feature-branch R CMD check and the external consumer comparison are
+    unverified. Processx supervision's identity and descendant limits remain
+    explicit.

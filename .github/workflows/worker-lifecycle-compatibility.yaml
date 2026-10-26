@@ -100,7 +100,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: menshikovs/R-Knowledge-MCP
-          ref: main
+          # Pin the latest public commit inspected for the launcher consumer.
+          # It does not currently publish tests/test_codex_launcher.py; the
+          # pytest step remains strict so the missing consumer evidence stays visible.
+          ref: 8f01870558263283ba197dc215d0f1ab5ad864af
           path: R-Knowledge-MCP
       - uses: actions/setup-python@v5
         with:

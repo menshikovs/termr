@@ -190,16 +190,21 @@ test_that("graceful cancellation allows child cleanup while the event loop stays
   pilot$wait_for(function(app) !worker$is_running(), timeout = 8)
   expect_identical(worker$state, "cancelled")
   expect_true(file.exists(marker))
+  expect_null(worker$.__enclos_env__$private$cancel_escalated_at)
+  expect_match(worker$.__enclos_env__$private$last_diagnostics,
+               "exit_status=0;.*cancel_escalated=FALSE")
   expect_gt(ticks, 0L)
   expect_lt(ticks, 1000L)
 })
 
-test_that("a missed graceful interrupt escalates at its deadline", {
+test_that("a child that ignores SIGINT is killed at the grace deadline", {
   skip_on_cran()
   script <- tempfile("termr-unresponsive-child-", fileext = ".R")
   writeLines(c(
     'cat("READY\\n"); flush(stdout())',
-    "repeat(tryCatch(Sys.sleep(0.02), interrupt = function(e) NULL))"
+    'repeat(tryCatch(Sys.sleep(60), interrupt = function(e) {',
+    '  cat("INTERRUPT_HANDLED\\n"); flush(stdout())',
+    "}))"
   ), script)
   on.exit(unlink(script, force = TRUE), add = TRUE)
 
@@ -212,12 +217,54 @@ test_that("a missed graceful interrupt escalates at its deadline", {
   }, add = TRUE)
   lifecycle_wait_for_output(pilot, worker, "READY")
 
-  started <- now_seconds()
-  expect_true(worker$request_cancel(grace = 0.15))
+  expect_true(worker$request_cancel(grace = 2))
+  deadline <- worker$.__enclos_env__$private$cancel_deadline
+  pilot$wait_for(function(app) "INTERRUPT_HANDLED" %in% worker$stdout, timeout = 8)
+  expect_true(worker$is_running(), info = paste(worker$stdout, collapse = " | "))
+  expect_true(worker$cancel_requested)
+
   pilot$wait_for(function(app) !worker$is_running(), timeout = 8)
+  private <- worker$.__enclos_env__$private
   expect_identical(worker$state, "cancelled")
-  expect_gte(now_seconds() - started, 0.1)
-  expect_lt(now_seconds() - started, 8)
+  expect_true(is.numeric(private$cancel_escalated_at))
+  expect_gte(private$cancel_escalated_at, deadline)
+  expect_match(private$last_diagnostics, "cancel_escalated=TRUE")
+})
+
+test_that("a natural child exit during a cancellation request is not escalated", {
+  skip_on_cran()
+  release <- tempfile("termr-cancel-natural-release-")
+  script <- tempfile("termr-cancel-natural-child-", fileext = ".R")
+  writeLines(c(
+    'cat("READY\\n"); flush(stdout())',
+    sprintf("release <- %s", deparse(release)),
+    "repeat {",
+    '  tryCatch(Sys.sleep(60), interrupt = function(e) {',
+    '    cat("CANCEL_RECEIVED\\n"); flush(stdout())',
+    "  })",
+    '  if (file.exists(release)) quit(save = "no", status = 0L, runLast = FALSE)',
+    "}"
+  ), script)
+  on.exit(unlink(c(release, script), force = TRUE), add = TRUE)
+
+  application <- app(label("x"))
+  pilot <- test_app(application, 20, 2)
+  worker <- lifecycle_start_process(application, args = c("--vanilla", script))
+  on.exit({
+    if (worker$is_running()) worker$cancel(grace = 0)
+    pilot$stop()
+  }, add = TRUE)
+  lifecycle_wait_for_output(pilot, worker, "READY")
+
+  expect_true(worker$request_cancel(grace = 5))
+  pilot$wait_for(function(app) "CANCEL_RECEIVED" %in% worker$stdout, timeout = 8)
+  expect_true(worker$is_running())
+  writeLines("exit naturally", release)
+  pilot$wait_for(function(app) !worker$is_running(), timeout = 8)
+  private <- worker$.__enclos_env__$private
+  expect_identical(worker$state, "cancelled")
+  expect_null(private$cancel_escalated_at)
+  expect_match(private$last_diagnostics, "exit_status=0;.*cancel_escalated=FALSE")
 })
 
 test_that("asynchronous cancellation removes worker temporary files", {

@@ -516,8 +516,45 @@ The report-only commit `319d4c6f6ea31bc8bd0529306f8187b7f604326e` triggered
 which created four jobs. Windows and macOS passed again, and the consumer job
 failed again on the missing public test path. At 2026-10-26 11:15:31 UTC, the
 Ubuntu job was still in `setup-r-dependencies`; it had not rerun the lifecycle
-suite. The Ubuntu escalation result therefore remains unresolved rather than
-confirmed as transient or reproducible.
+suite.
+
+Commit `3a16a399e670c10a9efc99ca8556b93236a55858` triggered
+[run 40313778899](https://github.com/menshikovs/termr/actions/runs/40313778899),
+which completed all four jobs. Windows and macOS passed the shared contracts,
+the CRAN real-child probe and their applicable lifecycle tests. Windows
+reported the same two explicit Windows skips. Ubuntu passed the shared
+contracts and CRAN real-child probe, then failed only the lifecycle assertion
+at `test-worker-lifecycle.R:219`: elapsed time was 0.054 seconds versus the
+fixture's 0.100-second minimum. The logs contain no child-side acknowledgement
+or escalation-reason diagnostic. Therefore they cannot distinguish a child
+that exited on SIGINT from an early escalation; the prior test itself only
+assumed that the child ignored the interrupt. This was an inconclusive test
+oracle, not evidence of a worker defect. The new test fixture and private
+diagnostic below are pending a hosted rerun.
+
+The pending correction removes the minimum-elapsed assertion. The escalation
+fixture now prints an acknowledgement from its interrupt handler and keeps
+running; the test checks that it is still alive, then checks a private
+monotonic timestamp recorded only when the grace-deadline branch force-kills
+it. Separate tests cover a prompt cleanup handler and a child released to exit
+naturally after cancellation was accepted. This adds no public API and changes
+no cancellation defaults or behavior. On the local Windows sandbox,
+`Rscript -e "testthat::test_local('.', filter = 'worker-lifecycle', reporter =
+'summary')"` passed the runnable expectations; process tests were skipped
+because the environment blocks processx pipes. A hosted rerun is required for
+the real-process assertions.
+
+The consumer failure in runs 40311845330, 40312594293 and 40313778899 is an
+unpublished-test blocker. The current public R-Knowledge-MCP `main` is
+`8f01870558263283ba197dc215d0f1ab5ad864af`. The branch listing contained 34
+public heads; recursive tree inspection found no launcher-test file on any of
+them. The 25 public pull-request file lists likewise contained no
+`tests/test_codex_launcher.py` (or equivalent launcher test path). No public
+commit containing the referenced pytest tests was located, so the tests cannot
+be run unmodified against either package version. The workflow now pins the
+inspected `main` commit; it retains the strict test invocation and does not
+substitute unrelated tests. This consumer comparison remains unresolved until
+the consumer publishes its suite.
 
 `actionlint` was not installed. A local `go install` attempt failed because
 the build network was blocked (`proxy.golang.org` connection refused) and Go's
@@ -530,19 +567,21 @@ substitute for the actual runs linked above.
 
 | Platform/job | CRAN 1.0.1 and development contract | Real-child baseline probe | Lifecycle suite | Classification |
 |---|---|---|---|---|
-| Ubuntu | Run 40311845330: pass / pass (32 expectations each), probe pass. Run 40312594293 had not reached tests at 11:15:31 UTC | Pass in 40311845330 | One failure in 40311845330: escalation elapsed 0.055s, expected at least 0.1s | Unresolved cancellation/escalation behavior; repeat test pending runner progress |
-| Windows | Pass / pass (32 expectations each) in runs 40311845330 and 40312594293 | Pass in both runs | Pass in both; 2 explicit POSIX signal skips | Applicable Windows lifecycle behavior passed; skipped cases are unsupported on Windows |
-| macOS | Pass / pass (32 expectations each) in runs 40311845330 and 40312594293 | Pass in both runs | Pass in both; no skips | Applicable macOS lifecycle behavior passed |
-| Ubuntu R-Knowledge-MCP | Not applicable; both package installs succeeded | Not applicable | No tests ran; pytest exit 4 due missing file in runs 40311845330 and 40312594293 | Consumer comparison unresolved due missing public test suite |
+| Ubuntu | Pass / pass (32 expectations each) in 40313778899; CRAN probe pass | Pass in 40313778899 | One failure in 40313778899: the 0.054s early completion cannot establish graceful exit versus escalation; new diagnostic test pending | Unresolved pending synchronized rerun |
+| Windows | Pass / pass in 40311845330, 40312594293 and 40313778899; CRAN probe pass | Pass in all three runs | Pass in all three; 2 explicit Windows skips | Applicable Windows lifecycle behavior passed; two POSIX signal cases are unsupported on Windows |
+| macOS | Pass / pass in 40311845330, 40312594293 and 40313778899; CRAN probe pass | Pass in all three runs | Pass in all three; no skips | Applicable macOS lifecycle behavior passed |
+| Ubuntu R-Knowledge-MCP | Package installs succeeded in 40313778899; test source pinned to `8f01870558263283ba197dc215d0f1ab5ad864af` | Not applicable | No tests ran; pytest exit 4 because the pinned consumer revision lacks the requested file | Unresolved: consumer tests are not present on public branches or PRs |
 
 The [R-CMD-check workflow](https://github.com/menshikovs/termr/actions/workflows/R-CMD-check.yaml)
 has push filters for `main`, `master` and `develop-*`, plus an unfiltered
-`pull_request` trigger. No pull request exists for this branch, so there is no
-R-CMD-check run for this head. A pull request from this feature branch will
-trigger its matrix: Ubuntu release, oldrel-1, R 4.1 and devel; macOS release;
-and Windows release. The dedicated [worker lifecycle workflow](https://github.com/menshikovs/termr/actions/workflows/worker-lifecycle-compatibility.yaml)
-now runs real child probes and lifecycle tests on all three operating systems,
-but its Ubuntu escalation failure and the consumer suite path remain open.
+`pull_request` trigger. At this report revision no draft pull request has been
+created, so there is no feature-branch R-CMD-check run yet. A draft PR from this
+branch triggers its matrix: Ubuntu release, oldrel-1, R 4.1 and devel; macOS
+release; and Windows release. The dedicated
+[worker lifecycle workflow](https://github.com/menshikovs/termr/actions/workflows/worker-lifecycle-compatibility.yaml)
+runs real child probes and lifecycle tests on all three operating systems.
+The Ubuntu termination reason, consumer suite availability and feature-branch
+R CMD check remain open.
 
 ## K. Breaking-change assessment
 

@@ -288,6 +288,7 @@ Worker <- R6::R6Class(
     last_diagnostics = NULL,
     exited_at = NULL,
     cancel_deadline = NULL,
+    cancel_escalated_at = NULL,
 
     start_process = function(app, fn, args, packages, timeout, supervision) {
       payload <- worker_prepare_payload(fn, args, packages)
@@ -399,6 +400,7 @@ Worker <- R6::R6Class(
       alive <- p$is_alive()
       if (isTRUE(self$cancel_requested) && alive &&
           !is.null(private$cancel_deadline) && now_seconds() >= private$cancel_deadline) {
+        private$cancel_escalated_at <- now_seconds()
         private$force_terminate()
         alive <- p$is_alive()
       }
@@ -591,7 +593,10 @@ Worker <- R6::R6Class(
 
     finish_cancelled = function() {
       if (self$state != "running") return(invisible(FALSE))
-      private$last_diagnostics <- private$diagnostics()
+      private$last_diagnostics <- paste0(
+        private$diagnostics(),
+        "; cancel_escalated=", !is.null(private$cancel_escalated_at)
+      )
       if (!is.null(private$process)) try(private$process$kill_tree(), silent = TRUE)
       private$cleanup()
       private$cancel_deadline <- NULL

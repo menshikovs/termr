@@ -114,7 +114,7 @@ Generated from the checked-in `NAMESPACE`, top-level definitions in `R/`, and cu
 | `panel` | function | [screens.R](../R/screens.R#L144) | [yes](../man/panel.Rd) | yes | yes | README, docs, examples, tests |
 | `patch_to_ansi` | helper | [renderer.R](../R/renderer.R#L16) | [yes](../man/patch_to_ansi.Rd) | yes | yes | examples, tests |
 | `peek` | function | [signals.R](../R/signals.R#L304) | [yes](../man/signals.Rd) | yes | yes | docs, tests |
-| `process_view` | function | [widget-process.R](../R/widget-process.R#L152) | [yes](../man/process_view.Rd) | yes | yes | README, docs, tests |
+| `process_view` | function | [widget-process.R](../R/widget-process.R#L254) | [yes](../man/process_view.Rd) | yes | yes | README, docs, tests |
 | `progress_bar` | function | [widget-display.R](../R/widget-display.R#L115) | [yes](../man/progress_bar.Rd) | yes | yes | README, docs, examples, tests |
 | `property_grid` | function | [widget-workflows.R](../R/widget-workflows.R#L255) | [yes](../man/property_grid.Rd) | yes | yes | docs, tests |
 | `r_highlighter` | function | [widget-textarea.R](../R/widget-textarea.R#L1582) | [yes](../man/r_highlighter.Rd) | yes | no | docs, tests |
@@ -261,7 +261,7 @@ No `TODO`, `FIXME`, `HACK`, or `XXX` markers were found in `R/`, `tests/`, or `d
 
 ## Review notes
 
-- `24` direct exports have no textual reference in README/docs/examples/tests: `Animation`, `BlurEvent`, `Checkbox`, `FocusEvent`, `KeyValue`, `MarkdownView`, `Metric`, `MountEvent`, `OptionList`, `ProcessView`, `ProgressBar`, `RadioButton`, `RadioSet`, `Rule`, `Sparkline`, `Spinner`, `SplitHandle`, `SplitPane`, `TabPane`, `Timer`, `Toast`, `TreeNode`, `TreeView`, `UnmountEvent`.
+- `23` direct exports have no textual reference in README/docs/examples/tests: `Animation`, `BlurEvent`, `Checkbox`, `FocusEvent`, `KeyValue`, `MarkdownView`, `Metric`, `MountEvent`, `OptionList`, `ProgressBar`, `RadioButton`, `RadioSet`, `Rule`, `Sparkline`, `Spinner`, `SplitHandle`, `SplitPane`, `TabPane`, `Timer`, `Toast`, `TreeNode`, `TreeView`, `UnmountEvent`.
   All are R6 class names; several are returned by constructors or represent event/widget types. This is a ?no direct reference? metric, not evidence that the classes are dead.
 - `72` exported symbols lack examples in Rd (including `DataProfile`, `PropertyGrid`, `StatusBar` and `db_query_source`, added in 0.9): `Animation`, `App`, `BlurEvent`, `Button`, `Checkbox`, `DataTable`, `Event`, `FocusEvent`, `Grid`, `Horizontal`, `Input`, `KeyEvent`, `KeyValue`, `Label`, `LogView`, `MarkdownView`, `MessageEvent`, `Metric`, `ModalScreen`, `MountEvent`, `MouseEvent`, `OptionList`, `Panel`, `PasteEvent`, `ProcessView`, `ProgressBar`, `RadioButton`, `RadioSet`, `ResizeEvent`, `Rule`, `Screen`, `ScreenBuffer`, `ScrollView`, `Select`, `Sparkline`, `Spinner`, `SplitHandle`, `SplitPane`, `TabPane`, `Tabs`, `TextArea`, `Timer`, `Toast`, `TreeNode`, `TreeView`, `UnmountEvent`, `Vertical`, `Widget`, `Worker`, `current_app`, `db_connection`, `db_metadata`, `db_table_source`, `inspect_signal`, `knit_termr`, `r_highlighter`, `register_layout`, `render_svg`, `run`, `screen_snapshot_json`, `sql_editor`, `sql_highlighter`, `table_filter`, `table_source`, `unregister_layout`, `widget_snapshot`, `widget_snapshot_json`, `write_rendered`.
 - `0` exported symbols lack Rd usage: none.

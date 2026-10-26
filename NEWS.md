@@ -1,5 +1,15 @@
 # termr (development)
 
+## Developer experience
+
+* Extended `process_view()` with opt-in non-blocking cancellation and escalation
+  (`stop_grace`), optional processx parent-death supervision, read-only process
+  state and exit status, explicit log clearing, and restart-after-stop behavior.
+  Existing cancellation and supervision defaults are unchanged.
+* Extended `inspect_widget()` with current focus and focus-chain position.
+* Added the `dynamic-workflow` example for public dynamic list/table updates,
+  conditional visibility, focus navigation and reactive status.
+
 ## Worker lifecycle
 
 * Added `Worker$request_cancel(grace = 30)` for non-blocking cancellation.

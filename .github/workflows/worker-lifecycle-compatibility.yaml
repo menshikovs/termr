@@ -63,6 +63,10 @@ jobs:
         run: Rscript tools/compat/worker-lifecycle-baseline.R
       - name: Run development worker lifecycle integration tests
         run: Rscript -e "testthat::test_local('.', filter = 'worker-lifecycle', reporter = 'summary')"
+      - name: Run ProcessView process lifecycle tests
+        run: Rscript -e "testthat::test_local('.', filter = 'process-view', reporter = 'summary')"
+      - name: Run dynamic workflow and developer diagnostics tests
+        run: Rscript -e "testthat::test_local('.', filter = 'dynamic-workflow|devtools', reporter = 'summary')"
 
   r_knowledge_mcp_launcher:
     name: R-Knowledge-MCP launcher on CRAN and development termr

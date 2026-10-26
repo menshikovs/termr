@@ -574,6 +574,23 @@ child immediately after cancellation is accepted. That correction is pending
 the next hosted run. The original 0.054-second run still has no recorded
 termination reason; the corrected deadline test is intended to establish it.
 
+Commit `4439320dbe08a50a398e409b7d3ac3ff0e508923` triggered
+[run 40316152671](https://github.com/menshikovs/termr/actions/runs/40316152671).
+Ubuntu, Windows and macOS again passed package installation, both CRAN and
+development compatibility contracts, and the CRAN real-child probe. Each
+lifecycle job reached the new escalation fixture and failed at the same test
+code error: the installed testthat version rejects `info=` on `expect_gte()`.
+The prior assertions in that test passed, including creation of the child-side
+SIGINT acknowledgement marker and a numeric escalation timestamp. The
+timestamp comparison against the captured deadline did not run. The test
+source now uses `expect_true(timestamp >= deadline, info = diagnostics)`;
+hosted confirmation is pending. A local focused rerun passed the 32 shared
+compatibility expectations, but this Windows sandbox skipped the lifecycle
+subprocess cases because processx child pipes are blocked (and retained the two
+Windows-only POSIX signal skips). Therefore that local run did not exercise the
+corrected deadline comparison. The Windows hosted job also retained its two
+explicit POSIX signal skips.
+
 `actionlint` was not installed. A local `go install` attempt failed because
 the build network was blocked (`proxy.golang.org` connection refused) and Go's
 telemetry path was not writable. PyYAML parsing and structural checks passed
@@ -585,9 +602,9 @@ substitute for the actual runs linked above.
 
 | Platform/job | CRAN 1.0.1 and development contract | Real-child baseline probe | Lifecycle suite | Classification |
 |---|---|---|---|---|
-| Ubuntu | Pass / pass (32 expectations each) in 40313778899 and 40315356760; CRAN probe passed in both | Pass in both runs | Run 40313778899 failed the 0.100s minimum (actual 0.054s); run 40315356760 failed the handler acknowledgement and natural-exit fixture | No confirmed implementation defect; corrected short-polling fixture pending. Original termination reason unresolved |
-| Windows | Pass / pass in runs 40311845330, 40312594293, 40313778899 and 40315356760; CRAN probe pass | Pass in all four runs | Run 40315356760 failed the natural-exit fixture: its 60s sleep caused escalation (`exit_status=15`); 2 explicit Windows skips | Test-fixture defect confirmed; corrected release synchronization pending. Two POSIX signal cases remain unsupported on Windows |
-| macOS | Pass / pass in runs 40311845330, 40312594293, 40313778899 and 40315356760; CRAN probe pass | Pass in all four runs | Run 40315356760 failed the natural-exit fixture: its 60s sleep caused escalation (`exit_status=-9`); no skips | Test-fixture defect confirmed; corrected release synchronization pending |
+| Ubuntu | Pass / pass (32 expectations each) in 40313778899, 40315356760 and 40316152671; CRAN probe passed in all three | Pass in all three | Run 40313778899 failed the 0.100s minimum (actual 0.054s); run 40315356760 exposed fixture sleeps; run 40316152671 reached the acknowledgement and escalation timestamp but errored before deadline comparison because of unsupported `info=` on `expect_gte()` | No confirmed implementation defect; corrected assertion is pending. Original termination reason remains unresolved |
+| Windows | Pass / pass in runs 40311845330, 40312594293, 40313778899, 40315356760 and 40316152671; CRAN probe pass | Pass in all five runs | Run 40315356760 showed the natural-exit fixture escalating (`exit_status=15`); run 40316152671 reached the acknowledgement and escalation timestamp but hit the same testthat argument error; 2 Windows skips | Fixture defect and test assertion error confirmed; corrected deadline assertion pending. Two POSIX signal cases are unsupported on Windows |
+| macOS | Pass / pass in runs 40311845330, 40312594293, 40313778899, 40315356760 and 40316152671; CRAN probe pass | Pass in all five runs | Run 40315356760 showed the natural-exit fixture escalating (`exit_status=-9`); run 40316152671 reached the acknowledgement and escalation timestamp but hit the same testthat argument error | Fixture defect and test assertion error confirmed; corrected deadline assertion pending |
 | Ubuntu R-Knowledge-MCP | Package installs succeeded in 40315356760; test source pinned to `8f01870558263283ba197dc215d0f1ab5ad864af` | Not applicable | No tests ran; pytest exit 4 because the pinned consumer revision lacks the requested file | Unresolved: consumer tests are not present on public branches or PRs |
 
 The [R-CMD-check workflow](https://github.com/menshikovs/termr/actions/workflows/R-CMD-check.yaml)

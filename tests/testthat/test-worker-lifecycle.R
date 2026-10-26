@@ -226,7 +226,7 @@ test_that("a child that ignores SIGINT is killed at the grace deadline", {
   expect_identical(worker$state, "cancelled")
   expect_true(file.exists(marker), info = private$last_diagnostics)
   expect_true(is.numeric(private$cancel_escalated_at), info = private$last_diagnostics)
-  expect_gte(private$cancel_escalated_at, deadline, info = private$last_diagnostics)
+  expect_true(private$cancel_escalated_at >= deadline, info = private$last_diagnostics)
   expect_match(private$last_diagnostics, "cancel_escalated=TRUE")
 })
 

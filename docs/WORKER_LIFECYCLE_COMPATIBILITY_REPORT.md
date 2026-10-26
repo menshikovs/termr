@@ -415,8 +415,9 @@ they use `skip_on_cran()`; the dedicated workflow sets `NOT_CRAN=true` and
 The public [R-Knowledge-MCP repository](https://github.com/menshikovs/R-Knowledge-MCP)
 was checked out cleanly by the CI workflow. Its `main` tree does not contain
 `tests/test_codex_launcher.py` or the launcher test suite referenced by the
-workflow. In runs [40310186089](https://github.com/menshikovs/termr/actions/runs/40310186089)
-and [40311845330](https://github.com/menshikovs/termr/actions/runs/40311845330),
+workflow. In runs [40310186089](https://github.com/menshikovs/termr/actions/runs/40310186089),
+[40311845330](https://github.com/menshikovs/termr/actions/runs/40311845330),
+and [40312594293](https://github.com/menshikovs/termr/actions/runs/40312594293),
 pytest exited 4 with `file or directory not found`; no consumer test ran. The
 local consumer checkout's launcher files are untracked and cannot establish
 compatibility of the public repository. The consumer comparison remains
@@ -440,10 +441,11 @@ not replace the missing clean-repository CI comparison.
   establish whether the child fixture handled or ignored that signal as
   intended. This remains unresolved; no test was weakened.
 * Windows and macOS run 40311845330 passed the shared contracts, CRAN real-child
-  cancellation probe, and all applicable lifecycle tests. Windows explicitly
-  skipped two POSIX signal cases (`graceful cancellation allows child cleanup`
-  and `processx supervision cleans the direct child after parent signals`),
-  both reported as unsupported on Windows. macOS had no lifecycle skips.
+  cancellation probe, and all applicable lifecycle tests. The later run
+  40312594293 passed both platform jobs again. Windows explicitly skipped two
+  POSIX signal cases (`graceful cancellation allows child cleanup` and
+  `processx supervision cleans the direct child after parent signals`), both
+  reported as unsupported on Windows. macOS had no lifecycle skips.
 * Direct-child and descendant cleanup assertions passed on the hosted runners.
   Parent supervision is tested for registered direct children only; arbitrary
   grandchildren are not guaranteed to be terminated. PID reuse is not proven
@@ -509,6 +511,14 @@ The consumer job failed because the launcher test path is absent from public
 and establish shared CRAN 1.0.1 compatibility on all three; they do not yet
 establish a clean all-platform lifecycle pass.
 
+The report-only commit `319d4c6f6ea31bc8bd0529306f8187b7f604326e` triggered
+[run 40312594293](https://github.com/menshikovs/termr/actions/runs/40312594293),
+which created four jobs. Windows and macOS passed again, and the consumer job
+failed again on the missing public test path. At 2026-10-26 11:15:31 UTC, the
+Ubuntu job was still in `setup-r-dependencies`; it had not rerun the lifecycle
+suite. The Ubuntu escalation result therefore remains unresolved rather than
+confirmed as transient or reproducible.
+
 `actionlint` was not installed. A local `go install` attempt failed because
 the build network was blocked (`proxy.golang.org` connection refused) and Go's
 telemetry path was not writable. PyYAML parsing and structural checks passed
@@ -520,10 +530,10 @@ substitute for the actual runs linked above.
 
 | Platform/job | CRAN 1.0.1 and development contract | Real-child baseline probe | Lifecycle suite | Classification |
 |---|---|---|---|---|
-| Ubuntu | Pass / pass (32 expectations each) | Pass | One failure: escalation elapsed 0.055s, expected at least 0.1s | Unresolved cancellation/escalation behavior; all other lifecycle assertions in the run completed |
-| Windows | Pass / pass (32 expectations each) | Pass | Pass; 2 explicit POSIX signal skips | Applicable Windows lifecycle behavior passed; skipped cases are unsupported on Windows |
-| macOS | Pass / pass (32 expectations each) | Pass | Pass; no skips | Applicable macOS lifecycle behavior passed |
-| Ubuntu R-Knowledge-MCP | Not applicable; both package installs succeeded | Not applicable | No tests ran; pytest exit 4 due missing file | Consumer comparison unresolved due missing public test suite |
+| Ubuntu | Run 40311845330: pass / pass (32 expectations each), probe pass. Run 40312594293 had not reached tests at 11:15:31 UTC | Pass in 40311845330 | One failure in 40311845330: escalation elapsed 0.055s, expected at least 0.1s | Unresolved cancellation/escalation behavior; repeat test pending runner progress |
+| Windows | Pass / pass (32 expectations each) in runs 40311845330 and 40312594293 | Pass in both runs | Pass in both; 2 explicit POSIX signal skips | Applicable Windows lifecycle behavior passed; skipped cases are unsupported on Windows |
+| macOS | Pass / pass (32 expectations each) in runs 40311845330 and 40312594293 | Pass in both runs | Pass in both; no skips | Applicable macOS lifecycle behavior passed |
+| Ubuntu R-Knowledge-MCP | Not applicable; both package installs succeeded | Not applicable | No tests ran; pytest exit 4 due missing file in runs 40311845330 and 40312594293 | Consumer comparison unresolved due missing public test suite |
 
 The [R-CMD-check workflow](https://github.com/menshikovs/termr/actions/workflows/R-CMD-check.yaml)
 has push filters for `main`, `master` and `develop-*`, plus an unfiltered

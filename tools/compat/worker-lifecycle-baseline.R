@@ -1,7 +1,7 @@
 # Characterize worker contracts from an installed termr 1.0.1 package.
 #
 # Point TERMR_CRAN_LIB at an isolated library containing the CRAN-installed
-# package. This script deliberately refuses a package without CRAN install
+# package. This script deliberately refuses a package without CRAN repository
 # metadata, so a local build with the same version is not mistaken for CRAN.
 
 library_path <- Sys.getenv("TERMR_CRAN_LIB")
@@ -13,7 +13,8 @@ if (!nzchar(library_path) || !dir.exists(library_path)) {
 description <- packageDescription("termr", lib.loc = library_path)
 if (is.null(description) || !identical(description$Version, "1.0.1") ||
     !identical(description$Repository, "CRAN") ||
-    !identical(description$RemoteType, "standard")) {
+    (!is.null(description$RemoteType) &&
+      !identical(description$RemoteType, "standard"))) {
   stop("The selected package must be the CRAN-installed termr 1.0.1 artifact.", call. = FALSE)
 }
 

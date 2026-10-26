@@ -47,6 +47,12 @@ jobs:
           NOT_CRAN: true
         run: Rscript -e "testthat::test_local(reporter = 'summary')"
 
+      - name: Run worker lifecycle integration tests
+        if: always()
+        env:
+          NOT_CRAN: true
+        run: Rscript -e "testthat::test_local(filter = 'worker-lifecycle', reporter = 'summary')"
+
   cran-incoming:
     # The matrix above uses --no-manual and skips CRAN's incoming checks.
     # This job checks the built tarball as CRAN's incoming checks do: PDF

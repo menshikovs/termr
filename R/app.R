@@ -87,7 +87,12 @@ App <- R6::R6Class(
       result <- tryCatch(
         {
           private$start(driver)
-          while (!private$.exit_requested) private$tick(wait = TRUE)
+          while (!private$.exit_requested ||
+                 (private$.worker_shutdown_active &&
+                    (length(self$workers()) > 0L || !private$.queue$is_empty()) &&
+                    now_seconds() < private$.worker_shutdown_deadline)) {
+            private$tick(wait = TRUE)
+          }
           NULL
         },
         interrupt = function(e) NULL,
@@ -100,7 +105,15 @@ App <- R6::R6Class(
 
     #' @description Ask the app to stop after the current event.
     #' @param value Value returned by `run()`.
-    exit = function(value = NULL) {
+    #' @param worker_grace If supplied, request non-blocking cancellation for
+    #'   current workers and keep polling them for this many seconds before
+    #'   shutdown forcefully cancels any that remain. `NULL` keeps the
+    #'   existing synchronous shutdown behavior.
+    exit = function(value = NULL, worker_grace = NULL) {
+      if (!is.null(worker_grace)) {
+        worker_grace <- check_worker_grace(worker_grace, "worker_grace")
+        private$start_worker_shutdown(worker_grace)
+      }
       private$.return_value <- value
       private$.exit_requested <- TRUE
       invisible(self)
@@ -411,12 +424,16 @@ App <- R6::R6Class(
     #'   [run_worker()] for the arguments.
     #' @param fn,args,on_complete,on_error,on_progress,name,owner,packages,inline
     #'   See [run_worker()].
-    #' @param on_stdout,on_stderr,timeout See [run_worker()].
+    #' @param on_stdout,on_stderr,timeout,supervision See [run_worker()].
     run_worker = function(fn, args = list(), on_complete = NULL, on_error = NULL, on_progress = NULL,
                           name = NULL, owner = NULL, packages = character(), inline = FALSE,
-                          on_stdout = NULL, on_stderr = NULL, timeout = NULL) {
+                          on_stdout = NULL, on_stderr = NULL, timeout = NULL, supervision = "none") {
+      if (private$.worker_shutdown_active) {
+        stop("Cannot start a worker while graceful worker shutdown is in progress.", call. = FALSE)
+      }
       worker <- start_worker(self, fn, args, on_complete, on_error, on_progress, name, owner, packages, inline,
-                             on_stdout = on_stdout, on_stderr = on_stderr, timeout = timeout)
+                             on_stdout = on_stdout, on_stderr = on_stderr, timeout = timeout,
+                             supervision = supervision)
       if (worker$is_running()) private$.workers[[length(private$.workers) + 1L]] <- worker
       self$request_repaint()
       invisible(worker)
@@ -424,13 +441,16 @@ App <- R6::R6Class(
 
     #' @description Run an external program in the background, without a
     #'   shell. See [run_process()].
-    #' @param command,args,on_complete,on_error,on_stdout,on_stderr,on_exit,timeout,wd,env,name,owner
+    #' @param command,args,on_complete,on_error,on_stdout,on_stderr,on_exit,timeout,wd,env,name,owner,supervision
     #'   See [run_process()].
     run_process = function(command, args = character(), on_complete = NULL, on_error = NULL,
                            on_stdout = NULL, on_stderr = NULL, on_exit = NULL, timeout = NULL,
-                           wd = NULL, env = NULL, name = NULL, owner = NULL) {
+                           wd = NULL, env = NULL, name = NULL, owner = NULL, supervision = "none") {
+      if (private$.worker_shutdown_active) {
+        stop("Cannot start a process while graceful worker shutdown is in progress.", call. = FALSE)
+      }
       worker <- start_command(self, command, args, on_complete, on_error, on_stdout, on_stderr, on_exit,
-                              timeout, wd, env, name, owner)
+                              timeout, wd, env, name, owner, supervision)
       if (worker$is_running()) private$.workers[[length(private$.workers) + 1L]] <- worker
       self$request_repaint()
       invisible(worker)
@@ -574,6 +594,8 @@ App <- R6::R6Class(
     .snapshot = NULL,
     .layers = NULL,
     .workers = list(),
+    .worker_shutdown_active = FALSE,
+    .worker_shutdown_deadline = NULL,
     .theme = NULL,
     .mono = FALSE,
     .stylesheets = list(),
@@ -589,6 +611,21 @@ App <- R6::R6Class(
     .return_value = NULL,
     idle_timeout = 0.5,
     max_events_per_tick = 10000L,
+
+    start_worker_shutdown = function(grace) {
+      private$.worker_shutdown_active <- TRUE
+      deadline <- now_seconds() + grace + 1
+      if (is.null(private$.worker_shutdown_deadline)) {
+        private$.worker_shutdown_deadline <- deadline
+      } else {
+        private$.worker_shutdown_deadline <- min(private$.worker_shutdown_deadline, deadline)
+      }
+      # Timers and call_later callbacks are app work. Do not let them
+      # replenish the worker list after shutdown has been requested.
+      private$.later <- list()
+      for (worker in self$workers()) worker$request_cancel(grace = grace)
+      invisible()
+    },
 
     clock = function() {
       if (is.null(private$.driver)) now_seconds() else private$.driver$clock()
@@ -634,6 +671,8 @@ App <- R6::R6Class(
       private$.driver <- driver
       private$.exit_requested <- FALSE
       private$.return_value <- NULL
+      private$.worker_shutdown_active <- FALSE
+      private$.worker_shutdown_deadline <- NULL
       # Timers created before the app started count from the start.
       start_time <- driver$clock()
       for (t in private$.timers$timers) t$due <- start_time + t$delay
@@ -680,7 +719,13 @@ App <- R6::R6Class(
       private$.driver <- NULL
       private$.renderer <- NULL
       attempt("cancel app timers", private$.timers$cancel_all)
-      for (w in private$.workers) attempt(paste0("cancel ", w$name), w$cancel)
+      for (w in private$.workers) {
+        if (private$.worker_shutdown_active) {
+          attempt(paste0("force-cancel ", w$name), function() w$cancel(grace = 0))
+        } else {
+          attempt(paste0("cancel ", w$name), w$cancel)
+        }
+      }
       private$.workers <- list()
       if (!is.null(private$.animator)) attempt("cancel animations", private$.animator$cancel_all)
       private$.debug <- NULL
@@ -688,21 +733,31 @@ App <- R6::R6Class(
       private$.queue$clear()
       private$.later <- list()
       attempt("stop terminal driver", driver$stop)
+      private$.worker_shutdown_active <- FALSE
+      private$.worker_shutdown_deadline <- NULL
       if (length(failures)) warning(paste("Errors during app shutdown:", paste(failures, collapse = "; ")), call. = FALSE)
       invisible()
     },
 
     # One iteration of the event loop.
     tick = function(wait = TRUE) {
+      worker_shutdown <- private$.worker_shutdown_active && private$.exit_requested
       timeout <- 0
       idle <- private$.queue$is_empty() && !private$.needs_repaint && length(private$.later) == 0L
       if (wait && idle) {
-        timeout <- min(private$.timers$time_until_next(), private$idle_timeout)
+        timeout <- if (worker_shutdown) private$idle_timeout else
+          min(private$.timers$time_until_next(), private$idle_timeout)
         if (length(private$.workers)) timeout <- min(timeout, 0.05)
       }
-      for (ev in private$.driver$read_events(timeout)) private$post_input(ev)
+      if (!worker_shutdown) {
+        for (ev in private$.driver$read_events(timeout)) private$post_input(ev)
+      }
       private$poll_workers()
-      private$.timers$fire_due(function(timer) batch(call_flex(timer$callback, self)))
+      if (worker_shutdown) {
+        private$.later <- list()
+      } else {
+        private$.timers$fire_due(function(timer) batch(call_flex(timer$callback, self)))
+      }
       private$process_queue()
       if (private$.needs_repaint && private$.running && !private$.exit_requested) {
         private$refresh_screen()

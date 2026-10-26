@@ -1,0 +1,510 @@
+# Worker lifecycle compatibility report
+
+This report compares the published termr 1.0.1 behavior with the additive
+worker lifecycle APIs in this development tree. It records observed facts
+separately from guarantees that could not be exercised in the current
+environment.
+
+## A. Baseline
+
+### Artifact and environment
+
+The installed package used for characterization is termr 1.0.1 in
+`C:/Users/User001/AppData/Local/R/win-library/4.5/termr`. Its installed
+metadata reports `Repository=CRAN`, `RemoteType=standard`, `RemoteSha=1.0.1`,
+and `Built=R 4.5.2; 2026-10-21 15:30:53 UTC; windows`. The installed package
+tree was copied unchanged to the isolated library
+`C:/Users/User001/AppData/Local/Temp/termr-cran-1.0.1-lib/termr` and loaded
+from that path for API and inline-worker characterization. The direct
+`install.packages()` request for the archived source tarball was also
+attempted, but the sandbox could not connect to `cran.r-project.org`; the
+existing installation's CRAN repository metadata is the provenance evidence
+available here. No archive checksum could be obtained.
+
+Environment: Windows x64 (build 26100; Sys.info reports Windows 10 x64 while
+R CMD check identifies Windows 11 x64), R 4.5.2 (`x86_64-w64-mingw32`),
+termr 1.0.1, processx 3.8.6, ps 1.9.1, R6 2.6.1, testthat 3.3.2, callr 3.7.6,
+and roxygen2 8.1.0. Repository commit before implementation:
+`a7f92ee5391deb3417dce6ab7fef24f1ca08981d`.
+
+The reusable executable characterization is
+[`tools/compat/worker-lifecycle-baseline.R`](../tools/compat/worker-lifecycle-baseline.R).
+Set `TERMR_CRAN_LIB` to the isolated library above and run it with
+`Rscript tools/compat/worker-lifecycle-baseline.R`. Set
+`TERMR_RUN_PROCESS_PROBE=true` to include real child-process probes; setting
+`TERMR_REQUIRE_PROCESS_PROBE=true` makes inability to start a child a failing
+result, as used in CI.
+
+[`tests/testthat/test-worker-lifecycle-compat.R`](../tests/testthat/test-worker-lifecycle-compat.R)
+is the shared contract suite. It checks the pre-1.0.1 argument order and
+defaults, inline success and failure events and callbacks, and synchronous
+`Worker$cancel()` behavior. CI runs that same file against both isolated
+installations.
+
+### Published API contract observed
+
+The CRAN artifact exports `App`, `Worker`, `app()`, `run()`, `run_worker()`
+and `run_process()`. Relevant function signatures are:
+
+```r
+app(..., bindings = list(), actions = list(), title = NULL, mouse = TRUE,
+    stylesheet = NULL, theme = "default", debug = FALSE, reduce_motion = NULL)
+
+run_worker(fn, args = list(), on_complete = NULL, on_error = NULL,
+           on_progress = NULL, name = NULL, owner = NULL,
+           packages = character(), inline = FALSE, on_stdout = NULL,
+           on_stderr = NULL, timeout = NULL, app = current_app())
+
+run_process(command, args = character(), on_complete = NULL, on_error = NULL,
+            on_stdout = NULL, on_stderr = NULL, on_exit = NULL,
+            timeout = NULL, wd = NULL, env = NULL, name = NULL,
+            owner = NULL, app = current_app())
+
+run(x, ...)
+```
+
+The exported `Worker` fields are `name`, `state`, `result`, `error`,
+`timed_out`, `progress`, `owner`, `stdout`, `stderr` and `kind`. Its public
+methods are `initialize(name, owner = NULL, callbacks = list())`,
+`cancel(grace = 0.3)`, `is_running()`, `pid()` and `print(...)` (plus the R6
+`clone()` method). `App` exposes `run()`, `exit(value = NULL)`,
+`run_worker(...)`, `run_process(...)` and `workers()`.
+
+The current stability guide classifies `run_worker()`, `run_process()` and
+worker lifecycle details as public, documented experimental APIs. The
+characterized signatures, fields, event names and callback order are published
+observable behavior even where their exact lifecycle details are experimental.
+Unexported helpers and processx/ps internals are implementation details.
+
+The inline characterization observed `worker.started` followed by
+`worker.completed`, result `42L`, one completion callback, and no error
+callback. `Worker$cancel()` on a running standalone handle returned `TRUE`
+and set `state` to `"cancelled"`; a repeated call returned `FALSE`.
+`cancel()` on a terminal completed worker returned `FALSE`.
+
+## B. Existing behavior
+
+### Worker state and event ordering
+
+The published worker states are `running`, `completed`, `failed` and
+`cancelled`. Successful completion sets `result`, emits `worker.completed`,
+then invokes `on_complete(result, app)`. Failure sets `error`, emits
+`worker.failed(error, timed_out, status)`, then invokes `on_error(message,
+app)`. `run_process()` additionally invokes `on_exit(status, app)` after its
+completion/error callback on natural process exit. Synchronous cancellation
+sets `state` to `cancelled` and emits `worker.cancelled`; it does not call
+`on_complete`, `on_error` or `on_exit`.
+
+`worker.started`, progress and output are posted as app events. At most 200
+output lines are delivered per worker poll. The public `state` remains
+`running` until a terminal outcome is observed.
+
+Worker APIs are experimental according to `docs/stability.md`; the class,
+function signatures, documented event payloads and callback signatures remain
+public. The order recorded above and the 200-line poll bound are observable
+behavior characterized from the installed artifact, whether or not each detail
+is a stability-guaranteed extension point.
+
+### Cancellation, timeout and cleanup
+
+`Worker$cancel(grace = 0.3)` is synchronous. On Unix it sends an interrupt,
+waits up to the grace period, then kills the process tree. On Windows the
+current implementation skips the interrupt/wait path and kills the tree
+immediately, so the grace argument does not add a delay there.
+
+Timeout is detected during worker polling. A timed-out child is stopped with
+the existing 0.3-second termination path, then reported as `failed` with
+`timed_out=TRUE`. Natural process exit drains bounded output and kills any
+surviving descendants before finishing. Worker job/result/progress/scratch
+files are removed at terminal cleanup.
+
+### Application exit and ownership
+
+`App$exit(value = NULL)` stores the return value and sets the exit flag. The
+event loop ends after the current tick. `App$run()` shutdown invokes widget
+shutdown hooks, cancels app timers and each running worker, clears queued
+events, then stops the terminal driver. Each worker is synchronously cancelled
+with its default 0.3-second grace. Removing an owner widget or leaving its
+screen synchronously calls the same `cancel()` path. The normal shutdown path
+restores the terminal; hard process termination cannot run R cleanup.
+
+### Process supervision dependencies
+
+`run_process()` uses `processx::process$new(..., cleanup = TRUE,
+cleanup_tree = TRUE)`. `ps` is used for process-tree diagnostics. The installed
+processx 3.8.6 help documents `supervise = TRUE` as registering a child with a
+separate processx supervisor that kills registered children when the R parent
+exits. Its local help documents Unix `SIGTERM` then `SIGKILL` and Windows
+CTRL+C/WM_CLOSE then hard termination. The repository does not currently opt
+into that supervisor.
+
+### Baseline test attempt
+
+Command:
+
+```text
+Rscript -e "testthat::test_local('.', filter = 'workers|worker-bootstrap|lifecycle', reporter = 'summary')"
+```
+
+Lifecycle-only tests passed. A process-removal test skipped for the expected
+local pipe restriction. Real worker and process tests in the worker bootstrap
+file failed at `processx_exec` with Windows system error 5 (`Access is denied`)
+while creating a pipe for Rscript. These failures are environmental and do not
+establish a worker lifecycle regression. The checked-in suite already notes
+this local Windows sandbox limitation.
+
+## C. Changes implemented
+
+### Non-blocking cancellation
+
+* Original: Worker cancel with its default grace synchronously interrupts on
+  Unix, waits, kills the process tree, cleans files and emits one cancellation
+  event. Windows kills immediately. This contract and its default were retained.
+* New: Worker request_cancel with a configurable grace sends processx's
+  platform interrupt, records cancel_requested and a deadline, then returns.
+  Normal polling drains output and force-kills the tree at the deadline. Zero
+  grace force-kills immediately. Repeating a positive request does not extend
+  the deadline; a repeated zero-grace request escalates immediately. A process
+  already exited when requested keeps its natural completion or failure.
+* Opt-in: yes. Existing cancel behavior is unchanged; asynchronous cancellation
+  requires the new method.
+* Files: R/workers.R, docs/workers.md, man/Worker.Rd, man/run_worker.Rd,
+  NEWS.md.
+* Tests: tests/testthat/test-worker-lifecycle.R covers validation, idempotence,
+  immediate escalation, natural completion/failure races, callback counts,
+  terminal events, cleanup files and child cleanup. A multi-worker test checks
+  that cancelling one child leaves another free to complete. Real process cases
+  could not run here because processx pipe creation is denied.
+* Compatibility: additive field/method only. It does not repurpose a state or
+  event; an accepted request leaves state as running until cancellation is
+  finalized.
+
+### Graceful app shutdown
+
+* Original: App exit with its existing value argument stops after the current
+  tick; shutdown synchronously cancels running workers with the existing path.
+* New: App exit accepts an optional worker_grace and opts into asynchronous
+  cancellation. It keeps polling workers up to the grace period plus a bounded
+  one-second final drain. It ignores new terminal input and timers, rejects new
+  worker/process starts, processes already queued lifecycle events and restores
+  the driver after cleanup.
+* Opt-in: yes; omitted worker_grace preserves the existing shutdown route.
+* Files: R/app.R, man/App-class.Rd, docs/workers.md, NEWS.md.
+* Tests: the new lifecycle test checks worker termination, app return value,
+  rejection of new work and driver restoration. It was skipped here because
+  worker process creation is blocked.
+* Compatibility: the existing first argument and default behavior are
+  retained. Repeated graceful exit requests can shorten the deadline but never
+  extend it.
+
+### Optional parent-death supervision
+
+* Original: processx cleanup and cleanup_tree handled normal termr cleanup; no
+  helper watched children after an R parent crash.
+* New: run_worker, run_process and their App methods accept supervision values
+  none or parent. The opt-in passes supervise=TRUE to processx when its public
+  constructor supports that option. No dependency minimum was raised;
+  requesting an unsupported option fails with a clear error.
+* Opt-in: yes. none remains the default.
+* Files: R/workers.R, R/app.R, man/run_worker.Rd, man/App-class.Rd,
+  docs/workers.md, NEWS.md.
+* Tests: constructor feature detection is unit-tested; direct-child registration
+  and parent signal tests use real children but were skipped because process
+  spawning is denied or because they require Unix.
+* Compatibility: only new trailing parameters were added. Normal cleanup and
+  existing worker ownership are unchanged. The supervisor is processx's
+  external helper, not a termr daemon.
+
+### Baseline tooling and documentation
+
+* Added tools/compat/worker-lifecycle-baseline.R as a reusable script for an
+  isolated CRAN installation. It validates CRAN metadata before probing APIs
+  and inline behavior.
+* Added this report and expanded docs/workers.md with examples, transitions,
+  platform behavior, migration guidance and known supervision limits.
+* Generated roxygen output with Rscript tools/dev.R doc; no exported symbol or
+  mandatory dependency was added. Roxygen also refreshed package links in
+  man/termr-package.Rd to match the existing DESCRIPTION URLs.
+
+The exact additions to public signatures are:
+
+```r
+Worker$request_cancel(grace = 30)
+Worker$cancel_requested
+App$exit(value = NULL, worker_grace = NULL)
+run_worker(..., app = current_app(), supervision = "none")
+App$run_worker(..., timeout = NULL, supervision = "none")
+run_process(..., app = current_app(), supervision = "none")
+App$run_process(..., owner = NULL, supervision = "none")
+```
+
+## D. API compatibility matrix
+
+| API | CRAN 1.0.1 behavior | New default behavior | New opt-in behavior | Compatibility |
+|---|---|---|---|---|
+| Worker cancel(grace = 0.3) | Synchronous termination; Unix interrupt/wait, Windows immediate kill; one worker.cancelled; returns invisible TRUE once and FALSE after terminal | Same; also sets additive cancel_requested = TRUE on a running worker | Not applicable | Signature, return, state and event retained |
+| Worker request_cancel(grace = 30) | Not present | New method, unused unless called | Non-blocking request; interrupt then poll/escalate; returns TRUE for the first accepted request, FALSE for an already requested/terminal/unstarted handle; zero grace forces | Additive experimental API |
+| Worker cancel_requested | Not present | FALSE until cancellation is accepted/performed | TRUE while asynchronous cancellation is pending and after synchronous cancel | Additive public field |
+| run_worker and App run_worker | Spawned worker, default cleanup, callbacks/events as documented | Same defaults | Trailing parent supervision asks processx to supervise the direct child | Existing positional arguments keep their order |
+| run_process and App run_process | Spawned program, default cleanup, callbacks/events as documented | Same defaults | Trailing parent supervision asks processx to supervise the direct child | Existing positional arguments keep their order |
+| App exit(value = NULL) | Store return value and exit flag; normal shutdown synchronously cancels workers | Same when worker_grace is omitted | worker_grace = seconds requests asynchronous cancellation and bounded drain | Existing value argument and default retained |
+| Timeout handling | Poll-detected timeout becomes failed, timed_out = TRUE, with existing callbacks/events | Same path and default | No timeout policy option added | Existing timeout meaning retained |
+| Ownership/removal | Removing an owner cancels its worker synchronously | Same | No new owner-removal mode | Existing cleanup path retained |
+| Worker events/callbacks | Existing start/progress/output/terminal events, signatures and ordering | Same for natural completion, failure, timeout and synchronous cancellation | Async cancel uses existing worker.cancelled; no completion/error/exit callback | No event removed or renamed; opt-in callback behavior is documented |
+
+## E. Behavioral compatibility
+
+Existing call forms and defaults remain in place. New top-level parameters are
+after existing app arguments; new App method parameters follow their prior last
+arguments. The existing positional argument order is unchanged.
+
+Natural completion and failure retain their state, result/error, event order
+and callbacks. Synchronous cancel retains its existing TRUE/FALSE result and
+single cancellation event. The async path keeps the existing public state
+values: it leaves the worker running while cancellation is pending, then sets
+cancelled, cleans temporary files and emits one worker.cancelled. Neither
+cancellation path invokes on_complete, on_error or on_exit. If the child is
+already dead when the first asynchronous request is checked, the request
+returns FALSE and the next poll records the natural outcome. If it was alive at
+the check, a later exit race is reported as cancellation.
+
+The default app exit still cancels workers synchronously. The opt-in app exit
+continues polling only while workers or already queued events remain, stops
+timers and input during the drain, rejects new work, and forces remaining
+workers after the configured bound. Callback/event code already queued before
+the exit request can run; app APIs reject starting another worker or process
+during this period.
+
+Supervision does not alter normal completion or ownership. With parent
+supervision enabled, processx registers the direct child with its helper;
+normal termr cancellation and cleanup remain in effect while the parent is
+alive. No detached-process mode was added.
+
+## F. Platform guarantees
+
+Verified locally on Windows x64, build 26100, R 4.5.2: the shared API and
+inline behavior contract passes against both the isolated CRAN 1.0.1 install
+and the isolated development install. The development lifecycle file's
+headless assertions pass. Real subprocess behavior could not be exercised
+because processx pipe creation is denied in this sandbox. Unix/macOS signal
+behavior and process-tree cleanup remain unverified locally. Windows tests
+that explicitly require Unix signals were skipped as unsupported.
+
+The parent supervision guarantees are those of processx's public supervise
+option. Its helper polls for the parent and terminates registered direct
+children. On Unix processx documents SIGTERM followed by SIGKILL after five
+seconds; on Windows it documents CTRL+C/WM_CLOSE followed by forced
+termination. See the [processx cleanup article](https://processx.r-lib.org/articles/cleanup.html).
+The helper's PID tracking is not a PID-reuse-proof identity check; termr does
+not claim protection beyond processx's implementation. It does not promise to
+terminate arbitrary grandchildren after parent death. Processx also documents
+a Windows Defender/antivirus caveat for its bundled supervisor executable.
+The PID caveat follows the helper's PID-based liveness check in the
+[processx supervisor implementation](https://github.com/r-lib/processx/blob/main/src/supervisor/supervisor.c).
+R itself cannot handle SIGKILL or execute app cleanup after it.
+
+## G. Regression testing
+
+Commands and results on this host:
+
+| Command | Result |
+|---|---|
+| Rscript tools/compat/worker-lifecycle-baseline.R with TERMR_CRAN_LIB set to the isolated CRAN metadata-bearing install | Passed API and inline behavior probes; process probe omitted |
+| Same, with TERMR_RUN_PROCESS_PROBE=true | API/inline probes passed; real child spawn failed with system error 5, Access is denied while creating a processx pipe |
+| `testthat::test_file('tests/testthat/test-worker-lifecycle-compat.R')`, with `library(termr, lib.loc=...)` set first to the isolated CRAN 1.0.1 install and then to the isolated development install | Both passed: 32 expectations per package covering legacy argument order/defaults, inline success/failure and callback counts, event order, synchronous cancellation and default `App$exit()` return behavior |
+| `$env:NOT_CRAN='true'; Rscript -e "testthat::test_local('.', filter = 'worker-lifecycle', reporter = 'summary')"` | Exit 0: headless checks passed; 13 real-process or Unix-only cases skipped. Eleven subprocess cases skip because child pipes are denied; two cases skip because they require Unix behavior on Windows |
+| Same baseline script with `TERMR_RUN_PROCESS_PROBE=true` and `TERMR_REQUIRE_PROCESS_PROBE=true` | Exit 1 as intended: strict mode reports the actual Windows system error 5 while creating the processx write pipe. CI sets `CI=true`, so this condition fails the job instead of skipping |
+| `testthat::test_file('tests/testthat/test-markdown.R', package='termr')` against CRAN 1.0.1 and development, same Windows locale | Both produce the same 10 Unicode rendering assertion failures, including box borders, bullets and separators. This demonstrates those representative render failures predate the lifecycle changes |
+| `testthat::test_file('tests/testthat/test-database-explorer.R', package='termr')` against CRAN 1.0.1 and development with locale variables set to C | Both runs report the same two warnings at line 118: `unable to translate 'fields:select " café' to native encoding` |
+| Rscript tools/dev.R doc | Passed; roxygen output regenerated without warnings |
+| `$env:NOT_CRAN='true'; Rscript -e "testthat::test_local('.', filter = 'workers|worker-bootstrap|lifecycle', reporter = 'summary')"` | Exit 1; existing worker/bootstrap subprocess cases failed at processx pipe creation with system error 5; lifecycle tests passed and the expected process-removal test skipped |
+| Rscript tools/dev.R test | TOTAL: 1253 tests, 14 failed, 0 errors, 0 skipped, 2 warnings; failures were ASCII/Unicode rendering mismatches in existing accessibility, button and table tests. The run stopped after testthat's max-failure threshold |
+| R CMD build --no-build-vignettes . on the full checkout | Interrupted after repeated permission-denied copying of ignored tools/ci-work/python files. A temporary package-only source copy, omitting .Rbuildignore-excluded tools/ and docs/, built successfully with the same build command |
+| R CMD check --no-manual --no-build-vignettes --output=TEMP . | Direct source-directory check stopped at DESCRIPTION metadata with missing generated Author/Maintainer fields; the normal build-then-check path was used |
+| R CMD check of the built tarball with the inherited C.UTF-8 locale variables | Stopped at DESCRIPTION metadata with 1 error and 1 warning after unsupported locale startup warnings; rerunning with locale variables set to C passed metadata checks |
+| R CMD check --no-manual --no-build-vignettes on the rebuilt temporary `termr_1.0.1.tar.gz`, with locale variables set to C | Source/install/load, code, Rd, dependency-in-code and examples checks passed. Test phase ended FAIL 68 / WARN 2 / SKIP 44 / PASS 4382; details and classification are listed below. Check exit status 1 |
+| Fresh `R CMD build --no-build-vignettes` and `R CMD check --no-manual --no-build-vignettes` on the current source copy, with `.Rbuildignore` applied and locale variables set to C | Build passed. Install/load, R code, Rd, dependency-in-code and examples checks passed. Test phase ended FAIL 68 / WARN 2 / SKIP 48 / PASS 4414; check status is 1 ERROR, with no R CMD check WARNING |
+| PyYAML `BaseLoader` parse of `.github/workflows/R-CMD-check.yaml` and `.github/workflows/worker-lifecycle-compatibility.yaml` plus structure assertions | Passed. `actionlint` is not installed in this environment |
+| git diff --check | Passed |
+
+The check's dependency-index lookup could not reach CRAN/Bioconductor; all
+dependencies needed to install and load termr were already available. Windows
+also emitted a `system2("du")` warning during installed-size checking, which
+then passed. These are environment warnings, not R CMD check WARNING status.
+No lifecycle-specific failure was observed in the available headless checks.
+The real lifecycle integration checks remain unverified because local process
+creation is denied. No conclusion about Unix/macOS integration passing follows
+from this Windows run.
+
+### Exact failures, warnings and skips from the fresh R CMD check
+
+The check's one R CMD check `ERROR` is the aggregate test failure. Its current
+`[FAIL 68 | WARN 2 | SKIP 48 | PASS 4414]` testthat result consisted of the
+following items. The preceding check before four additional lifecycle
+integration cases had 44 skips; the current check lists all 48 below.
+
+Classification from the evidence available:
+
+* **Actual lifecycle defects:** none demonstrated by the passing shared API
+  contract or headless tests. The process behavior is still unverified, so this
+  does not establish that the new lifecycle paths are defect-free.
+* **Pre-existing behavior:** CRAN 1.0.1 and development reproduced the same
+  ten markdown glyph failures and the same two database translation warnings
+  in the same Windows locale. The other renderer failures have the same ASCII
+  fallback signature; this host result alone does not establish their behavior
+  on a UTF-8 Unix runner.
+* **Environment failures:** processx cannot create child-process pipes here
+  (Windows system error 5), and the R CMD check host cannot reach CRAN or
+  Bioconductor indexes. The `du` warning also comes from the Windows check
+  host and does not fail the installed-size check.
+* **Unsupported here:** POSIX signal/PTY tests are skipped on Windows; recipe
+  Markdown tests are skipped from package builds because `.Rbuildignore`
+  intentionally excludes their source files.
+
+* **50 Unicode rendering assertions:** `test-accessibility.R:32`;
+  `test-datatable2.R:25,26,129,132,135`; `test-markdown.R:23,54-56,65-66,74-77`;
+  `test-screens.R:55,139-140,165-166`; `test-scroll.R:21,23-24,60`;
+  `test-split.R:16-17,70`; `test-textarea.R:29-31,219,222-223,227,229,231,238,241`;
+  `test-treeview.R:91`; `test-widget-tree.R:97`; and
+  `test-widgets-extra.R:24,85,114,116,118,123,127,129,143`. The renderer fell
+  back to ASCII glyphs while the expectations require Unicode. The exact same
+  markdown failures were reproduced against CRAN 1.0.1 under the same locale.
+* **Two non-worker errors:** `test-posix-driver.R:86` failed to create a
+  processx input pipe with Windows system error 5; `test-screens.R:142` reported
+  an out-of-buffer position amid the same ASCII rendering mismatches.
+* **Sixteen worker process start errors:** `test-worker-bootstrap.R:25,42,98,110,139,157,165,188,206,213`
+  and `test-workers2.R:204,250,263,274,287,321`. Each attempted process start
+  failed with Windows system error 5 (`Access is denied`) while processx
+  created a pipe. These are host restrictions, not evidence that the lifecycle
+  behavior passed or failed on an unrestricted host.
+* **Two testthat warnings:** both at `test-database-explorer.R:118`, where the
+  ASCII/native locale cannot translate `café`. Both warnings were reproduced
+  unchanged against CRAN 1.0.1 and development under the same locale.
+
+The 48 skipped tests were:
+
+* **43 `skip_on_cran()` cases:** `test-accessibility.R:97`, `test-button.R:35`,
+  `test-datatable.R:15`, `test-examples.R:11`, `test-examples2.R:6,44`,
+  `test-grid.R:88`, `test-input.R:112`, `test-lifecycle.R:44`,
+  `test-process-view.R:4,24,35,52,65`, `test-treeview.R:26`,
+  `test-widget-tree.R:64,81`,
+  `test-worker-lifecycle.R:71,108,139,160,198,224,244,284,325,373,396,418,481`,
+  `test-workers.R:29,62`, and
+  `test-workers2.R:6,40,56,74,91,106,130,148,162,174,219`.
+* **One unsupported Windows test:** `test-terminal-posix.R:2` requires POSIX
+  signals/terminal behavior.
+* **Four source-checkout-only recipe tests:** `test-agent-recipes.R:17,26,38,53`
+  are skipped in the built package because the recipe Markdown is excluded.
+
+The earlier `Rscript tools/dev.R test` run reported 14 failures and two
+warnings. Its failures were the same ASCII/Unicode rendering class; the
+testthat warnings were the two database translation warnings above. The fresh
+check keeps the same 68 failures, with no additional lifecycle assertion
+failures. Lifecycle integration cases still skip under R CMD check because
+they use `skip_on_cran()`; the dedicated workflow sets `NOT_CRAN=true` and
+`CI=true` so they run and fail if subprocess creation is unavailable.
+
+## H. External consumer testing
+
+The R-Knowledge-MCP repository is available at
+`C:/programming_pj/cran-mcp`. Its R launcher tests are in
+`benchmarks/codex_r/launcher/tests/testthat`; the Python wrapper marks the
+launcher suite Linux-only because it needs POSIX signals/PTY behavior. The
+consumer repository was not modified.
+
+Ran `testthat::test_dir('C:/programming_pj/cran-mcp/benchmarks/codex_r/launcher/tests/testthat', reporter='summary')`
+twice, once with `R_LIBS` pointing to the isolated CRAN 1.0.1 package and once
+with it pointing to the staged development package. In both runs the
+`test-app.R` and `test-b1.R` files skipped because Windows does not provide the
+required POSIX signals. The `test-core.R` process wrapper test failed because
+processx was denied pipe creation (system error 5) while trying to launch `sh`;
+the other runnable `test-core.R` assertions passed. Thus the side-by-side
+consumer compatibility test is inconclusive here, not a pass.
+
+The local consumer checkout already had unrelated modified and untracked files
+before this task; no files in that repository were changed here. The local
+`test_dir()` runs used that existing working tree. The CI job below checks out
+the public repository's `main` branch in a clean job directory.
+
+The consumer repository is public and available at
+[menshikovs/R-Knowledge-MCP](https://github.com/menshikovs/R-Knowledge-MCP).
+The new `r_knowledge_mcp_launcher` job checks out that repository without
+modifications on Ubuntu and runs its existing headless and POSIX launcher
+tests against both isolated package versions. Those CI checks have not run for
+these uncommitted workflow changes.
+
+Reproduction on a supported POSIX host: set `R_LIBS` first to the isolated
+CRAN 1.0.1 library and run
+`Rscript -e "testthat::test_dir('benchmarks/codex_r/launcher/tests/testthat', reporter='summary')"`;
+then install this checkout into a separate library, point `R_LIBS` to that
+library and run the same command. Keep the consumer repository untouched and
+do not start its live benchmark trials for this compatibility check.
+
+## I. Remaining limitations
+
+* Real process tests, including graceful cleanup, callback/event races, forced
+  escalation, temporary-file removal, app shutdown and processx supervision,
+  need a supported host where child-process pipes can be created. They must pass
+  on Ubuntu, Windows and macOS CI before release.
+* Unix SIGINT/SIGTERM/SIGHUP/SIGKILL tests and PTY restoration were not run
+  here. Windows lifecycle integration was likewise blocked at process spawn.
+* Processx parent-death supervision covers registered direct children only;
+  arbitrary grandchildren may survive parent death. PID reuse is not proven
+  impossible by processx's PID-based helper, so no stronger guarantee is
+  claimed. Windows Defender/antivirus can block the helper.
+* An interrupt may be ignored or unsupported by the child; async cancellation
+  then escalates to forced termination at the deadline. No cleanup callback can
+  run after SIGKILL.
+* The installed CRAN package's metadata is the available source evidence; the
+  archived source tarball could not be downloaded in this network-restricted
+  environment, and no CRAN tarball checksum was recorded.
+* The external consumer's real launcher tests are POSIX-only and could not
+  establish side-by-side behavior on this Windows host. Its new CI comparison
+  is pending.
+
+## J. CI coverage and pending evidence
+
+The existing [R-CMD-check workflow](https://github.com/41929424/termr/actions/workflows/R-CMD-check.yaml)
+checks Ubuntu with R release, oldrel-1, 4.1 and devel, macOS with release, and
+Windows with release. It now runs a dedicated worker-lifecycle test step after
+the extended suite, even if that broader suite fails. The new
+[worker lifecycle compatibility workflow](https://github.com/41929424/termr/actions/workflows/worker-lifecycle-compatibility.yaml)
+compares the CRAN 1.0.1 API contract on Ubuntu, Windows and macOS, requires a
+real child process and checks synchronous cancellation, then runs the
+development lifecycle integration tests. Its Ubuntu consumer job runs the
+unmodified R-Knowledge-MCP launcher tests against each version.
+
+There is no CI run URL for these changes yet: they are uncommitted and this
+environment cannot dispatch workflows. The workflow links above point to the
+configured jobs, not to passing runs. No workflow creation is counted as test
+evidence.
+
+## K. Breaking-change assessment
+
+1. **Existing functions removed or renamed?** No.
+2. **Existing arguments removed or reordered?** No. Added arguments are
+   trailing and defaulted.
+3. **Existing defaults changed?** No. cancel, app shutdown, supervision,
+   timeout, ownership and callback defaults remain unchanged.
+4. **Did synchronous methods become asynchronous by default?** No. Only
+   request_cancel and explicit worker_grace use the async route.
+5. **Did event or callback semantics change?** No for existing natural exit,
+   failure, timeout or default cancellation. The opt-in async path emits one
+   existing worker.cancelled event and no completion/error/exit callback.
+6. **Did existing process cleanup become weaker?** No change to default
+   cleanup_tree or default app/widget cancellation. New parent supervision is
+   opt-in and its direct-child/descendant limitations are documented.
+7. **Were new mandatory dependencies introduced?** No. The existing processx
+   dependency provides supervision when supported; the opt-in errors on an
+   older processx version without the constructor option.
+8. **Were existing application tests affected?** The new tests do not remove or
+   weaken existing tests. Representative Unicode render failures and database
+   warnings reproduce identically against CRAN 1.0.1. Broader R CMD check
+   results and the process-spawn restriction still require supported CI evidence.
+9. **Is migration required?** No. Existing applications retain their behavior
+   without code changes.
+10. **Is this safe for a backward-compatible CRAN update?** Not established.
+    The shared API contract passes against CRAN 1.0.1 and the development
+    package, but real lifecycle tests, a clean R CMD check on supported
+    platforms, and the consumer workflow remain pending. Processx supervision's
+    identity and descendant limits remain explicit.

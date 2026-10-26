@@ -14,6 +14,10 @@ Returned by \code{app$run_worker()} and \code{app$run_process()}. See
 
     \item{\code{state}}{\code{"running"}, \code{"completed"}, \code{"failed"} or \code{"cancelled"}.}
 
+    \item{\code{cancel_requested}}{Has cancellation been requested or performed?
+A non-blocking request leaves \code{state} as \code{"running"} until the child
+exits or is forcefully terminated.}
+
     \item{\code{result}}{The value returned by the function (workers) or the
 exit status (processes).}
 
@@ -36,6 +40,7 @@ exit status (processes).}
   \itemize{
     \item \href{#method-Worker-initialize}{\code{Worker$new()}}
     \item \href{#method-Worker-cancel}{\code{Worker$cancel()}}
+    \item \href{#method-Worker-request_cancel}{\code{Worker$request_cancel()}}
     \item \href{#method-Worker-is_running}{\code{Worker$is_running()}}
     \item \href{#method-Worker-pid}{\code{Worker$pid()}}
     \item \href{#method-Worker-print}{\code{Worker$print()}}
@@ -79,6 +84,29 @@ seconds.
     \if{html}{\out{<div class="arguments">}}
     \describe{
       \item{\code{grace}}{Seconds to wait before killing.}
+    }
+    \if{html}{\out{</div>}}
+  }
+}
+
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Worker-request_cancel"></a>}}
+\if{latex}{\out{\hypertarget{method-Worker-request_cancel}{}}}
+\subsection{\code{Worker$request_cancel()}}{
+  Request cancellation and return without waiting for the
+process to exit. The event loop escalates to a process-tree kill when
+\code{grace} expires. Repeating a request does not extend the deadline;
+\code{grace = 0} escalates an existing request immediately.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Worker$request_cancel(grace = 30)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{grace}}{Seconds to allow the child to handle an interrupt before
+it is forcefully terminated. Zero requests an immediate force kill.}
     }
     \if{html}{\out{</div>}}
   }

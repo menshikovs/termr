@@ -190,13 +190,17 @@ exit, on error and on interrupt.
   Ask the app to stop after the current event.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
-    \preformatted{App$exit(value = NULL)}
+    \preformatted{App$exit(value = NULL, worker_grace = NULL)}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
     \if{html}{\out{<div class="arguments">}}
     \describe{
       \item{\code{value}}{Value returned by \code{run()}.}
+      \item{\code{worker_grace}}{If supplied, request non-blocking cancellation for
+current workers and keep polling them for this many seconds before
+shutdown forcefully cancels any that remain. \code{NULL} keeps the
+existing synchronous shutdown behavior.}
     }
     \if{html}{\out{</div>}}
   }
@@ -715,7 +719,8 @@ the one below, restoring its focus.
   inline = FALSE,
   on_stdout = NULL,
   on_stderr = NULL,
-  timeout = NULL
+  timeout = NULL,
+  supervision = "none"
 )}
     \if{html}{\out{</div>}}
   }
@@ -723,7 +728,7 @@ the one below, restoring its focus.
     \if{html}{\out{<div class="arguments">}}
     \describe{
       \item{\code{fn, args, on_complete, on_error, on_progress, name, owner, packages, inline}}{See \code{\link[=run_worker]{run_worker()}}.}
-      \item{\code{on_stdout, on_stderr, timeout}}{See \code{\link[=run_worker]{run_worker()}}.}
+      \item{\code{on_stdout, on_stderr, timeout, supervision}}{See \code{\link[=run_worker]{run_worker()}}.}
     }
     \if{html}{\out{</div>}}
   }
@@ -749,14 +754,15 @@ shell. See \code{\link[=run_process]{run_process()}}.
   wd = NULL,
   env = NULL,
   name = NULL,
-  owner = NULL
+  owner = NULL,
+  supervision = "none"
 )}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
     \if{html}{\out{<div class="arguments">}}
     \describe{
-      \item{\code{command, args, on_complete, on_error, on_stdout, on_stderr, on_exit, timeout, wd, env, name, owner}}{See \code{\link[=run_process]{run_process()}}.}
+      \item{\code{command, args, on_complete, on_error, on_stdout, on_stderr, on_exit, timeout, wd, env, name, owner, supervision}}{See \code{\link[=run_process]{run_process()}}.}
     }
     \if{html}{\out{</div>}}
   }

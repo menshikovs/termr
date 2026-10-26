@@ -1,3 +1,18 @@
+# termr (development)
+
+## Worker lifecycle
+
+* Added `Worker$request_cancel(grace = 30)` for non-blocking cancellation.
+  The existing synchronous `cancel(grace = 0.3)` behavior remains the default.
+* Added opt-in graceful app shutdown through
+  `app$exit(value, worker_grace = ...)`; omitted `worker_grace` preserves the
+  existing shutdown path.
+* Added opt-in `supervision = "parent"` to `run_worker()` and `run_process()`
+  using processx parent-death supervision. It is disabled by default.
+* Documented worker lifecycle transitions, shutdown ordering and platform
+  limits in `docs/workers.md` and
+  `docs/WORKER_LIFECYCLE_COMPATIBILITY_REPORT.md`.
+
 # termr 1.0.1
 
 First CRAN release, published on [CRAN](https://CRAN.R-project.org/package=termr)

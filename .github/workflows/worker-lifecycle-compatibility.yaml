@@ -1,0 +1,107 @@
+name: Worker lifecycle compatibility
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions: read-all
+
+jobs:
+  lifecycle:
+    name: ${{ matrix.os }} worker lifecycle and CRAN compatibility
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    env:
+      CI: true
+      NOT_CRAN: true
+      TERMR_CRAN_LIB: ${{ runner.temp }}/termr-cran-1.0.1
+      TERMR_DEV_LIB: ${{ runner.temp }}/termr-development
+    steps:
+      - uses: actions/checkout@v4
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: release
+          use-public-rspm: true
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::remotes, any::pkgload, any::testthat
+          needs: check
+      - name: Install CRAN 1.0.1 and development packages into isolated libraries
+        shell: bash
+        run: |
+          Rscript -e 'dir.create(Sys.getenv("TERMR_CRAN_LIB"), recursive = TRUE, showWarnings = FALSE); dir.create(Sys.getenv("TERMR_DEV_LIB"), recursive = TRUE, showWarnings = FALSE)'
+          Rscript -e 'remotes::install_version("termr", version = "1.0.1", repos = "https://cloud.r-project.org", lib = Sys.getenv("TERMR_CRAN_LIB"), dependencies = FALSE, upgrade = "never")'
+          Rscript -e 'remotes::install_local(".", lib = Sys.getenv("TERMR_DEV_LIB"), dependencies = FALSE, upgrade = "never")'
+      - name: Run the shared API and synchronous behavior contract against CRAN 1.0.1
+        shell: bash
+        run: >-
+          Rscript -e 'library(termr, lib.loc = Sys.getenv("TERMR_CRAN_LIB"));
+          testthat::test_file("tests/testthat/test-worker-lifecycle-compat.R", reporter = "summary")'
+      - name: Run the same contract against the development package
+        shell: bash
+        run: >-
+          Rscript -e 'library(termr, lib.loc = Sys.getenv("TERMR_DEV_LIB"));
+          testthat::test_file("tests/testthat/test-worker-lifecycle-compat.R", reporter = "summary")'
+      - name: Require a real child and verify CRAN synchronous cancellation
+        env:
+          TERMR_RUN_PROCESS_PROBE: 'true'
+          TERMR_REQUIRE_PROCESS_PROBE: 'true'
+        run: Rscript tools/compat/worker-lifecycle-baseline.R
+      - name: Run development worker lifecycle integration tests
+        run: Rscript -e "testthat::test_local('.', filter = 'worker-lifecycle', reporter = 'summary')"
+
+  r_knowledge_mcp_launcher:
+    name: R-Knowledge-MCP launcher on CRAN and development termr
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      CI: true
+      NOT_CRAN: true
+      TERMR_CRAN_LIB: ${{ runner.temp }}/termr-cran-1.0.1
+      TERMR_DEV_LIB: ${{ runner.temp }}/termr-development
+    steps:
+      - uses: actions/checkout@v4
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: release
+          use-public-rspm: true
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::remotes, any::pkgload, any::testthat
+          needs: check
+      - name: Install CRAN 1.0.1 and development packages into isolated libraries
+        shell: bash
+        run: |
+          Rscript -e 'dir.create(Sys.getenv("TERMR_CRAN_LIB"), recursive = TRUE, showWarnings = FALSE); dir.create(Sys.getenv("TERMR_DEV_LIB"), recursive = TRUE, showWarnings = FALSE)'
+          Rscript -e 'remotes::install_version("termr", version = "1.0.1", repos = "https://cloud.r-project.org", lib = Sys.getenv("TERMR_CRAN_LIB"), dependencies = FALSE, upgrade = "never")'
+          Rscript -e 'remotes::install_local(".", lib = Sys.getenv("TERMR_DEV_LIB"), dependencies = FALSE, upgrade = "never")'
+      - uses: actions/checkout@v4
+        with:
+          repository: menshikovs/R-Knowledge-MCP
+          ref: main
+          path: R-Knowledge-MCP
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install consumer test dependencies
+        working-directory: R-Knowledge-MCP
+        run: python -m pip install -e '.[dev]'
+      - name: Run unmodified consumer launcher tests against CRAN 1.0.1
+        working-directory: R-Knowledge-MCP
+        shell: bash
+        run: |
+          original_r_libs="${R_LIBS:-}"
+          export R_LIBS="$TERMR_CRAN_LIB${original_r_libs:+:$original_r_libs}"
+          python -m pytest -q tests/test_codex_launcher.py -k 'r_unit_and_headless_ui_suite_passes or real_terminal_ctrl_c_stops_gracefully_and_leaves_no_runner or runner_is_interrupted_when_the_launcher_dies_abnormally'
+      - name: Run the same unmodified consumer launcher tests against development termr
+        working-directory: R-Knowledge-MCP
+        shell: bash
+        run: |
+          original_r_libs="${R_LIBS:-}"
+          export R_LIBS="$TERMR_DEV_LIB${original_r_libs:+:$original_r_libs}"
+          python -m pytest -q tests/test_codex_launcher.py -k 'r_unit_and_headless_ui_suite_passes or real_terminal_ctrl_c_stops_gracefully_and_leaves_no_runner or runner_is_interrupted_when_the_launcher_dies_abnormally'

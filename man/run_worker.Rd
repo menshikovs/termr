@@ -18,7 +18,8 @@ run_worker(
   on_stdout = NULL,
   on_stderr = NULL,
   timeout = NULL,
-  app = current_app()
+  app = current_app(),
+  supervision = "none"
 )
 
 run_process(
@@ -34,7 +35,8 @@ run_process(
   env = NULL,
   name = NULL,
   owner = NULL,
-  app = current_app()
+  app = current_app(),
+  supervision = "none"
 )
 }
 \arguments{
@@ -65,6 +67,10 @@ line.}
 
 \item{app}{The app (defaults to the running app).}
 
+\item{supervision}{\code{"none"} (default) or \code{"parent"}. The opt-in
+\code{"parent"} policy asks processx to terminate this direct child if the R
+parent process exits or crashes. See \code{docs/workers.md} for platform limits.}
+
 \item{command}{The program to run (a path or a name found on the \code{PATH}).}
 
 \item{on_exit}{\verb{function(status, app)} called when the process ends
@@ -75,8 +81,8 @@ line.}
 \item{env}{Named character vector of extra environment variables.}
 }
 \value{
-A \link{Worker} handle with \code{cancel()}, \code{state}, \code{result}, \code{error},
-\code{stdout} and \code{stderr}.
+A \link{Worker} handle with \code{cancel()}, \code{request_cancel()}, \code{state},
+\code{result}, \code{error}, \code{stdout} and \code{stderr}.
 }
 \description{
 \code{app$run_worker()} runs a function in a separate R process and reports

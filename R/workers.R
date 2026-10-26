@@ -168,6 +168,10 @@ Worker <- R6::R6Class(
     name = NULL,
     #' @field state `"running"`, `"completed"`, `"failed"` or `"cancelled"`.
     state = "running",
+    #' @field cancel_requested Has cancellation been requested or performed?
+    #'   A non-blocking request leaves `state` as `"running"` until the child
+    #'   exits or is forcefully terminated.
+    cancel_requested = FALSE,
     #' @field result The value returned by the function (workers) or the
     #'   exit status (processes).
     result = NULL,
@@ -201,13 +205,57 @@ Worker <- R6::R6Class(
     #' @param grace Seconds to wait before killing.
     cancel = function(grace = 0.3) {
       if (self$state != "running") return(invisible(FALSE))
+      self$cancel_requested <- TRUE
       private$terminate(grace)
       private$last_diagnostics <- private$diagnostics()
       private$cleanup()
+      private$cancel_deadline <- NULL
       self$state <- "cancelled"
       private$emit("worker.cancelled", list())
       private$app <- NULL
       invisible(TRUE)
+    },
+
+    #' @description Request cancellation and return without waiting for the
+    #'   process to exit. The event loop escalates to a process-tree kill when
+    #'   `grace` expires. Repeating a request does not extend the deadline;
+    #'   `grace = 0` escalates an existing request immediately.
+    #' @param grace Seconds to allow the child to handle an interrupt before
+    #'   it is forcefully terminated. Zero requests an immediate force kill.
+    request_cancel = function(grace = 30) {
+      grace <- check_worker_grace(grace)
+      if (self$state != "running" || is.null(private$process)) return(invisible(FALSE))
+      p <- private$process
+      alive <- tryCatch(isTRUE(p$is_alive()), error = function(e) FALSE)
+      if (!self$cancel_requested) {
+        # A process that already exited keeps its natural result, even if its
+        # exit has not yet been observed by the normal polling tick.
+        if (!alive) return(invisible(FALSE))
+        self$cancel_requested <- TRUE
+        private$cancel_deadline <- now_seconds() + grace
+        if (grace == 0) {
+          private$force_terminate()
+        } else {
+          # processx maps this to SIGINT on Unix and CTRL+BREAK on Windows.
+          # If the request cannot be sent, do not leave a child running until
+          # a long grace deadline with no graceful signal pending.
+          sent <- tryCatch({ p$interrupt(); TRUE }, error = function(e) FALSE)
+          if (!sent) {
+            private$cancel_deadline <- now_seconds()
+            private$force_terminate()
+          }
+        }
+        return(invisible(TRUE))
+      }
+      if (grace == 0) {
+        private$cancel_deadline <- now_seconds()
+        private$force_terminate()
+        return(invisible(TRUE))
+      }
+      if (!is.null(private$cancel_deadline)) {
+        private$cancel_deadline <- min(private$cancel_deadline, now_seconds() + grace)
+      }
+      invisible(FALSE)
     },
 
     #' @description Is the worker still running?
@@ -239,8 +287,9 @@ Worker <- R6::R6Class(
     trace_file = NULL,
     last_diagnostics = NULL,
     exited_at = NULL,
+    cancel_deadline = NULL,
 
-    start_process = function(app, fn, args, packages, timeout) {
+    start_process = function(app, fn, args, packages, timeout, supervision) {
       payload <- worker_prepare_payload(fn, args, packages)
       private$app <- app
       private$timeout <- timeout
@@ -295,25 +344,38 @@ Worker <- R6::R6Class(
                TMPDIR = scratch, TMP = scratch, TEMP = scratch)
       private$spawn_info <- paste0("spawn: wd=", getwd(), "; R_TESTS=[", env[["R_TESTS"]], "]; R_LIBS=[",
                                    substr(env[["R_LIBS"]], 1L, 400L), "]; job_bytes=", job_size)
-      private$spawn(rscript, c("--vanilla", script, job, out, prog, trace), env = env)
+      private$spawn(rscript, c("--vanilla", script, job, out, prog, trace), env = env,
+                    supervision = supervision)
     },
 
-    start_command = function(app, command, args, wd, env, timeout) {
+    start_command = function(app, command, args, wd, env, timeout, supervision) {
       private$app <- app
       private$timeout <- timeout
       self$kind <- "process"
-      private$spawn(command, args, wd = wd, env = env)
+      private$spawn(command, args, wd = wd, env = env, supervision = supervision)
     },
 
-    spawn = function(command, args, wd = NULL, env = NULL) {
+    spawn = function(command, args, wd = NULL, env = NULL, supervision = "none") {
       private$started <- now_seconds()
       private$executable <- command
       private$process <- tryCatch(
-        # Worker and run_process children never consume the app's terminal
-        # input. Keep stdin detached even if the processx default changes.
-        processx::process$new(command, args, stdin = NULL, stdout = "|", stderr = "|", wd = wd,
-                              env = if (is.null(env)) NULL else c("current", env),
-                              cleanup = TRUE, cleanup_tree = TRUE),
+        {
+          # Worker and run_process children never consume the app's terminal
+          # input. Keep stdin detached even if the processx default changes.
+          process_args <- list(
+            command = command, args = args, stdin = NULL, stdout = "|", stderr = "|", wd = wd,
+            env = if (is.null(env)) NULL else c("current", env),
+            cleanup = TRUE, cleanup_tree = TRUE
+          )
+          if (identical(supervision, "parent")) {
+            if (!processx_supports_supervision()) {
+              stop("`supervision = \"parent\"` requires a processx version with `supervise` support.",
+                   call. = FALSE)
+            }
+            process_args$supervise <- TRUE
+          }
+          do.call(processx::process$new, process_args)
+        },
         error = function(e) {
           private$cleanup()
           stop("Could not start `", command, "`: ", conditionMessage(e), call. = FALSE)
@@ -335,6 +397,11 @@ Worker <- R6::R6Class(
       if (self$state != "running" || is.null(private$process)) return(invisible())
       p <- private$process
       alive <- p$is_alive()
+      if (isTRUE(self$cancel_requested) && alive &&
+          !is.null(private$cancel_deadline) && now_seconds() >= private$cancel_deadline) {
+        private$force_terminate()
+        alive <- p$is_alive()
+      }
       if (!alive && is.null(private$exited_at)) {
         private$exited_at <- now_seconds()
         # Stop surviving producers without closing the pipes we still need
@@ -343,6 +410,18 @@ Worker <- R6::R6Class(
       }
       more_output <- private$drain(p, final = !alive)
       if (self$state != "running") return(invisible())
+      if (isTRUE(self$cancel_requested)) {
+        if (!alive) {
+          if (isTRUE(more_output)) {
+            private$exited_at <- now_seconds()
+            return(invisible())
+          }
+          if ((p$is_incomplete_output() || p$is_incomplete_error()) &&
+              now_seconds() - private$exited_at < 0.1) return(invisible())
+          private$finish_cancelled()
+        }
+        return(invisible())
+      }
       if (alive) {
         if (!is.null(private$timeout) && now_seconds() - private$started > private$timeout) {
           # Capture the process state (phase, process tree) before stopping it.
@@ -504,6 +583,24 @@ Worker <- R6::R6Class(
       invisible()
     },
 
+    force_terminate = function() {
+      p <- private$process
+      if (!is.null(p)) try(p$kill_tree(grace = 0, close_connections = FALSE), silent = TRUE)
+      invisible()
+    },
+
+    finish_cancelled = function() {
+      if (self$state != "running") return(invisible(FALSE))
+      private$last_diagnostics <- private$diagnostics()
+      if (!is.null(private$process)) try(private$process$kill_tree(), silent = TRUE)
+      private$cleanup()
+      private$cancel_deadline <- NULL
+      self$state <- "cancelled"
+      private$emit("worker.cancelled", list())
+      private$app <- NULL
+      invisible(TRUE)
+    },
+
     finish = function(res) {
       app <- private$app
       private$last_diagnostics <- private$diagnostics()
@@ -529,6 +626,7 @@ Worker <- R6::R6Class(
         status <- if (isTRUE(res$ok)) res$value else res$status
         if (!is.null(cb)) call_flex(cb, status, app)
       }
+      private$cancel_deadline <- NULL
       private$app <- NULL
     },
 
@@ -615,14 +713,17 @@ Worker <- R6::R6Class(
 #'   line.
 #' @param timeout Seconds after which the worker is stopped and fails
 #'   (`NULL`: no limit).
+#' @param supervision `"none"` (default) or `"parent"`. The opt-in
+#'   `"parent"` policy asks processx to terminate this direct child if the R
+#'   parent process exits or crashes. See `docs/workers.md` for platform limits.
 #' @param name Name of the worker.
 #' @param owner A widget owning the worker (events come from it, and it is
 #'   cancelled when the widget is removed).
 #' @param packages Packages to attach in the worker process.
 #' @param inline Run in this process instead (for tests).
 #' @param app The app (defaults to the running app).
-#' @return A [Worker] handle with `cancel()`, `state`, `result`, `error`,
-#'   `stdout` and `stderr`.
+#' @return A [Worker] handle with `cancel()`, `request_cancel()`, `state`,
+#'   `result`, `error`, `stdout` and `stderr`.
 #' @export
 #' @examples
 #' pilot <- test_app(app(label("Jobs")), width = 30, height = 1)
@@ -638,11 +739,12 @@ Worker <- R6::R6Class(
 #' pilot$stop()
 run_worker <- function(fn, args = list(), on_complete = NULL, on_error = NULL, on_progress = NULL,
                        name = NULL, owner = NULL, packages = character(), inline = FALSE,
-                       on_stdout = NULL, on_stderr = NULL, timeout = NULL, app = current_app()) {
+                       on_stdout = NULL, on_stderr = NULL, timeout = NULL, app = current_app(),
+                       supervision = "none") {
   check_app(app)$run_worker(fn, args = args, on_complete = on_complete, on_error = on_error,
                             on_progress = on_progress, name = name, owner = owner,
                             packages = packages, inline = inline, on_stdout = on_stdout,
-                            on_stderr = on_stderr, timeout = timeout)
+                            on_stderr = on_stderr, timeout = timeout, supervision = supervision)
 }
 
 #' @rdname run_worker
@@ -654,10 +756,12 @@ run_worker <- function(fn, args = list(), on_complete = NULL, on_error = NULL, o
 #' @export
 run_process <- function(command, args = character(), on_complete = NULL, on_error = NULL,
                         on_stdout = NULL, on_stderr = NULL, on_exit = NULL, timeout = NULL,
-                        wd = NULL, env = NULL, name = NULL, owner = NULL, app = current_app()) {
+                        wd = NULL, env = NULL, name = NULL, owner = NULL, app = current_app(),
+                        supervision = "none") {
   check_app(app)$run_process(command, args = args, on_complete = on_complete, on_error = on_error,
                              on_stdout = on_stdout, on_stderr = on_stderr, on_exit = on_exit,
-                             timeout = timeout, wd = wd, env = env, name = name, owner = owner)
+                             timeout = timeout, wd = wd, env = env, name = name, owner = owner,
+                             supervision = supervision)
 }
 
 # Sequential names that do not touch the user's random number stream.
@@ -678,29 +782,59 @@ check_worker_options <- function(on_complete, on_error, on_progress, on_stdout, 
   if (!is.null(owner) && !is_widget(owner)) stop("`owner` must be a widget.", call. = FALSE)
 }
 
+check_worker_grace <- function(grace, argument = "grace") {
+  if (!(is.numeric(grace) && length(grace) == 1L && !is.na(grace) &&
+        is.finite(grace) && grace >= 0)) {
+    stop("`", argument, "` must be a finite, non-negative number of seconds.", call. = FALSE)
+  }
+  as.numeric(grace)
+}
+
+check_worker_supervision <- function(supervision) {
+  if (!is.character(supervision) || length(supervision) != 1L || is.na(supervision) ||
+      !supervision %in% c("none", "parent")) {
+    stop("`supervision` must be `\"none\"` or `\"parent\"`.", call. = FALSE)
+  }
+  supervision
+}
+
+processx_supports_supervision <- function() {
+  tryCatch({
+    methods <- processx::process$public_methods
+    is.list(methods) && is.function(methods$initialize) &&
+      "supervise" %in% names(formals(methods$initialize))
+  }, error = function(e) FALSE)
+}
+
 start_worker <- function(app, fn, args, on_complete, on_error, on_progress, name, owner, packages, inline,
-                         on_stdout = NULL, on_stderr = NULL, timeout = NULL) {
+                         on_stdout = NULL, on_stderr = NULL, timeout = NULL, supervision = "none") {
   check_function(fn, "fn")
   if (!is.list(args)) stop("`args` must be a list.", call. = FALSE)
   check_worker_options(on_complete, on_error, on_progress, on_stdout, on_stderr, timeout, owner)
+  supervision <- check_worker_supervision(supervision)
   if (!is.character(packages)) stop("`packages` must be a character vector.", call. = FALSE)
   check_flag(inline)
+  if (inline && supervision != "none") {
+    stop("`supervision = \"parent\"` requires a separate worker process; use `inline = FALSE`.",
+         call. = FALSE)
+  }
   worker <- Worker$new(
     name %||% next_worker_name(), owner = owner,
     callbacks = list(on_complete = on_complete, on_error = on_error, on_progress = on_progress,
                      on_stdout = on_stdout, on_stderr = on_stderr)
   )
   wp <- worker$.__enclos_env__$private
-  if (inline) wp$run_inline(app, fn, args) else wp$start_process(app, fn, args, packages, timeout)
+  if (inline) wp$run_inline(app, fn, args) else wp$start_process(app, fn, args, packages, timeout, supervision)
   worker
 }
 
 start_command <- function(app, command, args, on_complete, on_error, on_stdout, on_stderr, on_exit, timeout,
-                          wd, env, name, owner) {
+                          wd, env, name, owner, supervision = "none") {
   check_scalar_character(command, "command")
   if (!is.character(args)) stop("`args` must be a character vector (one element per argument).", call. = FALSE)
   check_function(on_exit, "on_exit", allow_null = TRUE)
   check_worker_options(on_complete, on_error, NULL, on_stdout, on_stderr, timeout, owner)
+  supervision <- check_worker_supervision(supervision)
   if (!is.null(env) && (is.null(names(env)) || !is.character(env))) {
     stop("`env` must be a named character vector.", call. = FALSE)
   }
@@ -711,6 +845,6 @@ start_command <- function(app, command, args, on_complete, on_error, on_stdout, 
       on_exit = on_exit
     )
   )
-  worker$.__enclos_env__$private$start_command(app, command, args, wd, env, timeout)
+  worker$.__enclos_env__$private$start_command(app, command, args, wd, env, timeout, supervision)
   worker
 }

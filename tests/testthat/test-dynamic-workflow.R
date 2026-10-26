@@ -1,0 +1,31 @@
+test_that("the dynamic workflow example updates widgets and focus accessibly", {
+  pilot <- test_app(load_example("dynamic-workflow"), 100, 24)
+  on.exit(pilot$stop(), add = TRUE)
+  expect_match(pilot$query_one("#status")$text, "Ready | 5 rows", fixed = TRUE)
+
+  pilot$focus("#filters")
+  pilot$press("down", "enter")
+  expect_identical(pilot$query_one("#jobs")$data$state, c("active", "active"))
+  expect_match(pilot$query_one("#status")$text, "Showing Active | 2 rows", fixed = TRUE)
+
+  pilot$click("#add-review")
+  expect_identical(pilot$query_one("#filters")$choices, c("all", "active", "complete", "review"))
+  pilot$focus("#filters")
+  pilot$press("end", "enter")
+  expect_identical(pilot$query_one("#jobs")$data$state, "review")
+
+  pilot$focus("#filters")
+  pilot$press("home", "enter")
+  pilot$click("#complete-task")
+  expect_identical(pilot$query_one("#jobs")$data$state[[1L]], "complete")
+  expect_match(pilot$query_one("#status")$text, "Updated task state", fixed = TRUE)
+
+  pilot$focus("#note")
+  pilot$press("ctrl+h")
+  expect_false(pilot$query_one("#details")$visible)
+  expect_false(any(vapply(pilot$app$focus_chain(), function(widget) identical(widget$id, "note"), logical(1))))
+  expect_false(identical(pilot$app$focused$id, "note"))
+  pilot$press("ctrl+h")
+  expect_true(pilot$query_one("#details")$visible)
+  expect_true(any(vapply(pilot$app$focus_chain(), function(widget) identical(widget$id, "note"), logical(1))))
+})

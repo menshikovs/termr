@@ -45,7 +45,7 @@ jobs:
           Rscript -e 'dir.create(Sys.getenv("TERMR_CRAN_LIB"), recursive = TRUE, showWarnings = FALSE); dir.create(Sys.getenv("TERMR_DEV_LIB"), recursive = TRUE, showWarnings = FALSE)'
           Rscript -e 'install.packages("termr", repos = c(CRAN = "https://cloud.r-project.org"), lib = Sys.getenv("TERMR_CRAN_LIB"), dependencies = FALSE, type = "source")'
           Rscript -e 'cran <- packageDescription("termr", lib.loc = Sys.getenv("TERMR_CRAN_LIB")); stopifnot(identical(cran$Version, "1.0.1"), identical(cran$Repository, "CRAN"), is.null(cran$RemoteType) || identical(cran$RemoteType, "standard"))'
-          Rscript -e 'remotes::install_local(".", lib = Sys.getenv("TERMR_DEV_LIB"), dependencies = FALSE, upgrade = "never")'
+          Rscript -e 'remotes::install_local(".", lib = Sys.getenv("TERMR_DEV_LIB"), dependencies = FALSE, upgrade = "never", force = TRUE)'
       - name: Run the shared API and synchronous behavior contract against CRAN 1.0.1
         shell: bash
         run: >-

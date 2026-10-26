@@ -486,8 +486,23 @@ GitHub's [context-availability table](https://docs.github.com/en/actions/referen
 does not permit `runner` in `jobs.<job_id>.env`, while it does permit `runner`
 in `jobs.<job_id>.steps.env`. The two library paths have been moved to a
 step-level initializer, which exports them through `GITHUB_ENV` for subsequent
-steps. This is the confirmed workflow validation defect consistent with the
-zero-job result; GitHub exposed no annotation stating the rejection text.
+steps. The pushed fix is commit `ce921b095de49ba76d754fd235b77c4f08acb130`.
+The new [run 40309289545](https://github.com/menshikovs/termr/actions/runs/40309289545)
+created four jobs, and the initializer succeeded on all four runners. GitHub
+exposed no validation annotation for the original jobless run, so the exact
+rejection text remains unavailable.
+
+The first jobs that reached package tests exposed another test-harness mismatch.
+Windows and macOS installed both packages successfully and passed the 32
+expectation shared API contract against CRAN 1.0.1 and development. Their strict
+probe then stopped before spawning a child because the CRAN baseline script
+requires `Repository=CRAN` and `RemoteType=standard`. The workflow used
+`remotes::install_version()`, which removes `RemoteType` and `RemoteUrl` from
+installed metadata ([remotes implementation](https://github.com/r-lib/remotes/blob/main/R/install-version.R)).
+The workflow now installs the exact CRAN 1.0.1 archive URL and the baseline
+script accepts its exact recorded `RemoteUrl` as provenance, while retaining
+the standard-CRAN metadata path for existing installations. The strict child
+process and cancellation assertions remain required.
 
 `actionlint` was not installed. A local `go install` attempt failed because
 the build network is blocked (`proxy.golang.org` connection refused) and Go's
@@ -497,11 +512,12 @@ passed. Manual expression review against GitHub's context table found no other
 unsupported context placements in the two workflows. This does not substitute
 for a new Actions run.
 
-| Platform | Actual Actions result for this branch head | Classification / evidence |
+| Job/platform | Run 40309289545 result | Classification / evidence |
 |---|---|---|
-| Ubuntu | No job was created | Lifecycle, CRAN comparison, and R-Knowledge-MCP checks did not run; pending |
-| Windows | No job was created | Lifecycle and CRAN comparison did not run in CI. Local Windows R 4.5.2 comparison confirms the renderer failures match CRAN; subprocess lifecycle tests remain blocked by pipe-creation denial |
-| macOS | No job was created | Lifecycle and CRAN comparison did not run; pending |
+| Ubuntu lifecycle | In progress when this report was updated | Path export passed; lifecycle and process results pending |
+| Windows lifecycle | Failed at strict baseline metadata validation | Path export, package installs, and both 32-expectation API contracts passed; child probe was not reached |
+| macOS lifecycle | Failed at the same strict baseline metadata validation | Path export, package installs, and both API contracts passed; child probe was not reached |
+| Ubuntu R-Knowledge-MCP | In progress when this report was updated | Path export passed; CRAN/development consumer comparisons pending |
 
 The existing [R-CMD-check workflow](https://github.com/menshikovs/termr/actions/workflows/R-CMD-check.yaml)
 has push triggers only for `main`, `master` and `develop-*`, plus an unfiltered

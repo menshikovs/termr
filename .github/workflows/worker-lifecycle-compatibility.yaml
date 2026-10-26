@@ -19,6 +19,7 @@ jobs:
     env:
       CI: true
       NOT_CRAN: true
+      TERMR_CRAN_ARCHIVE_URL: https://cloud.r-project.org/src/contrib/Archive/termr/termr_1.0.1.tar.gz
     steps:
       - uses: actions/checkout@v4
       - name: Export isolated package library paths
@@ -43,7 +44,7 @@ jobs:
         shell: bash
         run: |
           Rscript -e 'dir.create(Sys.getenv("TERMR_CRAN_LIB"), recursive = TRUE, showWarnings = FALSE); dir.create(Sys.getenv("TERMR_DEV_LIB"), recursive = TRUE, showWarnings = FALSE)'
-          Rscript -e 'remotes::install_version("termr", version = "1.0.1", repos = "https://cloud.r-project.org", lib = Sys.getenv("TERMR_CRAN_LIB"), dependencies = FALSE, upgrade = "never")'
+          Rscript -e 'remotes::install_url(Sys.getenv("TERMR_CRAN_ARCHIVE_URL"), lib = Sys.getenv("TERMR_CRAN_LIB"), dependencies = FALSE, upgrade = "never")'
           Rscript -e 'remotes::install_local(".", lib = Sys.getenv("TERMR_DEV_LIB"), dependencies = FALSE, upgrade = "never")'
       - name: Run the shared API and synchronous behavior contract against CRAN 1.0.1
         shell: bash

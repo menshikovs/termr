@@ -2,7 +2,8 @@
 #
 # Point TERMR_CRAN_LIB at an isolated library containing the CRAN-installed
 # package. This script deliberately refuses a package without CRAN install
-# metadata, so a local build with the same version is not mistaken for CRAN.
+# metadata or the exact CRAN archive URL recorded by remotes::install_url(),
+# so a local build with the same version is not mistaken for CRAN.
 
 library_path <- Sys.getenv("TERMR_CRAN_LIB")
 if (!nzchar(library_path) || !dir.exists(library_path)) {
@@ -11,9 +12,16 @@ if (!nzchar(library_path) || !dir.exists(library_path)) {
 .libPaths(c(normalizePath(library_path), .libPaths()))
 
 description <- packageDescription("termr", lib.loc = library_path)
+cran_archive_url <- "https://cloud.r-project.org/src/contrib/Archive/termr/termr_1.0.1.tar.gz"
+standard_cran_install <- !is.null(description) &&
+  identical(description$Repository, "CRAN") &&
+  identical(description$RemoteType, "standard")
+archive_cran_install <- !is.null(description) &&
+  identical(description$RemoteType, "url") &&
+  identical(description$RemoteUrl, cran_archive_url) &&
+  identical(Sys.getenv("TERMR_CRAN_ARCHIVE_URL"), cran_archive_url)
 if (is.null(description) || !identical(description$Version, "1.0.1") ||
-    !identical(description$Repository, "CRAN") ||
-    !identical(description$RemoteType, "standard")) {
+    !(standard_cran_install || archive_cran_install)) {
   stop("The selected package must be the CRAN-installed termr 1.0.1 artifact.", call. = FALSE)
 }
 

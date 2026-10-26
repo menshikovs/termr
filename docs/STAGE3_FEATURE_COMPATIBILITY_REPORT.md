@@ -209,6 +209,27 @@ On corrected source commit
   Tidy when this report was written. The equivalent tarball check passed on
   this same package source in [run 40337489693](https://github.com/menshikovs/termr/actions/runs/40337489693).
 
+The package-check logs report no ERROR or WARNING on any of the six matrix
+jobs. Ubuntu, macOS, and Windows each ran the full suite; the Windows suite
+passed with 8,522 expectations and seven platform skips, and the Unix suites
+passed with 8,554 expectations and four skips. R CMD check reported two NOTEs
+on Unix and three on Windows. The extra Windows NOTE is `checking for detritus
+in the temp directory`: it lists six `Rscript`-prefixed entries. The Windows
+check for the main-branch baseline commit
+[`d6ca75e`](https://github.com/menshikovs/termr/commit/d6ca75ea3e23c9320146602b9b790b4b91b16e92)
+in [run 39626174014](https://github.com/menshikovs/termr/actions/runs/39626174014)
+reported that directory clean. The development log does not identify which
+test created those entries. New lifecycle fixtures do force-stop Rscript
+children, so those tests are a plausible source, but the attribution is not
+confirmed. This is an unresolved Windows test-temp cleanup NOTE, not a process
+test failure; the Windows package-check job itself passed. No claim is made
+that arbitrary child-process temporary files are cleaned after forced
+termination.
+
+The report-only head [`01c2170`](https://github.com/menshikovs/termr/commit/01c21708f10b3785bf327347a72487c443cb5258)
+has new lifecycle and R CMD check runs in progress. The package source is
+unchanged from `8948191`; these reruns are not counted as completed evidence.
+
 No R CMD check ERROR or WARNING was reported by the completed hosted
 package-check jobs. The local Windows sandbox still reports 17 process-spawn
 errors before package child code because it denies pipe creation. No Stage 3
@@ -231,6 +252,11 @@ made. The event logger remains disabled by default and bounded as before.
   code because the sandbox denies child pipes. Hosted package checks passed.
 - The R-Knowledge-MCP launcher tests are unavailable at the pinned public
   revision; no equivalent unrelated tests were substituted.
+- The Windows R CMD check passes with no ERROR or WARNING, but reports one
+  additional temp-detritus NOTE from six `Rscript...` entries. The development
+  log does not map them to a specific test. Forced Rscript cancellation tests
+  are a plausible source, but this remains unconfirmed and should be revisited
+  before making a claim about child-created temporary-file cleanup.
 - Stage 2 layout diagnostics are not available on this base.
 - Initial interrupt selection is fixed by processx/platform behavior. Parent
   supervision is not an arbitrary descendant-tree guarantee.
@@ -261,10 +287,14 @@ made. The event logger remains disabled by default and bounded as before.
 
 ## Release readiness
 
-**Stage 3 package and platform verification is complete.** The corrected
-ProcessView tests, full package-check matrix and shared CRAN 1.0.1 compatibility
-contract pass on Ubuntu, Windows and macOS. The public R-Knowledge-MCP launcher
-test module is absent, so that consumer comparison could not run and is not
-claimed as passed. The latest CRAN incoming rerun was still installing system
-tools; an equivalent tarball check passed in the immediately preceding run on
-the same package source. No version bump, merge, or CRAN submission was made.
+**Stage 3 implementation and core platform verification are complete; full
+consumer verification remains incomplete.** The corrected ProcessView tests,
+six-job package-check matrix and shared CRAN 1.0.1 compatibility contract pass
+on Ubuntu, Windows and macOS. The public R-Knowledge-MCP launcher test module
+is absent at the pinned revision, so that consumer comparison could not run.
+The Windows check also has the unresolved test-temp NOTE described above.
+The latest report-only reruns are still in progress; an equivalent CRAN
+incoming tarball check passed on the same package source in run 40337489693.
+No version bump, merge, or CRAN submission was made. Stage 3 is not fully
+release-verified until the consumer suite is available and the Windows temp
+NOTE is attributed or shown not to come from the new lifecycle tests.

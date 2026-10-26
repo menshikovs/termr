@@ -202,6 +202,12 @@ On corrected source commit
   compatibility contract and real ProcessView tests. Its only failed job is
   the R-Knowledge-MCP launcher job because the pinned repository lacks
   `tests/test_codex_launcher.py`.
+- The lifecycle logs show the Windows ProcessView tests and the opt-in parent
+  supervision registration/cancellation test passing. Two Windows-only skips
+  are explicitly platform-scoped: the POSIX graceful-SIGINT test and the test
+  that verifies direct-child cleanup after a parent receives a POSIX signal.
+  The latter signal behavior is therefore established only by Ubuntu and
+  macOS runs. No lifecycle-test skips were reported on those Unix runners.
 - [R CMD check run 40337980089](https://github.com/menshikovs/termr/actions/runs/40337980089)
   passed all six package-check jobs (Ubuntu release, oldrel-1, 4.1, devel;
   macOS release; Windows release), extended suites, SQL, Windows input, and
@@ -226,9 +232,11 @@ test failure; the Windows package-check job itself passed. No claim is made
 that arbitrary child-process temporary files are cleaned after forced
 termination.
 
-The report-only head [`01c2170`](https://github.com/menshikovs/termr/commit/01c21708f10b3785bf327347a72487c443cb5258)
-has new lifecycle and R CMD check runs in progress. The package source is
-unchanged from `8948191`; these reruns are not counted as completed evidence.
+The report-only head [`9928598`](https://github.com/menshikovs/termr/commit/9928598a955a576379b66ece711d9e81e5cd0d33)
+has lifecycle run [40342674314](https://github.com/menshikovs/termr/actions/runs/40342674314)
+and R CMD check run [40342674310](https://github.com/menshikovs/termr/actions/runs/40342674310)
+queued. The package source is unchanged from `8948191`; these reruns are not
+counted as completed evidence.
 
 No R CMD check ERROR or WARNING was reported by the completed hosted
 package-check jobs. The local Windows sandbox still reports 17 process-spawn
@@ -248,6 +256,9 @@ made. The event logger remains disabled by default and bounded as before.
 
 - Real Stage 3 child-process tests cannot run in this Windows sandbox; hosted
   Linux, Windows and macOS lifecycle jobs pass on the corrected commit.
+- Two signal-specific lifecycle tests are skipped on Windows; the POSIX signal
+  path was exercised on Ubuntu and macOS. Windows process cancellation and
+  opt-in parent-supervision registration were exercised separately.
 - The local full `R CMD check` has 17 process-spawn errors before package child
   code because the sandbox denies child pipes. Hosted package checks passed.
 - The R-Knowledge-MCP launcher tests are unavailable at the pinned public

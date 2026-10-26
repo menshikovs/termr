@@ -14,6 +14,11 @@ Runs a program and shows its output. See \code{\link[=process_view]{process_view
   \describe{
     \item{\code{command, args, wd, env, timeout}}{The process to run.}
 
+    \item{\code{stop_grace}}{\code{NULL} for the existing synchronous cancellation;
+a number opts into non-blocking cancellation with escalation.}
+
+    \item{\code{supervision}}{Process supervision policy (\code{"none"} or \code{"parent"}).}
+
     \item{\code{autostart}}{Start when the widget is mounted?}
 
     \item{\code{worker}}{The \link{Worker} of the current run, or \code{NULL}.}
@@ -24,6 +29,12 @@ Runs a program and shows its output. See \code{\link[=process_view]{process_view
   \if{html}{\out{<div class="r6-active-bindings">}}
   \describe{
     \item{\code{running}}{Is the process running?}
+
+    \item{\code{state}}{Process state: \code{"pending"}, \code{"running"}, \code{"stopping"},
+\code{"completed"}, \code{"failed"} or \code{"cancelled"}.}
+
+    \item{\code{exit_status}}{Last observed process exit status, or \code{NA_integer_}
+when cancellation did not provide an exit status.}
 
     \item{\code{output}}{The output lines so far.}
   }
@@ -38,6 +49,7 @@ Runs a program and shows its output. See \code{\link[=process_view]{process_view
     \item \href{#method-ProcessView-start}{\code{ProcessView$start()}}
     \item \href{#method-ProcessView-cancel}{\code{ProcessView$cancel()}}
     \item \href{#method-ProcessView-restart}{\code{ProcessView$restart()}}
+    \item \href{#method-ProcessView-clear_output}{\code{ProcessView$clear_output()}}
     \item \href{#method-ProcessView-action_cancel_process}{\code{ProcessView$action_cancel_process()}}
     \item \href{#method-ProcessView-action_restart_process}{\code{ProcessView$action_restart_process()}}
     \item \href{#method-ProcessView-clone}{\code{ProcessView$clone()}}
@@ -115,7 +127,9 @@ Runs a program and shows its output. See \code{\link[=process_view]{process_view
   max_lines = 2000L,
   id = NULL,
   classes = NULL,
-  style = NULL
+  style = NULL,
+  stop_grace = NULL,
+  supervision = "none"
 )}
     \if{html}{\out{</div>}}
   }
@@ -126,6 +140,7 @@ Runs a program and shows its output. See \code{\link[=process_view]{process_view
       \item{\code{autostart}}{Start when mounted?}
       \item{\code{max_lines}}{Output lines kept.}
       \item{\code{id, classes, style}}{See \link{Widget}.}
+      \item{\code{stop_grace, supervision}}{See \code{\link[=process_view]{process_view()}}.}
     }
     \if{html}{\out{</div>}}
   }
@@ -178,7 +193,9 @@ Runs a program and shows its output. See \code{\link[=process_view]{process_view
 \if{html}{\out{<a id="method-ProcessView-cancel"></a>}}
 \if{latex}{\out{\hypertarget{method-ProcessView-cancel}{}}}
 \subsection{\code{ProcessView$cancel()}}{
-  Stop the process.
+  Stop the process. With the default \code{stop_grace = NULL},
+this keeps the existing synchronous cancellation. A configured grace
+requests cancellation without blocking and escalates through Worker.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
     \preformatted{ProcessView$cancel()}
@@ -190,10 +207,24 @@ Runs a program and shows its output. See \code{\link[=process_view]{process_view
 \if{html}{\out{<a id="method-ProcessView-restart"></a>}}
 \if{latex}{\out{\hypertarget{method-ProcessView-restart}{}}}
 \subsection{\code{ProcessView$restart()}}{
-  Cancel the process and run it again.
+  Cancel the current process and run it again. With an
+opted-in \code{stop_grace}, the next run starts only after this worker has
+reached a terminal state.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
     \preformatted{ProcessView$restart()}
+    \if{html}{\out{</div>}}
+  }
+}
+
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ProcessView-clear_output"></a>}}
+\if{latex}{\out{\hypertarget{method-ProcessView-clear_output}{}}}
+\subsection{\code{ProcessView$clear_output()}}{
+  Clear the displayed output without stopping the process.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ProcessView$clear_output()}
     \if{html}{\out{</div>}}
   }
 }

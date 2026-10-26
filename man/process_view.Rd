@@ -14,7 +14,9 @@ process_view(
   max_lines = 2000L,
   id = NULL,
   classes = NULL,
-  style = NULL
+  style = NULL,
+  stop_grace = NULL,
+  supervision = "none"
 )
 }
 \arguments{
@@ -33,10 +35,20 @@ process_view(
 \item{max_lines}{Output lines kept.}
 
 \item{id, classes, style}{Common widget arguments.}
+
+\item{stop_grace}{\code{NULL} keeps synchronous cancellation. A finite,
+non-negative number opts into non-blocking cancellation; the worker first
+receives processx's platform interrupt and is forcefully terminated if
+still running at the deadline. Signal selection is not configurable.}
+
+\item{supervision}{\code{"none"} (default) or \code{"parent"} to opt into processx
+parent-death supervision when supported. This does not guarantee that
+arbitrary descendant processes are terminated.}
 }
 \value{
-A \code{ProcessView} widget with \verb{$start()}, \verb{$cancel()},
-\verb{$restart()}, \verb{$running}, \verb{$output} and \verb{$worker}.
+A \code{ProcessView} widget with \verb{$start()}, \verb{$cancel()}, \verb{$restart()},
+\verb{$clear_output()}, \verb{$running}, \verb{$state}, \verb{$exit_status}, \verb{$output} and
+\verb{$worker}.
 }
 \description{
 Runs an external program (without a shell) and shows its output in a
@@ -45,7 +57,11 @@ error colour, under a one-line status. The process starts when the view
 is mounted (or call \verb{$start()}), is cancelled when the view is removed
 or the app exits, and sends \code{"process.finished"} (\code{status}, \code{state})
 when it ends. Ctrl+X cancels it and Ctrl+R restarts it while the view
-has focus. \strong{Experimental.}
+has focus. By default cancellation remains synchronous. Set \code{stop_grace}
+to a number to request a non-blocking graceful stop with escalation after
+that many seconds. \code{supervision = "parent"} opts into processx parent-death
+supervision; it does not promise cleanup of arbitrary descendants.
+\strong{Experimental.}
 }
 \examples{
 pv <- process_view(file.path(R.home("bin"), "Rscript"), c("-e", "cat('hi\\\\n')"),

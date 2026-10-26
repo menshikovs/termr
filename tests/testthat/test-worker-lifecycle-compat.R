@@ -60,6 +60,19 @@ test_that("the published worker API keeps its argument order and cancel default"
   expect_null(formals(termr::App$public_methods$exit)$value)
 })
 
+test_that("process_view keeps its CRAN 1.0.1 constructor arguments and defaults", {
+  legacy_arguments <- c(
+    "command", "args", "wd", "env", "timeout", "autostart", "max_lines", "id", "classes", "style"
+  )
+  legacy_defaults <- alist(
+    command =, args = character(), wd = NULL, env = NULL, timeout = NULL,
+    autostart = TRUE, max_lines = 2000L, id = NULL, classes = NULL, style = NULL
+  )
+  expect_identical(head(names(formals(termr::process_view)), length(legacy_arguments)), legacy_arguments)
+  expect_identical(as.list(formals(termr::process_view)[legacy_arguments]), as.list(legacy_defaults))
+  expect_null(names(formals(termr::ProcessView$public_methods$cancel)))
+  expect_null(names(formals(termr::ProcessView$public_methods$restart)))
+})
 test_that("legacy inline completion, failure and synchronous cancellation remain stable", {
   events <- character()
   callbacks <- new.env(parent = emptyenv())

@@ -492,17 +492,27 @@ created four jobs, and the initializer succeeded on all four runners. GitHub
 exposed no validation annotation for the original jobless run, so the exact
 rejection text remains unavailable.
 
-The first jobs that reached package tests exposed another test-harness mismatch.
+The first jobs that reached package tests exposed a test-harness mismatch.
 Windows and macOS installed both packages successfully and passed the 32
 expectation shared API contract against CRAN 1.0.1 and development. Their strict
-probe then stopped before spawning a child because the CRAN baseline script
-requires `Repository=CRAN` and `RemoteType=standard`. The workflow used
+probe then stopped before spawning a child because the baseline script requires
+`Repository=CRAN` and `RemoteType=standard`. The workflow used
 `remotes::install_version()`, which removes `RemoteType` and `RemoteUrl` from
 installed metadata ([remotes implementation](https://github.com/r-lib/remotes/blob/main/R/install-version.R)).
-The workflow now installs the exact CRAN 1.0.1 archive URL and the baseline
-script accepts its exact recorded `RemoteUrl` as provenance, while retaining
-the standard-CRAN metadata path for existing installations. The strict child
-process and cancellation assertions remain required.
+
+Commit `089ce0ef076e4752cd5d57ffbc3d29ca66518491` changed the baseline install
+to `remotes::install_url()` for that exact archive, but run
+[40310186089](https://github.com/menshikovs/termr/actions/runs/40310186089)
+showed that direct `download.file()` calls could not open the archive URL on
+Windows and macOS. `install_url()` logged the download failure but returned
+without installing the baseline, so the subsequent CRAN contract failed with
+“there is no package called termr.” This run did not reach lifecycle tests.
+
+The current workflow change uses `install.packages()` with a named CRAN
+repository, then immediately asserts version 1.0.1 plus `Repository=CRAN` and
+`RemoteType=standard`. The baseline script's strict provenance check remains
+unchanged. This fails closed if CRAN no longer serves version 1.0.1 or if the
+isolated CRAN install is missing. The new run is pending.
 
 `actionlint` was not installed. A local `go install` attempt failed because
 the build network is blocked (`proxy.golang.org` connection refused) and Go's

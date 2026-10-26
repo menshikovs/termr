@@ -314,7 +314,7 @@ Commands and results on this host:
 | `testthat::test_file('tests/testthat/test-worker-lifecycle-compat.R')`, with `library(termr, lib.loc=...)` set first to the isolated CRAN 1.0.1 install and then to the isolated development install | Both passed: 32 expectations per package covering legacy argument order/defaults, inline success/failure and callback counts, event order, synchronous cancellation and default `App$exit()` return behavior |
 | `$env:NOT_CRAN='true'; Rscript -e "testthat::test_local('.', filter = 'worker-lifecycle', reporter = 'summary')"` | Exit 0: headless checks passed; 13 real-process or Unix-only cases skipped. Eleven subprocess cases skip because child pipes are denied; two cases skip because they require Unix behavior on Windows |
 | Same baseline script with `TERMR_RUN_PROCESS_PROBE=true` and `TERMR_REQUIRE_PROCESS_PROBE=true` | Exit 1 as intended: strict mode reports the actual Windows system error 5 while creating the processx write pipe. CI sets `CI=true`, so this condition fails the job instead of skipping |
-| `testthat::test_file('tests/testthat/test-markdown.R', package='termr')` against CRAN 1.0.1 and development, same Windows locale | Both produce the same 10 Unicode rendering assertion failures, including box borders, bullets and separators. This demonstrates those representative render failures predate the lifecycle changes |
+| Side-by-side `testthat::test_file()` comparison of the 10 renderer test files against CRAN 1.0.1 and development, Windows R 4.5.2 with `LC_ALL`, `LC_CTYPE`, `LC_COLLATE`, `LC_MONETARY` and `LC_TIME` set to `C` | Every file reported the same failure/error counts in both versions: accessibility 1; datatable2 5; markdown 10; screens 5 failures + 1 error; scroll 4; split 3; textarea 11; treeview 1; widget-tree 1; widgets-extra 9. Thus all 50 Unicode assertions and the one screen error reproduce on CRAN 1.0.1 under the same environment. |
 | `testthat::test_file('tests/testthat/test-database-explorer.R', package='termr')` against CRAN 1.0.1 and development with locale variables set to C | Both runs report the same two warnings at line 118: `unable to translate 'fields:select " café' to native encoding` |
 | Rscript tools/dev.R doc | Passed; roxygen output regenerated without warnings |
 | `$env:NOT_CRAN='true'; Rscript -e "testthat::test_local('.', filter = 'workers|worker-bootstrap|lifecycle', reporter = 'summary')"` | Exit 1; existing worker/bootstrap subprocess cases failed at processx pipe creation with system error 5; lifecycle tests passed and the expected process-removal test skipped |
@@ -349,10 +349,14 @@ Classification from the evidence available:
   contract or headless tests. The process behavior is still unverified, so this
   does not establish that the new lifecycle paths are defect-free.
 * **Pre-existing behavior:** CRAN 1.0.1 and development reproduced the same
-  ten markdown glyph failures and the same two database translation warnings
-  in the same Windows locale. The other renderer failures have the same ASCII
-  fallback signature; this host result alone does not establish their behavior
-  on a UTF-8 Unix runner.
+  50 Unicode rendering assertion failures, the same screen test error, and
+  the same two database translation warnings in equivalent Windows R 4.5.2
+  environments. The renderer emits ASCII borders where these tests expect
+  Unicode. In `test-screens.R:142`, the Unicode border search returns `-1`,
+  then `get_cell(-1, row)` raises the out-of-buffer error. This screen-position
+  error is a consequence of the reproduced baseline rendering mismatch, not a
+  separate lifecycle or position regression. These Windows results do not
+  establish renderer behavior on a UTF-8 Unix runner.
 * **Environment failures:** processx cannot create child-process pipes here
   (Windows system error 5), and the R CMD check host cannot reach CRAN or
   Bioconductor indexes. The `du` warning also comes from the Windows check
@@ -361,17 +365,19 @@ Classification from the evidence available:
   Markdown tests are skipped from package builds because `.Rbuildignore`
   intentionally excludes their source files.
 
-* **50 Unicode rendering assertions:** `test-accessibility.R:32`;
+* **50 Unicode rendering assertions, all reproduced against CRAN 1.0.1:** `test-accessibility.R:32`;
   `test-datatable2.R:25,26,129,132,135`; `test-markdown.R:23,54-56,65-66,74-77`;
   `test-screens.R:55,139-140,165-166`; `test-scroll.R:21,23-24,60`;
   `test-split.R:16-17,70`; `test-textarea.R:29-31,219,222-223,227,229,231,238,241`;
   `test-treeview.R:91`; `test-widget-tree.R:97`; and
   `test-widgets-extra.R:24,85,114,116,118,123,127,129,143`. The renderer fell
-  back to ASCII glyphs while the expectations require Unicode. The exact same
-  markdown failures were reproduced against CRAN 1.0.1 under the same locale.
-* **Two non-worker errors:** `test-posix-driver.R:86` failed to create a
-  processx input pipe with Windows system error 5; `test-screens.R:142` reported
-  an out-of-buffer position amid the same ASCII rendering mismatches.
+  back to ASCII glyphs while the expectations require Unicode. The side-by-side
+  comparison covered every listed rendering file under the same Windows `C`
+  locale.
+* **One non-worker environment error:** `test-posix-driver.R:86` failed to
+  create a processx input pipe with Windows system error 5. The second
+  non-worker error, `test-screens.R:142`, is the CRAN-reproduced Unicode
+  fallback consequence described above.
 * **Sixteen worker process start errors:** `test-worker-bootstrap.R:25,42,98,110,139,157,165,188,206,213`
   and `test-workers2.R:204,250,263,274,287,321`. Each attempted process start
   failed with Windows system error 5 (`Access is denied`) while processx
@@ -429,9 +435,9 @@ the public repository's `main` branch in a clean job directory.
 The consumer repository is public and available at
 [menshikovs/R-Knowledge-MCP](https://github.com/menshikovs/R-Knowledge-MCP).
 The new `r_knowledge_mcp_launcher` job checks out that repository without
-modifications on Ubuntu and runs its existing headless and POSIX launcher
-tests against both isolated package versions. Those CI checks have not run for
-these uncommitted workflow changes.
+modifications on Ubuntu and is configured to run its existing headless and
+POSIX launcher tests against both isolated package versions. The branch's
+Actions run created no jobs, so neither consumer comparison ran.
 
 Reproduction on a supported POSIX host: set `R_LIBS` first to the isolated
 CRAN 1.0.1 library and run
@@ -442,12 +448,15 @@ do not start its live benchmark trials for this compatibility check.
 
 ## I. Remaining limitations
 
-* Real process tests, including graceful cleanup, callback/event races, forced
-  escalation, temporary-file removal, app shutdown and processx supervision,
-  need a supported host where child-process pipes can be created. They must pass
-  on Ubuntu, Windows and macOS CI before release.
+* Real process tests, including non-blocking cancellation, graceful cleanup,
+  callback/event races, forced escalation, temporary-file removal, app
+  shutdown and processx supervision, need a supported host where child-process
+  pipes can be created. The development-branch Actions run created no jobs, so
+  none of these behaviors has CI evidence on Ubuntu, Windows or macOS yet.
 * Unix SIGINT/SIGTERM/SIGHUP/SIGKILL tests and PTY restoration were not run
-  here. Windows lifecycle integration was likewise blocked at process spawn.
+  here. Windows lifecycle integration was blocked at process spawn. No
+  platform-specific lifecycle result can be inferred from the failed,
+  jobless Actions run.
 * Processx parent-death supervision covers registered direct children only;
   arbitrary grandchildren may survive parent death. PID reuse is not proven
   impossible by processx's PID-based helper, so no stronger guarantee is
@@ -462,22 +471,51 @@ do not start its live benchmark trials for this compatibility check.
   establish side-by-side behavior on this Windows host. Its new CI comparison
   is pending.
 
-## J. CI coverage and pending evidence
+## J. GitHub Actions evidence for the development branch
 
-The existing [R-CMD-check workflow](https://github.com/41929424/termr/actions/workflows/R-CMD-check.yaml)
-checks Ubuntu with R release, oldrel-1, 4.1 and devel, macOS with release, and
-Windows with release. It now runs a dedicated worker-lifecycle test step after
-the extended suite, even if that broader suite fails. The new
-[worker lifecycle compatibility workflow](https://github.com/41929424/termr/actions/workflows/worker-lifecycle-compatibility.yaml)
-compares the CRAN 1.0.1 API contract on Ubuntu, Windows and macOS, requires a
-real child process and checks synchronous cancellation, then runs the
-development lifecycle integration tests. Its Ubuntu consumer job runs the
-unmodified R-Knowledge-MCP launcher tests against each version.
+The branch head is `5f3833358adb9b7c446e7e47512017875535b1f0`. GitHub lists one
+Actions run for that commit: [worker lifecycle compatibility, run 40307104360](https://github.com/menshikovs/termr/actions/runs/40307104360),
+created 2026-10-26 10:23:58 UTC and completed with conclusion `failure`. The
+run record exposes zero jobs; the jobs endpoint returned `total_count: 0`, the
+commit check-runs endpoint returned zero check runs, the artifact list was
+empty, and the run-logs endpoint returned 404. There are therefore no runner
+step logs or test outputs or validation annotations to inspect. Static
+validation identified an invalid expression placement in that workflow:
+`${{ runner.temp }}` was referenced in both jobs' job-level `env` blocks.
+GitHub's [context-availability table](https://docs.github.com/en/actions/reference/workflows-and-actions/contexts#context-availability)
+does not permit `runner` in `jobs.<job_id>.env`, while it does permit `runner`
+in `jobs.<job_id>.steps.env`. The two library paths have been moved to a
+step-level initializer, which exports them through `GITHUB_ENV` for subsequent
+steps. This is the confirmed workflow validation defect consistent with the
+zero-job result; GitHub exposed no annotation stating the rejection text.
 
-There is no CI run URL for these changes yet: they are uncommitted and this
-environment cannot dispatch workflows. The workflow links above point to the
-configured jobs, not to passing runs. No workflow creation is counted as test
-evidence.
+`actionlint` was not installed. A local `go install` attempt failed because
+the build network is blocked (`proxy.golang.org` connection refused) and Go's
+telemetry path was not writable. PyYAML parsing and assertions for the
+preserved OS matrix, runner-context placement, and `pull_request` trigger
+passed. Manual expression review against GitHub's context table found no other
+unsupported context placements in the two workflows. This does not substitute
+for a new Actions run.
+
+| Platform | Actual Actions result for this branch head | Classification / evidence |
+|---|---|---|
+| Ubuntu | No job was created | Lifecycle, CRAN comparison, and R-Knowledge-MCP checks did not run; pending |
+| Windows | No job was created | Lifecycle and CRAN comparison did not run in CI. Local Windows R 4.5.2 comparison confirms the renderer failures match CRAN; subprocess lifecycle tests remain blocked by pipe-creation denial |
+| macOS | No job was created | Lifecycle and CRAN comparison did not run; pending |
+
+The existing [R-CMD-check workflow](https://github.com/menshikovs/termr/actions/workflows/R-CMD-check.yaml)
+has push triggers only for `main`, `master` and `develop-*`, plus an unfiltered
+`pull_request` trigger. The feature branch has no pull request, so that
+workflow did not run for this head; a PR whose head is this feature branch
+will trigger it. Earlier successful R-CMD-check runs on `main` predate
+this commit and are not evidence for these changes. The configured matrix
+covers Ubuntu R release, oldrel-1, 4.1 and devel, macOS release, and Windows
+release when triggered. The separate [worker lifecycle compatibility
+workflow](https://github.com/menshikovs/termr/actions/workflows/worker-lifecycle-compatibility.yaml)
+is intended to compare CRAN 1.0.1 and development on all three operating
+systems, require real-child probes, run lifecycle tests, and run the unmodified
+R-Knowledge-MCP launcher checks on Ubuntu. Its workflow configuration alone
+does not establish that any of those checks passed.
 
 ## K. Breaking-change assessment
 
@@ -498,13 +536,15 @@ evidence.
    dependency provides supervision when supported; the opt-in errors on an
    older processx version without the constructor option.
 8. **Were existing application tests affected?** The new tests do not remove or
-   weaken existing tests. Representative Unicode render failures and database
-   warnings reproduce identically against CRAN 1.0.1. Broader R CMD check
-   results and the process-spawn restriction still require supported CI evidence.
+   weaken existing tests. All 50 Unicode renderer failures, the screen
+   out-of-buffer error, and the two database warnings reproduced identically
+   against CRAN 1.0.1 in the Windows comparison. Real process behavior and
+   cross-platform R CMD check results still lack usable CI evidence.
 9. **Is migration required?** No. Existing applications retain their behavior
    without code changes.
-10. **Is this safe for a backward-compatible CRAN update?** Not established.
-    The shared API contract passes against CRAN 1.0.1 and the development
-    package, but real lifecycle tests, a clean R CMD check on supported
-    platforms, and the consumer workflow remain pending. Processx supervision's
-    identity and descendant limits remain explicit.
+10. **Is this safe for a backward-compatible CRAN update?** No. The shared API
+    contract passes against CRAN 1.0.1 and development locally, but real
+    lifecycle tests, a clean R CMD check on supported platforms, and the
+    consumer workflow remain pending. The only branch Actions run failed
+    before exposing any jobs or logs. Processx supervision's identity and
+    descendant limits remain explicit.

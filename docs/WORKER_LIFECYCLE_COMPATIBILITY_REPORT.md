@@ -529,16 +529,17 @@ fixture's 0.100-second minimum. The logs contain no child-side acknowledgement
 or escalation-reason diagnostic. Therefore they cannot distinguish a child
 that exited on SIGINT from an early escalation; the prior test itself only
 assumed that the child ignored the interrupt. This was an inconclusive test
-oracle, not evidence of a worker defect. The new test fixture and private
-diagnostic below are pending a hosted rerun.
+oracle, not evidence of a worker defect. At this point the new test fixture and
+private diagnostic below were pending a hosted rerun; subsequent outcomes are
+recorded below.
 
-The pending correction removes the minimum-elapsed assertion. The escalation
-fixture now prints an acknowledgement from its interrupt handler and keeps
-running; the test checks that it is still alive, then checks a private
-monotonic timestamp recorded only when the grace-deadline branch force-kills
-it. Separate tests cover a prompt cleanup handler and a child released to exit
-naturally after cancellation was accepted. This adds no public API and changes
-no cancellation defaults or behavior. On the local Windows sandbox,
+The initial correction removed the minimum-elapsed assertion and added a private
+monotonic timestamp set only when the grace-deadline branch force-kills the
+child. Separate fixtures covered prompt cleanup, continued execution after an
+interrupt, and natural exit after cancellation. The first hosted attempts
+exposed additional readiness races, which were corrected in later commits
+below. This adds no public API and changes no cancellation defaults or
+behavior. On the local Windows sandbox,
 `Rscript -e "testthat::test_local('.', filter = 'worker-lifecycle', reporter =
 'summary')"` passed the runnable expectations; process tests were skipped
 because the environment blocks processx pipes. A hosted rerun is required for
@@ -583,8 +584,9 @@ code error: the installed testthat version rejects `info=` on `expect_gte()`.
 The prior assertions in that test passed, including creation of the child-side
 SIGINT acknowledgement marker and a numeric escalation timestamp. The
 timestamp comparison against the captured deadline did not run. The test
-source now uses `expect_true(timestamp >= deadline, info = diagnostics)`;
-hosted confirmation is pending. A local focused rerun passed the 32 shared
+source now uses `expect_true(timestamp >= deadline, info = diagnostics)`.
+Run 40317213183 subsequently exercised the marker and timestamp assertions; its
+testthat argument error is described above. A local focused rerun passed the 32 shared
 compatibility expectations, but this Windows sandbox skipped the lifecycle
 subprocess cases because processx child pipes are blocked (and retained the two
 Windows-only POSIX signal skips). Therefore that local run did not exercise the
@@ -637,10 +639,21 @@ the 150-millisecond escalation case did not produce the POSIX SIGINT handler
 marker. The same log confirms `cancel_escalated=TRUE` and termination at the
 grace deadline; the natural-exit handler case passed. Two POSIX-only Windows
 skips remain. The marker assertion is now limited to Unix; Windows still must
-satisfy the exact deadline and escalation assertions. That adjustment awaits
-a new hosted run. The pinned R-Knowledge-MCP job failed pytest with exit 4
+satisfy the exact deadline and escalation assertions. Run 40318579995 passed
+that adjustment. The pinned R-Knowledge-MCP job failed pytest with exit 4
 because `tests/test_codex_launcher.py` is absent from the pinned consumer
 revision; neither termr version reached the launcher tests.
+
+Commit `3d78e396da02f2fc31042d19234ec2c035ff607e` triggered
+[run 40318579995](https://github.com/menshikovs/termr/actions/runs/40318579995).
+The Ubuntu, Windows and macOS lifecycle jobs all passed, including the CRAN
+1.0.1/development contracts and real-child baseline probe on each platform.
+The Windows escalation test passed with its deadline and force-termination
+assertions; it does not require a POSIX SIGINT marker from CTRL+BREAK. Two
+POSIX-only cases remain explicitly skipped on Windows. At the time checked,
+the consumer job was still in R setup; run 40317864989 already demonstrates
+that its pinned public source fails the strict pytest step because the
+requested test file is missing.
 
 `actionlint` was not installed. A local `go install` attempt failed because
 the build network was blocked (`proxy.golang.org` connection refused) and Go's
@@ -653,10 +666,10 @@ substitute for the actual runs linked above.
 
 | Platform/job | CRAN 1.0.1 and development contract | Real-child baseline probe | Lifecycle suite | Classification |
 |---|---|---|---|---|
-| Ubuntu | Pass / pass (32 expectations each) and CRAN probe in run 40317864989 | Pass in run 40317864989 | Run 40317864989 passed the lifecycle suite. Earlier failure reproduced as fixture SIGINT exit status 1 with no escalation in run 40317213183 | No implementation regression established; historical short time was caused by the test fixture exiting before its handler, based on reproduced evidence |
-| Windows | Pass / pass in runs 40311845330, 40312594293, 40313778899, 40315356760, 40316152671, 40317213183 and 40317864989; CRAN probe passed in all seven | Pass in all seven | Run 40317864989 had one marker assertion failure; `cancel_escalated_at >= deadline` and `cancel_escalated=TRUE` passed; natural-exit case passed; two POSIX-only skips | Grace-deadline escalation verified. POSIX handler marker is unsupported for Windows CTRL+BREAK and is now asserted only on Unix; rerun pending |
-| macOS | Pass / pass and CRAN probe through run 40317864989 | Pass in run 40317864989 | Run 40317864989 passed the lifecycle suite | Applicable lifecycle tests pass |
-| Ubuntu R-Knowledge-MCP | Pinned source revision `8f01870558263283ba197dc215d0f1ab5ad864af` | Not applicable | Runs 40315356760 and 40317864989 failed pytest exit 4 because `tests/test_codex_launcher.py` is absent; neither version reached launcher tests | Unresolved: required consumer tests were not found in public branches/PRs and have not run against either package |
+| Ubuntu | Pass / pass (32 expectations each) and CRAN real-child probe in run 40318579995 | Pass in run 40318579995 | Run 40318579995 passed the lifecycle suite. Earlier failure reproduced as fixture SIGINT exit status 1 with no escalation in run 40317213183 | No implementation regression established; historical short time was caused by the test fixture exiting before its handler, based on reproduced evidence |
+| Windows | Pass / pass and CRAN probe in runs 40311845330, 40312594293, 40313778899, 40315356760, 40316152671, 40317213183, 40317864989 and 40318579995 | Pass in all eight | Run 40318579995 passed lifecycle suite including deadline escalation; two POSIX-only cases skipped | Applicable lifecycle tests pass. POSIX signal-handler marker is unsupported for CTRL+BREAK; deadline behavior remains verified |
+| macOS | Pass / pass and CRAN probe through run 40318579995 | Pass in run 40318579995 | Run 40318579995 passed the lifecycle suite | Applicable lifecycle tests pass |
+| Ubuntu R-Knowledge-MCP | Pinned source revision `8f01870558263283ba197dc215d0f1ab5ad864af` | Not applicable | Run 40317864989 failed pytest exit 4 because `tests/test_codex_launcher.py` is absent; run 40318579995 was still in R setup when last checked | Unresolved: required consumer tests were not found in public branches/PRs and have not run against either package |
 
 The [R-CMD-check workflow](https://github.com/menshikovs/termr/actions/workflows/R-CMD-check.yaml)
 has push filters for `main`, `master` and `develop-*`, plus an unfiltered
@@ -669,9 +682,9 @@ feature-branch R-CMD-check run. A draft PR from this branch should trigger its
 matrix: Ubuntu release,
 oldrel-1, R 4.1 and devel; macOS release; and Windows release. The dedicated
 [worker lifecycle workflow](https://github.com/menshikovs/termr/actions/workflows/worker-lifecycle-compatibility.yaml)
-runs real child probes and lifecycle tests on all three operating systems.
-The corrected Ubuntu/macOS fixture synchronization, consumer suite availability,
-and feature-branch R CMD check remain open.
+runs real child probes and lifecycle tests on all three operating systems; the
+latest completed platform jobs pass. The consumer test suite and a feature-
+branch R CMD check remain unavailable.
 
 ## K. Breaking-change assessment
 
@@ -695,18 +708,17 @@ and feature-branch R CMD check remain open.
    weaken existing tests. All 50 Unicode renderer failures, the screen
    out-of-buffer error, and the two database warnings reproduced identically
   against CRAN 1.0.1 in the prior Windows comparison. The dedicated hosted
-  runs now exercise real processes on all three platforms. Ubuntu and macOS
-  passed the synchronized lifecycle suite. Windows confirmed deadline
-  escalation, but its POSIX handler-marker assertion failed; the marker check
-  is now platform-specific and awaits rerun. The local R CMD check's processx
-  pipe failures are caused by the Windows sandbox denying process creation. No
-  feature-branch R CMD check has run.
+  runs now exercise real processes on all three platforms. All three passed the
+  synchronized lifecycle suite in run 40318579995. Windows passed its
+  deadline escalation checks with the marker assertion scoped to POSIX. The
+  local R CMD check's processx pipe failures are caused by the Windows sandbox
+  denying process creation. No feature-branch R CMD check has run.
 9. **Is migration required?** No. Existing applications retain their behavior
    without code changes.
 10. **Is this safe for a backward-compatible CRAN update?** Not yet. The
     shared API contract passes against CRAN 1.0.1 and development on all three
-    operating systems. Ubuntu and macOS lifecycle suites pass; Windows
-    deadline escalation is verified with its marker adjustment pending CI.
+    operating systems. Applicable lifecycle suites pass on all three operating
+    systems; the Windows POSIX signal-marker limitation is documented.
     Feature-branch R CMD check and the external consumer comparison are
     unverified. Processx supervision's identity and descendant limits remain
     explicit.

@@ -114,7 +114,7 @@ Generated from the checked-in `NAMESPACE`, top-level definitions in `R/`, and cu
 | `panel` | function | [screens.R](../R/screens.R#L144) | [yes](../man/panel.Rd) | yes | yes | README, docs, examples, tests |
 | `patch_to_ansi` | helper | [renderer.R](../R/renderer.R#L16) | [yes](../man/patch_to_ansi.Rd) | yes | yes | examples, tests |
 | `peek` | function | [signals.R](../R/signals.R#L304) | [yes](../man/signals.Rd) | yes | yes | docs, tests |
-| `process_view` | function | [widget-process.R](../R/widget-process.R#L254) | [yes](../man/process_view.Rd) | yes | yes | README, docs, tests |
+| `process_view` | function | [widget-process.R](../R/widget-process.R#L253) | [yes](../man/process_view.Rd) | yes | yes | README, docs, tests |
 | `progress_bar` | function | [widget-display.R](../R/widget-display.R#L115) | [yes](../man/progress_bar.Rd) | yes | yes | README, docs, examples, tests |
 | `property_grid` | function | [widget-workflows.R](../R/widget-workflows.R#L255) | [yes](../man/property_grid.Rd) | yes | yes | docs, tests |
 | `r_highlighter` | function | [widget-textarea.R](../R/widget-textarea.R#L1582) | [yes](../man/r_highlighter.Rd) | yes | no | docs, tests |

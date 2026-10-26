@@ -3,9 +3,11 @@
 Audit date: 2026-10-26  
 Branch: `feature/developer-experience-1.1`  
 Published baseline: `termr` 1.0.1 on CRAN  
-Source revision checked locally: `abe5a8c0c49d079ba561f567c11dc42e85da130c`  
-Stage 3 source commits: `e07d427` (ProcessView), `50e26da` (dynamic workflow),
-`cec4771` (widget inspection), `abe5a8c` (audit, docs and workflows).
+Source revision tested in hosted CI: `89481918a0ba9665764735275db4d4ab015880c3`
+Stage 3 commits: `e07d427` (ProcessView), `50e26da` (dynamic workflow),
+`cec4771` (widget inspection), `abe5a8c` (audit/docs/workflows),
+`a4b53ba` (report), `4fe20eb` (CI assertion correction), and `8948191`
+(forced isolated development install).
 
 ## A. Baseline
 
@@ -110,10 +112,9 @@ table patterns are demonstrated in `inst/examples/dynamic-workflow.R`.
 The R-Knowledge-MCP public revision pinned by the compatibility workflow is
 `8f01870558263283ba197dc215d0f1ab5ad864af`. That revision does not contain
 `tests/test_codex_launcher.py`; the prior Stage 1 run therefore failed at the
-consumer test-file lookup before launcher tests ran. No consumer pass is
-claimed. The workflow retains strict invocations for both CRAN and development
-termr and must use a reproducible consumer commit that actually contains the
-launcher tests before it can provide that evidence.
+consumer test-file lookup before launcher tests ran. Stage 3 CI repeated the
+same strict failure because pytest reported `file or directory not found`; no
+unrelated tests were substituted. No consumer pass is claimed.
 
 ## G. Test evidence
 
@@ -174,10 +175,44 @@ Ubuntu/macOS/Windows, and R CMD check still covers Ubuntu, macOS and Windows
 with its existing R-version matrix. Lifecycle and ProcessView tests remain
 strict in CI.
 
-**No Stage 3 GitHub Actions run has been recorded for this local revision yet.**
-The Stage 1 run linked in [Baseline](#a-baseline) is evidence only for the
-Stage 1 code, not for the Stage 3 additions. Hosted Stage 3 platform results
-remain pending until this branch is pushed and jobs complete.
+The first hosted Stage 3 attempt surfaced test and workflow problems:
+
+- [Lifecycle run 40336758268](https://github.com/menshikovs/termr/actions/runs/40336758268)
+  failed ProcessView tests on Ubuntu, Windows and macOS. The tests asserted
+  `TRUE` for `Pilot$wait_for()`, which returns the Pilot object after the
+  condition is met, and the output fixture used `cat()`'s default separator,
+  which inserted spaces between lines. These were test defects; the logged
+  wait conditions were met and output matched the fixture behavior.
+- [R CMD check run 40336758229](https://github.com/menshikovs/termr/actions/runs/40336758229)
+  failed all six package-check matrix jobs on those same ProcessView test
+  expectations. The tests now wait and then assert the actual state, and the
+  output fixture uses `writeLines()`.
+- [Lifecycle rerun 40337489493](https://github.com/menshikovs/termr/actions/runs/40337489493)
+  passed macOS and Windows. Ubuntu exposed an isolated-install issue:
+  `remotes::install_local()` skipped installing development termr because its
+  recorded SHA/version matched 1.0.1, leaving the development library empty.
+  The workflow now uses `force = TRUE`; this argument was validated locally,
+  and the Ubuntu rerun installed and tested the development package.
+
+On corrected source commit
+[`8948191`](https://github.com/menshikovs/termr/commit/89481918a0ba9665764735275db4d4ab015880c3):
+
+- [Lifecycle run 40337980093](https://github.com/menshikovs/termr/actions/runs/40337980093)
+  passed all three platform lifecycle jobs. Each ran the CRAN/development
+  compatibility contract and real ProcessView tests. Its only failed job is
+  the R-Knowledge-MCP launcher job because the pinned repository lacks
+  `tests/test_codex_launcher.py`.
+- [R CMD check run 40337980089](https://github.com/menshikovs/termr/actions/runs/40337980089)
+  passed all six package-check jobs (Ubuntu release, oldrel-1, 4.1, devel;
+  macOS release; Windows release), extended suites, SQL, Windows input, and
+  both PTY jobs. Its CRAN incoming job was still installing TeX, qpdf and HTML
+  Tidy when this report was written. The equivalent tarball check passed on
+  this same package source in [run 40337489693](https://github.com/menshikovs/termr/actions/runs/40337489693).
+
+No R CMD check ERROR or WARNING was reported by the completed hosted
+package-check jobs. The local Windows sandbox still reports 17 process-spawn
+errors before package child code because it denies pipe creation. No Stage 3
+implementation defect was established by the failed attempts.
 
 ## H. Performance considerations
 
@@ -191,10 +226,9 @@ made. The event logger remains disabled by default and bounded as before.
 ## I. Remaining limitations
 
 - Real Stage 3 child-process tests cannot run in this Windows sandbox; hosted
-  Linux, Windows and macOS jobs are still required.
-- The local full `R CMD check` is not clean because 17 process-spawn tests fail
-  before package child code due to the sandbox pipe restriction. The hosted
-  full checks remain pending.
+  Linux, Windows and macOS lifecycle jobs pass on the corrected commit.
+- The local full `R CMD check` has 17 process-spawn errors before package child
+  code because the sandbox denies child pipes. Hosted package checks passed.
 - The R-Knowledge-MCP launcher tests are unavailable at the pinned public
   revision; no equivalent unrelated tests were substituted.
 - Stage 2 layout diagnostics are not available on this base.
@@ -219,16 +253,18 @@ made. The event logger remains disabled by default and bounded as before.
    opt-in asynchronous cancellation.
 8. New mandatory dependencies added: **No.**
 9. Existing applications require migration: **No.**
-10. Suitable for a backward-compatible minor release: **Likely by API and
-    default-behavior review, but not verified yet.** Cross-platform Stage 3 CI,
-    clean hosted R CMD check, and a real launcher consumer run remain
-    outstanding.
+10. Suitable for a backward-compatible minor release: **Yes for termr's
+    public API and default behavior, based on the CRAN contract comparison and
+    passing Ubuntu/Windows/macOS lifecycle checks.** The R-Knowledge-MCP
+    consumer remains unverified because its test module is absent from the
+    pinned public revision.
 
 ## Release readiness
 
-**Stage 3 is not complete or verified yet.** Focused local tests and the shared
-CRAN compatibility contract pass. However, ProcessView real-process coverage
-and the full package check remain inconclusive locally because of child pipe
-denial, Stage 3 hosted CI is pending, and the R-Knowledge-MCP launcher test
-module is absent from the pinned public revision. No version bump, merge, or
-CRAN submission was made.
+**Stage 3 package and platform verification is complete.** The corrected
+ProcessView tests, full package-check matrix and shared CRAN 1.0.1 compatibility
+contract pass on Ubuntu, Windows and macOS. The public R-Knowledge-MCP launcher
+test module is absent, so that consumer comparison could not run and is not
+claimed as passed. The latest CRAN incoming rerun was still installing system
+tools; an equivalent tarball check passed in the immediately preceding run on
+the same package source. No version bump, merge, or CRAN submission was made.

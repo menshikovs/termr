@@ -1,0 +1,30 @@
+{
+  "direction": "wsl-to-windows",
+  "client_R": "R version 4.6.1 (2026-06-24 ucrt)",
+  "nanonext": "1.10.3",
+  "endpoint": "tcp://127.0.0.1:40249",
+  "snapshot_endpoint": "tcp://127.0.0.1:33123",
+  "publisher": {
+    "endpoint": "tcp://127.0.0.1:40249",
+    "snapshot_endpoint": "tcp://127.0.0.1:33123",
+    "source": "p41951-1793293704060763-filea3df3a948776",
+    "R": "R version 4.5.2 (2025-10-31)",
+    "nanonext": "1.10.3"
+  },
+  "connected": true,
+  "latest": {
+    "n": 20,
+    "sent_at": 1793293716.0134
+  },
+  "status": {
+    "state": "live",
+    "source_id": "p41951-1793293704060763-filea3df3a948776",
+    "sequence": 21,
+    "gaps": 4,
+    "invalid": 0,
+    "resyncs": 4,
+    "last_error": null,
+    "needs_sync": true,
+    "pending": 1
+  }
+}

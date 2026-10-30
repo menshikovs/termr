@@ -1,3 +1,38 @@
+# Unreleased development notes
+
+* Add optional mirai task pools with isolated compute profiles, bounded
+  admission, native result transport, explicit cancellation/timeouts/restart,
+  and bounded nonblocking progress events backed by termr_stream.
+* Add task-monitor TUI and Shiny ExtendedTask/independent-producer examples.
+  Existing processx workers remain unchanged; mirai/promises stay in Suggests.
+
+* Add experimental shared Shiny receivers, session-aware latest/history/status
+  reactives and a typed bounded data.frame adapter. Shiny remains optional.
+* Add CPU/RAM ggplot2 history and an incremental Plotly dashboard using public
+  proxies, bounded traces, source restart/gap resynchronization and live status.
+  ggplot2, Plotly and htmlwidgets are optional suggested packages.
+* Drain ready nanonext packets within each bounded nonblocking poll to avoid
+  one-event-per-poll backlog under graph load. Preserve the current environment
+  in integration launchers; partial Windows processx environments caused native
+  child-process crashes even without nanonext.
+
+* Add optional nanonext telemetry with raw JSON topics, initial snapshots,
+  latest-value resynchronization, gap diagnostics and bounded main-thread polling.
+  The live system monitor supports file, nano and simultaneous publication.
+
+* Add experimental `termr_stream()` with synchronous subscriptions, bounded
+  history, explicit cleanup, callback error isolation and signal integration.
+* Add a separate real system-monitor demo: independent collector, termr TUI
+  and optional Shiny dashboard using validated, versioned local JSON snapshots.
+
+* Route each terminal key or paste event using the focus at dispatch time, so
+  a Tab followed by Enter in one POSIX input read reaches the newly focused
+  widget. Add grouped/split byte-parser tests and a single-write PTY regression.
+* Add `App$layout_diagnostics()` for on-demand reports of possible content
+  clipping, and `Pilot$wait_until_exit()` for deterministic shutdown tests.
+* Add `visible = TRUE` to `label()` and include a compact responsive form
+  example with dynamic visibility.
+
 # termr 1.0.1
 
 First CRAN release, published on [CRAN](https://CRAN.R-project.org/package=termr)

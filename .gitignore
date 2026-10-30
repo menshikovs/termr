@@ -9,3 +9,20 @@ termr.Rcheck/
 /tools/pty/__pycache__/
 /tools/bench/baselines/*.Rprof*
 tests/testthat/_snaps/*.new.md
+.serena
+
+# Local development runtimes and generated validation artifacts.
+/.playwright-mcp/
+/audit-results/**/lib-*/
+/audit-results/**/minimal-*/
+/audit-results/**/baseline/
+/audit-results/**/check-*/
+/audit-results/**/native-source/
+/audit-results/**/initial-tracked-tree/
+/audit-results/**/original-docs/
+/audit-results/**/*snapshots/
+/audit-results/**/*.Rprof*
+/audit-results/**/*.out
+/audit-results/**/STOP*
+/audit-results/**/*pid*.txt
+/audit-results/git-prepublish-status.txt

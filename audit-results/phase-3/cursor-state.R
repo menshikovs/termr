@@ -1,0 +1,11 @@
+suppressMessages(pkgload::load_all(".", quiet = TRUE))
+a <- app(vertical(label("x"), input("héllo", id = "in"), text_area("ab\ncd", id = "ta"), button("b", id = "b")))
+p <- test_app(a, 30, 12); vt <- p$driver$terminal
+st <- function(tag) cat(sprintf("%-26s cursor_visible=%-5s at (%d,%d) alt=%s focused=%s\n", tag, vt$cursor_visible, vt$cursor_x, vt$cursor_y, vt$alt_screen, class(a$focused)[1]))
+st("start")
+p$press("tab"); st("tab -> input"); p$press("right"); p$press("right"); st("2x right"); p$type("你"); st("type wide")
+p$press("tab"); st("tab -> text_area"); p$press("down"); p$press("end"); st("down,end")
+p$press("tab"); st("tab -> button"); p$press("tab"); st("tab -> wraps")
+p$press("shift+tab"); p$press("shift+tab"); st("shift+tab x2")
+a$query_one("#ta")$visible <- FALSE; p$step(); st("hide focused text_area")
+p$resize(3, 2); st("resize 3x2"); p$resize(30, 12); st("resize back")

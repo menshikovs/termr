@@ -1,0 +1,12 @@
+PASS: actual Shiny runApp serves dashboard on 127.0.0.1:3838
+Warning messages:
+1: In file(con, "r") :
+  URL 'http://127.0.0.1:3838/': status was 'Could not connect to server'
+2: In file(con, "r") :
+  URL 'http://127.0.0.1:3838/': status was 'Could not connect to server'
+3: In file(con, "r") :
+  URL 'http://127.0.0.1:3838/': status was 'Could not connect to server'
+4: In file(con, "r") :
+  URL 'http://127.0.0.1:3838/': status was 'Could not connect to server'
+5: In file(con, "r") :
+  URL 'http://127.0.0.1:3838/': status was 'Could not connect to server'

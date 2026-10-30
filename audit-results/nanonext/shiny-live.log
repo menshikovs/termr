@@ -1,0 +1,12 @@
+Loading required package: shiny
+
+Attaching package: ‘shiny’
+
+The following objects are masked from ‘package:termr’:
+
+    column, reactive, span
+
+Error in stopifnot(grepl("RAM:", output$metrics), is.list(output$history),  : 
+  current()$status == "live" is not TRUE
+Calls: <Anonymous> ... force -> <Anonymous> -> force -> <Anonymous> -> stopifnot
+Execution halted

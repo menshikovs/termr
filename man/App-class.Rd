@@ -85,6 +85,7 @@ layout passes so far.}
     \item \href{#method-App-bind}{\code{App$bind()}}
     \item \href{#method-App-log_events}{\code{App$log_events()}}
     \item \href{#method-App-event_log}{\code{App$event_log()}}
+    \item \href{#method-App-layout_diagnostics}{\code{App$layout_diagnostics()}}
     \item \href{#method-App-toggle_debug}{\code{App$toggle_debug()}}
     \item \href{#method-App-add_command}{\code{App$add_command()}}
     \item \href{#method-App-show_help}{\code{App$show_help()}}
@@ -331,6 +332,35 @@ default, so normal apps pay nothing.
     \if{html}{\out{<div class="r">}}
     \preformatted{App$event_log()}
     \if{html}{\out{</div>}}
+  }
+}
+
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-App-layout_diagnostics"></a>}}
+\if{latex}{\out{\hypertarget{method-App-layout_diagnostics}{}}}
+\subsection{\code{App$layout_diagnostics()}}{
+  Inspect the current screen for content that exceeds a
+widget's allocated content box. This runs a layout pass but does not
+render, warn or change the normal layout policy. Dimensions default
+to the current app size. Scroll-view clipping is treated as
+intentional and is not reported.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{App$layout_diagnostics(width = NULL, height = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{width, height}}{Terminal dimensions to inspect; omitted values use
+the current app size.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A data frame with widget, ID, available and required dimensions,
+clipping direction and an assessment that fixed-size clipping may be
+intentional.
   }
 }
 

@@ -1,0 +1,29 @@
+R version 4.5.2 (2025-10-31) 
+ Linux 
+# A tibble: 8 × 5
+  expression      median `itr/sec` mem_alloc `gc/sec`
+  <bch:expr>    <bch:tm>     <dbl> <bch:byt>    <dbl>
+1 create          6.44µs   133048.      840B      0  
+2 emit_0          3.77µs   231552.        0B      0  
+3 latest        457.05ns  2042849.        0B      0  
+4 history_1000       2ms      452.    19.7KB     21.7
+5 callback_only 152.04ns  1395388.        0B      0  
+6 emit_1          9.75µs    73729.        0B     73.7
+7 emit_10        64.33µs    12250.        0B     36.8
+8 emit_100      635.33µs     1336.        0B     34.7
+# A tibble: 1 × 5
+  expression    median `itr/sec` mem_alloc `gc/sec`
+  <bch:expr>  <bch:tm>     <dbl> <bch:byt>    <dbl>
+1 emit_100000    374ms      2.63     182KB     28.0
+Retained slot bytes after 1k / 101k: 7728 7728 slots: 64 
+Warning message:
+In Rprof(profile, interval = 0.001, memory.profiling = TRUE) :
+  interval too short for this platform, using '0.010000'
+               total.time total.pct mem.total self.time self.pct
+"bulk"               0.45    100.00     254.2      0.07    15.56
+"x$emit"             0.37     82.22     212.3      0.20    44.44
+"assign"             0.12     26.67      72.4      0.07    15.56
+"as.character"       0.05     11.11      33.1      0.05    11.11
+"min"                0.04      8.89      20.2      0.04     8.89
+"$"                  0.01      2.22      11.2      0.01     2.22
+"assert_open"        0.01      2.22       6.7      0.01     2.22

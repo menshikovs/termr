@@ -1,0 +1,3 @@
+cd ~/audit/src2
+timeout 2400 Rscript -e 'cov <- covr::package_coverage(".", type="tests"); saveRDS(cov, "../cov.rds"); cat("OVERALL", covr::percent_coverage(cov), "\n"); df <- covr::tally_coverage(cov, by="line"); d <- as.data.frame(cov); agg <- aggregate(cbind(covered=value>0, n=1) ~ filename, d, sum); agg$pct <- round(100*agg$covered/agg$n,1); print(agg[order(agg$pct),][1:25,], row.names=FALSE); for (f in c("R/dirty.R","R/widget-scroll.R","R/widget-input.R","R/layout.R","R/testing.R")) { x <- d[d$filename==f,]; cat(f, round(100*mean(x$value>0),1), "%\n") }' > ~/audit/cov.log 2>&1
+tail -45 ~/audit/cov.log

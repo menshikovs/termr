@@ -158,9 +158,20 @@ ScrollView <- R6::R6Class(
           virtual <- size()
         }
       }
-      private$.viewport <- rect(inner$x, inner$y, vw, vh)
+      viewport <- rect(inner$x, inner$y, vw, vh)
+      bars <- c(x = bar_x, y = bar_y)
+      # Bars and thumbs depend on the extent of the children, whose own dirty
+      # rectangles need not reach them: repaint the view when they change.
+      if (!is.null(private$.viewport) &&
+          !(identical(private$.viewport, viewport) && identical(private$.virtual, as.integer(virtual)) &&
+            identical(private$.bars, bars))) {
+        private$.dirty <- TRUE
+        app <- self$app
+        if (!is.null(app)) app$request_repaint(self, layout = FALSE)
+      }
+      private$.viewport <- viewport
       private$.virtual <- as.integer(virtual)
-      private$.bars <- c(x = bar_x, y = bar_y)
+      private$.bars <- bars
       # Content may have shrunk: keep offsets in range without invalidating.
       private$.state$offset_x <- private$clamp(private$.state$offset_x, "x")
       private$.state$offset_y <- private$clamp(private$.state$offset_y, "y")

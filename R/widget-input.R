@@ -284,6 +284,8 @@ Input <- R6::R6Class(
       visible <- seq.int(scroll + 1L, length.out = length(chars) - scroll)
       visible <- visible[cumsum(widths[visible]) <= width]
       if (!show_cursor) return(text_lines(paste(chars[visible], collapse = "")))
+      # A cursor character wider than the whole box leaves nothing visible.
+      if (!length(visible)) return(text_lines(span(" ", style(reverse = TRUE))))
       selected <- private$selected_indices()
       kind <- ifelse(visible == cursor + 1L, "cursor", ifelse(visible %in% selected, "selected", "plain"))
       pieces <- chars[visible]
@@ -329,6 +331,27 @@ Input <- R6::R6Class(
   ),
   private = list(
     .scroll = 0L,
+
+    # A new value changes only the natural width (the text is one line). That
+    # width is observed by an ancestor's size only through `auto` widths and
+    # `measure()`, so the layout can be skipped when every widget up to the
+    # root is a plain vertical / horizontal container (or a screen) whose
+    # width is not `auto`, or when a `fixed` width ends the chain.
+    paint_only_change = function(name, old, new) {
+      if (!identical(name, "value")) return(FALSE)
+      node <- self
+      repeat {
+        type <- node$computed_style()$width$type
+        if (identical(type, "fixed")) return(TRUE)
+        if (identical(type, "auto")) return(FALSE)
+        parent <- node$parent
+        if (is.null(parent)) return(TRUE)
+        if (!identical(class(parent)[[1]], "Vertical") && !identical(class(parent)[[1]], "Horizontal") &&
+            !identical(class(parent)[[1]], "Screen")) return(FALSE)
+        if (!parent$computed_style()$layout %in% c("vertical", "horizontal")) return(FALSE)
+        node <- parent
+      }
+    },
 
     length = function() length(input_chars(private$.state$value)),
 

@@ -1,0 +1,26 @@
+R version 4.5.2 (2025-10-31) 
+mirai 2.7.3 
+nanonext 1.10.3 
+promises 1.5.0 
+shiny 1.14.0 
+later 1.4.6 
+mirai-integration: .....Loading required package: shiny
+
+Attaching package: 'shiny'
+
+The following objects are masked from 'package:termr':
+
+    column, reactive, span
+
+........WUnhandled promise error: Can't access reactive `ExtendedTask$private$status`; its module session has been destroyed
+.....
+mirai: ............................................................................
+
+══ Warnings ════════════════════════════════════════════════════════════════════
+1. an independent task producer reaches Shiny through existing stream adapters ('test-mirai-integration.R:82:5') - ERROR: An error occurred when invoking the ExtendedTask.
+Caused by error:
+! Cancellation resolved by mirai; execution may still be stopping.
+
+══ DONE ════════════════════════════════════════════════════════════════════════
+Your tests are extraordinary!
+TOTAL 95 expectations; 0 failures; 0 errors; 0 skips; 1 warnings

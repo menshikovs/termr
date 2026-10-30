@@ -69,6 +69,7 @@ Grid <- R6::R6Class(
 #' @param id Optional identifier.
 #' @param classes Optional classes.
 #' @param style A [style()].
+#' @param visible Is the container shown initially?
 #' @return A `Grid` widget.
 #' @export
 #' @examples
@@ -78,9 +79,11 @@ Grid <- R6::R6Class(
 #'   columns = c("1fr", "2fr"), gap = 1
 #' )
 #' render_widget(ui, 20, 5)
-grid_layout <- function(..., columns = 2L, rows = NULL, gap = 0L, id = NULL, classes = NULL, style = NULL) {
+grid_layout <- function(..., columns = 2L, rows = NULL, gap = 0L, id = NULL,
+                        classes = NULL, style = NULL, visible = TRUE) {
   grid_style <- style(grid_columns = columns, grid_rows = rows, grid_gap = gap)
-  Grid$new(..., id = id, classes = classes, style = merge_styles(grid_style, as_style(style)))
+  Grid$new(..., id = id, classes = classes, style = merge_styles(grid_style, as_style(style)),
+           visible = visible)
 }
 
 #' Layout containers
@@ -97,6 +100,7 @@ grid_layout <- function(..., columns = 2L, rows = NULL, gap = 0L, id = NULL, cla
 #' @param id Optional identifier (for `#id` selectors).
 #' @param classes Optional classes (for `.class` selectors).
 #' @param style A [style()].
+#' @param visible Is the container shown initially?
 #' @return A `Vertical` or `Horizontal` widget.
 #' @export
 #' @examples
@@ -105,12 +109,12 @@ grid_layout <- function(..., columns = 2L, rows = NULL, gap = 0L, id = NULL, cla
 #'   horizontal(label("left"), label("right"))
 #' )
 #' render_widget(ui, 20, 3)
-vertical <- function(..., id = NULL, classes = NULL, style = NULL) {
-  Vertical$new(..., id = id, classes = classes, style = style)
+vertical <- function(..., id = NULL, classes = NULL, style = NULL, visible = TRUE) {
+  Vertical$new(..., id = id, classes = classes, style = style, visible = visible)
 }
 
 #' @rdname vertical
 #' @export
-horizontal <- function(..., id = NULL, classes = NULL, style = NULL) {
-  Horizontal$new(..., id = id, classes = classes, style = style)
+horizontal <- function(..., id = NULL, classes = NULL, style = NULL, visible = TRUE) {
+  Horizontal$new(..., id = id, classes = classes, style = style, visible = visible)
 }

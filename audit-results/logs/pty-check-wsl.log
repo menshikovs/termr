@@ -1,0 +1,60 @@
+PASS no-termr stty control snapshots (stdin_only=False)
+PASS no-termr stty control changes only PENDIN (stdin_only=False)
+INFO no-termr stty control stdin_only=False: exact match
+PTY child: TERM='xterm-256color' COLORTERM='' TERM_PROGRAM='' tty_mode=stdin
+PASS no-termr stty control exits (stdin_only=True)
+PASS no-termr stty control snapshots (stdin_only=True)
+PASS no-termr stty control changes only PENDIN (stdin_only=True)
+INFO no-termr stty control stdin_only=True: exact match
+PTY child: TERM='xterm-256color' COLORTERM='' TERM_PROGRAM='' tty_mode=controlling
+PASS stty restored (stdin_only=False, TERM=xterm-256color, error=False)
+PASS restoration session status
+PASS alternate screen disabled at exit
+PASS bracketed paste disabled at exit
+PASS mouse reporting disabled at exit
+PASS SGR mouse disabled at exit
+PASS cursor shown again
+PTY child: TERM='xterm-256color' COLORTERM='' TERM_PROGRAM='' tty_mode=stdin
+PASS stdin-only PTY has no controlling terminal
+PASS stdin-only PTY app starts
+PASS stdin-only PTY key input works
+PASS stdin-only PTY resize works
+PASS stdin-only PTY normal exit
+PASS alternate screen disabled at exit
+PASS bracketed paste disabled at exit
+PASS mouse reporting disabled at exit
+PASS SGR mouse disabled at exit
+PASS cursor shown again
+PASS no-TTY subprocess has no terminal
+PASS no-TTY session fails with a termr error
+PASS no-TTY error is not opaque ENXIO
+PTY child: TERM='dumb' COLORTERM='' TERM_PROGRAM='' tty_mode=controlling
+PASS TERM=dumb starts
+PASS TERM=dumb input usable
+PASS TERM=dumb normal exit
+PASS TERM=dumb omits unsupported mode 1049
+PASS TERM=dumb omits unsupported mode 2004
+PASS TERM=dumb omits unsupported mode 1000
+PASS TERM=dumb omits unsupported mode 1006
+PASS cursor shown again
+PTY child: TERM='xterm-256color' COLORTERM='' TERM_PROGRAM='' tty_mode=stdin
+PASS stty restored (stdin_only=True, TERM=xterm-256color, error=False)
+PASS restoration session status
+PASS alternate screen disabled at exit
+PASS bracketed paste disabled at exit
+PASS mouse reporting disabled at exit
+PASS SGR mouse disabled at exit
+PASS cursor shown again
+PTY child: TERM='dumb' COLORTERM='' TERM_PROGRAM='' tty_mode=controlling
+PASS stty restored (stdin_only=False, TERM=dumb, error=False)
+PASS restoration session status
+PASS cursor shown again
+PTY child: TERM='xterm-256color' COLORTERM='' TERM_PROGRAM='' tty_mode=controlling
+PASS stty restored (stdin_only=False, TERM=xterm-256color, error=True)
+PASS restoration session status
+PASS alternate screen disabled at exit
+PASS bracketed paste disabled at exit
+PASS mouse reporting disabled at exit
+PASS SGR mouse disabled at exit
+PASS cursor shown again
+all PTY checks passed

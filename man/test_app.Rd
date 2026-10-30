@@ -43,6 +43,8 @@ positions (selectors, widgets or \code{c(x, y)});
 \item \code{focus(target)}, \code{find(selector)}: focus a widget, find one;
 \item \code{wait_for(condition, timeout = 5)}: step the event loop (simulated time, real time
 while workers run) until \code{condition(app)} is \code{TRUE};
+\item \code{wait_until_exit(timeout = 5)}: step until the app exits and return its
+exit value, including when it has already exited;
 \item \code{run_worker(fn, ..., wait = TRUE)}: start a worker and wait for it;
 \item \code{wait_for_workers(timeout)}: wait for background workers to finish;
 \item \code{screen_text()}: the visible screen as a character vector;

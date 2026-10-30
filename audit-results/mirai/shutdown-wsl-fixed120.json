@@ -1,0 +1,6 @@
+{
+  "status": 0,
+  "stdout": "closing 1 \nclosed 1 \nclosing 2 \nclosed 2 \nclosing 3 \nclosed 3 \nclosing 4 \nclosed 4 \nclosing 5 \nclosed 5 \nclosing 6 \nclosed 6 \nclosing 7 \nclosed 7 \nclosing 8 \nclosed 8 \nclosing 9 \nclosed 9 \nclosing 10 \nclosed 10 \nclosing 11 \nclosed 11 \nclosing 12 \nclosed 12 \nclosing 13 \nclosed 13 \nclosing 14 \nclosed 14 \nclosing 15 \nclosed 15 \nclosing 16 \nclosed 16 \nclosing 17 \nclosed 17 \nclosing 18 \nclosed 18 \nclosing 19 \nclosed 19 \nclosing 20 \nclosed 20 \nclosing 21 \nclosed 21 \nclosing 22 \nclosed 22 \nclosing 23 \nclosed 23 \nclosing 24 \nclosed 24 \nclosing 25 \nclosed 25 \nclosing 26 \nclosed 26 \nclosing 27 \nclosed 27 \nclosing 28 \nclosed 28 \nclosing 29 \nclosed 29 \nclosing 30 \nclosed 30 \nPASS repeated active shutdown\n",
+  "stderr": "",
+  "timeout": false
+}

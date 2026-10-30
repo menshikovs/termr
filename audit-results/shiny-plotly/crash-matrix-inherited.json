@@ -1,0 +1,62 @@
+[
+  {
+    "mode": "pkgload-no-nano",
+    "iteration": 1,
+    "exit": 0
+  },
+  {
+    "mode": "pkgload-no-nano",
+    "iteration": 2,
+    "exit": 0
+  },
+  {
+    "mode": "installed",
+    "iteration": 1,
+    "exit": 0
+  },
+  {
+    "mode": "installed",
+    "iteration": 2,
+    "exit": 0
+  },
+  {
+    "mode": "pkgload",
+    "iteration": 1,
+    "exit": 0
+  },
+  {
+    "mode": "pkgload",
+    "iteration": 2,
+    "exit": 0
+  },
+  {
+    "mode": "pkgload-no-helpers",
+    "iteration": 1,
+    "exit": 0
+  },
+  {
+    "mode": "pkgload-no-helpers",
+    "iteration": 2,
+    "exit": 0
+  },
+  {
+    "mode": "installed-shiny",
+    "iteration": 1,
+    "exit": 0
+  },
+  {
+    "mode": "installed-shiny",
+    "iteration": 2,
+    "exit": 0
+  },
+  {
+    "mode": "pkgload-shiny",
+    "iteration": 1,
+    "exit": 0
+  },
+  {
+    "mode": "pkgload-shiny",
+    "iteration": 2,
+    "exit": 0
+  }
+]

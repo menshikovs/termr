@@ -1,0 +1,20 @@
+{
+  "initial_files": 467,
+  "changed": [
+    ".Rbuildignore",
+    "DESCRIPTION",
+    "NAMESPACE",
+    "NEWS.md",
+    "R/transport_nanonext.R",
+    "README.md",
+    "docs/api-inventory.md",
+    "docs/stability.md",
+    "inst/examples/system-monitor-live/README.md",
+    "tests/testthat/test-nanonext.R",
+    "tools/data-streams-integration.R",
+    "tools/nanonext_integration.R"
+  ],
+  "unexpected": [],
+  "preserved": 455,
+  "index_unchanged": true
+}

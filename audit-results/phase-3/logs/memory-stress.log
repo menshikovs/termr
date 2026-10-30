@@ -1,0 +1,2 @@
+events=  1000  time=   4.5s (4.47 ms/ev)  mem MB: start 67.7 half 67.7 end 67.7  | delta(end-start)=+0.00 MB, delta(end-half)=+0.00 MB
+events= 10000  time=  47.4s (4.74 ms/ev)  mem MB: start 67.7 half 68.2 end 68.6  | delta(end-start)=+0.90 MB, delta(end-half)=+0.40 MB

@@ -1,0 +1,15 @@
+===== final (cursor visible=True) =====
+|press xError in (function (event, app)  : boom from handler |
+|Calls: run -> <Anonymous>                                   |
+|Execution halted                                            |
+|                                                            |
+|                                                            |
+|                                                            |
+|                                                            |
+|                                                            |
+|                                                            |
+|                                                            |
+CHUNKS(first 5, last 2): [(0.2, 4), (0.21, 19), (3.22, 5), (3.23, 5), (3.48, 24)] [(6.48, 7), (6.48, 10)] n= 130
+ALIVE_AT_END: False | exit status: 1
+BYTES: 347
+TAIL: '\x1b[1t\x1b[c\x1b[?1004h\x1b[?9001h\x1b[?7l\x1b[?7h\x1b]0;Windows PowerShell\x1b\\\x1b[?1003;1006h\x1b[?1049h\x1b[?25l\x1b[?7l\x1b[0m\x1b[2J\x1b[H\x1b[?1000h\x1b[?1002h\x1b[?1003h\x1b[?1006h\x1b[?2004h\x1b[0m\x1b[2J\x1b[1;1H\x1b[0mpress x\x1b[0m\x1b[?2004l\x1b[?1006l\x1b[?1003l\x1b[?1002l\x1b[?1000l\x1b[0m\x1b[?7h\x1b[?25h\x1b[?1049l\x1b[?1003;1006lError in (function (event, app)  : boom from handler\r\n\rCalls: run -> <Anonymous>\r\n\rExecution halted\r\n\r'

@@ -1,0 +1,1 @@
+{"rscript": "audit-results/pty/uni-app.R", "cols": 200, "rows": 60, "steps": [["wait", 6.0], ["keys", "\t\t你好😀\r"], ["wait", 0.5], ["keys", "\u001b[A\u001b[B\u001b[Z\u007f\u007f"], ["wait", 0.5], ["resize", 30, 8], ["wait", 0.5], ["resize", 200, 60], ["wait", 0.5], ["keys", "\u0003"], ["wait", 3.0]]}

@@ -38,3 +38,23 @@ test_that("C1 control characters never reach the framebuffer", {
   expect_false(any(grepl(csi, buf$chars, fixed = TRUE)))
   expect_identical(sanitize_text("caf\u00e9 \u00a0ok"), "caf\u00e9 \u00a0ok")
 })
+
+test_that("sanitize_text matches the reference definition on every kind of input", {
+  reference <- function(x) {
+    x <- enc2utf8(as.character(x))
+    x <- gsub("\t", " ", x, fixed = TRUE)
+    gsub("[\\x{01}-\\x{1f}\\x{7f}-\\x{9f}]", "", x, perl = TRUE)
+  }
+  fixed <- c("", " ", "plain ascii text", "tab\there", "a\nb", "ctl\001x\037y\177z", "\u0080\u009f kept?", "\u00a0nbsp",
+             "\u043f\u0440\u0438\u0432\u0435\u0442", "\u4f60\u597d", "\U0001F600", "e\u0301", "\u200d",
+             "\033[31mred\033[0m", "~", "\x7e}", NA_character_)
+  expect_identical(sanitize_text(fixed), reference(fixed))
+  for (s in fixed) expect_identical(sanitize_text(s), reference(s))
+  set.seed(42)
+  pool <- intToUtf8(c(1:126, 127:160, 0x4f60, 0x1F600, 0x301, 0x200d, 0x2028), multiple = TRUE)
+  random <- vapply(1:500, function(i) paste(sample(pool, sample(0:12, 1), TRUE), collapse = ""), "")
+  expect_identical(sanitize_text(random), reference(random))
+  expect_identical(sanitize_text(factor(c("a\tb", "c"))), reference(factor(c("a\tb", "c"))))
+  expect_identical(sanitize_text(12.5), reference(12.5))
+  expect_identical(sanitize_text(character()), reference(character()))
+})

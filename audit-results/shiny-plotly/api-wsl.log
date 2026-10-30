@@ -1,0 +1,360 @@
+R version 4.5.2 (2025-10-31) 
+shiny 1.10.0 
+plotly 4.10.4 
+ggplot2 4.0.2 
+htmlwidgets 1.6.4 
+jsonlite 2.0.0 
+nanonext 1.10.3 
+roxygen2 7.3.3 
+bench 1.1.4 
+function (outputId, session = shiny::getDefaultReactiveDomain(), 
+    deferUntilFlush = TRUE) 
+{
+    if (is.null(session)) {
+        stop("plotlyProxy must be called from the server function of a Shiny app")
+    }
+    if (!is.null(session$ns) && nzchar(session$ns(NULL)) && substring(outputId, 
+        1, nchar(session$ns(""))) != session$ns("")) {
+        outputId <- session$ns(outputId)
+    }
+    structure(list(session = session, id = outputId, deferUntilFlush = deferUntilFlush), 
+        class = "plotly_proxy")
+}
+<bytecode: 0x5f92865b76b0>
+<environment: namespace:plotly>
+function (p, method, ...) 
+{
+    if (!is.proxy(p)) 
+        stop("p must be a proxy object. See `help(plotlyProxy)`", 
+            call. = FALSE)
+    if (missing(method)) 
+        stop("Must provide a plotly.js method (as a character string of length 1).\n", 
+            sprintf("Valid options include: '%s'", paste(plotlyjs_methods(), 
+                collapse = "', '")), call. = FALSE)
+    method <- match.arg(method, plotlyjs_methods())
+    msg <- list(id = p$id, method = method, args = list(...))
+    if (isTRUE(p$deferUntilFlushed)) {
+        p$session$onFlushed(function() {
+            p$session$sendCustomMessage("plotly-calls", msg)
+        }, once = TRUE)
+    }
+    else {
+        p$session$sendCustomMessage("plotly-calls", msg)
+    }
+    p
+}
+<bytecode: 0x5f92865bddb0>
+<environment: namespace:plotly>
+_S_c_h_e_d_u_l_e_d _I_n_v_a_l_i_d_a_t_i_o_n
+
+_D_e_s_c_r_i_p_t_i_o_n:
+
+     Schedules the current reactive context to be invalidated in the
+     given number of milliseconds.
+
+_U_s_a_g_e:
+
+     invalidateLater(millis, session = getDefaultReactiveDomain())
+     
+_A_r_g_u_m_e_n_t_s:
+
+  millis: Approximate milliseconds to wait before invalidating the
+          current reactive context.
+
+ session: A session object. This is needed to cancel any scheduled
+          invalidations after a user has ended the session. If ‘NULL’,
+          then this invalidation will not be tied to any session, and
+          so it will still occur.
+
+_D_e_t_a_i_l_s:
+
+     If this is placed within an observer or reactive expression, that
+     object will be invalidated (and re-execute) after the interval has
+     passed. The re-execution will reset the invalidation flag, so in a
+     typical use case, the object will keep re-executing and waiting
+     for the specified interval. It's possible to stop this cycle by
+     adding conditional logic that prevents the ‘invalidateLater’ from
+     being run.
+
+_S_e_e _A_l_s_o:
+
+     ‘reactiveTimer()’ is a slightly less safe alternative.
+
+_E_x_a_m_p_l_e_s:
+
+     ## Only run examples in interactive R sessions
+     if (interactive()) {
+     
+     ui <- fluidPage(
+       sliderInput("n", "Number of observations", 2, 1000, 500),
+       plotOutput("plot")
+     )
+     
+     server <- function(input, output, session) {
+     
+       observe({
+         # Re-execute this reactive expression after 1000 milliseconds
+         invalidateLater(1000, session)
+     
+         # Do something each time this is invalidated.
+         # The isolate() makes this observer _not_ get invalidated and re-executed
+         # when input$n changes.
+         print(paste("The value of input$n is", isolate(input$n)))
+       })
+     
+       # Generate a new histogram at timed intervals, but not when
+       # input$n changes.
+       output$plot <- renderPlot({
+         # Re-execute this reactive expression after 2000 milliseconds
+         invalidateLater(2000)
+         hist(rnorm(isolate(input$n)))
+       })
+     }
+     
+     shinyApp(ui, server)
+     }
+     
+_C_r_e_a_t_e _a _r_e_a_c_t_i_v_e _o_b_s_e_r_v_e_r
+
+_D_e_s_c_r_i_p_t_i_o_n:
+
+     Creates an observer from the given expression.
+
+_U_s_a_g_e:
+
+     observe(
+       x,
+       env = parent.frame(),
+       quoted = FALSE,
+       ...,
+       label = NULL,
+       suspended = FALSE,
+       priority = 0,
+       domain = getDefaultReactiveDomain(),
+       autoDestroy = TRUE,
+       ..stacktraceon = TRUE
+     )
+     
+_A_r_g_u_m_e_n_t_s:
+
+       x: An expression (quoted or unquoted). Any return value will be
+          ignored.
+
+     env: The parent environment for the reactive expression. By
+          default, this is the calling environment, the same as when
+          defining an ordinary non-reactive expression. If ‘x’ is a
+          quosure and ‘quoted’ is ‘TRUE’, then ‘env’ is ignored.
+
+  quoted: If it is ‘TRUE’, then the ‘quote()’ed value of ‘x’ will be
+          used when ‘x’ is evaluated. If ‘x’ is a quosure and you would
+          like to use its expression as a value for ‘x’, then you must
+          set ‘quoted’ to ‘TRUE’.
+
+     ...: Not used.
+
+   label: A label for the observer, useful for debugging.
+
+suspended: If ‘TRUE’, start the observer in a suspended state. If
+          ‘FALSE’ (the default), start in a non-suspended state.
+
+priority: An integer or numeric that controls the priority with which
+          this observer should be executed. A higher value means higher
+          priority: an observer with a higher priority value will
+          execute before all observers with lower priority values.
+          Positive, negative, and zero values are allowed.
+
+  domain: See domains.
+
+autoDestroy: If ‘TRUE’ (the default), the observer will be
+          automatically destroyed when its domain (if any) ends.
+
+..stacktraceon: Advanced use only. For stack manipulation purposes; see
+          ‘stacktrace()’.
+
+_D_e_t_a_i_l_s:
+
+     An observer is like a reactive expression in that it can read
+     reactive values and call reactive expressions, and will
+     automatically re-execute when those dependencies change. But
+     unlike reactive expressions, it doesn't yield a result and can't
+     be used as an input to other reactive expressions. Thus, observers
+     are only useful for their side effects (for example, performing
+     I/O).
+
+     Another contrast between reactive expressions and observers is
+     their execution strategy. Reactive expressions use lazy
+     evaluation; that is, when their dependencies change, they don't
+     re-execute right away but rather wait until they are called by
+     someone else. Indeed, if they are not called then they will never
+     re-execute. In contrast, observers use eager evaluation; as soon
+     as their dependencies change, they schedule themselves to
+     re-execute.
+
+     Starting with Shiny 0.10.0, observers are automatically destroyed
+     by default when the domain that owns them ends (e.g. when a Shiny
+     session ends).
+
+_V_a_l_u_e:
+
+     An observer reference class object. This object has the following
+     methods:
+
+     ‘suspend()’ Causes this observer to stop scheduling flushes
+          (re-executions) in response to invalidations. If the observer
+          was invalidated prior to this call but it has not re-executed
+          yet then that re-execution will still occur, because the
+          flush is already scheduled.
+
+     ‘resume()’ Causes this observer to start re-executing in response
+          to invalidations. If the observer was invalidated while
+          suspended, then it will schedule itself for re-execution.
+
+     ‘destroy()’ Stops the observer from executing ever again, even if
+          it is currently scheduled for re-execution.
+
+     ‘setPriority(priority = 0)’ Change this observer's priority. Note
+          that if the observer is currently invalidated, then the
+          change in priority will not take effect until the next
+          invalidation-unless the observer is also currently suspended,
+          in which case the priority change will be effective upon
+          resume.
+
+     ‘setAutoDestroy(autoDestroy)’ Sets whether this observer should be
+          automatically destroyed when its domain (if any) ends. If
+          autoDestroy is TRUE and the domain already ended, then
+          destroy() is called immediately."
+
+     ‘onInvalidate(callback)’ Register a callback function to run when
+          this observer is invalidated. No arguments will be provided
+          to the callback function when it is invoked.
+
+_E_x_a_m_p_l_e_s:
+
+     values <- reactiveValues(A=1)
+     
+     obsB <- observe({
+       print(values$A + 1)
+     })
+     
+     # To store expressions for later conversion to observe, use rlang::quo()
+     myquo <- rlang::quo({ print(values$A + 3) })
+     obsC <- rlang::inject(observe(!!myquo))
+     
+     # (Legacy) Can use quoted expressions
+     obsD <- observe(quote({ print(values$A + 2) }), quoted = TRUE)
+     
+     # In a normal Shiny app, the web client will trigger flush events. If you
+     # are at the console, you can force a flush with flushReact()
+     shiny:::flushReact()
+     
+_A_d_d _c_a_l_l_b_a_c_k_s _f_o_r _S_h_i_n_y _s_e_s_s_i_o_n _e_v_e_n_t_s
+
+_D_e_s_c_r_i_p_t_i_o_n:
+
+     These functions are for registering callbacks on Shiny session
+     events. ‘onFlush’ registers a function that will be called before
+     Shiny flushes the reactive system. ‘onFlushed’ registers a
+     function that will be called after Shiny flushes the reactive
+     system. ‘onUnhandledError’ registers a function to be called when
+     an unhandled error occurs before the session is closed.
+     ‘onSessionEnded’ registers a function to be called after the
+     client has disconnected.
+
+     These functions should be called within the application's server
+     function.
+
+     All of these functions return a function which can be called with
+     no arguments to cancel the registration.
+
+_U_s_a_g_e:
+
+     onFlush(fun, once = TRUE, session = getDefaultReactiveDomain())
+     
+     onFlushed(fun, once = TRUE, session = getDefaultReactiveDomain())
+     
+     onSessionEnded(fun, session = getDefaultReactiveDomain())
+     
+     onUnhandledError(fun, session = getDefaultReactiveDomain())
+     
+_A_r_g_u_m_e_n_t_s:
+
+     fun: A callback function.
+
+    once: Should the function be run once, and then cleared, or should
+          it re-run each time the event occurs. (Only for ‘onFlush’ and
+          ‘onFlushed’.)
+
+ session: A shiny session object.
+
+_U_n_h_a_n_d_l_e_d _E_r_r_o_r_s:
+
+     Unhandled errors are errors that aren't otherwise handled by Shiny
+     or by the application logic. In other words, they are errors that
+     will either cause the application to crash or will result in
+     "Error" output in the UI.
+
+     You can use ‘onUnhandledError()’ to register a function that will
+     be called when an unhandled error occurs. This function will be
+     called with the error object as its first argument. If the error
+     is fatal and will result in the session closing, the error
+     condition will have the ‘shiny.error.fatal’ class.
+
+     Note that the ‘onUnhandledError()’ callbacks cannot be used to
+     prevent the app from closing or to modify the error condition.
+     Instead, they are intended to give you an opportunity to log the
+     error or perform other cleanup operations.
+
+_S_e_e _A_l_s_o:
+
+     ‘onStop()’ for registering callbacks that will be invoked when the
+     application exits, or when a session ends.
+
+_E_x_a_m_p_l_e_s:
+
+     library(shiny)
+     
+     ui <- fixedPage(
+       markdown(c(
+         "Set the number to 8 or higher to cause an error",
+         "in the `renderText()` output."
+       )),
+       sliderInput("number", "Number", 0, 10, 4),
+       textOutput("text"),
+       hr(),
+       markdown(c(
+         "Click the button below to crash the app with an unhandled error",
+         "in an `observe()` block."
+       )),
+       actionButton("crash", "Crash the app!")
+     )
+     
+     log_event <- function(level, ...) {
+       ts <- strftime(Sys.time(), " [%F %T] ")
+       message(level, ts, ...)
+     }
+     
+     server <- function(input, output, session) {
+       log_event("INFO", "Session started")
+     
+       onUnhandledError(function(err) {
+         # log the unhandled error
+         level <- if (inherits(err, "shiny.error.fatal")) "FATAL" else "ERROR"
+         log_event(level, conditionMessage(err))
+       })
+     
+       onStop(function() {
+         log_event("INFO", "Session ended")
+       })
+     
+       observeEvent(input$crash, stop("Oops, an unhandled error happened!"))
+     
+       output$text <- renderText({
+         if (input$number > 7) {
+           stop("that's too high!")
+         }
+         sprintf("You picked number %d.", input$number)
+       })
+     }
+     
+     shinyApp(ui, server)
+     

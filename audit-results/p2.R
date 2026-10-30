@@ -1,0 +1,6 @@
+suppressMessages(pkgload::load_all(".", quiet = TRUE))
+a <- app(label("x"))
+print(tryCatch(a$layout_diagnostics(Inf, 3), error=function(e) conditionMessage(e)))
+print(tryCatch(a$layout_diagnostics(1e9, 1e9), error=function(e) conditionMessage(e)))
+print(tryCatch(termr:::check_count(Inf,"w"), error=function(e) conditionMessage(e)))
+print(tryCatch(app(label("x"))$layout_diagnostics(3e9, 3), error=function(e) conditionMessage(e)))

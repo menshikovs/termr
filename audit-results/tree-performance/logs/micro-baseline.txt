@@ -1,0 +1,17 @@
+# A tibble: 9 × 4
+  expression        median mem_alloc n_itr
+  <bch:expr>      <bch:tm> <bch:byt> <int>
+1 parse_size_fr     79.6µs     2.4KB  5947
+2 parse_size_auto   70.5µs  176.48KB  6770
+3 parse_size_num     6.9µs   80.66KB  9996
+4 style_default    183.1µs      528B  2586
+5 label_new       481.85µs    7.23KB   720
+6 input_new         1.48ms  185.59KB   309
+7 button_new        1.26ms    9.44KB   346
+8 horizontal_new   572.6µs    7.12KB   634
+9 r6_empty         624.8µs    1.26KB   698
+# A tibble: 2 × 3
+  expression           median mem_alloc
+  <bch:expr>         <bch:tm> <bch:byt>
+1 default_style_call  286.4µs      528B
+2 computed_style        2.2µs        0B

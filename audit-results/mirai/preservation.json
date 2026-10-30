@@ -1,0 +1,16 @@
+{
+  "initial_files": 483,
+  "changed": [
+    "ARCHITECTURE.md",
+    "DESCRIPTION",
+    "NAMESPACE",
+    "NEWS.md",
+    "README.md",
+    "docs/api-inventory.md",
+    "docs/stability.md",
+    "docs/workers.md"
+  ],
+  "unexpected": [],
+  "preserved": 475,
+  "unstaged_index": true
+}

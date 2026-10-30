@@ -1,0 +1,173 @@
+{
+  "status": "Source: live | reconnect: FALSE | gaps: 35 | sequence: 305 | updated: 2026-10-29 20:07:24 UTC ",
+  "methods": {
+    "extendTraces": 40,
+    "restyle": 1
+  },
+  "points": [
+    43,
+    43
+  ],
+  "frames": [
+    {
+      "method": "extendTraces",
+      "at": 1793304424604,
+      "browserUpdateMs": 18.899999998509884,
+      "endToEndMs": 171,
+      "points": 24,
+      "lastKey": "p1950-1793304123622018-file79e2ed25115:286"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304425630,
+      "browserUpdateMs": 17.400000005960464,
+      "endToEndMs": 131,
+      "points": 25,
+      "lastKey": "p1950-1793304123622018-file79e2ed25115:287"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304426773,
+      "browserUpdateMs": 17,
+      "endToEndMs": 211,
+      "points": 26,
+      "lastKey": "p1950-1793304123622018-file79e2ed25115:288"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304427822,
+      "browserUpdateMs": 19.299999997019768,
+      "endToEndMs": 129,
+      "points": 27,
+      "lastKey": "p1950-1793304123622018-file79e2ed25115:289"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304428921,
+      "browserUpdateMs": 19.600000001490116,
+      "endToEndMs": 173,
+      "points": 28,
+      "lastKey": "p1950-1793304123622018-file79e2ed25115:290"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304430035,
+      "browserUpdateMs": 24.700000002980232,
+      "endToEndMs": 225,
+      "points": 29,
+      "lastKey": "p1950-1793304123622018-file79e2ed25115:291"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304431048,
+      "browserUpdateMs": 24.5,
+      "endToEndMs": 127,
+      "points": 30,
+      "lastKey": "p1950-1793304123622018-file79e2ed25115:292"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304432122,
+      "browserUpdateMs": 17.30000000447035,
+      "endToEndMs": 146,
+      "points": 31,
+      "lastKey": "p1950-1793304123622018-file79e2ed25115:293"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304433226,
+      "browserUpdateMs": 15.800000004470348,
+      "endToEndMs": 189,
+      "points": 32,
+      "lastKey": "p1950-1793304123622018-file79e2ed25115:294"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304434227,
+      "browserUpdateMs": 15.399999998509884,
+      "endToEndMs": 100,
+      "points": 33,
+      "lastKey": "p1950-1793304123622018-file79e2ed25115:295"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304435331,
+      "browserUpdateMs": 17,
+      "endToEndMs": 152,
+      "points": 34,
+      "lastKey": "p1950-1793304123622018-file79e2ed25115:296"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304436394,
+      "browserUpdateMs": 21,
+      "endToEndMs": 112,
+      "points": 35,
+      "lastKey": "p1950-1793304123622018-file79e2ed25115:297"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304437495,
+      "browserUpdateMs": 18.899999998509884,
+      "endToEndMs": 143,
+      "points": 36,
+      "lastKey": "p1950-1793304123622018-file79e2ed25115:298"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304438693,
+      "browserUpdateMs": 20,
+      "endToEndMs": 245,
+      "points": 37,
+      "lastKey": "p1950-1793304123622018-file79e2ed25115:299"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304439711,
+      "browserUpdateMs": 16.899999998509884,
+      "endToEndMs": 133,
+      "points": 38,
+      "lastKey": "p1950-1793304123622018-file79e2ed25115:300"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304440820,
+      "browserUpdateMs": 18.399999998509884,
+      "endToEndMs": 180,
+      "points": 39,
+      "lastKey": "p1950-1793304123622018-file79e2ed25115:301"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304441923,
+      "browserUpdateMs": 18.799999997019768,
+      "endToEndMs": 194,
+      "points": 40,
+      "lastKey": "p1950-1793304123622018-file79e2ed25115:302"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304443022,
+      "browserUpdateMs": 17.100000001490116,
+      "endToEndMs": 191,
+      "points": 41,
+      "lastKey": "p1950-1793304123622018-file79e2ed25115:303"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304443982,
+      "browserUpdateMs": 18,
+      "endToEndMs": 84,
+      "points": 42,
+      "lastKey": "p1950-1793304123622018-file79e2ed25115:304"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304445073,
+      "browserUpdateMs": 21.100000001490116,
+      "endToEndMs": 129,
+      "points": 43,
+      "lastKey": "p1950-1793304123622018-file79e2ed25115:305"
+    }
+  ]
+}

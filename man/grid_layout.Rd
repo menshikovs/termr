@@ -11,7 +11,8 @@ grid_layout(
   gap = 0L,
   id = NULL,
   classes = NULL,
-  style = NULL
+  style = NULL,
+  visible = TRUE
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ grid_layout(
 \item{classes}{Optional classes.}
 
 \item{style}{A \code{\link[=style]{style()}}.}
+
+\item{visible}{Is the container shown initially?}
 }
 \value{
 A \code{Grid} widget.

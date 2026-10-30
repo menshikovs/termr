@@ -1,0 +1,11 @@
+Loading required package: shiny
+
+Attaching package: ‘shiny’
+
+The following objects are masked from ‘package:termr’:
+
+    column, reactive, span
+
+PASS live Shiny metrics, bounded history plot and status rendering
+PASS Shiny stale after publisher stop
+PASS Shiny restart resync and session cleanup

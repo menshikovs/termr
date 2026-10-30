@@ -1,0 +1,1 @@
+{"latest":{"n":200,"sent_at":1793293247.17318},"status":{"state":"live","source_id":"p4988-1793293243520378-file137c4dd664e8","sequence":201,"gaps":54,"invalid":0,"resyncs":43,"last_error":null,"needs_sync":false,"pending":1},"delivered":147,"latency_ms":{"50%":31.9910049438477,"95%":66.0914778709412,"99%":79.5041441917419},"rss_bytes":84889600,"history":16}

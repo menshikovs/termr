@@ -1,0 +1,146 @@
+ℹ Setting RoxygenNote to "7.3.3"
+ℹ Loading termr
+✖ testing.R:100: Undocumented R6 methods: initialize, press, type, paste,
+  system_clipboard, resize, advance, step, click, hover, scroll, mouse, drag,
+  focus, find, wait_for, run_worker, wait_for_workers, …, query_one, and stop.
+✖ testing.R:100: Undocumented R6 fields: app, driver, exited, and value.
+✖ testing.R:100: Must use one @param for each argument.
+✖ $initialize(app) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $initialize(width) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $initialize(height) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $initialize(color_mode) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $press(...) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $type(text) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $paste(text) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $resize(width) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $resize(height) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $advance(seconds) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $click(target) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $click(y) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $click(button) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $hover(target) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $hover(y) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $scroll(target) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $scroll(direction) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $scroll(times) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $scroll(y) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $mouse(action) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $mouse(x) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $mouse(y) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $mouse(button) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $mouse(direction) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $mouse(...) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $drag(from) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $drag(to) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $drag(button) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $drag(steps) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $focus(target) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $find(selector) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $wait_for(condition) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $wait_for(timeout) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $wait_for(interval) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $run_worker(fn) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $run_worker(...) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $run_worker(wait) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $wait_for_workers(timeout) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $query(selector) is not documented
+✖ testing.R:100: Must use one @param for each argument.
+✖ $query_one(selector) is not documented
+✖ widget-datatable.R:88: Unknown R6 fields: offset_row and offset_column.
+✖ widget-scroll.R:6: Unknown R6 fields: offset_x and offset_y.
+✖ widget-textarea.R:5: Unknown R6 fields: cursor_row, cursor_column, can_undo,
+  and can_redo.
+✖ widget-textarea.R:5: Must use one @param for each argument.
+✖ $initialize(highlighter) is not documented
+✖ widget-textarea.R:5: Must use one @param for each argument.
+✖ $content_height(width) is not documented
+✖ widget-workflows.R:7: Undocumented R6 field: paint_states.
+✖ widget-workflows.R:7: Must use one @param for each argument.
+✖ $initialize(disabled) is not documented
+✖ widget-workflows.R:436: Must use one @param for each argument.
+✖ $initialize(disabled) is not documented
+✖ In topic 'Pilot.Rd': Skipping; no name and/or title.
+Writing 'NAMESPACE'
+Writing 'Animation.Rd'
+Writing 'App-class.Rd'
+Writing 'Event.Rd'
+Writing 'MarkdownView-class.Rd'
+Writing 'Toast.Rd'
+Writing 'ScreenBuffer.Rd'
+Writing 'ModalScreen.Rd'
+Writing 'Panel-class.Rd'
+Writing 'termr-package.Rd'
+Writing 'Timer.Rd'
+Writing 'nanonext_transport.Rd'
+Writing 'Button-class.Rd'
+Writing 'Screen.Rd'
+Writing 'Vertical-class.Rd'
+Writing 'Horizontal-class.Rd'
+Writing 'Grid.Rd'
+Writing 'Checkbox-class.Rd'
+Writing 'RadioButton.Rd'
+Writing 'RadioSet-class.Rd'
+Writing 'Select-class.Rd'
+Writing 'DataTable-class.Rd'
+Writing 'ProgressBar-class.Rd'
+Writing 'Spinner-class.Rd'
+Writing 'Rule-class.Rd'
+Writing 'Sparkline-class.Rd'
+Writing 'Metric-class.Rd'
+Writing 'KeyValue-class.Rd'
+Writing 'Input-class.Rd'
+Writing 'Label-class.Rd'
+Writing 'OptionList-class.Rd'
+Writing 'LogView-class.Rd'
+Writing 'ProcessView-class.Rd'
+Writing 'ScrollView-class.Rd'
+Writing 'SplitHandle-class.Rd'
+Writing 'SplitPane-class.Rd'
+Writing 'TabPane.Rd'
+Writing 'Tabs-class.Rd'
+Writing 'TextArea-class.Rd'
+Writing 'TreeNode.Rd'
+Writing 'TreeView-class.Rd'
+Writing 'StatusBar-class.Rd'
+Writing 'PropertyGrid-class.Rd'
+Writing 'DataProfile-class.Rd'
+Writing 'Widget-class.Rd'
+Writing 'Worker.Rd'

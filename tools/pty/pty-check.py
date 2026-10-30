@@ -317,6 +317,32 @@ def normal_session():
         teardown_modes(s)
 
 
+def combined_focus_session():
+    """A single PTY write must preserve Tab-to-Enter focus ordering."""
+    with tempfile.TemporaryDirectory(prefix="termr-pty-combined-") as directory:
+        log = os.path.join(directory, "events.log")
+        os.environ["TERMR_PTY_LOG"] = log
+        s = Session(os.path.join(HERE, "hello-app.R"))
+        s.wait_for("termr demo", 60)
+        check("combined-input app ready", wait_until(lambda: "ready" in read_log(log), s, 60),
+              repr(read_log(log)))
+        s.send(b"Ada\t\r")
+        pressed = wait_until(lambda: "pressed name=Ada" in read_log(log), s, 30)
+        events = read_log(log)
+        focus_at = events.index("button focused") if "button focused" in events else -1
+        press_at = events.index("pressed name=Ada") if "pressed name=Ada" in events else -1
+        check("one PTY write delivers text, Tab focus and Enter activation in order",
+              pressed and focus_at >= 0 and press_at > focus_at,
+              f"events={events!r}; screen tail={strip(s.output)[-300:]!r}")
+        check("combined Tab+Enter fires focus and press once",
+              events.count("button focused") == 1 and events.count("pressed name=Ada") == 1,
+              repr(events))
+        s.send("\x03")
+        check("combined-input app exits normally", s.wait_exit() == 0, f"status {s.status}")
+        teardown_modes(s)
+        s.close()
+
+
 def read_log(path):
     try:
         with open(path, encoding="utf-8") as f:
@@ -625,13 +651,13 @@ def run_cases(cases):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--case", choices=("stdin_fallback_session", "no_tty_session"),
-                        help="run one failing session in an independent harness process")
+    parser.add_argument("--case", choices=("combined_focus_session", "stdin_fallback_session", "no_tty_session"),
+                        help="run one named session in an independent harness process")
     parser.add_argument("--exclude-case", action="append", default=[],
-                        choices=("stdin_fallback_session", "no_tty_session"))
+                        choices=("combined_focus_session", "stdin_fallback_session", "no_tty_session"))
     options = parser.parse_args()
     require_current_install()
-    cases = [normal_session, keys_session, fragments_session, error_session,
+    cases = [normal_session, combined_focus_session, keys_session, fragments_session, error_session,
              control_termios_session, lambda: control_termios_session(stdin_only=True),
              termios_restored, stdin_fallback_session, no_tty_session, degraded_session,
              lambda: termios_restored(stdin_only=True),

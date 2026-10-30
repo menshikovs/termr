@@ -1,0 +1,17 @@
+R version 4.5.2 (2025-10-31) 
+mirai 2.7.3 
+nanonext 1.10.3 
+promises 1.5.0 
+shiny 1.14.0 
+later 1.4.6 
+mirai: .........................................................................1
+
+══ Failed ══════════════════════════════════════════════════════════════════════
+── 1. Error ('test-mirai.R:247:3'): the read-only task stream can publish throug
+Error: `stream` must be an open, named termr_stream().
+Backtrace:
+    ▆
+ 1. └─termr::termr_nano_publish(pool$events, "tcp://127.0.0.1:0") at test-mirai.R:247:3
+
+══ DONE ════════════════════════════════════════════════════════════════════════
+TOTAL 73 expectations; 0 failures; 1 errors; 0 skips; 0 warnings

@@ -53,3 +53,64 @@ test_that("span() builds styled text that can be combined", {
   expect_identical(vapply(lines[[2]], `[[`, "", "text"), c("c", "d"))
   expect_identical(line_width(lines[[1]]), 2L)
 })
+
+test_that("absurdly large cell counts are clamped instead of failing in layout", {
+  huge <- list(Inf, 1e10, 2^31, .Machine$integer.max)
+  props <- c("width", "height", "min_width", "max_width", "min_height", "max_height", "margin", "padding")
+  for (prop in props) {
+    for (v in huge) {
+      a <- app(vertical(label("hello", style = do.call(style, stats::setNames(list(v), prop))), label("x")))
+      pilot <- test_app(a, 20, 4)
+      expect_no_error(pilot$step())
+      expect_identical(pilot$screen_text(), compose_frame(a$screen, 20L, 4L)$to_text())
+      pilot$stop()
+    }
+  }
+  a <- app(horizontal(label("a", style = style(width = .Machine$integer.max)),
+                      label("b", style = style(width = .Machine$integer.max))))
+  expect_no_error(test_app(a, 10, 2)$stop())
+})
+
+test_that("unusable grid track counts are rejected up front and gaps are clamped", {
+  for (v in list(Inf, 1e10, .Machine$integer.max)) {
+    expect_error(style(grid_columns = v), "grid_columns")
+    expect_error(style(grid_rows = v), "grid_rows")
+  }
+  expect_no_error(style(grid_gap = Inf))
+  expect_error(style(grid_gap = NA), "grid_gap")
+})
+
+test_that("clamping keeps the original rounding of cell values", {
+  expect_identical(style(margin = 1.9)$props$margin, rep(1L, 4L))
+  expect_identical(style(min_width = 2.7)$props$min_width, 2L)
+  expect_identical(parse_size(2.5)$value, 2L)
+  expect_identical(parse_size(3.5)$value, 4L)
+  expect_identical(parse_size("12")$value, 12L)
+})
+
+test_that("parse_size results are stable under repeated and cached parsing", {
+  reference <- function(s) {
+    s <- tolower(trimws(s))
+    if (s == "auto") return(list(type = "auto", value = NA_real_))
+    if (grepl("^[0-9]*[.]?[0-9]+fr$", s)) return(list(type = "fr", value = as.numeric(sub("fr$", "", s))))
+    if (grepl("^[0-9]*[.]?[0-9]+%$", s)) return(list(type = "percent", value = as.numeric(sub("%$", "", s)) / 100))
+    list(type = "fixed", value = as.integer(s))
+  }
+  inputs <- c("auto", "AUTO", " auto ", "1fr", "2.5fr", ".5fr", "3FR", "50%", "12.5%", "100%", "0%", "7", "007", "12")
+  for (round_ in 1:3) for (s in inputs) {
+    got <- parse_size(s)
+    want <- reference(s)
+    expect_identical(unclass(got)$type, want$type)
+    expect_equal(unclass(got)$value, want$value)
+  }
+  # a returned spec can be modified by the caller without affecting later parses
+  first <- parse_size("1fr")
+  first$value <- 99
+  expect_equal(parse_size("1fr")$value, 1)
+  for (bad in c("", NA_character_, "fr", "-1fr", "1e9fr", "NaN%", "1 fr", "abc")) {
+    expect_error(parse_size(bad), "Invalid")
+    expect_error(parse_size(bad), "Invalid")
+  }
+  for (i in 1:2000) parse_size(paste0(i, "fr"))
+  expect_equal(parse_size("1999fr")$value, 1999)
+})

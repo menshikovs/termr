@@ -70,6 +70,8 @@ compose_frame <- function(screen, width, height) {
 #' * `focus(target)`, `find(selector)`: focus a widget, find one;
 #' * `wait_for(condition, timeout = 5)`: step the event loop (simulated time, real time
 #'   while workers run) until `condition(app)` is `TRUE`;
+#' * `wait_until_exit(timeout = 5)`: step until the app exits and return its
+#'   exit value, including when it has already exited;
 #' * `run_worker(fn, ..., wait = TRUE)`: start a worker and wait for it;
 #' * `wait_for_workers(timeout)`: wait for background workers to finish;
 #' * `screen_text()`: the visible screen as a character vector;
@@ -224,6 +226,33 @@ Pilot <- R6::R6Class(
                       private$worker_diagnostics()), call. = FALSE)
         }
         if (busy) Sys.sleep(0.02)
+        self$advance(interval)
+        waited <- waited + interval
+      }
+    },
+
+    #' @description Wait for the app to exit and return its exit value.
+    #'   Timers advance in simulated time; while workers run, real time is
+    #'   used. Calling this after the app has exited returns immediately.
+    #' @param timeout Maximum wait in seconds.
+    #' @param interval Time advanced between checks, in seconds.
+    wait_until_exit = function(timeout = 5, interval = 0.05) {
+      if (!is_scalar_number(timeout) || !is.finite(timeout) || timeout < 0) {
+        stop("`timeout` must be a finite non-negative number.", call. = FALSE)
+      }
+      if (!is_scalar_number(interval) || !is.finite(interval) || interval <= 0) {
+        stop("`interval` must be a finite positive number.", call. = FALSE)
+      }
+      waited <- 0
+      real_deadline <- now_seconds() + timeout
+      repeat {
+        if (self$exited) return(invisible(self$value))
+        busy <- length(self$app$workers()) > 0L
+        if ((busy && now_seconds() > real_deadline) || (!busy && waited >= timeout)) {
+          stop(paste0("wait_until_exit(): the app did not exit within ",
+                      format(timeout), " seconds.", private$worker_diagnostics()), call. = FALSE)
+        }
+        if (busy) Sys.sleep(min(0.02, max(0, real_deadline - now_seconds())))
         self$advance(interval)
         waited <- waited + interval
       }

@@ -30,9 +30,16 @@ Imports:
     utils
 Suggests:
     DBI,
+    ggplot2,
+    htmlwidgets,
     jsonlite,
     knitr,
+    mirai (>= 2.7.3),
+    nanonext (>= 1.10.0),
+    plotly,
+    promises,
     RSQLite,
+    shiny,
     testthat (>= 3.0.0),
     withr
 Config/testthat/edition: 3

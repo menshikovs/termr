@@ -1,0 +1,36 @@
+{
+  "reactive_sequence": "empty",
+  "status": {
+    "state": "unavailable",
+    "source_id": null,
+    "sequence": 0,
+    "timestamp": null,
+    "generation": 0,
+    "gaps": 0,
+    "invalid": false,
+    "message": null,
+    "reconnecting": true
+  },
+  "source_status": {
+    "state": "connecting",
+    "source_id": null,
+    "sequence": 0,
+    "gaps": 0,
+    "invalid": 0,
+    "resyncs": 0,
+    "last_error": null,
+    "needs_sync": true,
+    "pending": 1
+  },
+  "diagnostics": {
+    "sessions": 1,
+    "observers": 1,
+    "polls": 196,
+    "processed": 0,
+    "coalesced": 0,
+    "duplicates": 0,
+    "out_of_order": 0,
+    "poll_errors": 0,
+    "history": 0
+  }
+}

@@ -57,6 +57,7 @@ App <- R6::R6Class(
         for (sheet in sheets) self$add_stylesheet(sheet)
       }
       private$.mouse <- mouse
+      private$.focus_target_marker <- new.env(parent = emptyenv())
       private$.queue <- EventQueue$new()
       private$.focus <- FocusManager$new(self)
       private$.timers <- TimerManager$new(function() private$clock())
@@ -165,6 +166,32 @@ App <- R6::R6Class(
 
     #' @description The recorded events as a data frame (see `log_events()`).
     event_log = function() private$.event_log,
+
+    #' @description Inspect the current screen for content that exceeds a
+    #'   widget's allocated content box. This runs a layout pass but does not
+    #'   render, warn or change the normal layout policy. Dimensions default
+    #'   to the current app size. Scroll-view clipping is treated as
+    #'   intentional and is not reported.
+    #' @param width,height Terminal dimensions to inspect; omitted values use
+    #'   the current app size.
+    #' @return A data frame with widget, ID, available and required dimensions,
+    #'   clipping direction and an assessment that fixed-size clipping may be
+    #'   intentional.
+    layout_diagnostics = function(width = NULL, height = NULL) {
+      current_size <- private$.size
+      size <- current_size
+      if (!is.null(width)) size[["width"]] <- check_count(width, "width")
+      if (!is.null(height)) size[["height"]] <- check_count(height, "height")
+      if (anyNA(size) || any(size < 1L)) stop("`width` and `height` must be positive.", call. = FALSE)
+      if (!identical(size, current_size)) {
+        on.exit(
+          layout_tree(self$screen, rect(1L, 1L, current_size[["width"]], current_size[["height"]])),
+          add = TRUE
+        )
+      }
+      layout_tree(self$screen, rect(1L, 1L, size[["width"]], size[["height"]]))
+      collect_layout_diagnostics(self$screen)
+    },
 
     #' @description Show or hide the debug overlay (also F12 with
     #'   `app(debug = TRUE)`).
@@ -555,6 +582,7 @@ App <- R6::R6Class(
     .actions = list(),
     .later = list(),
     .focus = NULL,
+    .focus_target_marker = NULL,
     .reveal = NULL,
     .debug = NULL,
     .debug_timer = NULL,
@@ -718,7 +746,9 @@ App <- R6::R6Class(
         private$.needs_repaint <- TRUE
         event$target <- self$screen
       } else if (inherits(event, "KeyEvent") || inherits(event, "PasteEvent")) {
-        event$target <- private$.focus$focused %||% self$screen
+        # Resolve focus at dispatch time so a Tab followed by Enter in one
+        # read can target the widget that receives focus after Tab.
+        event$target <- private$.focus_target_marker
       } else if (inherits(event, "MouseEvent")) {
         return(private$route_mouse(event))
       }
@@ -938,7 +968,7 @@ App <- R6::R6Class(
         # Repaint the regions of changed widgets (and of widgets that moved
         # or were resized, old and new place) into a copy of the last frame.
         frame <- previous$copy()
-        rects <- dirty_rects(private$.dirty, bounds, extra = changes)
+        rects <- dirty_rects(private$.dirty, bounds, extra = changes, frame = previous)
         for (clip in rects) {
           frame$fill(clip)
           paint_layers(frame, layers, overlays, private$.theme, clip)
@@ -975,6 +1005,9 @@ App <- R6::R6Class(
     # Dispatch --------------------------------------------------------------
 
     dispatch = function(event) {
+      if (identical(event$target, private$.focus_target_marker)) {
+        event$target <- private$.focus$focused %||% self$screen
+      }
       target <- event$target %||% self$screen
       lifecycle_event <- inherits(event, c("MountEvent", "UnmountEvent")) ||
         event$type %in% c("screen.show", "screen.hide")

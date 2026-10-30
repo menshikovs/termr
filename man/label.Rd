@@ -4,7 +4,14 @@
 \alias{label}
 \title{Text label}
 \usage{
-label(text = "", id = NULL, classes = NULL, style = NULL, wrap = NULL)
+label(
+  text = "",
+  id = NULL,
+  classes = NULL,
+  style = NULL,
+  wrap = NULL,
+  visible = TRUE
+)
 }
 \arguments{
 \item{text}{A string, a character vector (one element per line), a
@@ -19,6 +26,8 @@ re-evaluated whenever the \code{\link[=signal]{signal()}}s it reads change.}
 
 \item{wrap}{Shortcut for \code{style(wrap = )}: \code{"none"}, \code{"word"} or
 \code{"char"}.}
+
+\item{visible}{Is the label shown initially?}
 }
 \value{
 A \code{Label} widget. Change its text with \verb{$update()} or by

@@ -1,0 +1,10 @@
+suppressMessages(pkgload::load_all(".", quiet = TRUE))
+a <- app(vertical(label("s", id = "l"))); fired <- 0L
+a$on("key", function(ev, app) if (ev$key == "q") app$exit("bye"))
+a$on("unmount", function(ev, app) { fired <<- fired + 1L; stop("unmount boom") })
+p <- test_app(a, 20, 3)
+r <- withCallingHandlers(tryCatch({ p$press("q"); "no error" }, error = function(e) paste("error:", conditionMessage(e))), warning = function(w) { cat("WARNING:", conditionMessage(w), "\n"); invokeRestart("muffleWarning") })
+cat("result:", r, "| unmount handler fired:", fired, "| exited:", p$exited, "\n")
+a2 <- app(vertical(label("s", id = "l"))); a2$on("key", function(ev, app) if (ev$key == "q") app$query_one("#l")$remove())
+a2$on("unmount", function(ev, app) { fired <<- fired + 100L; stop("unmount boom 2") }); p2 <- test_app(a2, 20, 3)
+cat("remove widget with failing unmount handler:", tryCatch({ p2$press("q"); "no error" }, error = function(e) paste("error:", conditionMessage(e))), "| fired:", fired, "\n")

@@ -12,3 +12,7 @@
 ^pkgdown$
 ^_pkgdown\.yml$
 ^vignettes/articles$
+^audit-results$
+^\.playwright-mcp$
+^tests/testthat/_snaps/.*\.new\.md$
+^tests/testthat/_problems$

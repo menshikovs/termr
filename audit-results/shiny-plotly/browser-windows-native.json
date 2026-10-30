@@ -1,0 +1,157 @@
+{
+  "status": "Source: live | reconnect: FALSE | gaps: 31 | sequence: 81 | updated: 2026-10-29 20:09:58 UTC ",
+  "methods": {
+    "extendTraces": 17,
+    "restyle": 1
+  },
+  "points": [
+    50,
+    50
+  ],
+  "frames": [
+    {
+      "method": "restyle",
+      "at": 1793304571902,
+      "browserUpdateMs": 48.900000005960464,
+      "endToEndMs": 1204,
+      "points": 34,
+      "lastKey": "p22568-1793304458469133-file58287e13557a:64"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304572612,
+      "browserUpdateMs": 18.700000002980232,
+      "endToEndMs": 175,
+      "points": 35,
+      "lastKey": "p22568-1793304458469133-file58287e13557a:65"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304574405,
+      "browserUpdateMs": 17.100000001490116,
+      "endToEndMs": 155,
+      "points": 36,
+      "lastKey": "p22568-1793304458469133-file58287e13557a:66"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304576172,
+      "browserUpdateMs": 19.799999997019768,
+      "endToEndMs": 167,
+      "points": 37,
+      "lastKey": "p22568-1793304458469133-file58287e13557a:67"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304577961,
+      "browserUpdateMs": 17.599999994039536,
+      "endToEndMs": 149,
+      "points": 38,
+      "lastKey": "p22568-1793304458469133-file58287e13557a:68"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304579753,
+      "browserUpdateMs": 17.799999997019768,
+      "endToEndMs": 155,
+      "points": 39,
+      "lastKey": "p22568-1793304458469133-file58287e13557a:69"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304581426,
+      "browserUpdateMs": 17.5,
+      "endToEndMs": 146,
+      "points": 40,
+      "lastKey": "p22568-1793304458469133-file58287e13557a:70"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304583153,
+      "browserUpdateMs": 19,
+      "endToEndMs": 169,
+      "points": 41,
+      "lastKey": "p22568-1793304458469133-file58287e13557a:71"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304584926,
+      "browserUpdateMs": 18.100000001490116,
+      "endToEndMs": 154,
+      "points": 42,
+      "lastKey": "p22568-1793304458469133-file58287e13557a:72"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304586670,
+      "browserUpdateMs": 17.80000000447035,
+      "endToEndMs": 153,
+      "points": 43,
+      "lastKey": "p22568-1793304458469133-file58287e13557a:73"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304588302,
+      "browserUpdateMs": 18.700000002980232,
+      "endToEndMs": 90,
+      "points": 44,
+      "lastKey": "p22568-1793304458469133-file58287e13557a:74"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304589731,
+      "browserUpdateMs": 18.799999997019768,
+      "endToEndMs": 84,
+      "points": 45,
+      "lastKey": "p22568-1793304458469133-file58287e13557a:75"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304591283,
+      "browserUpdateMs": 10.899999998509884,
+      "endToEndMs": 96,
+      "points": 46,
+      "lastKey": "p22568-1793304458469133-file58287e13557a:76"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304592704,
+      "browserUpdateMs": 23.899999998509884,
+      "endToEndMs": 118,
+      "points": 47,
+      "lastKey": "p22568-1793304458469133-file58287e13557a:77"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304594079,
+      "browserUpdateMs": 18.399999998509884,
+      "endToEndMs": 121,
+      "points": 48,
+      "lastKey": "p22568-1793304458469133-file58287e13557a:78"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304595405,
+      "browserUpdateMs": 10.599999994039536,
+      "endToEndMs": 71,
+      "points": 49,
+      "lastKey": "p22568-1793304458469133-file58287e13557a:79"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304596789,
+      "browserUpdateMs": 10.5,
+      "endToEndMs": 111,
+      "points": 50,
+      "lastKey": "p22568-1793304458469133-file58287e13557a:80"
+    },
+    {
+      "method": "extendTraces",
+      "at": 1793304598141,
+      "browserUpdateMs": 9.700000002980232,
+      "endToEndMs": 87,
+      "points": 50,
+      "lastKey": "p22568-1793304458469133-file58287e13557a:81"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+source("audit-results/mirai/environment.R")
+Sys.setenv(NOT_CRAN = "true")
+args <- commandArgs(trailingOnly = TRUE)
+result <- testthat::test_local(".", filter = if (length(args)) args[[1L]] else "mirai", reporter = "summary", stop_on_failure = FALSE)
+data <- as.data.frame(result)
+cat("TOTAL", sum(data$nb), "expectations;", sum(data$failed), "failures;", sum(data$error), "errors;", sum(data$skipped), "skips;", sum(data$warning), "warnings\n")
+if (any(data$failed > 0 | data$error)) quit(status = 1L)

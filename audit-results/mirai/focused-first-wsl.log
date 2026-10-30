@@ -1,0 +1,26 @@
+R version 4.5.2 (2025-10-31) 
+mirai 2.7.3 
+nanonext 1.10.3 
+promises 1.5.0 
+shiny 1.14.0 
+later 1.4.6 
+mirai: .........................1...................2
+
+══ Failed ══════════════════════════════════════════════════════════════════════
+── 1. Error ('test-mirai.R:69:3'): reference inputs and excessive admission fail
+Error: Serialized task inputs exceed `max_input_bytes`.
+Backtrace:
+    ▆
+ 1. └─pool$submit(function() Sys.sleep(5)) at test-mirai.R:69:3
+ 2.   └─termr:::termr_mirai_submit(...) at r_textualize/R/tasks_mirai.R:233:5
+ 3.     └─termr:::mirai_prepare_job(fn, args, packages, state$max_input_bytes) at r_textualize/R/tasks_mirai.R:303:3
+
+── 2. Failure ('test-mirai.R:156:3'): progress cannot roll back after an unknown
+Expected `pool$diagnostics()$invalid_progress` to equal `before + 1L`.
+Differences:
+  `actual`: 0
+`expected`: 1
+
+
+══ DONE ════════════════════════════════════════════════════════════════════════
+TOTAL 45 expectations; 1 failures; 1 errors; 0 skips; 0 warnings

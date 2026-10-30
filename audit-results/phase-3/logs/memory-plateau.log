@@ -1,0 +1,14 @@
+buttons 
+  after   500 events: used 66.20 MB  (Ncells 816877, Vcells 2939963)
+  after  2000 events: used 66.50 MB  (Ncells 823161, Vcells 2941176)
+  after  5000 events: used 67.20 MB  (Ncells 836545, Vcells 2943299)
+  after  8000 events: used 67.80 MB  (Ncells 848081, Vcells 2945135)
+  after 14000 events: used 69.10 MB  (Ncells 871265, Vcells 2948895)
+  after 20000 events: used 70.30 MB  (Ncells 892853, Vcells 2952422)
+text_area_nav 
+  after   500 events: used 66.80 MB  (Ncells 823018, Vcells 2981988)
+  after  2000 events: used 67.10 MB  (Ncells 826742, Vcells 2990399)
+  after  5000 events: used 67.40 MB  (Ncells 831692, Vcells 2997586)
+  after  8000 events: used 67.70 MB  (Ncells 835226, Vcells 3002893)
+  after 14000 events: used 68.10 MB  (Ncells 842865, Vcells 3014081)
+  after 20000 events: used 68.50 MB  (Ncells 850045, Vcells 3024216)

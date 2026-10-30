@@ -1,0 +1,6 @@
+{
+  "counts": "queued 0 | running 0 | completed 1 | failed 0 | cancelled 1 | timed_out 0",
+  "tasks": "\n   task   status   duration   progress   error     \n    1: R   cancelled   0.50   0.06   Cancellation resolved by mirai; execution may still be stopping.  \n    2: R   completed   5.29   1.00     \n    ",
+  "result": "379832366",
+  "clock": "UI alive: 09:22:21.5"
+}

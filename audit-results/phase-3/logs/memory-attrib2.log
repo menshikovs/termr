@@ -1,0 +1,6 @@
+label only (no input)        8000 events: mem delta +0.00 MB (0 B/event)  0.3 ms/event
+button + tab/enter           8000 events: mem delta +1.30 MB (170 B/event)  3.9 ms/event
+input editing                8000 events: mem delta +0.10 MB (13 B/event)  7.1 ms/event
+text_area navigation only    8000 events: mem delta +0.70 MB (92 B/event)  11.6 ms/event
+text_area typing             8000 events: mem delta +0.20 MB (26 B/event)  12.1 ms/event
+data_table nav               8000 events: mem delta +0.00 MB (0 B/event)  12.1 ms/event

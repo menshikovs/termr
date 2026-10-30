@@ -1,0 +1,15 @@
+fresh process, building 3001 widgets repeatedly while keeping every tree alive:
+  build #1: 3.16 s elapsed, of which GC 0.57 s; live trees: 1; heap used 139 MB
+  build #2: 4.50 s elapsed, of which GC 0.59 s; live trees: 2; heap used 213 MB
+  build #3: 4.41 s elapsed, of which GC 0.56 s; live trees: 3; heap used 287 MB
+  build #4: 4.20 s elapsed, of which GC 0.56 s; live trees: 4; heap used 361 MB
+  build #5: 4.00 s elapsed, of which GC 0.69 s; live trees: 5; heap used 435 MB
+after releasing all trees:
+  build: 4.06 s (GC 0.18 s)
+  build: 3.92 s (GC 0.39 s)
+small tree (101 widgets) while a 3001-widget tree is alive:
+  30 x build(101 widgets): 4.32 s = 144.0 ms each
+  30 x build(101 widgets): 4.28 s = 142.7 ms each
+  30 x build(101 widgets): 4.26 s = 142.0 ms each
+  heap released: 30 x build(101 widgets): 134.0 ms each
+  heap released: 30 x build(101 widgets): 131.3 ms each

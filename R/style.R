@@ -90,10 +90,10 @@ style <- function(width = NULL, height = NULL,
 style_property_parsers <- list(
   width = function(v) parse_size(v, "width"),
   height = function(v) parse_size(v, "height"),
-  min_width = function(v) check_count(v, "min_width"),
-  max_width = function(v) check_count(v, "max_width"),
-  min_height = function(v) check_count(v, "min_height"),
-  max_height = function(v) check_count(v, "max_height"),
+  min_width = function(v) check_cells(v, "min_width"),
+  max_width = function(v) check_cells(v, "max_width"),
+  min_height = function(v) check_cells(v, "min_height"),
+  max_height = function(v) check_cells(v, "max_height"),
   margin = function(v) as_edges(v, "margin"),
   padding = function(v) as_edges(v, "padding"),
   border = function(v) check_choice(v, names(border_sets), "border"),
@@ -125,8 +125,15 @@ parse_style_props <- function(values) {
 }
 
 # Grid tracks: a number (that many "1fr" tracks) or a vector of sizes.
+max_tracks <- 10000L
+
 parse_tracks <- function(v, arg) {
-  if (is_scalar_number(v) && v >= 1 && v == round(v)) return(rep(list(size_spec("fr", 1)), v))
+  if (is_scalar_number(v) && v >= 1 && v == round(v)) {
+    if (v > max_tracks) {
+      stop(sprintf("`%s` must be at most %d tracks.", arg, max_tracks), call. = FALSE)
+    }
+    return(rep(list(size_spec("fr", 1)), v))
+  }
   if (!(is.character(v) || is.numeric(v)) || length(v) == 0L || anyNA(v)) {
     stop(sprintf("`%s` must be a number of tracks or a vector of sizes.", arg), call. = FALSE)
   }
@@ -137,7 +144,7 @@ parse_gap <- function(v) {
   if (!is.numeric(v) || !length(v) %in% 1:2 || anyNA(v) || any(v < 0)) {
     stop("`grid_gap` must be one or two non-negative numbers (rows, columns).", call. = FALSE)
   }
-  as.integer(rep_len(v, 2L))
+  clamp_cells(rep_len(v, 2L))
 }
 
 parse_span <- function(v, arg) {
@@ -209,20 +216,42 @@ format.termr_size <- function(x, ...) {
   )
 }
 
+# Parsing a size string is pure and runs for every widget's default style,
+# so successful results are memoised (bounded, keyed by the raw string).
+size_cache <- new.env(parent = emptyenv())
+size_cache_limit <- 512L
+
 parse_size <- function(x, arg = "size") {
   if (is.null(x) || inherits(x, "termr_size")) return(x)
-  if (is_scalar_number(x) && x >= 0) return(size_spec("fixed", as.integer(round(x))))
+  if (is_scalar_number(x) && x >= 0) return(size_spec("fixed", clamp_cells(round(x))))
   if (is_scalar_character(x)) {
+    usable <- !is.na(x) && nzchar(x)
+    if (usable) {
+      cached <- size_cache[[x]]
+      if (!is.null(cached)) return(cached)
+    }
+    spec <- parse_size_string(x)
+    if (!is.null(spec)) {
+      if (usable && length(size_cache) < size_cache_limit) assign(x, spec, envir = size_cache)
+      return(spec)
+    }
+  }
+  stop(sprintf(
+    "Invalid `%s`: use a number of cells, \"auto\", \"<n>fr\" or \"<n>%%\".", arg
+  ), call. = FALSE)
+}
+
+# The size for a string, or NULL when it is not a valid size.
+parse_size_string <- function(x) {
+  {
     s <- tolower(trimws(x))
     num <- "^[0-9]*\\.?[0-9]+"
     if (s == "auto") return(size_spec("auto"))
     if (grepl(paste0(num, "fr$"), s)) return(size_spec("fr", as.numeric(sub("fr$", "", s))))
     if (grepl(paste0(num, "%$"), s)) return(size_spec("percent", as.numeric(sub("%$", "", s)) / 100))
-    if (grepl("^[0-9]+$", s)) return(size_spec("fixed", as.integer(s)))
+    if (grepl("^[0-9]+$", s)) return(size_spec("fixed", clamp_cells(as.numeric(s))))
   }
-  stop(sprintf(
-    "Invalid `%s`: use a number of cells, \"auto\", \"<n>fr\" or \"<n>%%\".", arg
-  ), call. = FALSE)
+  NULL
 }
 
 # Validation helpers --------------------------------------------------------
@@ -248,6 +277,15 @@ check_count <- function(x, arg) {
     stop(sprintf("`%s` must be a non-negative number.", arg), call. = FALSE)
   }
   as.integer(x)
+}
+
+# Like check_count() for sizes in cells: huge values (including Inf) are clamped.
+check_cells <- function(x, arg) {
+  if (is.null(x)) return(NULL)
+  if (!is_scalar_number(x) || x < 0) {
+    stop(sprintf("`%s` must be a non-negative number.", arg), call. = FALSE)
+  }
+  clamp_cells(x)
 }
 
 # Resolution ----------------------------------------------------------------

@@ -1,0 +1,141 @@
+{
+  "platform": "windows",
+  "seed": 20261030,
+  "thousand": {
+    "tasks": 1000,
+    "seconds": 7.14,
+    "worker_pids": [26456, 22768, 27940, 6392],
+    "diagnostic": {
+      "pool_id": "termr-23396-file5b64c0a1f62-1793345071673724",
+      "closed": false,
+      "workers": 4,
+      "pending": 0,
+      "max_pending": 128,
+      "counters": {
+        "submitted": 1000,
+        "completed": 1000,
+        "failed": 0,
+        "cancelled": 0,
+        "timed_out": 0,
+        "progress": 0
+      },
+      "history": 64,
+      "invalid_progress": 0,
+      "late_progress": 54,
+      "backend": {
+        "connections": 4,
+        "daemons": "ipc://6d558b80b9b645cd85624180",
+        "mirai": [0, 0, 1004],
+        "memory": [0, 1.2967, 64]
+      }
+    }
+  },
+  "queued100": {
+    "pool_id": "termr-23396-file5b643c683257-1793345079466309",
+    "closed": false,
+    "workers": 2,
+    "pending": 100,
+    "max_pending": 100,
+    "counters": {
+      "submitted": 100,
+      "completed": 0,
+      "failed": 0,
+      "cancelled": 0,
+      "timed_out": 0,
+      "progress": 0
+    },
+    "history": 32,
+    "invalid_progress": 0,
+    "late_progress": 0,
+    "backend": {
+      "connections": 2,
+      "daemons": "ipc://699aa298fd4eb5a815fa9a50",
+      "mirai": [98, 2, 2],
+      "memory": [3.3215, 3.3215, 64]
+    }
+  },
+  "fuzz": {
+    "states": {
+      "cancelled": 10,
+      "completed": 38,
+      "failed": 7,
+      "timed_out": 5
+    },
+    "diagnostic": {
+      "pool_id": "termr-23396-file5b6432ef6da8-1793345081571460",
+      "closed": false,
+      "workers": 2,
+      "pending": 0,
+      "max_pending": 64,
+      "counters": {
+        "submitted": 60,
+        "completed": 38,
+        "failed": 7,
+        "cancelled": 10,
+        "timed_out": 5,
+        "progress": 175
+      },
+      "history": 341,
+      "invalid_progress": 0,
+      "late_progress": 3,
+      "backend": {
+        "connections": 2,
+        "daemons": "ipc://3befc95a99973ca3a1c71e78",
+        "mirai": [0, 0, 62],
+        "memory": [0, 0.8886, 64]
+      }
+    },
+    "after_raw": {
+      "pool_id": "termr-23396-file5b6432ef6da8-1793345081571460",
+      "closed": false,
+      "workers": 2,
+      "pending": 0,
+      "max_pending": 64,
+      "counters": {
+        "submitted": 60,
+        "completed": 38,
+        "failed": 7,
+        "cancelled": 10,
+        "timed_out": 5,
+        "progress": 175
+      },
+      "history": 341,
+      "invalid_progress": 202,
+      "late_progress": 4,
+      "backend": {
+        "connections": 2,
+        "daemons": "ipc://3befc95a99973ca3a1c71e78",
+        "mirai": [0, 0, 62],
+        "memory": [0, 0.8886, 64]
+      }
+    }
+  },
+  "backpressure": {
+    "error": "mirai dispatcher memory capacity reached; task not admitted.",
+    "seconds": 0.07,
+    "diagnostic": {
+      "pool_id": "termr-23396-file5b641cec7206-1793345085101293",
+      "closed": false,
+      "workers": 1,
+      "pending": 3,
+      "max_pending": 32,
+      "counters": {
+        "submitted": 3,
+        "completed": 0,
+        "failed": 0,
+        "cancelled": 0,
+        "timed_out": 0,
+        "progress": 0
+      },
+      "history": 3,
+      "invalid_progress": 0,
+      "late_progress": 0,
+      "backend": {
+        "connections": 1,
+        "daemons": "ipc://40644ee864e15062819173ab",
+        "mirai": [2, 1, 1],
+        "memory": [1.6681, 1.6681, 1]
+      }
+    }
+  }
+}

@@ -1,0 +1,59 @@
+ M .Rbuildignore
+ M .gitignore
+ M DESCRIPTION
+ M NAMESPACE
+ M NEWS.md
+ M R/app.R
+ M R/dirty.R
+ M R/geometry.R
+ M R/layout.R
+ M R/style.R
+ M R/testing.R
+ M R/widget-containers.R
+ M R/widget-factory.R
+ M R/widget-input.R
+ M R/widget-label.R
+ M R/widget-scroll.R
+ M R/widget.R
+ M README.md
+ M docs/api-inventory.md
+ M docs/layout.md
+ M docs/reactivity.md
+ M docs/stability.md
+ M docs/terminal.md
+ M docs/testing.md
+ M docs/widgets.md
+ M man/App-class.Rd
+ M man/grid_layout.Rd
+ M man/label.Rd
+ M man/test_app.Rd
+ M man/vertical.Rd
+ M man/widget.Rd
+ M tests/testthat/test-app.R
+ M tests/testthat/test-examples.R
+ M tests/testthat/test-input.R
+ M tests/testthat/test-keys.R
+ M tests/testthat/test-layout.R
+ M tests/testthat/test-reactive.R
+ M tests/testthat/test-renderer.R
+ M tests/testthat/test-scroll.R
+ M tests/testthat/test-style.R
+ M tests/testthat/test-unicode.R
+ M tools/pty/pty-check.py
+?? R/streams.R
+?? R/transport_nanonext.R
+?? audit-results/
+?? docs/TERMINAL_INPUT_LAYOUT_COMPATIBILITY_REPORT.md
+?? docs/data-streams.md
+?? docs/nanonext.md
+?? inst/examples/compact-form.R
+?? inst/examples/system-monitor-live/
+?? man/nanonext_transport.Rd
+?? man/termr_stream.Rd
+?? tests/testthat/fixtures/
+?? tests/testthat/test-monitor-live.R
+?? tests/testthat/test-nanonext.R
+?? tests/testthat/test-streams.R
+?? tools/data-streams-integration-child.R
+?? tools/data-streams-integration.R
+?? tools/nanonext_integration.R

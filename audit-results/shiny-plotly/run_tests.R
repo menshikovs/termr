@@ -1,0 +1,7 @@
+source("audit-results/shiny-plotly/environment.R")
+Sys.setenv(NOT_CRAN = "true")
+args <- commandArgs(trailingOnly = TRUE)
+res <- testthat::test_local(".", filter = if (length(args)) args[[1L]] else "stream-data|shiny-streams|plotly-live", reporter = "summary", stop_on_failure = FALSE)
+df <- as.data.frame(res)
+cat("TOTAL", sum(df$nb), "expectations;", sum(df$failed), "failures;", sum(df$error), "errors;", sum(df$skipped), "skips;", sum(df$warning), "warnings\n")
+if (any(df$failed > 0 | df$error)) quit(status = 1L)

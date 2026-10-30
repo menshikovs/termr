@@ -1,0 +1,2 @@
+events=100000  time= 936.7s (9.37 ms/ev)  mem MB: start 67.6 half 70.6 end 73.5  | delta(end-start)=+5.90 MB, delta(end-half)=+2.90 MB
+finished

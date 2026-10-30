@@ -1,0 +1,30 @@
+R version 4.5.2 (2025-10-31) nanonext 1.10.3 
+$unsubscribe
+function () 
+{
+    if (exists(id, envir = callbacks, inherits = FALSE)) {
+        rm(list = id, envir = callbacks)
+        registry$ids <- registry$ids[registry$ids != id]
+    }
+    invisible(NULL)
+}
+<bytecode: 0x599fe4d038a8>
+<environment: 0x599fe4cda5f8>
+
+attr(,"class")
+[1] "termr_subscription"
+# A tibble: 7 × 5
+  expression              median `itr/sec` mem_alloc `gc/sec`
+  <bch:expr>            <bch:tm>     <dbl> <bch:byt>    <dbl>
+1 emit_local              3.21µs   294238.        0B      0  
+2 emit_publisher        592.13µs     1497.    43.3KB     32.9
+3 encoding              289.36µs     3064.      432B     30.6
+4 decoding_validation    57.98µs    15902.    55.4KB      0  
+5 dispatch_one_callback   7.97µs    67642.        0B    135. 
+6 file_publish            9.02ms      105.   383.7KB     32.6
+7 file_read_validate    435.97µs     2145.   314.5KB     21.4
+Wire bytes 163 
+          used (Mb) gc trigger (Mb) max used (Mb)
+Ncells  642728 34.4    1275320 68.2  1275320 68.2
+Vcells 1308065 10.0    8388608 64.0  2421265 18.5
+RSS before/after 10000 publications 131448832 131801088 history 64 pending 1 

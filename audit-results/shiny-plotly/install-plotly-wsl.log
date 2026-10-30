@@ -1,0 +1,35 @@
+R version 4.5.2 (2025-10-31) 
+shiny 1.10.0 
+plotly 4.10.4 
+ggplot2 4.0.2 
+htmlwidgets 1.6.4 
+jsonlite 2.0.0 
+nanonext 1.10.3 
+roxygen2 7.3.3 
+bench 1.1.4 
+trying URL 'https://cloud.r-project.org/src/contrib/plotly_4.12.1.tar.gz'
+Content type 'application/x-gzip' length 4722007 bytes (4.5 MB)
+==================================================
+downloaded 4.5 MB
+
+* installing *source* package ‘plotly’ ...
+** this is package ‘plotly’ version ‘4.12.1’
+** package ‘plotly’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** demo
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+*** copying figures
+** building package indices
+** testing if installed package can be loaded from temporary location
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (plotly)
+
+The downloaded source packages are in
+	‘/tmp/Rtmpkb70pj/downloaded_packages’

@@ -1,0 +1,5 @@
+suppressMessages(pkgload::load_all(".", quiet = TRUE))
+f <- function() lapply(1:1500, function(i) label(paste("row", i)))
+Rprof("audit-results/tree-performance/logs/label.prof", interval = 0.002, line.profiling = FALSE); x <- f(); Rprof(NULL)
+s <- summaryRprof("audit-results/tree-performance/logs/label.prof")
+cat("sampling", s$sampling.time, "s\n"); print(head(s$by.total, 25)); cat("--- self ---\n"); print(head(s$by.self, 15))

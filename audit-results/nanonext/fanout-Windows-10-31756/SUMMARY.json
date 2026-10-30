@@ -1,0 +1,281 @@
+{
+  "platform": "Windows",
+  "R": "R version 4.6.1 (2026-06-24 ucrt)",
+  "nanonext": "1.10.3",
+  "endpoints": {
+    "endpoint": "tcp://127.0.0.1:50061",
+    "snapshot_endpoint": "tcp://127.0.0.1:50062",
+    "source": "p24548-1793293290424383-file5fe443cf581d",
+    "R": "R version 4.6.1 (2026-06-24 ucrt)",
+    "nanonext": "1.10.3"
+  },
+  "subscribers": 10,
+  "events": 200,
+  "elapsed": 3.56,
+  "observed_events_per_second": 56.1798,
+  "reports": [
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293294.5499
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p24548-1793293290424383-file5fe443cf581d",
+        "sequence": 201,
+        "gaps": 14,
+        "invalid": 0,
+        "resyncs": 24,
+        "last_error": null,
+        "needs_sync": true,
+        "pending": 2
+      },
+      "delivered": 187,
+      "latency_ms": {
+        "50%": 16.6039,
+        "95%": 48.488,
+        "99%": 63.602
+      },
+      "rss_bytes": 84525056,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293294.5499
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p24548-1793293290424383-file5fe443cf581d",
+        "sequence": 201,
+        "gaps": 32,
+        "invalid": 0,
+        "resyncs": 24,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": true,
+        "pending": 2
+      },
+      "delivered": 169,
+      "latency_ms": {
+        "50%": 17.3725,
+        "95%": 79.7328,
+        "99%": 101.723
+      },
+      "rss_bytes": 84578304,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293294.5499
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p24548-1793293290424383-file5fe443cf581d",
+        "sequence": 201,
+        "gaps": 19,
+        "invalid": 0,
+        "resyncs": 25,
+        "last_error": null,
+        "needs_sync": false,
+        "pending": 2
+      },
+      "delivered": 182,
+      "latency_ms": {
+        "50%": 17.0171,
+        "95%": 63.5669,
+        "99%": 95.1524
+      },
+      "rss_bytes": 84541440,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293294.5499
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p24548-1793293290424383-file5fe443cf581d",
+        "sequence": 201,
+        "gaps": 40,
+        "invalid": 0,
+        "resyncs": 25,
+        "last_error": null,
+        "needs_sync": true,
+        "pending": 2
+      },
+      "delivered": 161,
+      "latency_ms": {
+        "50%": 16.788,
+        "95%": 80.2751,
+        "99%": 113.5812
+      },
+      "rss_bytes": 84549632,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293294.5499
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p24548-1793293290424383-file5fe443cf581d",
+        "sequence": 201,
+        "gaps": 35,
+        "invalid": 0,
+        "resyncs": 24,
+        "last_error": null,
+        "needs_sync": true,
+        "pending": 1
+      },
+      "delivered": 166,
+      "latency_ms": {
+        "50%": 31.842,
+        "95%": 85.7795,
+        "99%": 123.9234
+      },
+      "rss_bytes": 85250048,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293294.5499
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p24548-1793293290424383-file5fe443cf581d",
+        "sequence": 201,
+        "gaps": 33,
+        "invalid": 0,
+        "resyncs": 25,
+        "last_error": null,
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 168,
+      "latency_ms": {
+        "50%": 31.62,
+        "95%": 83.2498,
+        "99%": 134.0864
+      },
+      "rss_bytes": 84443136,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293294.5499
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p24548-1793293290424383-file5fe443cf581d",
+        "sequence": 201,
+        "gaps": 29,
+        "invalid": 0,
+        "resyncs": 24,
+        "last_error": null,
+        "needs_sync": true,
+        "pending": 2
+      },
+      "delivered": 172,
+      "latency_ms": {
+        "50%": 17.9691,
+        "95%": 79.236,
+        "99%": 94.5004
+      },
+      "rss_bytes": 84484096,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293294.5499
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p24548-1793293290424383-file5fe443cf581d",
+        "sequence": 201,
+        "gaps": 37,
+        "invalid": 0,
+        "resyncs": 23,
+        "last_error": null,
+        "needs_sync": true,
+        "pending": 2
+      },
+      "delivered": 164,
+      "latency_ms": {
+        "50%": 20.436,
+        "95%": 63.2208,
+        "99%": 100.7386
+      },
+      "rss_bytes": 85487616,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293294.5499
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p24548-1793293290424383-file5fe443cf581d",
+        "sequence": 201,
+        "gaps": 30,
+        "invalid": 0,
+        "resyncs": 24,
+        "last_error": null,
+        "needs_sync": true,
+        "pending": 2
+      },
+      "delivered": 171,
+      "latency_ms": {
+        "50%": 16.8509,
+        "95%": 64.2758,
+        "99%": 81.609
+      },
+      "rss_bytes": 85438464,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293294.5499
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p24548-1793293290424383-file5fe443cf581d",
+        "sequence": 201,
+        "gaps": 144,
+        "invalid": 0,
+        "resyncs": 17,
+        "last_error": null,
+        "needs_sync": true,
+        "pending": 1
+      },
+      "delivered": 57,
+      "latency_ms": {
+        "50%": 71.1985,
+        "95%": 85.0295,
+        "99%": 158.9146
+      },
+      "rss_bytes": 84582400,
+      "history": 16
+    }
+  ],
+  "publisher": {
+    "n": 200,
+    "emit_seconds": 0.09,
+    "status": {
+      "closed": false,
+      "sequence": 201,
+      "sent": 201,
+      "snapshots": 243,
+      "errors": 0,
+      "last_error": null,
+      "pending": 1
+    }
+  }
+}

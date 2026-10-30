@@ -1,0 +1,1281 @@
+{
+  "platform": "Windows",
+  "R": "R version 4.6.1 (2026-06-24 ucrt)",
+  "nanonext": "1.10.3",
+  "endpoints": {
+    "endpoint": "tcp://127.0.0.1:64441",
+    "snapshot_endpoint": "tcp://127.0.0.1:64442",
+    "source": "p27072-1793293333806903-file69c07c8d5da2",
+    "R": "R version 4.6.1 (2026-06-24 ucrt)",
+    "nanonext": "1.10.3"
+  },
+  "subscribers": 50,
+  "events": 200,
+  "elapsed": 4.83,
+  "observed_events_per_second": 41.4079,
+  "reports": [
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 3,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 15.5025,
+        "95%": 37.2502,
+        "99%": 51.2578
+      },
+      "rss_bytes": 85438464,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 3,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 15.331,
+        "95%": 36.5495,
+        "99%": 49.2366
+      },
+      "rss_bytes": 85499904,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 2,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 15.555,
+        "95%": 36.7764,
+        "99%": 49.7896
+      },
+      "rss_bytes": 85467136,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 3,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 15.3686,
+        "95%": 46.3497,
+        "99%": 73.2482
+      },
+      "rss_bytes": 85409792,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 16.7211,
+        "95%": 37.6072,
+        "99%": 45.8308
+      },
+      "rss_bytes": 85233664,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 2,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 15.1476,
+        "95%": 32.9961,
+        "99%": 37.4875
+      },
+      "rss_bytes": 85536768,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 2,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 15.816,
+        "95%": 43.2311,
+        "99%": 52.9368
+      },
+      "rss_bytes": 85540864,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 15.444,
+        "95%": 38.0296,
+        "99%": 58.4501
+      },
+      "rss_bytes": 85413888,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 15.282,
+        "95%": 35.8575,
+        "99%": 53.4441
+      },
+      "rss_bytes": 85442560,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 15.0715,
+        "95%": 33.6616,
+        "99%": 38.5356
+      },
+      "rss_bytes": 85200896,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 2
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 15.9404,
+        "95%": 52.889,
+        "99%": 96.973
+      },
+      "rss_bytes": 85495808,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 14.9676,
+        "95%": 33.7843,
+        "99%": 37.7574
+      },
+      "rss_bytes": 85430272,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 15.3954,
+        "95%": 32.5184,
+        "99%": 36.1556
+      },
+      "rss_bytes": 85393408,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 2
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 16.1235,
+        "95%": 49.2127,
+        "99%": 67.2259
+      },
+      "rss_bytes": 85327872,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 2
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 16.0245,
+        "95%": 39.0829,
+        "99%": 66.1183
+      },
+      "rss_bytes": 85450752,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 4,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 16.1045,
+        "95%": 36.4793,
+        "99%": 49.1441
+      },
+      "rss_bytes": 85471232,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 2
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 14.8449,
+        "95%": 35.7317,
+        "99%": 37.4704
+      },
+      "rss_bytes": 85225472,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 2
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 16.0595,
+        "95%": 33.5886,
+        "99%": 38.0503
+      },
+      "rss_bytes": 85159936,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 2
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 16.0879,
+        "95%": 36.5549,
+        "99%": 65.0791
+      },
+      "rss_bytes": 85344256,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 2
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 16.2435,
+        "95%": 50.7558,
+        "99%": 57.3117
+      },
+      "rss_bytes": 85344256,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 4,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 16.062,
+        "95%": 35.1174,
+        "99%": 37.7595
+      },
+      "rss_bytes": 85442560,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 2
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 14.8151,
+        "95%": 32.263,
+        "99%": 36.0871
+      },
+      "rss_bytes": 85389312,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 4,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 2
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 15.6345,
+        "95%": 38.0034,
+        "99%": 67.1306
+      },
+      "rss_bytes": 85463040,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 2
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 15.2485,
+        "95%": 38.6949,
+        "99%": 51.7577
+      },
+      "rss_bytes": 85348352,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 2
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 15.34,
+        "95%": 37.0099,
+        "99%": 49.1379
+      },
+      "rss_bytes": 85319680,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 2
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 15.6291,
+        "95%": 41.9083,
+        "99%": 67.1498
+      },
+      "rss_bytes": 85622784,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 3,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 17.1591,
+        "95%": 51.2681,
+        "99%": 85.4376
+      },
+      "rss_bytes": 85262336,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 4,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 14.567,
+        "95%": 35.7847,
+        "99%": 49.1014
+      },
+      "rss_bytes": 85258240,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 1,
+        "invalid": 0,
+        "resyncs": 4,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 200,
+      "latency_ms": {
+        "50%": 15.238,
+        "95%": 39.964,
+        "99%": 53.5857
+      },
+      "rss_bytes": 85352448,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 3,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 15.6324,
+        "95%": 34.1531,
+        "99%": 48.9128
+      },
+      "rss_bytes": 85348352,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 4,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 14.9595,
+        "95%": 30.9241,
+        "99%": 36.8605
+      },
+      "rss_bytes": 85274624,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 4,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 15.2055,
+        "95%": 35.6684,
+        "99%": 41.628
+      },
+      "rss_bytes": 85340160,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 3,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 15.9485,
+        "95%": 40.4415,
+        "99%": 52.562
+      },
+      "rss_bytes": 85237760,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 3,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 15.6465,
+        "95%": 44.4439,
+        "99%": 55.672
+      },
+      "rss_bytes": 85286912,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 3,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 15.5284,
+        "95%": 34.5243,
+        "99%": 37.081
+      },
+      "rss_bytes": 85471232,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 2,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 16.6781,
+        "95%": 36.8681,
+        "99%": 54.6344
+      },
+      "rss_bytes": 85307392,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 2,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 15.2905,
+        "95%": 33.1858,
+        "99%": 56.8601
+      },
+      "rss_bytes": 85233664,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 2,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 15.956,
+        "95%": 52.965,
+        "99%": 71.8443
+      },
+      "rss_bytes": 85241856,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 3,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 15.931,
+        "95%": 36.1507,
+        "99%": 49.2702
+      },
+      "rss_bytes": 85397504,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 2,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 17.1934,
+        "95%": 36.5791,
+        "99%": 51.4683
+      },
+      "rss_bytes": 85315584,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 2,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 16.1481,
+        "95%": 35.6215,
+        "99%": 52.2866
+      },
+      "rss_bytes": 85352448,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 15.5245,
+        "95%": 33.5218,
+        "99%": 36.9939
+      },
+      "rss_bytes": 85164032,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 15.328,
+        "95%": 35.2436,
+        "99%": 53.2558
+      },
+      "rss_bytes": 85254144,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 15.5989,
+        "95%": 47.4585,
+        "99%": 66.5244
+      },
+      "rss_bytes": 85262336,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 15.5051,
+        "95%": 45.6187,
+        "99%": 55.6099
+      },
+      "rss_bytes": 85053440,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 15.77,
+        "95%": 34.8192,
+        "99%": 38.6874
+      },
+      "rss_bytes": 85131264,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 15.8695,
+        "95%": 41.8655,
+        "99%": 51.9051
+      },
+      "rss_bytes": 85254144,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 15.842,
+        "95%": 36.5561,
+        "99%": 50.8041
+      },
+      "rss_bytes": 85295104,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 201,
+      "latency_ms": {
+        "50%": 15.9849,
+        "95%": 36.9515,
+        "99%": 50.2129
+      },
+      "rss_bytes": 85159936,
+      "history": 16
+    },
+    {
+      "latest": {
+        "n": 200,
+        "sent_at": 1793293343.9768
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p27072-1793293333806903-file69c07c8d5da2",
+        "sequence": 201,
+        "gaps": 157,
+        "invalid": 0,
+        "resyncs": 5,
+        "last_error": "Snapshot timeout; retrying.",
+        "needs_sync": true,
+        "pending": 1
+      },
+      "delivered": 44,
+      "latency_ms": {
+        "50%": 76.1421,
+        "95%": 88.3862,
+        "99%": 108.9525
+      },
+      "rss_bytes": 84013056,
+      "history": 16
+    }
+  ],
+  "publisher": {
+    "n": 200,
+    "emit_seconds": 0.58,
+    "status": {
+      "closed": false,
+      "sequence": 201,
+      "sent": 201,
+      "snapshots": 588,
+      "errors": 0,
+      "last_error": null,
+      "pending": 1
+    }
+  }
+}

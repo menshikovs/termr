@@ -1,0 +1,4 @@
+buttons        cons cells: +0.00/event (events 1k-7k), +0.00/event (7k-13k)
+text_area_nav  cons cells: +0.52/event (events 1k-7k), +0.57/event (7k-13k)
+input_edit     cons cells: +0.08/event (events 1k-7k), +0.06/event (7k-13k)
+mixed          cons cells: +0.50/event (events 1k-7k), +0.13/event (7k-13k)

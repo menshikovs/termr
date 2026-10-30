@@ -1,0 +1,46 @@
+R version 4.5.2 (2025-10-31) 
+mirai 2.7.3 
+nanonext 1.10.3 
+promises 1.5.0 
+shiny 1.14.0 
+later 1.4.6 
+$pid
+[1] 617
+
+$time
+[1] 1793306279
+
+$libs
+[1] "/mnt/c/programming_pj/r_textualize/audit-results/mirai/lib-wsl"       
+[2] "/mnt/c/programming_pj/r_textualize/audit-results/shiny-plotly/lib-wsl"
+[3] "/mnt/c/programming_pj/r_textualize/audit-results/nanonext/lib-wsl"    
+[4] "/home/user001/R/x86_64-pc-linux-gnu-library/4.5"                      
+[5] "/usr/local/lib/R/site-library"                                        
+[6] "/usr/lib/R/site-library"                                              
+[7] "/usr/lib/R/library"                                                   
+
+$connections
+[1] 1
+
+$daemons
+[1] "abstract://4f0600d117bb9d42e119b076"
+
+$mirai
+ awaiting executing completed 
+        0         0         1 
+
+$memory
+    used     peak capacity 
+       0        0       NA 
+
+connections  cumulative    awaiting   executing   completed 
+          1           1           0           0           1 
+QUEUED TIMEOUT 0.102 
+'errorValue' int 5 | Timed out
+[1] TRUE
+'errorValue' int 20 | Operation canceled
+[1] FALSE
+[1] 42
+[1] FALSE
+'miraiError' chr Error: probe failure
+[1] "miraiError" "errorValue" "try-error" 

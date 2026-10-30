@@ -49,7 +49,7 @@ callable as \verb{widget$<name>(...)}.}
 }
 \value{
 A constructor function
-\verb{function(..., id = NULL, classes = NULL, style = NULL, disabled = FALSE)}.
+\verb{function(..., id = NULL, classes = NULL, style = NULL, disabled = FALSE, visible = TRUE)}.
 Named arguments in \code{...} set initial state values; unnamed arguments are
 child widgets.
 }

@@ -22,7 +22,8 @@
 #' @param focusable Can widgets of this type receive focus?
 #' @param inherit Parent class: [Widget], [Vertical] or [Horizontal].
 #' @return A constructor function
-#'   `function(..., id = NULL, classes = NULL, style = NULL, disabled = FALSE)`.
+#'   `function(..., id = NULL, classes = NULL, style = NULL, disabled = FALSE,
+#'   visible = TRUE)`.
 #'   Named arguments in `...` set initial state values; unnamed arguments are
 #'   child widgets.
 #' @export
@@ -73,7 +74,8 @@ widget <- function(name, state = list(), render = NULL, compose = NULL,
 
   public <- list(
     focusable = focusable,
-    initialize = function(..., id = NULL, classes = NULL, style = NULL, disabled = FALSE) {
+    initialize = function(..., id = NULL, classes = NULL, style = NULL,
+                          disabled = FALSE, visible = TRUE) {
       args <- list(...)
       arg_names <- names(args) %||% rep("", length(args))
       values <- args[nzchar(arg_names)]
@@ -81,7 +83,8 @@ widget <- function(name, state = list(), render = NULL, compose = NULL,
       if (length(unknown)) {
         stop(sprintf("%s has no state field \"%s\".", class(self)[[1]], unknown[[1]]), call. = FALSE)
       }
-      super$initialize(id = id, classes = classes, style = style, disabled = disabled)
+      super$initialize(id = id, classes = classes, style = style, disabled = disabled,
+                       visible = visible)
       for (field in names(spec$state)) {
         private$.state[[field]] <- if (field %in% names(values)) values[[field]] else spec$state[[field]]$default
       }
@@ -120,8 +123,10 @@ widget <- function(name, state = list(), render = NULL, compose = NULL,
     )
   )
 
-  constructor <- function(..., id = NULL, classes = NULL, style = NULL, disabled = FALSE) {
-    generator$new(..., id = id, classes = classes, style = style, disabled = disabled)
+  constructor <- function(..., id = NULL, classes = NULL, style = NULL,
+                          disabled = FALSE, visible = TRUE) {
+    generator$new(..., id = id, classes = classes, style = style,
+                  disabled = disabled, visible = visible)
   }
   structure(constructor, class = c("termr_widget_type", "function"), generator = generator, type_name = name)
 }

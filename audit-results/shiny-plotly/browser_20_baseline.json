@@ -1,0 +1,1613 @@
+{
+  "at": 1793302572597,
+  "methods": {
+    "extendTraces": 1222,
+    "restyle": 320
+  },
+  "frames": [
+    {
+      "method": "restyle",
+      "at": 1793302471788,
+      "browserUpdateMs": 1057.7999999970198,
+      "endToEndMs": 704,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7625"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302471788,
+      "browserUpdateMs": 611.2999999970198,
+      "endToEndMs": 704,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7625"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302471788,
+      "browserUpdateMs": 137.20000000298023,
+      "endToEndMs": 704,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7625"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302473202,
+      "browserUpdateMs": 1082.9000000059605,
+      "endToEndMs": 673,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7635"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302473202,
+      "browserUpdateMs": 611,
+      "endToEndMs": 673,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7635"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302474210,
+      "browserUpdateMs": 1138.2000000029802,
+      "endToEndMs": 656,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7642"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302474237,
+      "browserUpdateMs": 680.1000000014901,
+      "endToEndMs": 683,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7642"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302474237,
+      "browserUpdateMs": 184.19999999552965,
+      "endToEndMs": 683,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7642"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302475656,
+      "browserUpdateMs": 1114.1000000014901,
+      "endToEndMs": 656,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7652"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302475656,
+      "browserUpdateMs": 639.1000000014901,
+      "endToEndMs": 656,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7652"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302475694,
+      "browserUpdateMs": 177.30000000447035,
+      "endToEndMs": 694,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7652"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302477146,
+      "browserUpdateMs": 1125.5,
+      "endToEndMs": 709,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7662"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302477146,
+      "browserUpdateMs": 627.5999999940395,
+      "endToEndMs": 709,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7662"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302478152,
+      "browserUpdateMs": 1141.1000000014901,
+      "endToEndMs": 703,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7669"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302478188,
+      "browserUpdateMs": 672.7999999970198,
+      "endToEndMs": 739,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7669"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302478188,
+      "browserUpdateMs": 134.89999999850988,
+      "endToEndMs": 739,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7669"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302479701,
+      "browserUpdateMs": 1130.7000000029802,
+      "endToEndMs": 673,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7680"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302479779,
+      "browserUpdateMs": 674.6000000014901,
+      "endToEndMs": 751,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7680"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302479779,
+      "browserUpdateMs": 149.39999999850988,
+      "endToEndMs": 751,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7680"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302481113,
+      "browserUpdateMs": 926.6999999955297,
+      "endToEndMs": 930,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7688"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302481113,
+      "browserUpdateMs": 385.5,
+      "endToEndMs": 930,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7688"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302482333,
+      "browserUpdateMs": 1055.8999999985099,
+      "endToEndMs": 1120,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7695"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302482333,
+      "browserUpdateMs": 501.20000000298023,
+      "endToEndMs": 1120,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7695"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302483465,
+      "browserUpdateMs": 1025.3000000044703,
+      "endToEndMs": 667,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7706"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302483465,
+      "browserUpdateMs": 579.8000000044703,
+      "endToEndMs": 667,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7706"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302483465,
+      "browserUpdateMs": 135,
+      "endToEndMs": 667,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7706"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302484881,
+      "browserUpdateMs": 1095,
+      "endToEndMs": 633,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7716"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302484881,
+      "browserUpdateMs": 632.2000000029802,
+      "endToEndMs": 633,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7716"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302484929,
+      "browserUpdateMs": 186.5,
+      "endToEndMs": 681,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7716"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302486353,
+      "browserUpdateMs": 1145.2000000029802,
+      "endToEndMs": 783,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7725"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302486528,
+      "browserUpdateMs": 853.3999999985099,
+      "endToEndMs": 958,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7725"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302486528,
+      "browserUpdateMs": 377,
+      "endToEndMs": 958,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7725"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302487790,
+      "browserUpdateMs": 1138.8000000044703,
+      "endToEndMs": 760,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7735"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302487790,
+      "browserUpdateMs": 636.6000000014901,
+      "endToEndMs": 760,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7735"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302487831,
+      "browserUpdateMs": 180.20000000298023,
+      "endToEndMs": 801,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7735"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302489309,
+      "browserUpdateMs": 1165,
+      "endToEndMs": 650,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7746"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302489309,
+      "browserUpdateMs": 646.0999999940395,
+      "endToEndMs": 650,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7746"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302489345,
+      "browserUpdateMs": 179,
+      "endToEndMs": 686,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7746"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302490817,
+      "browserUpdateMs": 1140.6000000014901,
+      "endToEndMs": 658,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7756"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302490860,
+      "browserUpdateMs": 681.7000000029802,
+      "endToEndMs": 701,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7756"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302490860,
+      "browserUpdateMs": 148.10000000149012,
+      "endToEndMs": 701,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7756"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302492379,
+      "browserUpdateMs": 1142.1000000014901,
+      "endToEndMs": 662,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7767"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302492484,
+      "browserUpdateMs": 673.7999999970198,
+      "endToEndMs": 767,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7767"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302492484,
+      "browserUpdateMs": 145.39999999850988,
+      "endToEndMs": 767,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7767"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302493825,
+      "browserUpdateMs": 937.5,
+      "endToEndMs": 972,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7775"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302493825,
+      "browserUpdateMs": 393.20000000298023,
+      "endToEndMs": 972,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7775"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302494972,
+      "browserUpdateMs": 984.8999999985099,
+      "endToEndMs": 1100,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7782"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302494973,
+      "browserUpdateMs": 424.79999999701977,
+      "endToEndMs": 1101,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7782"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302496116,
+      "browserUpdateMs": 888.7000000029802,
+      "endToEndMs": 942,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7791"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302496116,
+      "browserUpdateMs": 402.6000000014901,
+      "endToEndMs": 942,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7791"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302497208,
+      "browserUpdateMs": 1038.1000000014901,
+      "endToEndMs": 592,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7801"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302497208,
+      "browserUpdateMs": 592.7999999970198,
+      "endToEndMs": 592,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7801"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302497208,
+      "browserUpdateMs": 147.20000000298023,
+      "endToEndMs": 592,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7801"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302498608,
+      "browserUpdateMs": 1073.5,
+      "endToEndMs": 716,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7810"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302498608,
+      "browserUpdateMs": 590.3999999985099,
+      "endToEndMs": 716,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7810"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302498657,
+      "browserUpdateMs": 179.5,
+      "endToEndMs": 765,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7810"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302500061,
+      "browserUpdateMs": 1115.3999999985099,
+      "endToEndMs": 715,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7820"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302500061,
+      "browserUpdateMs": 634.1999999955297,
+      "endToEndMs": 715,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7820"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302501066,
+      "browserUpdateMs": 1148.8000000044703,
+      "endToEndMs": 713,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7827"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302501107,
+      "browserUpdateMs": 688.5,
+      "endToEndMs": 754,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7827"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302501107,
+      "browserUpdateMs": 188.5,
+      "endToEndMs": 754,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7827"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302502343,
+      "browserUpdateMs": 906.8999999985099,
+      "endToEndMs": 955,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7834"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302502343,
+      "browserUpdateMs": 399.09999999403954,
+      "endToEndMs": 955,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7834"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302503365,
+      "browserUpdateMs": 913.7999999970198,
+      "endToEndMs": 963,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7841"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302503365,
+      "browserUpdateMs": 407.1000000014901,
+      "endToEndMs": 963,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7841"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302504403,
+      "browserUpdateMs": 936,
+      "endToEndMs": 1005,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7848"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302504403,
+      "browserUpdateMs": 393.3999999985099,
+      "endToEndMs": 1005,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7848"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302505454,
+      "browserUpdateMs": 922.1000000014901,
+      "endToEndMs": 913,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7856"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302505454,
+      "browserUpdateMs": 391.69999999552965,
+      "endToEndMs": 913,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7856"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302506731,
+      "browserUpdateMs": 1148.7999999970198,
+      "endToEndMs": 595,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7867"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302506850,
+      "browserUpdateMs": 701.1999999955297,
+      "endToEndMs": 714,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7867"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302506850,
+      "browserUpdateMs": 140.69999999552965,
+      "endToEndMs": 714,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7867"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302508398,
+      "browserUpdateMs": 1141.0999999940395,
+      "endToEndMs": 667,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7878"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302508517,
+      "browserUpdateMs": 681.7000000029802,
+      "endToEndMs": 786,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7878"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302508517,
+      "browserUpdateMs": 136.60000000149012,
+      "endToEndMs": 786,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7878"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302509864,
+      "browserUpdateMs": 1041.6000000014901,
+      "endToEndMs": 585,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7889"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302509864,
+      "browserUpdateMs": 596.6000000014901,
+      "endToEndMs": 585,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7889"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302509864,
+      "browserUpdateMs": 140.70000000298023,
+      "endToEndMs": 585,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7889"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302511339,
+      "browserUpdateMs": 1147.5,
+      "endToEndMs": 761,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7898"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302511470,
+      "browserUpdateMs": 818.7000000029802,
+      "endToEndMs": 892,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7898"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302511470,
+      "browserUpdateMs": 347.80000000447035,
+      "endToEndMs": 892,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7898"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302512713,
+      "browserUpdateMs": 1119.3999999985099,
+      "endToEndMs": 667,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7908"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302512713,
+      "browserUpdateMs": 628.3999999985099,
+      "endToEndMs": 667,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7908"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302512752,
+      "browserUpdateMs": 183.60000000149012,
+      "endToEndMs": 706,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7908"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302514179,
+      "browserUpdateMs": 1131.7999999970198,
+      "endToEndMs": 684,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7918"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302514179,
+      "browserUpdateMs": 640.6999999955297,
+      "endToEndMs": 684,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7918"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302514227,
+      "browserUpdateMs": 196,
+      "endToEndMs": 732,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7918"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302515723,
+      "browserUpdateMs": 1172.1000000014901,
+      "endToEndMs": 774,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7928"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302515723,
+      "browserUpdateMs": 663.2999999970198,
+      "endToEndMs": 774,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7928"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302515784,
+      "browserUpdateMs": 206.59999999403954,
+      "endToEndMs": 835,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7928"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302517237,
+      "browserUpdateMs": 1147.7999999970198,
+      "endToEndMs": 701,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7939"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302517272,
+      "browserUpdateMs": 663.2000000029802,
+      "endToEndMs": 736,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7939"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302517272,
+      "browserUpdateMs": 147,
+      "endToEndMs": 736,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7939"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302518365,
+      "browserUpdateMs": 718.1000000014901,
+      "endToEndMs": 832,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7946"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302518365,
+      "browserUpdateMs": 183.89999999850988,
+      "endToEndMs": 832,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7946"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302519865,
+      "browserUpdateMs": 1141.2000000029802,
+      "endToEndMs": 688,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7957"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302519976,
+      "browserUpdateMs": 693,
+      "endToEndMs": 799,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7957"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302519976,
+      "browserUpdateMs": 144.89999999850988,
+      "endToEndMs": 799,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7957"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302520577,
+      "browserUpdateMs": 182.09999999403954,
+      "endToEndMs": 829,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7961"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302521188,
+      "browserUpdateMs": 180.40000000596046,
+      "endToEndMs": 836,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7965"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302522487,
+      "browserUpdateMs": 1025,
+      "endToEndMs": 684,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7975"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302522487,
+      "browserUpdateMs": 586.8999999985099,
+      "endToEndMs": 684,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7975"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302522487,
+      "browserUpdateMs": 131.80000000447035,
+      "endToEndMs": 684,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7975"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302523979,
+      "browserUpdateMs": 1147.0999999940395,
+      "endToEndMs": 713,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7985"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302524007,
+      "browserUpdateMs": 682.3999999985099,
+      "endToEndMs": 741,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7985"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302524007,
+      "browserUpdateMs": 178.39999999850988,
+      "endToEndMs": 741,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7985"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302525431,
+      "browserUpdateMs": 1118,
+      "endToEndMs": 707,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7995"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302525431,
+      "browserUpdateMs": 635.7000000029802,
+      "endToEndMs": 707,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:7995"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302526437,
+      "browserUpdateMs": 1143.1999999955297,
+      "endToEndMs": 699,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8002"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302526484,
+      "browserUpdateMs": 707.7999999970198,
+      "endToEndMs": 746,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8002"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302526484,
+      "browserUpdateMs": 196.89999999850988,
+      "endToEndMs": 746,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8002"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302527715,
+      "browserUpdateMs": 914.3999999985099,
+      "endToEndMs": 958,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8009"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302527715,
+      "browserUpdateMs": 394.79999999701977,
+      "endToEndMs": 958,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8009"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302528735,
+      "browserUpdateMs": 868.0999999940395,
+      "endToEndMs": 975,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8016"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302528735,
+      "browserUpdateMs": 403.79999999701977,
+      "endToEndMs": 975,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8016"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302529781,
+      "browserUpdateMs": 932,
+      "endToEndMs": 1021,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8023"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302529781,
+      "browserUpdateMs": 413.1000000014901,
+      "endToEndMs": 1021,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8023"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302531041,
+      "browserUpdateMs": 1149.2000000029802,
+      "endToEndMs": 692,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8034"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302531090,
+      "browserUpdateMs": 672.6000000014901,
+      "endToEndMs": 741,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8034"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302531090,
+      "browserUpdateMs": 142.89999999850988,
+      "endToEndMs": 741,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8034"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302532617,
+      "browserUpdateMs": 1138.7999999970198,
+      "endToEndMs": 692,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8045"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302532716,
+      "browserUpdateMs": 687.3999999985099,
+      "endToEndMs": 791,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8045"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302532716,
+      "browserUpdateMs": 144.60000000149012,
+      "endToEndMs": 791,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8045"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302534118,
+      "browserUpdateMs": 1000.2999999970198,
+      "endToEndMs": 1046,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8053"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302534118,
+      "browserUpdateMs": 345,
+      "endToEndMs": 1046,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8053"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302535278,
+      "browserUpdateMs": 1057.3999999985099,
+      "endToEndMs": 606,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8064"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302535278,
+      "browserUpdateMs": 591.7999999970198,
+      "endToEndMs": 606,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8064"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302535323,
+      "browserUpdateMs": 188.5,
+      "endToEndMs": 651,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8064"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302536741,
+      "browserUpdateMs": 1143.8999999985099,
+      "endToEndMs": 723,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8073"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302536905,
+      "browserUpdateMs": 833.8000000044703,
+      "endToEndMs": 887,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8073"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302536905,
+      "browserUpdateMs": 375.20000000298023,
+      "endToEndMs": 887,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8073"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302538152,
+      "browserUpdateMs": 1140.2999999970198,
+      "endToEndMs": 655,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8083"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302538172,
+      "browserUpdateMs": 688.8999999985099,
+      "endToEndMs": 675,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8083"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302538172,
+      "browserUpdateMs": 189.10000000149012,
+      "endToEndMs": 675,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8083"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302539574,
+      "browserUpdateMs": 1100.7000000029802,
+      "endToEndMs": 597,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8093"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302539574,
+      "browserUpdateMs": 616.1000000014901,
+      "endToEndMs": 597,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8093"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302539623,
+      "browserUpdateMs": 180.29999999701977,
+      "endToEndMs": 646,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8093"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302540824,
+      "browserUpdateMs": 879.6999999955297,
+      "endToEndMs": 970,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8099"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302540824,
+      "browserUpdateMs": 365.8999999985099,
+      "endToEndMs": 970,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8099"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302541846,
+      "browserUpdateMs": 892,
+      "endToEndMs": 933,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8106"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302541846,
+      "browserUpdateMs": 378,
+      "endToEndMs": 933,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8106"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302542935,
+      "browserUpdateMs": 959.6999999955297,
+      "endToEndMs": 1010,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8113"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302542935,
+      "browserUpdateMs": 414.29999999701977,
+      "endToEndMs": 1010,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8113"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302544000,
+      "browserUpdateMs": 943.6999999955297,
+      "endToEndMs": 1062,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8120"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302544000,
+      "browserUpdateMs": 405.19999999552965,
+      "endToEndMs": 1062,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8120"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302545069,
+      "browserUpdateMs": 938.3999999985099,
+      "endToEndMs": 978,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8128"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302545069,
+      "browserUpdateMs": 394,
+      "endToEndMs": 978,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8128"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302546171,
+      "browserUpdateMs": 948.3999999985099,
+      "endToEndMs": 943,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8136"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302546171,
+      "browserUpdateMs": 405.79999999701977,
+      "endToEndMs": 943,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8136"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302547248,
+      "browserUpdateMs": 928,
+      "endToEndMs": 1013,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8143"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302547248,
+      "browserUpdateMs": 340.8999999985099,
+      "endToEndMs": 1013,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8143"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302548380,
+      "browserUpdateMs": 1020,
+      "endToEndMs": 710,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8153"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302548380,
+      "browserUpdateMs": 544.6000000014901,
+      "endToEndMs": 710,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8153"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302548380,
+      "browserUpdateMs": 139.89999999850988,
+      "endToEndMs": 710,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8153"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302549803,
+      "browserUpdateMs": 1079,
+      "endToEndMs": 698,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8163"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302549803,
+      "browserUpdateMs": 604,
+      "endToEndMs": 698,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8163"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302550809,
+      "browserUpdateMs": 1142.5,
+      "endToEndMs": 717,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8170"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302550976,
+      "browserUpdateMs": 850.2000000029802,
+      "endToEndMs": 884,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8170"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302550976,
+      "browserUpdateMs": 384.29999999701977,
+      "endToEndMs": 884,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8170"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302552249,
+      "browserUpdateMs": 1145.5,
+      "endToEndMs": 713,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8180"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302552261,
+      "browserUpdateMs": 668.8999999985099,
+      "endToEndMs": 725,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8180"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302552261,
+      "browserUpdateMs": 179.10000000149012,
+      "endToEndMs": 725,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8180"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302553712,
+      "browserUpdateMs": 1143.8000000044703,
+      "endToEndMs": 735,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8190"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302553712,
+      "browserUpdateMs": 640.1000000014901,
+      "endToEndMs": 735,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8190"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302553760,
+      "browserUpdateMs": 188.20000000298023,
+      "endToEndMs": 783,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8190"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302555031,
+      "browserUpdateMs": 920.8999999985099,
+      "endToEndMs": 919,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8198"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302555031,
+      "browserUpdateMs": 391.79999999701977,
+      "endToEndMs": 919,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8198"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302556108,
+      "browserUpdateMs": 934,
+      "endToEndMs": 995,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8205"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302556108,
+      "browserUpdateMs": 393.6000000014901,
+      "endToEndMs": 995,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8205"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302557198,
+      "browserUpdateMs": 945.7000000029802,
+      "endToEndMs": 924,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8213"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302557198,
+      "browserUpdateMs": 404.90000000596046,
+      "endToEndMs": 924,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8213"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302558496,
+      "browserUpdateMs": 1150,
+      "endToEndMs": 595,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8224"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302558587,
+      "browserUpdateMs": 689.7999999970198,
+      "endToEndMs": 686,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8224"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302558587,
+      "browserUpdateMs": 136.10000000149012,
+      "endToEndMs": 686,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8224"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302560001,
+      "browserUpdateMs": 989,
+      "endToEndMs": 1087,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8231"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302560001,
+      "browserUpdateMs": 346.8999999985099,
+      "endToEndMs": 1087,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8231"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302561134,
+      "browserUpdateMs": 1034.4000000059605,
+      "endToEndMs": 664,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8242"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302561134,
+      "browserUpdateMs": 581.1000000014901,
+      "endToEndMs": 664,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8242"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302561134,
+      "browserUpdateMs": 140.5,
+      "endToEndMs": 664,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8242"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302562579,
+      "browserUpdateMs": 1132,
+      "endToEndMs": 673,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8252"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302562739,
+      "browserUpdateMs": 814,
+      "endToEndMs": 833,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8252"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302562739,
+      "browserUpdateMs": 356.3999999985099,
+      "endToEndMs": 833,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8252"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302563989,
+      "browserUpdateMs": 1108.7000000029802,
+      "endToEndMs": 623,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8262"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302563989,
+      "browserUpdateMs": 636,
+      "endToEndMs": 623,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8262"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302564046,
+      "browserUpdateMs": 190.70000000298023,
+      "endToEndMs": 680,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8262"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302565468,
+      "browserUpdateMs": 1121.9000000059605,
+      "endToEndMs": 664,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8272"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302565468,
+      "browserUpdateMs": 636.6000000014901,
+      "endToEndMs": 664,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8272"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302565516,
+      "browserUpdateMs": 180.30000000447035,
+      "endToEndMs": 712,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8272"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302566995,
+      "browserUpdateMs": 1155.3999999985099,
+      "endToEndMs": 754,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8282"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302566995,
+      "browserUpdateMs": 641.3000000044703,
+      "endToEndMs": 754,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8282"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302567043,
+      "browserUpdateMs": 182.5,
+      "endToEndMs": 802,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8282"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302568301,
+      "browserUpdateMs": 928.3000000044703,
+      "endToEndMs": 1044,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8289"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302568301,
+      "browserUpdateMs": 373.80000000447035,
+      "endToEndMs": 1044,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8289"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302569557,
+      "browserUpdateMs": 1142.1999999955297,
+      "endToEndMs": 584,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8301"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302569619,
+      "browserUpdateMs": 657.2999999970198,
+      "endToEndMs": 646,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8301"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302569619,
+      "browserUpdateMs": 139.59999999403954,
+      "endToEndMs": 646,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8301"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302570966,
+      "browserUpdateMs": 932,
+      "endToEndMs": 954,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8308"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302570966,
+      "browserUpdateMs": 392,
+      "endToEndMs": 954,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8308"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302572050,
+      "browserUpdateMs": 922.3999999985099,
+      "endToEndMs": 1024,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8315"
+    },
+    {
+      "method": "restyle",
+      "at": 1793302572050,
+      "browserUpdateMs": 386.69999999552965,
+      "endToEndMs": 1024,
+      "points": 50,
+      "lastKey": "p598-1793301369425904-file2567d275df1:8315"
+    }
+  ],
+  "points": [
+    50,
+    50
+  ]
+}

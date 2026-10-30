@@ -1,0 +1,23 @@
+source("audit-results/mirai/environment.R")
+Sys.setenv(R_LIBS = paste(normalizePath(.libPaths(), winslash = "/"), collapse = .Platform$path.sep),
+  NOT_CRAN = "true", `_R_CHECK_FORCE_SUGGESTS_` = "false", R_TESTS = "")
+path <- file.path(root, "audit-results/mirai", paste0("check-", host))
+dir.create(path, recursive = TRUE, showWarnings = FALSE)
+source_path <- file.path(path, "source")
+dir.create(source_path, showWarnings = FALSE)
+patterns <- readLines(file.path(root, ".Rbuildignore"))
+entries <- list.files(root, all.files = TRUE, no.. = TRUE)
+entries <- entries[!startsWith(entries, ".") | entries == ".Rbuildignore"]
+entries <- entries[!vapply(entries, function(entry) any(vapply(patterns[nzchar(patterns)], grepl, logical(1), x = entry)), logical(1))]
+stopifnot(all(file.copy(file.path(root, entries), source_path, recursive = TRUE)))
+setwd(path)
+r <- file.path(R.home("bin"), "R")
+status <- system2(r, c("CMD", "build", "--no-build-vignettes", "--no-manual", shQuote(source_path)))
+if (status) quit(status = status)
+tarball <- list.files(pattern = "^termr_.*[.]tar[.]gz$")
+stopifnot(length(tarball) == 1L)
+files <- utils::untar(tarball, list = TRUE)
+stopifnot(!any(grepl("audit-results|[.]playwright|[.]pending-|[.]new[.]md$|_problems", files)))
+cat("PASS build excludes reports and temporary artifacts\n")
+status <- system2(r, c("CMD", "check", "--no-manual", "--no-build-vignettes", tarball))
+quit(status = status)

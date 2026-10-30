@@ -1,0 +1,1521 @@
+diff --git a/.Rbuildignore b/.Rbuildignore
+index ab4d71c..663b2de 100644
+--- a/.Rbuildignore
++++ b/.Rbuildignore
+@@ -12,3 +12,6 @@
+ ^pkgdown$
+ ^_pkgdown\.yml$
+ ^vignettes/articles$
++^audit-results$
++^tests/testthat/_snaps/.*\.new\.md$
++^tests/testthat/_problems$
+diff --git a/.gitignore b/.gitignore
+index 42859a9..0ad3036 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -9,3 +9,4 @@ termr.Rcheck/
+ /tools/pty/__pycache__/
+ /tools/bench/baselines/*.Rprof*
+ tests/testthat/_snaps/*.new.md
++.serena
+\ No newline at end of file
+diff --git a/DESCRIPTION b/DESCRIPTION
+index 2422141..9bafdef 100644
+--- a/DESCRIPTION
++++ b/DESCRIPTION
+@@ -32,7 +32,9 @@ Suggests:
+     DBI,
+     jsonlite,
+     knitr,
++    nanonext (>= 1.10.0),
+     RSQLite,
++    shiny,
+     testthat (>= 3.0.0),
+     withr
+ Config/testthat/edition: 3
+diff --git a/NAMESPACE b/NAMESPACE
+index 672c7d3..de52c65 100644
+--- a/NAMESPACE
++++ b/NAMESPACE
+@@ -170,6 +170,9 @@ export(table_filter)
+ export(table_source)
+ export(tabs)
+ export(terminal_capabilities)
++export(termr_nano_connect)
++export(termr_nano_publish)
++export(termr_stream)
+ export(termr_theme)
+ export(test_app)
+ export(text_area)
+diff --git a/NEWS.md b/NEWS.md
+index 994960e..f2b5fe7 100644
+--- a/NEWS.md
++++ b/NEWS.md
+@@ -1,3 +1,22 @@
++# Unreleased development notes
++
++* Add optional nanonext telemetry with raw JSON topics, initial snapshots,
++  latest-value resynchronization, gap diagnostics and bounded main-thread polling.
++  The live system monitor supports file, nano and simultaneous publication.
++
++* Add experimental `termr_stream()` with synchronous subscriptions, bounded
++  history, explicit cleanup, callback error isolation and signal integration.
++* Add a separate real system-monitor demo: independent collector, termr TUI
++  and optional Shiny dashboard using validated, versioned local JSON snapshots.
++
++* Route each terminal key or paste event using the focus at dispatch time, so
++  a Tab followed by Enter in one POSIX input read reaches the newly focused
++  widget. Add grouped/split byte-parser tests and a single-write PTY regression.
++* Add `App$layout_diagnostics()` for on-demand reports of possible content
++  clipping, and `Pilot$wait_until_exit()` for deterministic shutdown tests.
++* Add `visible = TRUE` to `label()` and include a compact responsive form
++  example with dynamic visibility.
++
+ # termr 1.0.1
+ 
+ First CRAN release, published on [CRAN](https://CRAN.R-project.org/package=termr)
+diff --git a/R/app.R b/R/app.R
+index 098655d..c5aa967 100644
+--- a/R/app.R
++++ b/R/app.R
+@@ -57,6 +57,7 @@ App <- R6::R6Class(
+         for (sheet in sheets) self$add_stylesheet(sheet)
+       }
+       private$.mouse <- mouse
++      private$.focus_target_marker <- new.env(parent = emptyenv())
+       private$.queue <- EventQueue$new()
+       private$.focus <- FocusManager$new(self)
+       private$.timers <- TimerManager$new(function() private$clock())
+@@ -166,6 +167,32 @@ App <- R6::R6Class(
+     #' @description The recorded events as a data frame (see `log_events()`).
+     event_log = function() private$.event_log,
+ 
++    #' @description Inspect the current screen for content that exceeds a
++    #'   widget's allocated content box. This runs a layout pass but does not
++    #'   render, warn or change the normal layout policy. Dimensions default
++    #'   to the current app size. Scroll-view clipping is treated as
++    #'   intentional and is not reported.
++    #' @param width,height Terminal dimensions to inspect; omitted values use
++    #'   the current app size.
++    #' @return A data frame with widget, ID, available and required dimensions,
++    #'   clipping direction and an assessment that fixed-size clipping may be
++    #'   intentional.
++    layout_diagnostics = function(width = NULL, height = NULL) {
++      current_size <- private$.size
++      size <- current_size
++      if (!is.null(width)) size[["width"]] <- check_count(width, "width")
++      if (!is.null(height)) size[["height"]] <- check_count(height, "height")
++      if (anyNA(size) || any(size < 1L)) stop("`width` and `height` must be positive.", call. = FALSE)
++      if (!identical(size, current_size)) {
++        on.exit(
++          layout_tree(self$screen, rect(1L, 1L, current_size[["width"]], current_size[["height"]])),
++          add = TRUE
++        )
++      }
++      layout_tree(self$screen, rect(1L, 1L, size[["width"]], size[["height"]]))
++      collect_layout_diagnostics(self$screen)
++    },
++
+     #' @description Show or hide the debug overlay (also F12 with
+     #'   `app(debug = TRUE)`).
+     toggle_debug = function() toggle_debug_overlay(self),
+@@ -555,6 +582,7 @@ App <- R6::R6Class(
+     .actions = list(),
+     .later = list(),
+     .focus = NULL,
++    .focus_target_marker = NULL,
+     .reveal = NULL,
+     .debug = NULL,
+     .debug_timer = NULL,
+@@ -718,7 +746,9 @@ App <- R6::R6Class(
+         private$.needs_repaint <- TRUE
+         event$target <- self$screen
+       } else if (inherits(event, "KeyEvent") || inherits(event, "PasteEvent")) {
+-        event$target <- private$.focus$focused %||% self$screen
++        # Resolve focus at dispatch time so a Tab followed by Enter in one
++        # read can target the widget that receives focus after Tab.
++        event$target <- private$.focus_target_marker
+       } else if (inherits(event, "MouseEvent")) {
+         return(private$route_mouse(event))
+       }
+@@ -938,7 +968,7 @@ App <- R6::R6Class(
+         # Repaint the regions of changed widgets (and of widgets that moved
+         # or were resized, old and new place) into a copy of the last frame.
+         frame <- previous$copy()
+-        rects <- dirty_rects(private$.dirty, bounds, extra = changes)
++        rects <- dirty_rects(private$.dirty, bounds, extra = changes, frame = previous)
+         for (clip in rects) {
+           frame$fill(clip)
+           paint_layers(frame, layers, overlays, private$.theme, clip)
+@@ -975,6 +1005,9 @@ App <- R6::R6Class(
+     # Dispatch --------------------------------------------------------------
+ 
+     dispatch = function(event) {
++      if (identical(event$target, private$.focus_target_marker)) {
++        event$target <- private$.focus$focused %||% self$screen
++      }
+       target <- event$target %||% self$screen
+       lifecycle_event <- inherits(event, c("MountEvent", "UnmountEvent")) ||
+         event$type %in% c("screen.show", "screen.hide")
+diff --git a/R/dirty.R b/R/dirty.R
+index d34276e..ad7a0c8 100644
+--- a/R/dirty.R
++++ b/R/dirty.R
+@@ -47,10 +47,23 @@ merge_rects <- function(rects) {
+   rects
+ }
+ 
++# A rectangle that starts or ends in the middle of a wide character of
++# `frame` would blank half of it, and the clipped repaint cannot restore the
++# glyph. Grow the rectangle to cover the whole character.
++keep_wide_chars_whole <- function(r, frame) {
++  rows <- seq.int(r$y, rect_bottom(r))
++  left <- r$x
++  right <- rect_right(r)
++  if (left > 1L && any(frame$chars[rows, left] == "")) left <- left - 1L
++  if (right < frame$width && any(frame$chars[rows, right + 1L] == "")) right <- right + 1L
++  rect(left, r$y, right - left + 1L, r$height)
++}
++
+ # Dirty rectangles for widgets: their regions clipped to `bounds`, widened
+ # by one column each side, merged. At most `max_rects` are kept (more
+-# than that collapses into their bounding box).
+-dirty_rects <- function(widgets, bounds, max_rects = 12L, extra = list()) {
++# than that collapses into their bounding box). With the previous `frame`,
++# rectangles are also grown so that they do not split wide characters.
++dirty_rects <- function(widgets, bounds, max_rects = 12L, extra = list(), frame = NULL) {
+   rects <- list()
+   for (r in extra) {
+     r <- rect_intersect(rect(r$x - 1L, r$y, r$width + 2L, r$height), bounds)
+@@ -62,6 +75,7 @@ dirty_rects <- function(widgets, bounds, max_rects = 12L, extra = list()) {
+     r <- rect_intersect(rect(r$x - 1L, r$y, r$width + 2L, r$height), bounds)
+     if (!rect_is_empty(r)) rects[[length(rects) + 1L]] <- r
+   }
++  if (!is.null(frame)) rects <- lapply(rects, keep_wide_chars_whole, frame = frame)
+   rects <- merge_rects(rects)
+   if (length(rects) > max_rects) {
+     box <- rects[[1]]
+diff --git a/R/geometry.R b/R/geometry.R
+index 50e1a40..f374f86 100644
+--- a/R/geometry.R
++++ b/R/geometry.R
+@@ -71,12 +71,17 @@ rect_shrink <- function(r, edges) {
+ }
+ 
+ # Normalise CSS-like shorthand (1, 2 or 4 values) to c(top, right, bottom, left).
++# Cell counts above this are meaningless in a terminal. Clamping keeps sums of
++# many sizes far below the integer limit, so layout arithmetic cannot overflow.
++max_cells <- 1000000L
++clamp_cells <- function(x) as.integer(pmin(x, max_cells))
++
+ as_edges <- function(x, arg = "edges") {
+   if (is.null(x)) return(c(0L, 0L, 0L, 0L))
+   if (!is.numeric(x) || anyNA(x) || any(x < 0)) {
+     stop(sprintf("`%s` must contain non-negative numbers.", arg), call. = FALSE)
+   }
+-  x <- as.integer(x)
++  x <- clamp_cells(x)
+   switch(
+     as.character(length(x)),
+     "1" = rep(x, 4L),
+diff --git a/R/layout.R b/R/layout.R
+index 8bbfe96..5538fe2 100644
+--- a/R/layout.R
++++ b/R/layout.R
+@@ -45,6 +45,64 @@ clear_regions <- function(widget) {
+   for (child in widget$children) clear_regions(child)
+ }
+ 
++# Inspect a laid-out tree for content that cannot fit inside a widget's own
++# content box. Scroll views intentionally clip virtual content; their viewport
++# clipping is not reported here.
++collect_layout_diagnostics <- function(widget) {
++  rows <- list()
++  walk <- function(node) {
++    if (is.null(node$region) || !node$visible) return(invisible())
++    st <- node$computed_style()
++    inner <- content_rect(node$region, st)
++    kids <- visible_children(node)
++    required_width <- 0L
++    required_height <- 0L
++    check_width <- TRUE
++    check_height <- TRUE
++
++    if (inherits(node, "ScrollView")) {
++      check_width <- check_height <- FALSE
++    } else if (length(kids)) {
++      measured <- layout_algorithms[[st$layout]]$measure(kids, st)
++      required_width <- as.integer(measured$width())
++      required_height <- as.integer(measured$height(inner$width))
++    } else if (inherits(node, c("TextArea", "LogView", "DataTable", "TreeView", "OptionList"))) {
++      # These widgets have their own scrolling, virtualization or viewport
++      # rules, which cannot be inferred from their natural content size.
++      check_width <- check_height <- FALSE
++    } else {
++      required_width <- as.integer(node$content_width())
++      required_height <- as.integer(node$content_height(inner$width))
++      if (st$wrap != "none") check_width <- FALSE
++      if (inherits(node, "Input")) check_width <- FALSE
++    }
++
++    horizontal <- check_width && required_width > inner$width
++    vertical <- check_height && required_height > inner$height
++    if (horizontal || vertical) {
++      rows[[length(rows) + 1L]] <<- data.frame(
++        widget = class(node)[[1]], id = if (is.null(node$id)) NA_character_ else node$id,
++        available_width = as.integer(inner$width), required_width = required_width,
++        available_height = as.integer(inner$height), required_height = required_height,
++        clipping = if (horizontal && vertical) "both" else if (horizontal) "horizontal" else "vertical",
++        assessment = "potential; fixed dimensions may make this intentional",
++        stringsAsFactors = FALSE
++      )
++    }
++    for (child in node$children) walk(child)
++    invisible()
++  }
++  walk(widget)
++  if (!length(rows)) {
++    return(data.frame(
++      widget = character(), id = character(), available_width = integer(), required_width = integer(),
++      available_height = integer(), required_height = integer(), clipping = character(),
++      assessment = character(), stringsAsFactors = FALSE
++    ))
++  }
++  do.call(rbind, rows)
++}
++
+ visible_children <- function(widget) {
+   Filter(function(w) w$visible, widget$children)
+ }
+diff --git a/R/style.R b/R/style.R
+index af7d050..4a990fa 100644
+--- a/R/style.R
++++ b/R/style.R
+@@ -90,10 +90,10 @@ style <- function(width = NULL, height = NULL,
+ style_property_parsers <- list(
+   width = function(v) parse_size(v, "width"),
+   height = function(v) parse_size(v, "height"),
+-  min_width = function(v) check_count(v, "min_width"),
+-  max_width = function(v) check_count(v, "max_width"),
+-  min_height = function(v) check_count(v, "min_height"),
+-  max_height = function(v) check_count(v, "max_height"),
++  min_width = function(v) check_cells(v, "min_width"),
++  max_width = function(v) check_cells(v, "max_width"),
++  min_height = function(v) check_cells(v, "min_height"),
++  max_height = function(v) check_cells(v, "max_height"),
+   margin = function(v) as_edges(v, "margin"),
+   padding = function(v) as_edges(v, "padding"),
+   border = function(v) check_choice(v, names(border_sets), "border"),
+@@ -125,8 +125,15 @@ parse_style_props <- function(values) {
+ }
+ 
+ # Grid tracks: a number (that many "1fr" tracks) or a vector of sizes.
++max_tracks <- 10000L
++
+ parse_tracks <- function(v, arg) {
+-  if (is_scalar_number(v) && v >= 1 && v == round(v)) return(rep(list(size_spec("fr", 1)), v))
++  if (is_scalar_number(v) && v >= 1 && v == round(v)) {
++    if (v > max_tracks) {
++      stop(sprintf("`%s` must be at most %d tracks.", arg, max_tracks), call. = FALSE)
++    }
++    return(rep(list(size_spec("fr", 1)), v))
++  }
+   if (!(is.character(v) || is.numeric(v)) || length(v) == 0L || anyNA(v)) {
+     stop(sprintf("`%s` must be a number of tracks or a vector of sizes.", arg), call. = FALSE)
+   }
+@@ -137,7 +144,7 @@ parse_gap <- function(v) {
+   if (!is.numeric(v) || !length(v) %in% 1:2 || anyNA(v) || any(v < 0)) {
+     stop("`grid_gap` must be one or two non-negative numbers (rows, columns).", call. = FALSE)
+   }
+-  as.integer(rep_len(v, 2L))
++  clamp_cells(rep_len(v, 2L))
+ }
+ 
+ parse_span <- function(v, arg) {
+@@ -209,20 +216,42 @@ format.termr_size <- function(x, ...) {
+   )
+ }
+ 
++# Parsing a size string is pure and runs for every widget's default style,
++# so successful results are memoised (bounded, keyed by the raw string).
++size_cache <- new.env(parent = emptyenv())
++size_cache_limit <- 512L
++
+ parse_size <- function(x, arg = "size") {
+   if (is.null(x) || inherits(x, "termr_size")) return(x)
+-  if (is_scalar_number(x) && x >= 0) return(size_spec("fixed", as.integer(round(x))))
++  if (is_scalar_number(x) && x >= 0) return(size_spec("fixed", clamp_cells(round(x))))
+   if (is_scalar_character(x)) {
++    usable <- !is.na(x) && nzchar(x)
++    if (usable) {
++      cached <- size_cache[[x]]
++      if (!is.null(cached)) return(cached)
++    }
++    spec <- parse_size_string(x)
++    if (!is.null(spec)) {
++      if (usable && length(size_cache) < size_cache_limit) assign(x, spec, envir = size_cache)
++      return(spec)
++    }
++  }
++  stop(sprintf(
++    "Invalid `%s`: use a number of cells, \"auto\", \"<n>fr\" or \"<n>%%\".", arg
++  ), call. = FALSE)
++}
++
++# The size for a string, or NULL when it is not a valid size.
++parse_size_string <- function(x) {
++  {
+     s <- tolower(trimws(x))
+     num <- "^[0-9]*\\.?[0-9]+"
+     if (s == "auto") return(size_spec("auto"))
+     if (grepl(paste0(num, "fr$"), s)) return(size_spec("fr", as.numeric(sub("fr$", "", s))))
+     if (grepl(paste0(num, "%$"), s)) return(size_spec("percent", as.numeric(sub("%$", "", s)) / 100))
+-    if (grepl("^[0-9]+$", s)) return(size_spec("fixed", as.integer(s)))
++    if (grepl("^[0-9]+$", s)) return(size_spec("fixed", clamp_cells(as.numeric(s))))
+   }
+-  stop(sprintf(
+-    "Invalid `%s`: use a number of cells, \"auto\", \"<n>fr\" or \"<n>%%\".", arg
+-  ), call. = FALSE)
++  NULL
+ }
+ 
+ # Validation helpers --------------------------------------------------------
+@@ -250,6 +279,15 @@ check_count <- function(x, arg) {
+   as.integer(x)
+ }
+ 
++# Like check_count() for sizes in cells: huge values (including Inf) are clamped.
++check_cells <- function(x, arg) {
++  if (is.null(x)) return(NULL)
++  if (!is_scalar_number(x) || x < 0) {
++    stop(sprintf("`%s` must be a non-negative number.", arg), call. = FALSE)
++  }
++  clamp_cells(x)
++}
++
+ # Resolution ----------------------------------------------------------------
+ 
+ # Apply the state styles of the active states and drop the rest. A state
+diff --git a/R/testing.R b/R/testing.R
+index 091c262..a2ef361 100644
+--- a/R/testing.R
++++ b/R/testing.R
+@@ -70,6 +70,8 @@ compose_frame <- function(screen, width, height) {
+ #' * `focus(target)`, `find(selector)`: focus a widget, find one;
+ #' * `wait_for(condition, timeout = 5)`: step the event loop (simulated time, real time
+ #'   while workers run) until `condition(app)` is `TRUE`;
++#' * `wait_until_exit(timeout = 5)`: step until the app exits and return its
++#'   exit value, including when it has already exited;
+ #' * `run_worker(fn, ..., wait = TRUE)`: start a worker and wait for it;
+ #' * `wait_for_workers(timeout)`: wait for background workers to finish;
+ #' * `screen_text()`: the visible screen as a character vector;
+@@ -229,6 +231,33 @@ Pilot <- R6::R6Class(
+       }
+     },
+ 
++    #' @description Wait for the app to exit and return its exit value.
++    #'   Timers advance in simulated time; while workers run, real time is
++    #'   used. Calling this after the app has exited returns immediately.
++    #' @param timeout Maximum wait in seconds.
++    #' @param interval Time advanced between checks, in seconds.
++    wait_until_exit = function(timeout = 5, interval = 0.05) {
++      if (!is_scalar_number(timeout) || !is.finite(timeout) || timeout < 0) {
++        stop("`timeout` must be a finite non-negative number.", call. = FALSE)
++      }
++      if (!is_scalar_number(interval) || !is.finite(interval) || interval <= 0) {
++        stop("`interval` must be a finite positive number.", call. = FALSE)
++      }
++      waited <- 0
++      real_deadline <- now_seconds() + timeout
++      repeat {
++        if (self$exited) return(invisible(self$value))
++        busy <- length(self$app$workers()) > 0L
++        if ((busy && now_seconds() > real_deadline) || (!busy && waited >= timeout)) {
++          stop(paste0("wait_until_exit(): the app did not exit within ",
++                      format(timeout), " seconds.", private$worker_diagnostics()), call. = FALSE)
++        }
++        if (busy) Sys.sleep(min(0.02, max(0, real_deadline - now_seconds())))
++        self$advance(interval)
++        waited <- waited + interval
++      }
++    },
++
+     run_worker = function(fn, ..., wait = TRUE) {
+       private$ensure_running()
+       worker <- self$app$run_worker(fn, ...)
+diff --git a/R/widget-containers.R b/R/widget-containers.R
+index 14b5f70..9c30ab2 100644
+--- a/R/widget-containers.R
++++ b/R/widget-containers.R
+@@ -69,6 +69,7 @@ Grid <- R6::R6Class(
+ #' @param id Optional identifier.
+ #' @param classes Optional classes.
+ #' @param style A [style()].
++#' @param visible Is the container shown initially?
+ #' @return A `Grid` widget.
+ #' @export
+ #' @examples
+@@ -78,9 +79,11 @@ Grid <- R6::R6Class(
+ #'   columns = c("1fr", "2fr"), gap = 1
+ #' )
+ #' render_widget(ui, 20, 5)
+-grid_layout <- function(..., columns = 2L, rows = NULL, gap = 0L, id = NULL, classes = NULL, style = NULL) {
++grid_layout <- function(..., columns = 2L, rows = NULL, gap = 0L, id = NULL,
++                        classes = NULL, style = NULL, visible = TRUE) {
+   grid_style <- style(grid_columns = columns, grid_rows = rows, grid_gap = gap)
+-  Grid$new(..., id = id, classes = classes, style = merge_styles(grid_style, as_style(style)))
++  Grid$new(..., id = id, classes = classes, style = merge_styles(grid_style, as_style(style)),
++           visible = visible)
+ }
+ 
+ #' Layout containers
+@@ -97,6 +100,7 @@ grid_layout <- function(..., columns = 2L, rows = NULL, gap = 0L, id = NULL, cla
+ #' @param id Optional identifier (for `#id` selectors).
+ #' @param classes Optional classes (for `.class` selectors).
+ #' @param style A [style()].
++#' @param visible Is the container shown initially?
+ #' @return A `Vertical` or `Horizontal` widget.
+ #' @export
+ #' @examples
+@@ -105,12 +109,12 @@ grid_layout <- function(..., columns = 2L, rows = NULL, gap = 0L, id = NULL, cla
+ #'   horizontal(label("left"), label("right"))
+ #' )
+ #' render_widget(ui, 20, 3)
+-vertical <- function(..., id = NULL, classes = NULL, style = NULL) {
+-  Vertical$new(..., id = id, classes = classes, style = style)
++vertical <- function(..., id = NULL, classes = NULL, style = NULL, visible = TRUE) {
++  Vertical$new(..., id = id, classes = classes, style = style, visible = visible)
+ }
+ 
+ #' @rdname vertical
+ #' @export
+-horizontal <- function(..., id = NULL, classes = NULL, style = NULL) {
+-  Horizontal$new(..., id = id, classes = classes, style = style)
++horizontal <- function(..., id = NULL, classes = NULL, style = NULL, visible = TRUE) {
++  Horizontal$new(..., id = id, classes = classes, style = style, visible = visible)
+ }
+diff --git a/R/widget-factory.R b/R/widget-factory.R
+index ece7a92..b610786 100644
+--- a/R/widget-factory.R
++++ b/R/widget-factory.R
+@@ -22,7 +22,8 @@
+ #' @param focusable Can widgets of this type receive focus?
+ #' @param inherit Parent class: [Widget], [Vertical] or [Horizontal].
+ #' @return A constructor function
+-#'   `function(..., id = NULL, classes = NULL, style = NULL, disabled = FALSE)`.
++#'   `function(..., id = NULL, classes = NULL, style = NULL, disabled = FALSE,
++#'   visible = TRUE)`.
+ #'   Named arguments in `...` set initial state values; unnamed arguments are
+ #'   child widgets.
+ #' @export
+@@ -73,7 +74,8 @@ widget <- function(name, state = list(), render = NULL, compose = NULL,
+ 
+   public <- list(
+     focusable = focusable,
+-    initialize = function(..., id = NULL, classes = NULL, style = NULL, disabled = FALSE) {
++    initialize = function(..., id = NULL, classes = NULL, style = NULL,
++                          disabled = FALSE, visible = TRUE) {
+       args <- list(...)
+       arg_names <- names(args) %||% rep("", length(args))
+       values <- args[nzchar(arg_names)]
+@@ -81,7 +83,8 @@ widget <- function(name, state = list(), render = NULL, compose = NULL,
+       if (length(unknown)) {
+         stop(sprintf("%s has no state field \"%s\".", class(self)[[1]], unknown[[1]]), call. = FALSE)
+       }
+-      super$initialize(id = id, classes = classes, style = style, disabled = disabled)
++      super$initialize(id = id, classes = classes, style = style, disabled = disabled,
++                       visible = visible)
+       for (field in names(spec$state)) {
+         private$.state[[field]] <- if (field %in% names(values)) values[[field]] else spec$state[[field]]$default
+       }
+@@ -120,8 +123,10 @@ widget <- function(name, state = list(), render = NULL, compose = NULL,
+     )
+   )
+ 
+-  constructor <- function(..., id = NULL, classes = NULL, style = NULL, disabled = FALSE) {
+-    generator$new(..., id = id, classes = classes, style = style, disabled = disabled)
++  constructor <- function(..., id = NULL, classes = NULL, style = NULL,
++                          disabled = FALSE, visible = TRUE) {
++    generator$new(..., id = id, classes = classes, style = style,
++                  disabled = disabled, visible = visible)
+   }
+   structure(constructor, class = c("termr_widget_type", "function"), generator = generator, type_name = name)
+ }
+diff --git a/R/widget-input.R b/R/widget-input.R
+index d268586..1f9cb33 100644
+--- a/R/widget-input.R
++++ b/R/widget-input.R
+@@ -284,6 +284,8 @@ Input <- R6::R6Class(
+       visible <- seq.int(scroll + 1L, length.out = length(chars) - scroll)
+       visible <- visible[cumsum(widths[visible]) <= width]
+       if (!show_cursor) return(text_lines(paste(chars[visible], collapse = "")))
++      # A cursor character wider than the whole box leaves nothing visible.
++      if (!length(visible)) return(text_lines(span(" ", style(reverse = TRUE))))
+       selected <- private$selected_indices()
+       kind <- ifelse(visible == cursor + 1L, "cursor", ifelse(visible %in% selected, "selected", "plain"))
+       pieces <- chars[visible]
+@@ -330,6 +332,27 @@ Input <- R6::R6Class(
+   private = list(
+     .scroll = 0L,
+ 
++    # A new value changes only the natural width (the text is one line). That
++    # width is observed by an ancestor's size only through `auto` widths and
++    # `measure()`, so the layout can be skipped when every widget up to the
++    # root is a plain vertical / horizontal container (or a screen) whose
++    # width is not `auto`, or when a `fixed` width ends the chain.
++    paint_only_change = function(name, old, new) {
++      if (!identical(name, "value")) return(FALSE)
++      node <- self
++      repeat {
++        type <- node$computed_style()$width$type
++        if (identical(type, "fixed")) return(TRUE)
++        if (identical(type, "auto")) return(FALSE)
++        parent <- node$parent
++        if (is.null(parent)) return(TRUE)
++        if (!identical(class(parent)[[1]], "Vertical") && !identical(class(parent)[[1]], "Horizontal") &&
++            !identical(class(parent)[[1]], "Screen")) return(FALSE)
++        if (!parent$computed_style()$layout %in% c("vertical", "horizontal")) return(FALSE)
++        node <- parent
++      }
++    },
++
+     length = function() length(input_chars(private$.state$value)),
+ 
+     check = function(value) run_validator(self$validate, value),
+diff --git a/R/widget-label.R b/R/widget-label.R
+index 020568e..4b130fd 100644
+--- a/R/widget-label.R
++++ b/R/widget-label.R
+@@ -53,6 +53,7 @@ Label <- R6::R6Class(
+ #' @param style A [style()].
+ #' @param wrap Shortcut for `style(wrap = )`: `"none"`, `"word"` or
+ #'   `"char"`.
++#' @param visible Is the label shown initially?
+ #' @return A `Label` widget. Change its text with `$update()` or by
+ #'   assigning `$text`.
+ #' @export
+@@ -60,10 +61,11 @@ Label <- R6::R6Class(
+ #' lbl <- label("Hello", style = style(bold = TRUE))
+ #' lbl$update("Goodbye")
+ #' render_widget(lbl, 10, 1)
+-label <- function(text = "", id = NULL, classes = NULL, style = NULL, wrap = NULL) {
++label <- function(text = "", id = NULL, classes = NULL, style = NULL, wrap = NULL, visible = TRUE) {
+   if (!is.null(wrap)) style <- merge_styles(as_style(style), style(wrap = wrap))
+   fn <- if (is.function(text)) text
+-  w <- Label$new(if (is.null(fn)) text else "", id = id, classes = classes, style = style)
++  w <- Label$new(if (is.null(fn)) text else "", id = id, classes = classes,
++                 style = style, visible = visible)
+   if (!is.null(fn)) w$bind_reactive("text", fn)
+   w
+ }
+diff --git a/R/widget-scroll.R b/R/widget-scroll.R
+index afb77ab..18634d2 100644
+--- a/R/widget-scroll.R
++++ b/R/widget-scroll.R
+@@ -158,9 +158,20 @@ ScrollView <- R6::R6Class(
+           virtual <- size()
+         }
+       }
+-      private$.viewport <- rect(inner$x, inner$y, vw, vh)
++      viewport <- rect(inner$x, inner$y, vw, vh)
++      bars <- c(x = bar_x, y = bar_y)
++      # Bars and thumbs depend on the extent of the children, whose own dirty
++      # rectangles need not reach them: repaint the view when they change.
++      if (!is.null(private$.viewport) &&
++          !(identical(private$.viewport, viewport) && identical(private$.virtual, as.integer(virtual)) &&
++            identical(private$.bars, bars))) {
++        private$.dirty <- TRUE
++        app <- self$app
++        if (!is.null(app)) app$request_repaint(self, layout = FALSE)
++      }
++      private$.viewport <- viewport
+       private$.virtual <- as.integer(virtual)
+-      private$.bars <- c(x = bar_x, y = bar_y)
++      private$.bars <- bars
+       # Content may have shrunk: keep offsets in range without invalidating.
+       private$.state$offset_x <- private$clamp(private$.state$offset_x, "x")
+       private$.state$offset_y <- private$clamp(private$.state$offset_y, "y")
+diff --git a/R/widget.R b/R/widget.R
+index db4693c..f2e332e 100644
+--- a/R/widget.R
++++ b/R/widget.R
+@@ -406,7 +406,14 @@ Widget <- R6::R6Class(
+         relayout <- !private$same_layout_in(before, after)
+         bump_epoch(layout = relayout)
+       }
+-      if (!relayout && name %in% self$paint_states) self$invalidate_paint() else self$invalidate()
++      if (!relayout && name %in% self$paint_states) {
++        self$invalidate_paint()
++      } else if (!relayout && private$paint_only_change(name, old, value)) {
++        clear_size_caches(self)
++        self$invalidate_paint()
++      } else {
++        self$invalidate()
++      }
+       private$state_changed(name, old, value)
+       invisible(TRUE)
+     },
+@@ -749,6 +756,10 @@ Widget <- R6::R6Class(
+     # Hook for subclasses: called after a state field changed.
+     state_changed = function(name, old, new) invisible(),
+ 
++    # Hook for subclasses: can this change of a non-paint state field alter
++    # any geometry? TRUE only when it provably cannot (the layout is skipped).
++    paint_only_change = function(name, old, new) FALSE,
++
+     # Hook for subclasses: short description for print().
+     describe = function() ""
+   )
+diff --git a/README.md b/README.md
+index 63bc8b1..5e8a838 100644
+--- a/README.md
++++ b/README.md
+@@ -101,6 +101,12 @@ cancellation and process cleanup. Static rendering exports text, Markdown,
+ HTML, SVG and JSON for scripts and optional knitr/Quarto output. These are
+ screen snapshots; static rendering does not start an app event loop.
+ 
++Experimental [data streams](docs/data-streams.md) provide local subscriptions
++and bounded event history. The [live system monitor](inst/examples/system-monitor-live/README.md)
++shares real collector snapshots with independently running termr and Shiny clients.
++Optional [nanonext telemetry](docs/nanonext.md) adds live pub/sub with snapshot
++recovery, bounded polling and independent clients while retaining file mode.
++
+ ## Installation
+ 
+ termr requires R >= 4.1.
+diff --git a/docs/api-inventory.md b/docs/api-inventory.md
+index 20e4aea..6496974 100644
+--- a/docs/api-inventory.md
++++ b/docs/api-inventory.md
+@@ -4,7 +4,7 @@ Generated from the checked-in `NAMESPACE`, top-level definitions in `R/`, and cu
+ 
+ ## Scope and counting
+ 
+-- Explicit `export()` symbols: **155**.
++- Explicit `export()` symbols: **158**.
+ - Registered S3 methods: **29** (listed separately; they are registrations, not `export(name)` directives).
+ - Exported symbols without a matching Rd alias: **0**.
+ - Exports without an Rd usage section: **0**.
+@@ -17,6 +17,9 @@ Generated from the checked-in `NAMESPACE`, top-level definitions in `R/`, and cu
+ 
+ | Name | Type | Implementation | Rd | Usage | Example | Direct references |
+ |---|---|---|---|---|---|---|
++| `termr_stream` | function (experimental) | [streams.R](../R/streams.R) | [yes](../man/termr_stream.Rd) | yes | yes | docs, examples, tests |
++| `termr_nano_publish` | function (experimental) | [transport_nanonext.R](../R/transport_nanonext.R) | [yes](../man/nanonext_transport.Rd) | yes | yes | docs, examples, tests |
++| `termr_nano_connect` | function (experimental) | [transport_nanonext.R](../R/transport_nanonext.R) | [yes](../man/nanonext_transport.Rd) | yes | yes | docs, examples, tests |
+ | `Animation` | R6 class | [animation.R](../R/animation.R#L45) | [yes](../man/Animation.Rd) | yes | no | ? |
+ | `App` | R6 class | [app.R](../R/app.R#L23) | [yes](../man/App-class.Rd) | yes | no | tests |
+ | `BlurEvent` | R6 class | [events.R](../R/events.R#L187) | [yes](../man/Event.Rd) | yes | no | ? |
+diff --git a/docs/layout.md b/docs/layout.md
+index 188707a..73cbb6d 100644
+--- a/docs/layout.md
++++ b/docs/layout.md
+@@ -58,6 +58,32 @@ scrolls to show it.
+ widget's width, by display width and grapheme; `"auto"` heights grow with
+ the wrapped text and re-wrap when the terminal is resized.
+ 
++## Diagnosing clipping
++
++Inspect the current screen at the app's size, or at an explicit terminal size:
++
++```r
++issues <- my_app$layout_diagnostics(width = 80, height = 24)
++issues[, c("widget", "id", "available_width", "required_width",
++           "available_height", "required_height", "clipping", "assessment")]
++```
++
++The result reports widgets whose measured content or children need more space
++than their content box provides. It is an on-demand check: it runs layout but
++does not paint, warn, or change the app's normal rendering. A fixed size may
++make clipping intentional, so review the `assessment` field in context.
++`scroll_view()` deliberately clips its virtual content and is not reported as
++a clipping issue. Specialized viewport widgets such as tables and text areas
++are also omitted because their visible content is managed internally.
++
++For a compact 80x24 form, check both the parent rows and individual labels.
++Use `style(wrap = "word")` for prose and a `scroll_view()` for long option or
++log lists. The runnable [compact form example](../inst/examples/compact-form.R)
++shows labels, inputs, radio buttons, checkboxes, wrapping and dynamic
++visibility. Every widget has a reactive `$visible` field; assign it after
++construction when its helper does not expose an initial `visible` argument.
++`label()` also accepts `visible = FALSE` at construction.
++
+ ## Unicode
+ 
+ Text is split into grapheme clusters: `"é"`, CJK characters, emoji
+diff --git a/docs/reactivity.md b/docs/reactivity.md
+index 98c24e8..cd382f6 100644
+--- a/docs/reactivity.md
++++ b/docs/reactivity.md
+@@ -48,3 +48,7 @@ the widget is removed. For other widgets use `widget$bind_reactive("field", fn)`
+ `button(on_press = )` takes a callback.
+ 
+ Signals hold their subscribers: `dispose()` watchers you no longer need.
++
++For a sequence that delivers every observation, including repeated values,
++use [Data streams](data-streams.md). A stream subscription can explicitly
++update a signal; it does not create a second dependency graph.
+diff --git a/docs/stability.md b/docs/stability.md
+index 0a82d3d..5e5ee52 100644
+--- a/docs/stability.md
++++ b/docs/stability.md
+@@ -44,6 +44,10 @@ NEWS and in [migration notes](migration-to-1.0.md).
+   `sql_highlighter()`).
+ - Reactive graph functions: `signal()`, `computed()`, `watch()`, `batch()`,
+   `peek()`, `untracked()`, `dispose()`, and `update_signal()`.
++- Local data streams: `termr_stream()` and its subscription/history lifecycle
++  (see [Data streams](data-streams.md)).
++- Optional telemetry: `termr_nano_publish()` and `termr_nano_connect()`
++  (see [nanonext transport](nanonext.md)).
+ - Workers and subprocesses: `run_worker()`, `run_process()`, and worker
+   lifecycle details.
+ - Custom widget construction and low-level widget subclassing through
+diff --git a/docs/terminal.md b/docs/terminal.md
+index 430cad7..ed43da9 100644
+--- a/docs/terminal.md
++++ b/docs/terminal.md
+@@ -37,6 +37,21 @@ breaks and makes the paste one undo step. Widgets handle it with an
+ `on_paste(event)` method. Test with `pilot$paste("text")`. Windows consoles do
+ not provide bracketed paste: pasted text arrives as individual keys.
+ 
++## Keyboard byte streams
++
++On POSIX terminals, the driver reads bytes and the incremental key parser
++produces ordered key events. Bytes from one read are dispatched in order, and
++each key uses the focus at the moment it is dispatched. A Tab followed by
++Enter in one terminal read therefore focuses the next widget before delivering
++Enter. Splitting those bytes across reads has the same result. Escape-sequence
++fragments can span reads; an incomplete sequence is held briefly to distinguish
++it from a lone Escape key. On Windows, the driver maps console key records
++instead of parsing a POSIX byte stream.
++
++The parser tests exercise combined, split and incomplete byte sequences
++synthetically. The POSIX PTY harness in `tools/pty/pty-check.py` exercises the
++real driver and terminal transport; it does not run on Windows.
++
+ ## Clipboard
+ 
+ `app$clipboard_write(text)` sets the app clipboard (`app$clipboard`) and, on
+diff --git a/docs/testing.md b/docs/testing.md
+index 1935c40..50b33fd 100644
+--- a/docs/testing.md
++++ b/docs/testing.md
+@@ -25,10 +25,16 @@ test_that("the form greets", {
+ 
+ More pilot methods: `paste(text)`, `drag(from, to)`, `focus(target)`,
+ `find(selector)`, `wait_for(function(app) ..., timeout)` (simulated time, real
+-time while workers run), `run_worker(fn)`, `system_clipboard()` (last OSC 52
+-text). `test_app(app, width, height, color_mode = "none")` renders without
++time while workers run), `wait_until_exit(timeout)` (returns the app's exit
++value, even if it has already exited), `run_worker(fn)`,
++`system_clipboard()` (last OSC 52 text). `test_app(app, width, height,
++color_mode = "none")` renders without
+ colour (also `"16"`, `"256"`), e.g. to test accessibility.
+ 
++`wait_for()` keeps its existing behavior and errors if called after exit.
++Use `pilot$wait_until_exit()` for shutdown flows, then inspect
++`pilot$exited` and `pilot$value`.
++
+ * `pilot$screen_text()`: the screen as text;
+   `pilot$driver$terminal$screen$get_cell(x, y)` for colours and
+   attributes.
+@@ -38,6 +44,28 @@ colour (also `"16"`, `"256"`), e.g. to test accessibility.
+   `options(termr.skip_layout = FALSE)`: always re-lay out. `app$last_paint`
+   and `app$frame_stats` show what a repaint did.
+ 
++## Testing terminal bytes
++
++`pilot$press()` and `pilot$type()` test event-level application behavior. They
++do not exercise POSIX byte reads or escape-sequence framing. For parser-level
++coverage, termr feeds byte chunks directly to its internal `KeyParser` in
++`tests/testthat/test-keys.R`; those tests compare equivalent grouped and split
++input without starting an OS process. App-level tests can queue several key
++events before one `pilot$step()` to check dispatch ordering after focus changes.
++
++The POSIX integration harness `python tools/pty/pty-check.py` uses a real PTY
++and the real terminal driver, including a single-write `Tab` + `Enter` focus
++transition. It runs on Linux/macOS CI and requires POSIX PTY support. Windows
++uses console key record mapping tests and its separate PowerShell input CI; a
++POSIX PTY result does not establish Windows console behavior.
++
++## Layout checks
++
++Use `app$layout_diagnostics(width = 80, height = 24)` to inspect potential
++clipping without rendering. It reports available and measured dimensions for
++each affected widget. See [layout diagnostics](layout.md#diagnosing-clipping)
++and the compact form example.
++
+ ## Inside termr
+ 
+ The test suite (`tests/testthat`) includes randomised property tests:
+diff --git a/docs/widgets.md b/docs/widgets.md
+index 473c23b..9e702ea 100644
+--- a/docs/widgets.md
++++ b/docs/widgets.md
+@@ -1,7 +1,8 @@
+ # Widgets
+ 
+-All widgets take `id`, `classes` and `style` arguments. Their state fields
+-are reactive: assigning a new value repaints the widget.
++Widgets expose common `id`, `classes`, `style`, `visible` and `disabled`
++fields as appropriate; their state fields are reactive, so assigning a new
++value repaints the widget.
+ 
+ ## Text
+ 
+@@ -83,6 +84,17 @@ frame, named list or vector).
+ 
+ ## Dynamic trees
+ 
++Every widget has a reactive `$visible` field. Hide or show a mounted widget
++with `widget$visible <- FALSE` or `widget$set(visible = TRUE)`. The initial
++`visible` argument is available on `label()`, `vertical()`, `horizontal()`
++and `grid_layout()`; custom constructors returned by `widget()` also accept
++it. Other convenience constructors keep their own focused arguments, and
++their widgets can be hidden immediately after construction through `$visible`.
++The argument is appended to the relevant constructor signatures so existing
++positional calls keep their meaning. See the
++[compact form example](../inst/examples/compact-form.R) for a checkbox that
++shows and hides a wrapped label.
++
+ ```r
+ container$mount(widget)                    # append
+ container$mount(widget, before = other)    # or after = , or an index
+diff --git a/man/App-class.Rd b/man/App-class.Rd
+index 2b68d7f..89a6b53 100644
+--- a/man/App-class.Rd
++++ b/man/App-class.Rd
+@@ -85,6 +85,7 @@ layout passes so far.}
+     \item \href{#method-App-bind}{\code{App$bind()}}
+     \item \href{#method-App-log_events}{\code{App$log_events()}}
+     \item \href{#method-App-event_log}{\code{App$event_log()}}
++    \item \href{#method-App-layout_diagnostics}{\code{App$layout_diagnostics()}}
+     \item \href{#method-App-toggle_debug}{\code{App$toggle_debug()}}
+     \item \href{#method-App-add_command}{\code{App$add_command()}}
+     \item \href{#method-App-show_help}{\code{App$show_help()}}
+@@ -334,6 +335,35 @@ default, so normal apps pay nothing.
+   }
+ }
+ 
++\if{html}{\out{<hr>}}
++\if{html}{\out{<a id="method-App-layout_diagnostics"></a>}}
++\if{latex}{\out{\hypertarget{method-App-layout_diagnostics}{}}}
++\subsection{\code{App$layout_diagnostics()}}{
++  Inspect the current screen for content that exceeds a
++widget's allocated content box. This runs a layout pass but does not
++render, warn or change the normal layout policy. Dimensions default
++to the current app size. Scroll-view clipping is treated as
++intentional and is not reported.
++  \subsection{Usage}{
++    \if{html}{\out{<div class="r">}}
++    \preformatted{App$layout_diagnostics(width = NULL, height = NULL)}
++    \if{html}{\out{</div>}}
++  }
++  \subsection{Arguments}{
++    \if{html}{\out{<div class="arguments">}}
++    \describe{
++      \item{\code{width, height}}{Terminal dimensions to inspect; omitted values use
++the current app size.}
++    }
++    \if{html}{\out{</div>}}
++  }
++  \subsection{Returns}{
++    A data frame with widget, ID, available and required dimensions,
++clipping direction and an assessment that fixed-size clipping may be
++intentional.
++  }
++}
++
+ \if{html}{\out{<hr>}}
+ \if{html}{\out{<a id="method-App-toggle_debug"></a>}}
+ \if{latex}{\out{\hypertarget{method-App-toggle_debug}{}}}
+diff --git a/man/grid_layout.Rd b/man/grid_layout.Rd
+index 16e0527..b430af6 100644
+--- a/man/grid_layout.Rd
++++ b/man/grid_layout.Rd
+@@ -11,7 +11,8 @@ grid_layout(
+   gap = 0L,
+   id = NULL,
+   classes = NULL,
+-  style = NULL
++  style = NULL,
++  visible = TRUE
+ )
+ }
+ \arguments{
+@@ -28,6 +29,8 @@ grid_layout(
+ \item{classes}{Optional classes.}
+ 
+ \item{style}{A \code{\link[=style]{style()}}.}
++
++\item{visible}{Is the container shown initially?}
+ }
+ \value{
+ A \code{Grid} widget.
+diff --git a/man/label.Rd b/man/label.Rd
+index 2c30a34..57a98a5 100644
+--- a/man/label.Rd
++++ b/man/label.Rd
+@@ -4,7 +4,14 @@
+ \alias{label}
+ \title{Text label}
+ \usage{
+-label(text = "", id = NULL, classes = NULL, style = NULL, wrap = NULL)
++label(
++  text = "",
++  id = NULL,
++  classes = NULL,
++  style = NULL,
++  wrap = NULL,
++  visible = TRUE
++)
+ }
+ \arguments{
+ \item{text}{A string, a character vector (one element per line), a
+@@ -19,6 +26,8 @@ re-evaluated whenever the \code{\link[=signal]{signal()}}s it reads change.}
+ 
+ \item{wrap}{Shortcut for \code{style(wrap = )}: \code{"none"}, \code{"word"} or
+ \code{"char"}.}
++
++\item{visible}{Is the label shown initially?}
+ }
+ \value{
+ A \code{Label} widget. Change its text with \verb{$update()} or by
+diff --git a/man/test_app.Rd b/man/test_app.Rd
+index b33d5ef..bbdb2d1 100644
+--- a/man/test_app.Rd
++++ b/man/test_app.Rd
+@@ -43,6 +43,8 @@ positions (selectors, widgets or \code{c(x, y)});
+ \item \code{focus(target)}, \code{find(selector)}: focus a widget, find one;
+ \item \code{wait_for(condition, timeout = 5)}: step the event loop (simulated time, real time
+ while workers run) until \code{condition(app)} is \code{TRUE};
++\item \code{wait_until_exit(timeout = 5)}: step until the app exits and return its
++exit value, including when it has already exited;
+ \item \code{run_worker(fn, ..., wait = TRUE)}: start a worker and wait for it;
+ \item \code{wait_for_workers(timeout)}: wait for background workers to finish;
+ \item \code{screen_text()}: the visible screen as a character vector;
+diff --git a/man/vertical.Rd b/man/vertical.Rd
+index 5380ef4..60fccb5 100644
+--- a/man/vertical.Rd
++++ b/man/vertical.Rd
+@@ -5,9 +5,9 @@
+ \alias{horizontal}
+ \title{Layout containers}
+ \usage{
+-vertical(..., id = NULL, classes = NULL, style = NULL)
++vertical(..., id = NULL, classes = NULL, style = NULL, visible = TRUE)
+ 
+-horizontal(..., id = NULL, classes = NULL, style = NULL)
++horizontal(..., id = NULL, classes = NULL, style = NULL, visible = TRUE)
+ }
+ \arguments{
+ \item{...}{Child widgets.}
+@@ -17,6 +17,8 @@ horizontal(..., id = NULL, classes = NULL, style = NULL)
+ \item{classes}{Optional classes (for \code{.class} selectors).}
+ 
+ \item{style}{A \code{\link[=style]{style()}}.}
++
++\item{visible}{Is the container shown initially?}
+ }
+ \value{
+ A \code{Vertical} or \code{Horizontal} widget.
+diff --git a/man/widget.Rd b/man/widget.Rd
+index cb7d2f8..414a5fb 100644
+--- a/man/widget.Rd
++++ b/man/widget.Rd
+@@ -49,7 +49,7 @@ callable as \verb{widget$<name>(...)}.}
+ }
+ \value{
+ A constructor function
+-\verb{function(..., id = NULL, classes = NULL, style = NULL, disabled = FALSE)}.
++\verb{function(..., id = NULL, classes = NULL, style = NULL, disabled = FALSE, visible = TRUE)}.
+ Named arguments in \code{...} set initial state values; unnamed arguments are
+ child widgets.
+ }
+diff --git a/tests/testthat/test-app.R b/tests/testthat/test-app.R
+index 0692705..8f18cef 100644
+--- a/tests/testthat/test-app.R
++++ b/tests/testthat/test-app.R
+@@ -11,6 +11,26 @@ test_that("app() collects widgets, handlers and bindings", {
+   expect_error(app(actions = list(function(app) NULL)), "named list")
+ })
+ 
++test_that("batched key input observes focus changes between keys", {
++  events <- character()
++  a <- app(input(id = "name"), button("Submit", id = "submit"))
++  a$query_one("#submit")$on("focus", function(event, app) {
++    events <<- c(events, "focus")
++  })
++  a$on("button.pressed", "#submit", function(event, app) {
++    events <<- c(events, "pressed")
++  })
++  pilot <- test_app(a)
++
++  # A single terminal read can contain both bytes. The Enter event must use
++  # the button focused by the preceding Tab event.
++  pilot$driver$feed(KeyEvent$new("tab"), KeyEvent$new("enter"))
++  pilot$step()
++
++  expect_identical(events, c("focus", "pressed"))
++  expect_identical(a$focused, a$query_one("#submit"))
++})
++
+ test_that("run() exits on a binding and restores the terminal", {
+   driver <- HeadlessDriver$new(30, 5)
+   driver$press("a", "b", "q")
+@@ -150,6 +170,19 @@ test_that("ctrl+c quits by default and exit() returns a value", {
+   expect_identical(pilot2$value, 42)
+ })
+ 
++test_that("Pilot can wait for app exit and inspect its value", {
++  a <- app(label("wait"))
++  a$set_timeout(0.1, function(app) app$exit("finished"))
++  pilot <- test_app(a)
++
++  expect_identical(pilot$wait_until_exit(timeout = 1), "finished")
++  expect_true(pilot$exited)
++  expect_identical(pilot$value, "finished")
++  expect_identical(pilot$wait_until_exit(), "finished")
++  expect_error(pilot$wait_for(function(app) TRUE), "has exited")
++  expect_error(pilot$wait_until_exit(interval = 0), "positive number")
++})
++
+ test_that("call_later runs callbacks on the next tick", {
+   a <- app(label("x"))
+   pilot <- test_app(a, 10, 1)
+diff --git a/tests/testthat/test-examples.R b/tests/testthat/test-examples.R
+index 8d78a68..dedceeb 100644
+--- a/tests/testthat/test-examples.R
++++ b/tests/testthat/test-examples.R
+@@ -1,7 +1,7 @@
+ # The bundled examples call run() at the end. Source them with run()
+ # replaced by a function that captures the app, then drive it headlessly.
+ test_that("all examples are listed", {
+-  expect_setequal(run_example(), c("buffer-demo", "counter", "dataframe-browser", "file-tree", "form", "hello",
++  expect_setequal(run_example(), c("buffer-demo", "compact-form", "counter", "dataframe-browser", "file-tree", "form", "hello",
+                                    "keys", "kitchen-sink", "model-monitor", "system-monitor", "data-explorer",
+                                    "task-runner", "terminal-dashboard", "editor", "accessibility-demo", "custom-widget",
+                                    "sql-workspace", "database-explorer", "export-report", "data-workbench"))
+diff --git a/tests/testthat/test-input.R b/tests/testthat/test-input.R
+index de2d8fd..8fc8888 100644
+--- a/tests/testthat/test-input.R
++++ b/tests/testthat/test-input.R
+@@ -226,3 +226,64 @@ test_that("password values stay out of print, inspection, event logs and clipboa
+   expect_false(any(grepl("hunter2", unlist(pilot$app$event_log()), fixed = TRUE)))
+   expect_identical(pw$value, "hunter2")
+ })
++
++test_that("a focused input renders when its cursor character is wider than the box", {
++  for (txt in c("你好", "a你", "\U0001F600")) {
++    for (cursor in 0:1) {
++      w <- input(txt)
++      pilot <- test_app(app(w), 10, 3)
++      w$focus()
++      w$cursor_position <- cursor
++      expect_no_error(w$render_lines(1L))
++      pilot$driver$feed(ResizeEvent$new(1L, 1L))
++      expect_no_error(pilot$step())
++      pilot$stop()
++    }
++  }
++})
++
++test_that("editing an input skips the layout pass only when no ancestor can observe its width", {
++  typed_layouts <- function(ui, size = c(40, 8)) {
++    a <- app(ui)
++    pilot <- test_app(a, size[[1]], size[[2]])
++    on.exit(pilot$stop(), add = TRUE)
++    a$query_one("#in")$focus()
++    before <- a$frame_stats[["layouts"]]
++    pilot$type("hello wide 你好")
++    pilot$press("backspace")
++    expect_identical(pilot$screen_text(), compose_frame(a$screen, size[[1]], size[[2]])$to_text())
++    a$frame_stats[["layouts"]] - before
++  }
++  # fr width all the way up: nothing observes the text width.
++  expect_identical(typed_layouts(vertical(horizontal(label("n"), input(id = "in")))), 0L)
++  expect_identical(typed_layouts(vertical(input(id = "in", style = style(width = 20)))), 0L)
++  # auto width on the input, or on any ancestor, or a non-plain parent: layout needed.
++  expect_gt(typed_layouts(vertical(input(id = "in", style = style(width = "auto")))), 0L)
++  expect_gt(typed_layouts(horizontal(vertical(input(id = "in"), style = style(width = "auto")), label("x"))), 0L)
++  expect_gt(typed_layouts(scroll_view(input(id = "in"), direction = "both")), 0L)
++  expect_gt(typed_layouts(grid_layout(input(id = "in"), label("x"), columns = c("auto", "1fr"))), 0L)
++})
++
++test_that("input edits keep incremental output identical to a full render across layouts", {
++  uis <- list(
++    function() vertical(horizontal(label("a"), input(id = "in"), button("b")), label("below")),
++    function() horizontal(vertical(input(id = "in"), style = style(width = "auto")), label("side")),
++    function() horizontal(input(id = "in", style = style(width = "auto")), input(), button("ok")),
++    function() panel(vertical(input(id = "in"), label("x"))),
++    function() grid_layout(input(id = "in"), label("x"), columns = c("auto", "1fr")),
++    function() vertical(split_pane(input(id = "in"), label("r")))
++  )
++  texts <- c("a", "你好", "\U0001F600", "é", strrep("w", 30))
++  for (make in uis) {
++    a <- app(make())
++    pilot <- test_app(a, 30, 8)
++    a$query_one("#in")$focus()
++    for (k in c(texts, "backspace", "backspace", "home", "x", "end", "ctrl+a")) {
++      if (nchar(k) > 1 && k %in% c("backspace", "home", "end", "ctrl+a")) pilot$press(k) else pilot$type(k)
++      expect_identical(pilot$screen_text(), compose_frame(a$screen, 30L, 8L)$to_text())
++    }
++    pilot$resize(12, 5)
++    expect_identical(pilot$screen_text(), compose_frame(a$screen, 12L, 5L)$to_text())
++    pilot$stop()
++  }
++})
+diff --git a/tests/testthat/test-keys.R b/tests/testthat/test-keys.R
+index dc32626..e45f1f5 100644
+--- a/tests/testthat/test-keys.R
++++ b/tests/testthat/test-keys.R
+@@ -56,6 +56,48 @@ test_that("escape sequences split across reads are reassembled", {
+   expect_identical(keys_of(p$feed("15~")), "f5")
+ })
+ 
++test_that("byte-stream parsing is invariant to input chunk boundaries", {
++  parse_chunks <- function(chunks) {
++    p <- KeyParser$new()
++    events <- list()
++    for (chunk in chunks) events <- c(events, p$feed(chunk))
++    c(events, p$flush())
++  }
++  cases <- list(
++    list(bytes = charToRaw("\t\r"), keys = c("tab", "enter")),
++    list(bytes = charToRaw("\t\t\r"), keys = c("tab", "tab", "enter")),
++    list(bytes = charToRaw("hello\t\r"), keys = c(strsplit("hello", "")[[1]], "tab", "enter")),
++    list(bytes = charToRaw("\033[A\033[B"), keys = c("up", "down")),
++    list(bytes = charToRaw(enc2utf8("é😀")), keys = c("é", "😀")),
++    list(bytes = as.raw(c(13L, 9L, 3L, 127L)), keys = c("enter", "tab", "ctrl+c", "backspace"))
++  )
++
++  for (case in cases) {
++    bytes <- case$bytes
++    chunkings <- list(list(bytes))
++    if (length(bytes) > 1L) {
++      chunkings <- c(chunkings, lapply(seq_len(length(bytes) - 1L), function(i) {
++        list(bytes[seq_len(i)], bytes[(i + 1L):length(bytes)])
++      }))
++      chunkings <- c(chunkings, list(lapply(as.list(bytes), as.raw)))
++    }
++    for (chunks in chunkings) {
++      expect_identical(keys_of(parse_chunks(chunks)), case$keys)
++    }
++  }
++})
++
++test_that("incomplete and unknown terminal sequences remain bounded", {
++  p <- KeyParser$new()
++  expect_length(p$feed(as.raw(c(27L, 91L))), 0L)
++  expect_true(p$has_pending())
++  expect_identical(keys_of(p$flush()), c("escape", "["))
++
++  p <- KeyParser$new()
++  expect_identical(keys_of(p$feed("\033[999zq")), "q")
++  expect_false(p$has_pending())
++})
++
+ test_that("Windows console key records map to keys", {
+   key <- function(...) windows_key_event(...)$key
+   expect_identical(key(65L, 97L, 0L), "a")
+diff --git a/tests/testthat/test-layout.R b/tests/testthat/test-layout.R
+index d814842..2470a77 100644
+--- a/tests/testthat/test-layout.R
++++ b/tests/testthat/test-layout.R
+@@ -69,13 +69,57 @@ test_that("align and valign position children inside a container", {
+ 
+ test_that("hidden widgets take no space", {
+   a <- label("a")
+-  b <- label("b")
++  b <- label("b", visible = FALSE)
+   c <- label("c")
+   root <- vertical(a, b, c)
+-  b$visible <- FALSE
+   layout_tree(root, rect(1, 1, 10, 5))
+   expect_null(b$region)
+   expect_identical(c$region$y, 2L)
++  b$visible <- TRUE
++  layout_tree(root, rect(1, 1, 10, 5))
++  expect_identical(c$region$y, 3L)
++  expect_false(vertical(visible = FALSE)$visible)
++  expect_false(horizontal(visible = FALSE)$visible)
++  expect_false(grid_layout(visible = FALSE)$visible)
++})
++
++test_that("app layout diagnostics report possible clipping without painting", {
++  compact <- app(vertical(
++    label("first", id = "first"),
++    label("second", id = "second"),
++    id = "form",
++    style = style(height = 1)
++  ))
++  issues <- compact$layout_diagnostics(width = 20, height = 2)
++  expect_null(compact$frame)
++  expect_true(any(issues$id == "form" & issues$clipping == "vertical"))
++  expect_identical(issues$assessment[[1]], "potential; fixed dimensions may make this intentional")
++
++  wide <- app(label("resume details that do not fit", id = "summary"))
++  wide_pilot <- test_app(wide, 20, 4)
++  on.exit(wide_pilot$stop(), add = TRUE)
++  summary_widget <- wide$query_one("#summary")
++  original_region <- summary_widget$region
++  issues <- wide$layout_diagnostics(width = 8, height = 3)
++  expect_true(any(issues$id == "summary" & issues$clipping == "horizontal"))
++  expect_identical(summary_widget$region, original_region)
++
++  compact_input <- app(input(id = "b1", style = style(height = 1)))
++  issues <- compact_input$layout_diagnostics(width = 20, height = 1)
++  expect_true(any(issues$id == "b1" & issues$clipping == "vertical"))
++
++  compact_choices <- app(radio_set(
++    radio_button("first"), radio_button("second"), id = "choices",
++    style = style(height = 1)
++  ))
++  issues <- compact_choices$layout_diagnostics(width = 20, height = 4)
++  expect_true(any(issues$id == "choices" & issues$clipping == "vertical"))
++
++  wrapped <- app(label("words wrap to fit", id = "wrapped", wrap = "word"))
++  expect_false("wrapped" %in% wrapped$layout_diagnostics(width = 5, height = 3)$id)
++
++  scrolled <- app(scroll_view(label("one\ntwo\nthree", id = "items"), id = "scroll"))
++  expect_false("scroll" %in% scrolled$layout_diagnostics(width = 10, height = 1)$id)
+ })
+ 
+ test_that("auto sizes of nested containers are measured from children", {
+@@ -119,3 +163,11 @@ test_that("register_layout(replace = TRUE) replaces a custom layout on purpose",
+   expect_error(register_layout("vertical", one_row, measure, replace = TRUE), "custom_")
+   expect_error(register_layout("custom_reload", one_row, measure, replace = NA), "replace")
+ })
++
++test_that("layout_diagnostics rejects sizes that are not usable integers", {
++  a <- app(label("x"))
++  for (bad in list(Inf, 3e9, 0)) {
++    expect_error(suppressWarnings(a$layout_diagnostics(width = bad, height = 3)), "positive|non-negative")
++  }
++  expect_error(suppressWarnings(a$layout_diagnostics(width = 3, height = Inf)), "positive|non-negative")
++})
+diff --git a/tests/testthat/test-reactive.R b/tests/testthat/test-reactive.R
+index 779392b..ace4582 100644
+--- a/tests/testthat/test-reactive.R
++++ b/tests/testthat/test-reactive.R
+@@ -16,12 +16,14 @@ frames <- function(a) a$.__enclos_env__$private$.renderer$frames
+ test_that("widget() returns a constructor that sets initial state", {
+   c1 <- Counter()
+   c2 <- Counter(count = 5L, id = "c2")
++  c3 <- Counter(visible = FALSE)
+   expect_s3_class(Counter, "termr_widget_type")
+   expect_identical(c1$type, "Counter")
+   expect_true(inherits(c1, "Widget"))
+   expect_identical(c1$count, 0L)
+   expect_identical(c2$count, 5L)
+   expect_identical(c2$id, "c2")
++  expect_false(c3$visible)
+   expect_error(Counter(nope = 1), "no state field")
+   expect_identical(render_widget(c2, 10, 1)$to_text(), "Count: 5  ")
+ })
+diff --git a/tests/testthat/test-renderer.R b/tests/testthat/test-renderer.R
+index b3a4605..cfde1c9 100644
+--- a/tests/testthat/test-renderer.R
++++ b/tests/testthat/test-renderer.R
+@@ -73,3 +73,20 @@ test_that("VirtualTerminal tracks private modes and SGR", {
+   vt$feed(ansi_cursor_visible(FALSE))
+   expect_false(vt$cursor_visible)
+ })
++
++test_that("incremental repaint does not split a wide character next to a changed widget", {
++  a <- app(vertical(horizontal(
++    label("你好世界你好世界", id = "wide"),
++    button("OK", id = "b"),
++    input("你好", id = "i")
++  )))
++  pilot <- test_app(a, 40, 6)
++  on.exit(pilot$stop(), add = TRUE)
++  for (id in c("#b", "#i", "#b")) {
++    w <- a$query_one(id)
++    w$visible <- !w$visible
++    pilot$step()
++    expect_identical(pilot$screen_text(), compose_frame(a$screen, 40L, 6L)$to_text())
++  }
++  expect_match(pilot$screen_text()[[1]], "^你好世界你好世界")
++})
+diff --git a/tests/testthat/test-scroll.R b/tests/testthat/test-scroll.R
+index be78c67..dc87519 100644
+--- a/tests/testthat/test-scroll.R
++++ b/tests/testthat/test-scroll.R
+@@ -131,3 +131,24 @@ test_that("scroll changes send a message", {
+   pilot$press("down")
+   expect_identical(got, list(x = 0L, y = 1L))
+ })
++
++test_that("incremental repaint follows scroll bar changes caused by child content", {
++  long <- paste(rep("some text", 12), collapse = "\n")
++  a <- app(vertical(scroll_view(label(long, id = "content"), id = "scroll")))
++  pilot <- test_app(a, 20, 6)
++  on.exit(pilot$stop(), add = TRUE)
++  expect_true(any(grepl("█", pilot$screen_text(), fixed = TRUE)))
++
++  # Content shrinks: the narrow label's dirty rectangle does not reach the
++  # scroll bar column, so the view itself must be repainted.
++  a$query_one("#content")$update("x")
++  pilot$step()
++  expect_identical(pilot$screen_text(), compose_frame(a$screen, 20L, 6L)$to_text())
++  expect_false(any(grepl("[█│]", pilot$screen_text())))
++
++  # Content grows again: the bar must appear without a full repaint.
++  a$query_one("#content")$update(long)
++  pilot$step()
++  expect_identical(pilot$screen_text(), compose_frame(a$screen, 20L, 6L)$to_text())
++  expect_true(any(grepl("█", pilot$screen_text(), fixed = TRUE)))
++})
+diff --git a/tests/testthat/test-style.R b/tests/testthat/test-style.R
+index d5c1303..3590230 100644
+--- a/tests/testthat/test-style.R
++++ b/tests/testthat/test-style.R
+@@ -53,3 +53,64 @@ test_that("span() builds styled text that can be combined", {
+   expect_identical(vapply(lines[[2]], `[[`, "", "text"), c("c", "d"))
+   expect_identical(line_width(lines[[1]]), 2L)
+ })
++
++test_that("absurdly large cell counts are clamped instead of failing in layout", {
++  huge <- list(Inf, 1e10, 2^31, .Machine$integer.max)
++  props <- c("width", "height", "min_width", "max_width", "min_height", "max_height", "margin", "padding")
++  for (prop in props) {
++    for (v in huge) {
++      a <- app(vertical(label("hello", style = do.call(style, stats::setNames(list(v), prop))), label("x")))
++      pilot <- test_app(a, 20, 4)
++      expect_no_error(pilot$step())
++      expect_identical(pilot$screen_text(), compose_frame(a$screen, 20L, 4L)$to_text())
++      pilot$stop()
++    }
++  }
++  a <- app(horizontal(label("a", style = style(width = .Machine$integer.max)),
++                      label("b", style = style(width = .Machine$integer.max))))
++  expect_no_error(test_app(a, 10, 2)$stop())
++})
++
++test_that("unusable grid track counts are rejected up front and gaps are clamped", {
++  for (v in list(Inf, 1e10, .Machine$integer.max)) {
++    expect_error(style(grid_columns = v), "grid_columns")
++    expect_error(style(grid_rows = v), "grid_rows")
++  }
++  expect_no_error(style(grid_gap = Inf))
++  expect_error(style(grid_gap = NA), "grid_gap")
++})
++
++test_that("clamping keeps the original rounding of cell values", {
++  expect_identical(style(margin = 1.9)$props$margin, rep(1L, 4L))
++  expect_identical(style(min_width = 2.7)$props$min_width, 2L)
++  expect_identical(parse_size(2.5)$value, 2L)
++  expect_identical(parse_size(3.5)$value, 4L)
++  expect_identical(parse_size("12")$value, 12L)
++})
++
++test_that("parse_size results are stable under repeated and cached parsing", {
++  reference <- function(s) {
++    s <- tolower(trimws(s))
++    if (s == "auto") return(list(type = "auto", value = NA_real_))
++    if (grepl("^[0-9]*[.]?[0-9]+fr$", s)) return(list(type = "fr", value = as.numeric(sub("fr$", "", s))))
++    if (grepl("^[0-9]*[.]?[0-9]+%$", s)) return(list(type = "percent", value = as.numeric(sub("%$", "", s)) / 100))
++    list(type = "fixed", value = as.integer(s))
++  }
++  inputs <- c("auto", "AUTO", " auto ", "1fr", "2.5fr", ".5fr", "3FR", "50%", "12.5%", "100%", "0%", "7", "007", "12")
++  for (round_ in 1:3) for (s in inputs) {
++    got <- parse_size(s)
++    want <- reference(s)
++    expect_identical(unclass(got)$type, want$type)
++    expect_equal(unclass(got)$value, want$value)
++  }
++  # a returned spec can be modified by the caller without affecting later parses
++  first <- parse_size("1fr")
++  first$value <- 99
++  expect_equal(parse_size("1fr")$value, 1)
++  for (bad in c("", NA_character_, "fr", "-1fr", "1e9fr", "NaN%", "1 fr", "abc")) {
++    expect_error(parse_size(bad), "Invalid")
++    expect_error(parse_size(bad), "Invalid")
++  }
++  for (i in 1:2000) parse_size(paste0(i, "fr"))
++  expect_equal(parse_size("1999fr")$value, 1999)
++})
+diff --git a/tests/testthat/test-unicode.R b/tests/testthat/test-unicode.R
+index bfd2ae3..27469b1 100644
+--- a/tests/testthat/test-unicode.R
++++ b/tests/testthat/test-unicode.R
+@@ -38,3 +38,23 @@ test_that("C1 control characters never reach the framebuffer", {
+   expect_false(any(grepl(csi, buf$chars, fixed = TRUE)))
+   expect_identical(sanitize_text("caf\u00e9 \u00a0ok"), "caf\u00e9 \u00a0ok")
+ })
++
++test_that("sanitize_text matches the reference definition on every kind of input", {
++  reference <- function(x) {
++    x <- enc2utf8(as.character(x))
++    x <- gsub("\t", " ", x, fixed = TRUE)
++    gsub("[\\x{01}-\\x{1f}\\x{7f}-\\x{9f}]", "", x, perl = TRUE)
++  }
++  fixed <- c("", " ", "plain ascii text", "tab\there", "a\nb", "ctl\001x\037y\177z", "\u0080\u009f kept?", "\u00a0nbsp",
++             "\u043f\u0440\u0438\u0432\u0435\u0442", "\u4f60\u597d", "\U0001F600", "e\u0301", "\u200d",
++             "\033[31mred\033[0m", "~", "\x7e}", NA_character_)
++  expect_identical(sanitize_text(fixed), reference(fixed))
++  for (s in fixed) expect_identical(sanitize_text(s), reference(s))
++  set.seed(42)
++  pool <- intToUtf8(c(1:126, 127:160, 0x4f60, 0x1F600, 0x301, 0x200d, 0x2028), multiple = TRUE)
++  random <- vapply(1:500, function(i) paste(sample(pool, sample(0:12, 1), TRUE), collapse = ""), "")
++  expect_identical(sanitize_text(random), reference(random))
++  expect_identical(sanitize_text(factor(c("a\tb", "c"))), reference(factor(c("a\tb", "c"))))
++  expect_identical(sanitize_text(12.5), reference(12.5))
++  expect_identical(sanitize_text(character()), reference(character()))
++})
+diff --git a/tools/pty/pty-check.py b/tools/pty/pty-check.py
+index b5abbbd..d883b94 100644
+--- a/tools/pty/pty-check.py
++++ b/tools/pty/pty-check.py
+@@ -317,6 +317,32 @@ def normal_session():
+         teardown_modes(s)
+ 
+ 
++def combined_focus_session():
++    """A single PTY write must preserve Tab-to-Enter focus ordering."""
++    with tempfile.TemporaryDirectory(prefix="termr-pty-combined-") as directory:
++        log = os.path.join(directory, "events.log")
++        os.environ["TERMR_PTY_LOG"] = log
++        s = Session(os.path.join(HERE, "hello-app.R"))
++        s.wait_for("termr demo", 60)
++        check("combined-input app ready", wait_until(lambda: "ready" in read_log(log), s, 60),
++              repr(read_log(log)))
++        s.send(b"Ada\t\r")
++        pressed = wait_until(lambda: "pressed name=Ada" in read_log(log), s, 30)
++        events = read_log(log)
++        focus_at = events.index("button focused") if "button focused" in events else -1
++        press_at = events.index("pressed name=Ada") if "pressed name=Ada" in events else -1
++        check("one PTY write delivers text, Tab focus and Enter activation in order",
++              pressed and focus_at >= 0 and press_at > focus_at,
++              f"events={events!r}; screen tail={strip(s.output)[-300:]!r}")
++        check("combined Tab+Enter fires focus and press once",
++              events.count("button focused") == 1 and events.count("pressed name=Ada") == 1,
++              repr(events))
++        s.send("\x03")
++        check("combined-input app exits normally", s.wait_exit() == 0, f"status {s.status}")
++        teardown_modes(s)
++        s.close()
++
++
+ def read_log(path):
+     try:
+         with open(path, encoding="utf-8") as f:
+@@ -625,13 +651,13 @@ def run_cases(cases):
+ 
+ if __name__ == "__main__":
+     parser = argparse.ArgumentParser(description=__doc__)
+-    parser.add_argument("--case", choices=("stdin_fallback_session", "no_tty_session"),
+-                        help="run one failing session in an independent harness process")
++    parser.add_argument("--case", choices=("combined_focus_session", "stdin_fallback_session", "no_tty_session"),
++                        help="run one named session in an independent harness process")
+     parser.add_argument("--exclude-case", action="append", default=[],
+-                        choices=("stdin_fallback_session", "no_tty_session"))
++                        choices=("combined_focus_session", "stdin_fallback_session", "no_tty_session"))
+     options = parser.parse_args()
+     require_current_install()
+-    cases = [normal_session, keys_session, fragments_session, error_session,
++    cases = [normal_session, combined_focus_session, keys_session, fragments_session, error_session,
+              control_termios_session, lambda: control_termios_session(stdin_only=True),
+              termios_restored, stdin_fallback_session, no_tty_session, degraded_session,
+              lambda: termios_restored(stdin_only=True),

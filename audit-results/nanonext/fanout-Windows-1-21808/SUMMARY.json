@@ -1,0 +1,56 @@
+{
+  "platform": "Windows",
+  "R": "R version 4.6.1 (2026-06-24 ucrt)",
+  "nanonext": "1.10.3",
+  "endpoints": {
+    "endpoint": "tcp://127.0.0.1:59165",
+    "snapshot_endpoint": "tcp://127.0.0.1:59173",
+    "source": "p28064-1793293197499594-file6da04431c0f",
+    "R": "R version 4.6.1 (2026-06-24 ucrt)",
+    "nanonext": "1.10.3"
+  },
+  "subscribers": 1,
+  "events": 100,
+  "elapsed": 1.68,
+  "observed_events_per_second": 59.5238,
+  "reports": [
+    {
+      "latest": {
+        "n": 100,
+        "sent_at": 1793293199.382
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p28064-1793293197499594-file6da04431c0f",
+        "sequence": 101,
+        "gaps": 25,
+        "invalid": 0,
+        "resyncs": 21,
+        "last_error": null,
+        "needs_sync": true,
+        "pending": 1
+      },
+      "delivered": 76,
+      "latency_ms": {
+        "50%": 16.386,
+        "95%": 47.9818,
+        "99%": 65.8756
+      },
+      "rss_bytes": 85037056,
+      "history": 16
+    }
+  ],
+  "publisher": {
+    "n": 100,
+    "emit_seconds": 0,
+    "status": {
+      "closed": false,
+      "sequence": 101,
+      "sent": 101,
+      "snapshots": 21,
+      "errors": 0,
+      "last_error": null,
+      "pending": 1
+    }
+  }
+}

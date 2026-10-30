@@ -11,6 +11,26 @@ test_that("app() collects widgets, handlers and bindings", {
   expect_error(app(actions = list(function(app) NULL)), "named list")
 })
 
+test_that("batched key input observes focus changes between keys", {
+  events <- character()
+  a <- app(input(id = "name"), button("Submit", id = "submit"))
+  a$query_one("#submit")$on("focus", function(event, app) {
+    events <<- c(events, "focus")
+  })
+  a$on("button.pressed", "#submit", function(event, app) {
+    events <<- c(events, "pressed")
+  })
+  pilot <- test_app(a)
+
+  # A single terminal read can contain both bytes. The Enter event must use
+  # the button focused by the preceding Tab event.
+  pilot$driver$feed(KeyEvent$new("tab"), KeyEvent$new("enter"))
+  pilot$step()
+
+  expect_identical(events, c("focus", "pressed"))
+  expect_identical(a$focused, a$query_one("#submit"))
+})
+
 test_that("run() exits on a binding and restores the terminal", {
   driver <- HeadlessDriver$new(30, 5)
   driver$press("a", "b", "q")
@@ -148,6 +168,19 @@ test_that("ctrl+c quits by default and exit() returns a value", {
   pilot2 <- test_app(app(label("x"), bind("enter", function(app) app$exit(42))), 10, 1)
   pilot2$press("enter")
   expect_identical(pilot2$value, 42)
+})
+
+test_that("Pilot can wait for app exit and inspect its value", {
+  a <- app(label("wait"))
+  a$set_timeout(0.1, function(app) app$exit("finished"))
+  pilot <- test_app(a)
+
+  expect_identical(pilot$wait_until_exit(timeout = 1), "finished")
+  expect_true(pilot$exited)
+  expect_identical(pilot$value, "finished")
+  expect_identical(pilot$wait_until_exit(), "finished")
+  expect_error(pilot$wait_for(function(app) TRUE), "has exited")
+  expect_error(pilot$wait_until_exit(interval = 0), "positive number")
 })
 
 test_that("call_later runs callbacks on the next tick", {

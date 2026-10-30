@@ -1,7 +1,7 @@
 # The bundled examples call run() at the end. Source them with run()
 # replaced by a function that captures the app, then drive it headlessly.
 test_that("all examples are listed", {
-  expect_setequal(run_example(), c("buffer-demo", "counter", "dataframe-browser", "file-tree", "form", "hello",
+  expect_setequal(run_example(), c("buffer-demo", "compact-form", "counter", "dataframe-browser", "file-tree", "form", "hello",
                                    "keys", "kitchen-sink", "model-monitor", "system-monitor", "data-explorer",
                                    "task-runner", "terminal-dashboard", "editor", "accessibility-demo", "custom-widget",
                                    "sql-workspace", "database-explorer", "export-report", "data-workbench"))

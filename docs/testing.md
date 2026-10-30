@@ -25,9 +25,15 @@ test_that("the form greets", {
 
 More pilot methods: `paste(text)`, `drag(from, to)`, `focus(target)`,
 `find(selector)`, `wait_for(function(app) ..., timeout)` (simulated time, real
-time while workers run), `run_worker(fn)`, `system_clipboard()` (last OSC 52
-text). `test_app(app, width, height, color_mode = "none")` renders without
+time while workers run), `wait_until_exit(timeout)` (returns the app's exit
+value, even if it has already exited), `run_worker(fn)`,
+`system_clipboard()` (last OSC 52 text). `test_app(app, width, height,
+color_mode = "none")` renders without
 colour (also `"16"`, `"256"`), e.g. to test accessibility.
+
+`wait_for()` keeps its existing behavior and errors if called after exit.
+Use `pilot$wait_until_exit()` for shutdown flows, then inspect
+`pilot$exited` and `pilot$value`.
 
 * `pilot$screen_text()`: the screen as text;
   `pilot$driver$terminal$screen$get_cell(x, y)` for colours and
@@ -37,6 +43,28 @@ colour (also `"16"`, `"256"`), e.g. to test accessibility.
 * `options(termr.incremental = FALSE)`: force full repaints;
   `options(termr.skip_layout = FALSE)`: always re-lay out. `app$last_paint`
   and `app$frame_stats` show what a repaint did.
+
+## Testing terminal bytes
+
+`pilot$press()` and `pilot$type()` test event-level application behavior. They
+do not exercise POSIX byte reads or escape-sequence framing. For parser-level
+coverage, termr feeds byte chunks directly to its internal `KeyParser` in
+`tests/testthat/test-keys.R`; those tests compare equivalent grouped and split
+input without starting an OS process. App-level tests can queue several key
+events before one `pilot$step()` to check dispatch ordering after focus changes.
+
+The POSIX integration harness `python tools/pty/pty-check.py` uses a real PTY
+and the real terminal driver, including a single-write `Tab` + `Enter` focus
+transition. It runs on Linux/macOS CI and requires POSIX PTY support. Windows
+uses console key record mapping tests and its separate PowerShell input CI; a
+POSIX PTY result does not establish Windows console behavior.
+
+## Layout checks
+
+Use `app$layout_diagnostics(width = 80, height = 24)` to inspect potential
+clipping without rendering. It reports available and measured dimensions for
+each affected widget. See [layout diagnostics](layout.md#diagnosing-clipping)
+and the compact form example.
 
 ## Inside termr
 

@@ -1,0 +1,14 @@
+PASS: collector owns dynamic loopback endpoints 
+PASS: independent R subscriber receives metrics 
+PASS: TUI receives live metrics 
+PASS: Shiny receives live metrics 
+PASS: simultaneous file snapshots and live payloads share collector identity
+PASS: TUI restarts without collector shutdown 
+PASS: Shiny restarts independently 
+PASS: TUI detects stopped collector 
+PASS: Shiny detects stopped collector 
+PASS: subscriber recovers collector restart 
+PASS: TUI recovers after source restart 
+PASS: Shiny recovers after source restart 
+PASS: independent processes and source lifecycle; all exits clean
+Logs: /mnt/c/programming_pj/r_textualize/audit-results/nanonext/monitor-Linux-39247 

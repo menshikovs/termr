@@ -37,6 +37,21 @@ breaks and makes the paste one undo step. Widgets handle it with an
 `on_paste(event)` method. Test with `pilot$paste("text")`. Windows consoles do
 not provide bracketed paste: pasted text arrives as individual keys.
 
+## Keyboard byte streams
+
+On POSIX terminals, the driver reads bytes and the incremental key parser
+produces ordered key events. Bytes from one read are dispatched in order, and
+each key uses the focus at the moment it is dispatched. A Tab followed by
+Enter in one terminal read therefore focuses the next widget before delivering
+Enter. Splitting those bytes across reads has the same result. Escape-sequence
+fragments can span reads; an incomplete sequence is held briefly to distinguish
+it from a lone Escape key. On Windows, the driver maps console key records
+instead of parsing a POSIX byte stream.
+
+The parser tests exercise combined, split and incomplete byte sequences
+synthetically. The POSIX PTY harness in `tools/pty/pty-check.py` exercises the
+real driver and terminal transport; it does not run on Windows.
+
 ## Clipboard
 
 `app$clipboard_write(text)` sets the app clipboard (`app$clipboard`) and, on

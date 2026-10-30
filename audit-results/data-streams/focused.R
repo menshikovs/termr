@@ -1,0 +1,5 @@
+Sys.setenv(NOT_CRAN = "true")
+results <- testthat::test_local(".", filter = "streams|monitor-live", reporter = "summary", stop_on_failure = FALSE)
+df <- as.data.frame(results)
+cat("\nTOTAL:", sum(df$nb), "expectations;", sum(df$failed), "failures;", sum(df$error), "errors;", sum(df$skipped), "skips\n")
+if (any(df$failed > 0 | df$error)) quit(status = 1L)

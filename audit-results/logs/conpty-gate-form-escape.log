@@ -1,0 +1,42 @@
+===== typed (cursor visible=False) =====
+|                                                                      |
+|  termr demo                                                          |
+|  Type your name, then press Enter or the button.                     |
+|  ╭────────────────────────────────────────────────────────────────╮  |
+|  │ Ann                                                            │  |
+|  ╰────────────────────────────────────────────────────────────────╯  |
+|  ╭───────────╮╭────────╮╭────────╮                                   |
+|  │ Say hello ││ Clear  ││  Quit  │                                   |
+|  ╰───────────╯╰────────╯╰────────╯                                   |
+|                                                                      |
+|                                                                      |
+|                                                                      |
+|  Tab: next field   Shift+Tab: previous   Esc: quit                   |
+|                                                                      |
+|                                                                      |
+|                                                                      |
+|                                                                      |
+|                                                                      |
+===== final (cursor visible=True) =====
+|                                                                      |
+|  termr demo                                                          |
+|  Type your name, then press Enter or the button.                     |
+|  ╭────────────────────────────────────────────────────────────────╮  |
+|  │ Ann                                                            │  |
+|  ╰────────────────────────────────────────────────────────────────╯  |
+|  ╭───────────╮╭────────╮╭────────╮                                   |
+|  │ Say hello ││ Clear  ││  Quit  │                                   |
+|  ╰───────────╯╰────────╯╰────────╯                                   |
+|                                                                      |
+|                                                                      |
+|                                                                      |
+|  Tab: next field   Shift+Tab: previous   Esc: quit                   |
+|                                                                      |
+|                                                                      |
+|                                                                      |
+|                                                                      |
+|                                                                      |
+CHUNKS(first 5, last 2): [(0.2, 4), (0.2, 19), (3.22, 5), (3.22, 5), (3.5, 24)] [(6.53, 3), (6.56, 13)] n= 269
+ALIVE_AT_END: False | exit status: 0
+BYTES: 1236
+TAIL: ' │\x1b[0m│ Clear  │\x1b[0;97;101m│  Quit  │\x1b[9;3H\x1b[0;97;44m╰───────────╯\x1b[0m╰────────╯\x1b[0;97;101m╰────────╯\x1b[13;3H\x1b[0;90mTab: next field   Shift+Tab: previous   Esc: quit\x1b[0m\x1b[5;5H\x1b[0mA\x1b[0;7m \x1b[0m       \x1b[0m\x1b[5;6H\x1b[0mnn\x1b[0;7m \x1b[0m\x1b[?2004l\x1b[?1006l\x1b[?1003l\x1b[?1002l\x1b[?1000l\x1b[0m\x1b[?7h\x1b[?25h\x1b[?1049l\x1b[?1003;1006l'

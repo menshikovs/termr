@@ -1,0 +1,1380 @@
+✔ | F W  S  OK | Context
+
+⠏ |          0 | accessibility                                                  
+⠋ |          1 | accessibility                                                  
+⠙ |          2 | accessibility                                                  
+⠼ |          5 | accessibility                                                  
+⠹ |         13 | accessibility                                                  
+⠇ |         19 | accessibility                                                  
+⠏ |         20 | accessibility                                                  
+⠼ |         25 | accessibility                                                  
+⠧ |         28 | accessibility                                                  
+⠋ |         31 | accessibility                                                  
+⠸ |         34 | accessibility                                                  
+⠇ |         39 | accessibility                                                  
+⠦ |         47 | accessibility                                                  
+⠇ |         49 | accessibility                                                  
+⠏ |         50 | accessibility                                                  
+⠙ |         52 | accessibility                                                  
+⠸ |         54 | accessibility                                                  
+⠴ |         56 | accessibility                                                  
+⠇ |         59 | accessibility                                                  
+⠏ |         60 | accessibility                                                  
+⠋ |         61 | accessibility                                                  
+⠼ |         65 | accessibility                                                  
+⠋ |         71 | accessibility                                                  
+⠸ |         74 | accessibility                                                  
+✔ |         74 | accessibility [3.8s]
+
+⠏ |          0 | agent-recipes                                                  
+⠋ |          1 | agent-recipes                                                  
+⠙ |          2 | agent-recipes                                                  
+⠼ |          5 | agent-recipes                                                  
+⠧ |          8 | agent-recipes                                                  Name                                    
+╭──────────────────────────────────────╮
+│ Ada                                  │
+╰──────────────────────────────────────╯
+╭────────╮                              
+│ Greet  │                              
+╰────────╯                              
+Hello, Ada                              
+
+⠏ |         10 | agent-recipes                                                  
+✔ |         11 | agent-recipes [1.4s]
+
+⠏ |          0 | animation                                                      
+⠇ |          9 | animation                                                      
+⠇ |         19 | animation                                                      
+⠙ |         22 | animation                                                      
+⠴ |         26 | animation                                                      
+⠧ |         28 | animation                                                      
+⠏ |         30 | animation                                                      
+⠋ |         31 | animation                                                      
+⠼ |         35 | animation                                                      
+✔ |         35 | animation [1.5s]
+
+⠏ |          0 | ansi                                                           
+⠇ |          9 | ansi                                                           
+⠹ |         13 | ansi                                                           
+✔ |         13 | ansi
+
+⠏ |          0 | app                                                            
+⠴ |          6 | app                                                            
+⠧ |          8 | app                                                            
+⠏ |         20 | app                                                            
+⠹ |         23 | app                                                            
+⠴ |         26 | app                                                            
+⠧ |         28 | app                                                            
+⠋ |         31 | app                                                            
+⠦ |         37 | app                                                            
+⠹ |         43 | app                                                            
+✔ |         45 | app [1.4s]
+
+⠏ |          0 | browse-data                                                    
+⠋ |          1 | browse-data                                                    
+⠼ |          5 | browse-data                                                    
+⠴ |          6 | browse-data                                                    
+⠦ |          7 | browse-data                                                    
+⠇ |          9 | browse-data                                                    
+⠏ |         10 | browse-data                                                    
+⠋ |         11 | browse-data                                                    
+⠙ |         12 | browse-data                                                    
+⠸ |         14 | browse-data                                                    
+✔ |         16 | browse-data [5.8s]
+
+⠏ |          0 | button                                                         
+⠋ |          1 | button                                                         
+⠙ |          2 | button                                                         
+⠴ |          6 | button                                                         
+⠇ |          9 | button                                                         
+✔ |         16 | button
+
+⠏ |          0 | capabilities                                                   
+⠏ |         10 | capabilities                                                   
+⠧ |         18 | capabilities                                                   
+⠙ |         32 | capabilities                                                   
+⠧ |         48 | capabilities                                                   
+⠴ |         56 | capabilities                                                   
+⠼ |         65 | capabilities                                                   
+⠹ |         73 | capabilities                                                   
+⠋ |         81 | capabilities                                                   
+✔ |         87 | capabilities [1.0s]
+
+⠏ |          0 | color                                                          
+⠧ |          8 | color                                                          
+⠹ |         13 | color                                                          
+✔ |         24 | color
+
+⠏ |          0 | command-palette                                                
+⠧ |          8 | command-palette                                                
+⠋ |         11 | command-palette                                                
+⠙ |         12 | command-palette                                                
+⠼ |         15 | command-palette                                                
+⠴ |         16 | command-palette                                                
+⠧ |         18 | command-palette                                                
+✔ |         18 | command-palette [3.1s]
+
+⠏ |          0 | commands-help                                                  
+⠴ |          6 | commands-help                                                  
+⠧ |          8 | commands-help                                                  
+⠇ |          9 | commands-help                                                  
+⠏ |         10 | commands-help                                                  
+⠹ |         13 | commands-help                                                  
+⠸ |         14 | commands-help                                                  
+⠧ |         18 | commands-help                                                  
+⠴ |         26 | commands-help                                                  
+⠦ |         27 | commands-help                                                  
+⠧ |         28 | commands-help                                                  
+✔ |         28 | commands-help [5.2s]
+
+⠏ |          0 | data-profile                                                   
+⠇ |          9 | data-profile                                                   
+⠦ |         17 | data-profile                                                   
+⠙ |         22 | data-profile                                                   
+⠸ |         24 | data-profile                                                   
+⠏ |         30 | data-profile                                                   
+✔ |         30 | data-profile
+
+⠏ |          0 | data-workbench                                                 
+⠋ |          1 | data-workbench                                                 
+⠼ |          5 | data-workbench                                                 
+✔ |          5 | data-workbench [1.8s]
+
+⠏ |          0 | database-explorer                                              
+⠼ |      4   1 | database-explorer                                              
+✔ |      4   2 | database-explorer
+
+⠏ |          0 | datatable-source-query                                         
+⠸ |      3   1 | datatable-source-query                                         
+✔ |      8   1 | datatable-source-query
+
+⠏ |          0 | datatable-source                                               
+⠙ |          2 | datatable-source                                               
+⠋ |         11 | datatable-source                                               
+⠇ |         19 | datatable-source                                               
+⠇ |         29 | datatable-source                                               
+⠸ |         34 | datatable-source                                               
+⠸ |         44 | datatable-source                                               
+⠙ |         52 | datatable-source                                               
+⠇ |         59 | datatable-source                                               
+⠴ |         66 | datatable-source                                               
+⠴ |         76 | datatable-source                                               
+⠸ |         84 | datatable-source                                               
+⠹ |         93 | datatable-source                                               
+⠹ |        103 | datatable-source                                               
+⠴ |        106 | datatable-source                                               
+✔ |      2 109 | datatable-source [1.6s]
+
+⠏ |          0 | datatable                                                      
+⠋ |          1 | datatable                                                      
+⠧ |          8 | datatable                                                      
+⠇ |          9 | datatable                                                      
+⠹ |         13 | datatable                                                      
+⠴ |         16 | datatable                                                      
+⠧ |         18 | datatable                                                      
+⠙ |         22 | datatable                                                      
+⠧ |         28 | datatable                                                      
+⠇ |         29 | datatable                                                      
+⠋ |         31 | datatable                                                      
+⠙ |         32 | datatable                                                      
+⠼ |         35 | datatable                                                      
+⠧ |         38 | datatable                                                      
+⠹ |         43 | datatable                                                      
+⠧ |         48 | datatable                                                      
+⠇ |         49 | datatable                                                      
+⠋ |         51 | datatable                                                      
+⠋ |         61 | datatable                                                      
+⠹ |         63 | datatable                                                      
+⠇ |         69 | datatable                                                      
+⠹ |         73 | datatable                                                      
+⠴ |         76 | datatable                                                      
+✔ |         79 | datatable [4.7s]
+
+⠏ |          0 | datatable2                                                     
+⠋ |          1 | datatable2                                                     
+⠼ |          5 | datatable2                                                     
+⠇ |          9 | datatable2                                                     
+⠋ |         11 | datatable2                                                     
+⠹ |         13 | datatable2                                                     
+⠼ |         15 | datatable2                                                     
+⠴ |         16 | datatable2                                                     
+⠇ |         19 | datatable2                                                     
+⠋ |         21 | datatable2                                                     
+⠹ |         23 | datatable2                                                     
+⠸ |         24 | datatable2                                                     
+⠦ |         27 | datatable2                                                     
+⠇ |         29 | datatable2                                                     
+⠋ |         31 | datatable2                                                     
+⠙ |         32 | datatable2                                                     
+⠦ |         37 | datatable2                                                     
+⠇ |         39 | datatable2                                                     
+⠙ |         42 | datatable2                                                     
+⠼ |         45 | datatable2                                                     
+⠴ |         46 | datatable2                                                     
+⠧ |         48 | datatable2                                                     
+⠹ |         53 | datatable2                                                     
+⠸ |         64 | datatable2                                                     
+⠇ |         69 | datatable2                                                     
+⠋ |         71 | datatable2                                                     
+⠼ |         75 | datatable2                                                     
+⠦ |         77 | datatable2                                                     
+⠋ |         81 | datatable2                                                     
+⠙ |         82 | datatable2                                                     
+⠦ |         87 | datatable2                                                     
+⠇ |         89 | datatable2                                                     
+⠏ |         90 | datatable2                                                     
+⠧ |         98 | datatable2                                                     
+⠇ |         99 | datatable2                                                     
+⠧ |        108 | datatable2                                                     
+⠏ |        120 | datatable2                                                     
+⠦ |        127 | datatable2                                                     
+⠦ |        137 | datatable2                                                     
+⠼ |        145 | datatable2                                                     
+⠼ |        155 | datatable2                                                     
+⠦ |        167 | datatable2                                                     
+⠸ |        174 | datatable2                                                     
+⠏ |        180 | datatable2                                                     
+⠋ |        191 | datatable2                                                     
+⠸ |        204 | datatable2                                                     
+⠙ |        212 | datatable2                                                     
+⠧ |        218 | datatable2                                                     
+⠹ |        233 | datatable2                                                     
+⠹ |        243 | datatable2                                                     
+⠏ |        250 | datatable2                                                     
+⠦ |        257 | datatable2                                                     
+⠸ |        264 | datatable2                                                     
+⠹ |        273 | datatable2                                                     
+⠋ |        281 | datatable2                                                     
+⠋ |        291 | datatable2                                                     
+⠹ |        303 | datatable2                                                     
+⠧ |        318 | datatable2                                                     
+⠏ |        330 | datatable2                                                     
+⠋ |        341 | datatable2                                                     
+⠧ |        348 | datatable2                                                     
+⠋ |        351 | datatable2                                                     
+⠹ |        363 | datatable2                                                     
+⠸ |        374 | datatable2                                                     
+⠏ |        380 | datatable2                                                     
+⠧ |        388 | datatable2                                                     
+⠴ |        396 | datatable2                                                     
+⠼ |        405 | datatable2                                                     
+⠙ |        412 | datatable2                                                     
+⠙ |        422 | datatable2                                                     
+⠼ |        435 | datatable2                                                     
+⠸ |        444 | datatable2                                                     
+⠼ |        455 | datatable2                                                     
+⠏ |        460 | datatable2                                                     
+⠼ |        465 | datatable2                                                     
+⠸ |        474 | datatable2                                                     
+⠏ |        480 | datatable2                                                     
+⠹ |        493 | datatable2                                                     
+⠴ |        506 | datatable2                                                     
+⠼ |        515 | datatable2                                                     
+⠙ |        522 | datatable2                                                     
+⠧ |        528 | datatable2                                                     
+⠧ |        538 | datatable2                                                     
+⠹ |        543 | datatable2                                                     
+⠙ |        552 | datatable2                                                     
+✔ |        557 | datatable2 [12.4s]
+
+⠏ |          0 | degradation                                                    
+⠧ |          8 | degradation                                                    
+✔ |          9 | degradation
+
+⠏ |          0 | devtools                                                       
+⠋ |          1 | devtools                                                       
+⠙ |         12 | devtools                                                       
+⠸ |         14 | devtools                                                       
+⠴ |         16 | devtools                                                       
+⠧ |         18 | devtools                                                       
+✔ |         21 | devtools [1.0s]
+
+⠏ |          0 | diff                                                           
+⠇ |          9 | diff                                                           
+✔ |         17 | diff
+
+⠏ |          0 | dirty-property                                                 
+⠋ |          1 | dirty-property                                                 
+⠙ |          2 | dirty-property                                                 
+⠹ |          3 | dirty-property                                                 
+⠸ |          4 | dirty-property                                                 
+⠴ |          6 | dirty-property                                                 
+⠋ |         11 | dirty-property                                                 
+⠴ |         16 | dirty-property                                                 
+⠋ |         21 | dirty-property                                                 
+⠸ |         24 | dirty-property                                                 
+⠼ |         25 | dirty-property                                                 
+⠴ |         26 | dirty-property                                                 
+✔ |         26 | dirty-property [48.0s]
+
+⠏ |          0 | dirty                                                          
+⠋ |          1 | dirty                                                          
+⠹ |          3 | dirty                                                          
+⠼ |          5 | dirty                                                          
+⠴ |          6 | dirty                                                          
+⠇ |          9 | dirty                                                          
+⠙ |         12 | dirty                                                          
+⠸ |         14 | dirty                                                          
+⠦ |         17 | dirty                                                          
+⠧ |         18 | dirty                                                          
+⠋ |         21 | dirty                                                          
+⠸ |         24 | dirty                                                          
+⠴ |         26 | dirty                                                          
+⠦ |         27 | dirty                                                          
+⠏ |         30 | dirty                                                          
+⠙ |         32 | dirty                                                          
+⠹ |         33 | dirty                                                          
+⠼ |         35 | dirty                                                          
+⠦ |         37 | dirty                                                          
+⠇ |         39 | dirty                                                          
+⠏ |         40 | dirty                                                          
+⠋ |         41 | dirty                                                          
+⠹ |         43 | dirty                                                          
+⠼ |         45 | dirty                                                          
+⠦ |         47 | dirty                                                          
+⠇ |         49 | dirty                                                          
+⠋ |         51 | dirty                                                          
+⠸ |         54 | dirty                                                          
+⠴ |         56 | dirty                                                          
+⠧ |         58 | dirty                                                          
+⠏ |         60 | dirty                                                          
+⠋ |         61 | dirty                                                          
+⠙ |         62 | dirty                                                          
+⠸ |         64 | dirty                                                          
+⠴ |         66 | dirty                                                          
+⠦ |         67 | dirty                                                          
+⠇ |         69 | dirty                                                          
+⠋ |         71 | dirty                                                          
+⠹ |         73 | dirty                                                          
+⠼ |         75 | dirty                                                          
+⠦ |         77 | dirty                                                          
+⠇ |         79 | dirty                                                          
+⠋ |         81 | dirty                                                          
+⠹ |         83 | dirty                                                          
+⠸ |         84 | dirty                                                          
+⠴ |         86 | dirty                                                          
+⠦ |         87 | dirty                                                          
+⠇ |         89 | dirty                                                          
+⠏ |         90 | dirty                                                          
+⠋ |         91 | dirty                                                          
+⠙ |         92 | dirty                                                          
+⠸ |         94 | dirty                                                          
+⠴ |         96 | dirty                                                          
+⠧ |         98 | dirty                                                          
+⠇ |         99 | dirty                                                          
+⠙ |        102 | dirty                                                          
+⠹ |        103 | dirty                                                          
+⠼ |        105 | dirty                                                          
+⠴ |        106 | dirty                                                          
+⠧ |        108 | dirty                                                          
+⠇ |        109 | dirty                                                          
+⠏ |        110 | dirty                                                          
+⠙ |        112 | dirty                                                          
+⠸ |        114 | dirty                                                          
+⠴ |        116 | dirty                                                          
+⠦ |        117 | dirty                                                          
+⠇ |        119 | dirty                                                          
+⠹ |        123 | dirty                                                          
+⠙ |        132 | dirty                                                          
+⠹ |        133 | dirty                                                          
+✔ |        138 | dirty [10.3s]
+
+⠏ |          0 | drag                                                           
+⠋ |          1 | drag                                                           
+⠧ |          8 | drag                                                           
+⠏ |         10 | drag                                                           
+⠋ |         11 | drag                                                           
+⠙ |         12 | drag                                                           
+⠸ |         14 | drag                                                           
+⠼ |         15 | drag                                                           
+✔ |         17 | drag [1.1s]
+
+⠏ |          0 | examples                                                       
+⠹ |          3 | examples                                                       
+⠼ |          5 | examples                                                       
+⠴ |          6 | examples                                                       
+⠇ |          9 | examples                                                       Bye! You pressed 0 key(s).
+
+⠸ |         14 | examples                                                       
+⠴ |         16 | examples                                                       
+⠋ |         21 | examples                                                       
+⠙ |         22 | examples                                                       
+⠹ |         23 | examples                                                       
+⠸ |         24 | examples                                                       
+⠼ |         25 | examples                                                       
+⠴ |         26 | examples                                                       
+⠦ |         27 | examples                                                       
+⠧ |         28 | examples                                                       
+⠇ |         29 | examples                                                       
+⠏ |         30 | examples                                                       
+⠋ |         31 | examples                                                       
+✔ |         31 | examples [11.1s]
+
+⠏ |          0 | examples2                                                      
+⠙ |          2 | examples2                                                      
+⠼ |          5 | examples2                                                      
+⠏ |         10 | examples2                                                      
+⠋ |         11 | examples2                                                      
+⠙ |         12 | examples2                                                      
+⠹ |         13 | examples2                                                      
+⠸ |         14 | examples2                                                      
+⠼ |         15 | examples2                                                      
+⠴ |         16 | examples2                                                      
+⠧ |         18 | examples2                                                      
+⠙ |         22 | examples2                                                      
+⠸ |         24 | examples2                                                      
+⠼ |         25 | examples2                                                      
+⠧ |         28 | examples2                                                      
+⠹ |         33 | examples2                                                      
+⠸ |         34 | examples2                                                      
+⠴ |         36 | examples2                                                      
+⠦ |         37 | examples2                                                      
+⠇ |         39 | examples2                                                      
+⠙ |         42 | examples2                                                      
+⠹ |         43 | examples2                                                      
+⠸ |         44 | examples2                                                      
+⠴ |         46 | examples2                                                      
+⠦ |         47 | examples2                                                      
+⠧ |         48 | examples2                                                      
+⠏ |         50 | examples2                                                      
+⠋ |         51 | examples2                                                      
+✔ |         52 | examples2 [32.0s]
+
+⠏ |          0 | export                                                         
+⠦ |          7 | export                                                         
+⠹ |         13 | export                                                         
+⠏ |         20 | export                                                         
+⠙ |         32 | export                                                         
+✔ |         34 | export
+
+⠏ |          0 | extensions-external                                            
+⠋ |          1 | extensions-external                                            
+⠸ |          4 | extensions-external                                            
+⠼ |          5 | extensions-external                                            
+⠦ |          7 | extensions-external                                            
+⠹ |         13 | extensions-external                                            
+✔ |      1  17 | extensions-external [1.4s]
+
+⠏ |          0 | focus                                                          
+⠋ |          1 | focus                                                          
+⠹ |          3 | focus                                                          
+⠼ |          5 | focus                                                          
+⠦ |          7 | focus                                                          
+⠋ |         11 | focus                                                          
+⠸ |         14 | focus                                                          
+⠴ |         16 | focus                                                          
+✔ |         16 | focus [1.4s]
+
+⠏ |          0 | geometry                                                       
+⠧ |          8 | geometry                                                       
+✔ |         14 | geometry
+
+⠏ |          0 | graphemes                                                      
+⠋ |         11 | graphemes                                                      
+⠹ |         23 | graphemes                                                      
+⠙ |         32 | graphemes                                                      
+⠴ |         36 | graphemes                                                      
+⠇ |         39 | graphemes                                                      
+⠙ |         42 | graphemes                                                      
+✔ |         47 | graphemes
+
+⠏ |          0 | grid                                                           
+⠦ |          7 | grid                                                           
+⠸ |         14 | grid                                                           
+⠙ |         22 | grid                                                           
+⠸ |         34 | grid                                                           
+⠧ |         48 | grid                                                           
+⠇ |         59 | grid                                                           
+⠸ |         74 | grid                                                           
+⠧ |         88 | grid                                                           
+⠧ |         98 | grid                                                           
+⠙ |        112 | grid                                                           
+⠸ |        124 | grid                                                           
+⠦ |        137 | grid                                                           
+⠏ |        150 | grid                                                           
+⠴ |        166 | grid                                                           
+⠦ |        177 | grid                                                           
+⠋ |        191 | grid                                                           
+⠼ |        205 | grid                                                           
+⠴ |        216 | grid                                                           
+⠦ |        227 | grid                                                           
+⠇ |        239 | grid                                                           
+⠧ |        258 | grid                                                           
+⠙ |        272 | grid                                                           
+⠹ |        283 | grid                                                           
+⠴ |        296 | grid                                                           
+⠧ |        308 | grid                                                           
+⠧ |        318 | grid                                                           
+⠹ |        333 | grid                                                           
+⠴ |        346 | grid                                                           
+⠦ |        357 | grid                                                           
+⠏ |        370 | grid                                                           
+⠹ |        383 | grid                                                           
+⠧ |        398 | grid                                                           
+⠋ |        411 | grid                                                           
+⠙ |        422 | grid                                                           
+⠙ |        442 | grid                                                           
+⠦ |        467 | grid                                                           
+⠏ |        480 | grid                                                           
+⠋ |        491 | grid                                                           
+⠼ |        505 | grid                                                           
+⠇ |        519 | grid                                                           
+⠏ |        530 | grid                                                           
+⠼ |        545 | grid                                                           
+⠴ |        556 | grid                                                           
+⠙ |        582 | grid                                                           
+⠼ |        595 | grid                                                           
+⠼ |        605 | grid                                                           
+⠋ |        621 | grid                                                           
+⠴ |        636 | grid                                                           
+⠹ |        653 | grid                                                           
+⠦ |        667 | grid                                                           
+⠏ |        680 | grid                                                           
+⠋ |        691 | grid                                                           
+✔ |        697 | grid [5.9s]
+
+⠏ |          0 | input                                                          
+⠋ |          1 | input                                                          
+⠹ |          3 | input                                                          
+⠴ |          6 | input                                                          
+⠇ |          9 | input                                                          
+⠙ |         12 | input                                                          
+⠹ |         13 | input                                                          
+⠴ |         16 | input                                                          
+⠦ |         17 | input                                                          
+⠙ |         22 | input                                                          
+⠹ |         23 | input                                                          
+⠴ |         26 | input                                                          
+⠦ |         27 | input                                                          
+⠧ |         28 | input                                                          
+⠹ |         33 | input                                                          
+⠴ |         36 | input                                                          
+⠇ |         39 | input                                                          
+⠋ |         41 | input                                                          
+⠦ |         47 | input                                                          
+⠹ |         53 | input                                                          
+⠼ |         55 | input                                                          
+⠏ |         60 | input                                                          
+⠋ |         61 | input                                                          
+⠙ |         72 | input                                                          
+✔ |         75 | input [3.6s]
+
+⠏ |          0 | invalidation                                                   
+⠹ |          3 | invalidation                                                   
+⠴ |          6 | invalidation                                                   
+⠧ |          8 | invalidation                                                   
+⠏ |         10 | invalidation                                                   
+⠸ |         14 | invalidation                                                   
+⠼ |         15 | invalidation                                                   
+⠴ |         16 | invalidation                                                   
+⠦ |         17 | invalidation                                                   
+✔ |         17 | invalidation [16.4s]
+
+⠏ |          0 | json-view                                                      
+⠧ |          8 | json-view                                                      
+⠹ |         13 | json-view                                                      
+✔ |         19 | json-view
+
+⠏ |          0 | keys                                                           
+⠸ |         14 | keys                                                           
+⠹ |         23 | keys                                                           
+⠧ |         28 | keys                                                           
+⠙ |         42 | keys                                                           
+⠴ |         56 | keys                                                           
+⠦ |         67 | keys                                                           
+⠧ |         78 | keys                                                           
+✔ |         86 | keys
+
+⠏ |          0 | layout-index                                                   
+⠸ |          4 | layout-index                                                   
+⠴ |          6 | layout-index                                                   
+⠦ |          7 | layout-index                                                   
+⠧ |          8 | layout-index                                                   
+⠏ |         10 | layout-index                                                   
+⠙ |         12 | layout-index                                                   
+⠸ |         14 | layout-index                                                   
+⠼ |         15 | layout-index                                                   
+⠦ |         17 | layout-index                                                   
+⠇ |         19 | layout-index                                                   
+⠏ |         20 | layout-index                                                   
+⠋ |         21 | layout-index                                                   
+⠙ |         22 | layout-index                                                   
+⠹ |         23 | layout-index                                                   
+⠸ |         24 | layout-index                                                   
+⠴ |         26 | layout-index                                                   
+⠧ |         28 | layout-index                                                   
+⠏ |         30 | layout-index                                                   
+⠋ |         31 | layout-index                                                   
+⠹ |         33 | layout-index                                                   
+⠼ |         35 | layout-index                                                   
+⠴ |         36 | layout-index                                                   
+⠴ |         46 | layout-index                                                   
+⠦ |         47 | layout-index                                                   
+⠋ |         51 | layout-index                                                   
+✔ |         52 | layout-index [8.8s]
+
+⠏ |          0 | layout                                                         
+⠼ |          5 | layout                                                         
+⠹ |         13 | layout                                                         
+⠦ |         17 | layout                                                         
+⠹ |         23 | layout                                                         
+⠧ |         28 | layout                                                         
+⠙ |         32 | layout                                                         
+⠙ |         42 | layout                                                         
+✔ |         44 | layout
+
+⠏ |          0 | lifecycle                                                      
+⠋ |          1 | lifecycle                                                      
+⠹ |          3 | lifecycle                                                      
+⠧ |          8 | lifecycle                                                      
+⠋ |         11 | lifecycle                                                      
+⠇ |         19 | lifecycle                                                      
+⠹ |         23 | lifecycle                                                      
+⠼ |         25 | lifecycle                                                      
+⠇ |         29 | lifecycle                                                      
+✔ |         31 | lifecycle [2.3s]
+
+⠏ |          0 | markdown                                                       
+⠏ |         10 | markdown                                                       
+⠦ |         17 | markdown                                                       
+⠦ |         27 | markdown                                                       
+⠹ |         33 | markdown                                                       
+⠧ |         38 | markdown                                                       
+⠋ |         41 | markdown                                                       
+✔ |         42 | markdown
+
+⠏ |          0 | mouse                                                          
+⠋ |         11 | mouse                                                          
+⠴ |         16 | mouse                                                          
+⠇ |         19 | mouse                                                          
+⠋ |         21 | mouse                                                          
+⠹ |         23 | mouse                                                          
+⠼ |         25 | mouse                                                          
+⠦ |         27 | mouse                                                          
+⠇ |         29 | mouse                                                          
+⠸ |         34 | mouse                                                          
+⠦ |         37 | mouse                                                          
+✔ |         37 | mouse [1.6s]
+
+⠏ |          0 | parser-fragments                                               
+⠼ |          5 | parser-fragments                                               
+⠙ |         12 | parser-fragments                                               
+⠇ |         19 | parser-fragments                                               
+⠧ |         28 | parser-fragments                                               
+⠸ |         34 | parser-fragments                                               
+⠏ |         40 | parser-fragments                                               
+⠏ |         50 | parser-fragments                                               
+⠴ |         56 | parser-fragments                                               
+⠼ |         65 | parser-fragments                                               
+⠏ |         70 | parser-fragments                                               
+⠧ |         78 | parser-fragments                                               
+⠋ |         91 | parser-fragments                                               
+⠹ |        103 | parser-fragments                                               
+⠸ |        114 | parser-fragments                                               
+⠙ |        122 | parser-fragments                                               
+⠙ |        132 | parser-fragments                                               
+✔ |        140 | parser-fragments [2.2s]
+
+⠏ |          0 | paste                                                          
+⠏ |         10 | paste                                                          
+⠏ |         20 | paste                                                          
+⠙ |         22 | paste                                                          
+⠦ |         27 | paste                                                          
+✔ |         28 | paste
+
+⠏ |          0 | platform-bounds                                                
+⠼ |          5 | platform-bounds                                                
+⠋ |         11 | platform-bounds                                                
+✔ |         14 | platform-bounds
+
+⠏ |          0 | posix-driver                                                   
+⠦ |          7 | posix-driver                                                   
+⠹ |         13 | posix-driver                                                   
+✔ |         15 | posix-driver
+
+⠏ |          0 | process-view                                                   
+⠋ |          1 | process-view                                                   
+⠹ |          3 | process-view                                                   
+⠏ |         10 | process-view                                                   
+⠙ |         12 | process-view                                                   
+⠦ |         17 | process-view                                                   
+⠧ |         18 | process-view                                                   
+⠋ |         21 | process-view                                                   
+⠙ |         22 | process-view                                                   
+✔ |         25 | process-view [1.3s]
+
+⠏ |          0 | profiling                                                      
+⠋ |          1 | profiling                                                      
+✔ |          7 | profiling
+
+⠏ |          0 | property-grid                                                  
+⠦ |          7 | property-grid                                                  
+⠙ |         12 | property-grid                                                  
+⠧ |         18 | property-grid                                                  
+⠙ |         22 | property-grid                                                  
+✔ |         23 | property-grid
+
+⠏ |          0 | reactive                                                       
+⠏ |         10 | reactive                                                       
+⠸ |         14 | reactive                                                       
+⠴ |         16 | reactive                                                       
+⠇ |         19 | reactive                                                       
+⠙ |         22 | reactive                                                       
+⠼ |         25 | reactive                                                       
+⠋ |         31 | reactive                                                       
+⠼ |         35 | reactive                                                       
+⠧ |         38 | reactive                                                       
+✔ |         39 | reactive [1.2s]
+
+⠏ |          0 | record-view                                                    
+⠙ |          2 | record-view                                                    
+⠴ |          6 | record-view                                                    
+✔ |          8 | record-view
+
+⠏ |          0 | renderer                                                       
+⠼ |          5 | renderer                                                       
+⠏ |         10 | renderer                                                       
+⠴ |         16 | renderer                                                       
+⠏ |         20 | renderer                                                       
+⠴ |         26 | renderer                                                       
+⠋ |         31 | renderer                                                       
+⠴ |         36 | renderer                                                       
+⠸ |         44 | renderer                                                       
+⠏ |         50 | renderer                                                       
+⠏ |         60 | renderer                                                       
+⠴ |         66 | renderer                                                       
+✔ |         69 | renderer [1.4s]
+
+⠏ |          0 | screen-buffer                                                  
+⠦ |         17 | screen-buffer                                                  
+⠼ |         25 | screen-buffer                                                  
+✔ |         29 | screen-buffer
+
+⠏ |          0 | screens                                                        
+⠋ |          1 | screens                                                        
+⠼ |          5 | screens                                                        
+⠇ |          9 | screens                                                        
+⠏ |         10 | screens                                                        
+⠼ |         15 | screens                                                        
+⠦ |         17 | screens                                                        
+⠧ |         18 | screens                                                        
+⠇ |         19 | screens                                                        
+⠏ |         20 | screens                                                        
+⠋ |         21 | screens                                                        
+⠙ |         22 | screens                                                        
+⠸ |         24 | screens                                                        
+⠦ |         27 | screens                                                        
+⠧ |         28 | screens                                                        
+⠦ |         37 | screens                                                        
+⠙ |         42 | screens                                                        
+✔ |         42 | screens [4.8s]
+
+⠏ |          0 | scroll                                                         
+⠋ |          1 | scroll                                                         
+⠼ |          5 | scroll                                                         
+⠧ |          8 | scroll                                                         
+⠙ |         12 | scroll                                                         
+⠸ |         14 | scroll                                                         
+⠦ |         17 | scroll                                                         
+⠋ |         21 | scroll                                                         
+⠸ |         24 | scroll                                                         
+⠴ |         26 | scroll                                                         
+⠇ |         29 | scroll                                                         
+⠋ |         31 | scroll                                                         
+⠙ |         32 | scroll                                                         
+⠸ |         34 | scroll                                                         
+⠦ |         37 | scroll                                                         
+⠹ |         43 | scroll                                                         
+⠇ |         49 | scroll                                                         
+⠹ |         53 | scroll                                                         
+⠦ |         57 | scroll                                                         
+⠋ |         61 | scroll                                                         
+⠴ |         66 | scroll                                                         
+⠇ |         69 | scroll                                                         
+⠼ |         75 | scroll                                                         
+⠙ |         82 | scroll                                                         
+⠧ |         88 | scroll                                                         
+⠹ |         93 | scroll                                                         
+⠇ |         99 | scroll                                                         
+⠼ |        105 | scroll                                                         
+⠸ |        114 | scroll                                                         
+⠇ |        119 | scroll                                                         
+⠹ |        133 | scroll                                                         
+⠋ |        141 | scroll                                                         
+⠦ |        147 | scroll                                                         
+⠹ |        153 | scroll                                                         
+⠦ |        157 | scroll                                                         
+⠧ |        158 | scroll                                                         
+⠋ |        161 | scroll                                                         
+✔ |        162 | scroll [5.1s]
+
+⠏ |          0 | selectors                                                      
+⠹ |         13 | selectors                                                      
+✔ |         18 | selectors
+
+⠏ |          0 | signals                                                        
+⠧ |          8 | signals                                                        
+⠧ |         18 | signals                                                        
+⠇ |         29 | signals                                                        
+⠴ |         36 | signals                                                        
+⠙ |         42 | signals                                                        
+⠴ |         46 | signals                                                        
+⠧ |         48 | signals                                                        
+⠴ |         56 | signals                                                        
+⠙ |         62 | signals                                                        
+✔ |         66 | signals [2.5s]
+
+⠏ |          0 | split                                                          
+⠦ |          7 | split                                                          
+⠙ |         12 | split                                                          
+⠴ |         16 | split                                                          
+⠏ |         20 | split                                                          
+⠹ |         23 | split                                                          
+⠴ |         26 | split                                                          
+⠙ |         32 | split                                                          
+⠹ |         33 | split                                                          
+✔ |         33 | split [1.2s]
+
+⠏ |          0 | sql                                                            
+⠴ |          6 | sql                                                            
+⠦ |         17 | sql                                                            
+⠸ |         24 | sql                                                            
+⠸ |         34 | sql                                                            
+⠏ |      2  38 | sql                                                            
+✔ |      2  40 | sql [1.0s]
+
+⠏ |          0 | status-bar                                                     
+⠙ |         12 | status-bar                                                     
+⠇ |         19 | status-bar                                                     
+✔ |         19 | status-bar
+
+⠏ |          0 | stress                                                         
+⠋ |          1 | stress                                                         
+⠹ |          3 | stress                                                         
+⠼ |          5 | stress                                                         
+⠦ |          7 | stress                                                         
+⠇ |          9 | stress                                                         
+⠏ |         10 | stress                                                         
+⠋ |         11 | stress                                                         
+⠙ |         12 | stress                                                         
+⠹ |         13 | stress                                                         
+⠸ |         14 | stress                                                         
+⠇ |         19 | stress                                                         
+⠋ |         21 | stress                                                         
+✔ |         22 | stress [56.9s]
+
+⠏ |          0 | style                                                          
+⠸ |         14 | style                                                          
+⠹ |         23 | style                                                          
+✔ |         27 | style
+
+⠏ |          0 | stylesheet                                                     
+⠏ |         10 | stylesheet                                                     
+⠏ |         20 | stylesheet                                                     
+⠴ |         26 | stylesheet                                                     
+⠏ |         30 | stylesheet                                                     
+⠸ |         34 | stylesheet                                                     
+⠸ |         44 | stylesheet                                                     
+⠦ |         47 | stylesheet                                                     
+✔ |         50 | stylesheet [1.1s]
+
+⠏ |          0 | tabs                                                           
+⠦ |          7 | tabs                                                           
+⠏ |         10 | tabs                                                           
+⠹ |         13 | tabs                                                           
+⠼ |         15 | tabs                                                           
+⠧ |         18 | tabs                                                           
+✔ |         24 | tabs [1.1s]
+
+⠏ |          0 | terminal-posix                                                 
+✔ |      1   0 | terminal-posix
+
+⠏ |          0 | text-buffer                                                    
+⠏ |         10 | text-buffer                                                    
+⠇ |         19 | text-buffer                                                    
+⠧ |         38 | text-buffer                                                    
+⠇ |         49 | text-buffer                                                    
+⠋ |         61 | text-buffer                                                    
+⠸ |         74 | text-buffer                                                    
+⠼ |         85 | text-buffer                                                    
+⠧ |         98 | text-buffer                                                    
+⠏ |        110 | text-buffer                                                    
+⠹ |        123 | text-buffer                                                    
+⠸ |        134 | text-buffer                                                    
+⠼ |        145 | text-buffer                                                    
+⠇ |        159 | text-buffer                                                    
+⠙ |        172 | text-buffer                                                    
+⠸ |        184 | text-buffer                                                    
+⠧ |        198 | text-buffer                                                    
+⠋ |        211 | text-buffer                                                    
+⠧ |        218 | text-buffer                                                    
+⠙ |        232 | text-buffer                                                    
+✔ |        243 | text-buffer [2.1s]
+
+⠏ |          0 | textarea                                                       
+⠋ |          1 | textarea                                                       
+⠼ |          5 | textarea                                                       
+⠧ |          8 | textarea                                                       
+⠙ |         12 | textarea                                                       
+⠼ |         15 | textarea                                                       
+⠧ |         18 | textarea                                                       
+⠇ |         19 | textarea                                                       
+⠋ |         21 | textarea                                                       
+⠼ |         25 | textarea                                                       
+⠏ |         30 | textarea                                                       
+⠸ |         34 | textarea                                                       
+⠦ |         37 | textarea                                                       
+⠇ |         39 | textarea                                                       
+⠹ |         43 | textarea                                                       
+⠸ |         44 | textarea                                                       
+⠧ |         48 | textarea                                                       
+⠏ |         50 | textarea                                                       
+⠋ |         51 | textarea                                                       
+⠙ |         52 | textarea                                                       
+⠸ |         54 | textarea                                                       
+⠼ |         55 | textarea                                                       
+⠦ |         57 | textarea                                                       
+⠧ |         58 | textarea                                                       
+⠋ |         61 | textarea                                                       
+⠹ |         63 | textarea                                                       
+⠼ |         65 | textarea                                                       
+⠦ |         67 | textarea                                                       
+⠋ |         71 | textarea                                                       
+⠹ |         73 | textarea                                                       
+⠴ |         76 | textarea                                                       
+⠏ |         80 | textarea                                                       
+⠹ |         83 | textarea                                                       
+⠼ |         85 | textarea                                                       
+⠴ |         96 | textarea                                                       
+⠦ |         97 | textarea                                                       
+⠙ |        102 | textarea                                                       
+⠹ |        103 | textarea                                                       
+⠴ |        106 | textarea                                                       
+⠏ |        110 | textarea                                                       
+⠙ |        112 | textarea                                                       
+⠋ |        121 | textarea                                                       
+⠼ |        125 | textarea                                                       
+⠦ |        127 | textarea                                                       
+⠼ |        135 | textarea                                                       
+⠧ |        148 | textarea                                                       
+⠙ |        162 | textarea                                                       
+⠸ |        174 | textarea                                                       
+⠙ |        192 | textarea                                                       
+⠦ |        207 | textarea                                                       
+⠇ |        219 | textarea                                                       
+⠹ |        233 | textarea                                                       
+⠼ |        245 | textarea                                                       
+⠇ |        259 | textarea                                                       
+⠹ |        273 | textarea                                                       
+⠧ |        288 | textarea                                                       
+⠇ |        299 | textarea                                                       
+⠹ |        313 | textarea                                                       
+⠇ |        329 | textarea                                                       
+⠇ |        339 | textarea                                                       
+⠦ |        357 | textarea                                                       
+⠇ |        369 | textarea                                                       
+⠙ |        382 | textarea                                                       
+⠴ |        396 | textarea                                                       
+⠼ |        415 | textarea                                                       
+⠇ |        429 | textarea                                                       
+⠹ |        443 | textarea                                                       
+⠴ |        456 | textarea                                                       
+⠇ |        469 | textarea                                                       
+⠸ |        484 | textarea                                                       
+⠴ |        496 | textarea                                                       
+⠏ |        510 | textarea                                                       
+⠋ |        521 | textarea                                                       
+⠼ |        535 | textarea                                                       
+⠋ |        551 | textarea                                                       
+⠹ |        563 | textarea                                                       
+⠴ |        576 | textarea                                                       
+✔ |        580 | textarea [11.9s]
+
+⠏ |          0 | timers                                                         
+⠧ |          8 | timers                                                         
+✔ |         11 | timers
+
+⠏ |          0 | treeview                                                       
+⠇ |          9 | treeview                                                       
+⠋ |         11 | treeview                                                       
+⠸ |         14 | treeview                                                       
+⠦ |         17 | treeview                                                       
+⠇ |         19 | treeview                                                       
+⠙ |         22 | treeview                                                       
+⠴ |         26 | treeview                                                       
+✔ |         30 | treeview [1.7s]
+
+⠏ |          0 | unicode                                                        
+⠧ |          8 | unicode                                                        
+⠦ |         17 | unicode                                                        
+✔ |         18 | unicode
+
+⠏ |          0 | widget-tree                                                    
+⠧ |         18 | widget-tree                                                    
+⠸ |         24 | widget-tree                                                    
+⠇ |         29 | widget-tree                                                    
+⠼ |         35 | widget-tree                                                    
+⠼ |         45 | widget-tree                                                    
+⠏ |         50 | widget-tree                                                    
+⠸ |         54 | widget-tree                                                    
+⠙ |         62 | widget-tree                                                    
+⠹ |         73 | widget-tree                                                    
+⠼ |         85 | widget-tree                                                    
+⠧ |         98 | widget-tree                                                    
+⠙ |        112 | widget-tree                                                    
+⠙ |        122 | widget-tree                                                    
+⠼ |        135 | widget-tree                                                    
+⠇ |        149 | widget-tree                                                    
+⠹ |        163 | widget-tree                                                    
+⠴ |        176 | widget-tree                                                    
+⠏ |        190 | widget-tree                                                    
+⠙ |        202 | widget-tree                                                    
+⠹ |        213 | widget-tree                                                    
+⠇ |        229 | widget-tree                                                    
+⠇ |        239 | widget-tree                                                    
+⠸ |        254 | widget-tree                                                    
+⠏ |        280 | widget-tree                                                    
+⠙ |        292 | widget-tree                                                    
+⠴ |        306 | widget-tree                                                    
+⠇ |        319 | widget-tree                                                    
+⠏ |        330 | widget-tree                                                    
+⠴ |        346 | widget-tree                                                    
+⠋ |        361 | widget-tree                                                    
+⠏ |        370 | widget-tree                                                    
+⠴ |        386 | widget-tree                                                    
+⠏ |        410 | widget-tree                                                    
+⠇ |        419 | widget-tree                                                    
+⠏ |        440 | widget-tree                                                    
+⠸ |        454 | widget-tree                                                    
+⠴ |        466 | widget-tree                                                    
+⠋ |        481 | widget-tree                                                    
+⠹ |        493 | widget-tree                                                    
+⠴ |        506 | widget-tree                                                    
+⠧ |        518 | widget-tree                                                    
+⠙ |        532 | widget-tree                                                    
+⠴ |        546 | widget-tree                                                    
+⠇ |        559 | widget-tree                                                    
+⠙ |        572 | widget-tree                                                    
+⠸ |        584 | widget-tree                                                    
+⠏ |        600 | widget-tree                                                    
+⠏ |        610 | widget-tree                                                    
+⠹ |        623 | widget-tree                                                    
+⠧ |        638 | widget-tree                                                    
+⠋ |        651 | widget-tree                                                    
+⠸ |        664 | widget-tree                                                    
+⠦ |        677 | widget-tree                                                    
+⠇ |        689 | widget-tree                                                    
+⠙ |        702 | widget-tree                                                    
+⠦ |        717 | widget-tree                                                    
+⠏ |        730 | widget-tree                                                    
+⠋ |        741 | widget-tree                                                    
+⠴ |        756 | widget-tree                                                    
+⠏ |        770 | widget-tree                                                    
+⠧ |        788 | widget-tree                                                    
+⠇ |        809 | widget-tree                                                    
+⠏ |        820 | widget-tree                                                    
+⠼ |        835 | widget-tree                                                    
+⠏ |        850 | widget-tree                                                    
+⠙ |        862 | widget-tree                                                    
+⠦ |        877 | widget-tree                                                    
+⠋ |        891 | widget-tree                                                    
+⠸ |        904 | widget-tree                                                    
+⠦ |        917 | widget-tree                                                    
+⠏ |        930 | widget-tree                                                    
+⠙ |        942 | widget-tree                                                    
+⠧ |        958 | widget-tree                                                    
+⠋ |        971 | widget-tree                                                    
+⠼ |        985 | widget-tree                                                    
+⠴ |        996 | widget-tree                                                    
+⠏ |        1010 | widget-tree                                                   
+⠏ |        1020 | widget-tree                                                   
+⠸ |        1034 | widget-tree                                                   
+⠴ |        1046 | widget-tree                                                   
+⠏ |        1060 | widget-tree                                                   
+⠹ |        1073 | widget-tree                                                   
+⠴ |        1086 | widget-tree                                                   
+⠏ |        1100 | widget-tree                                                   
+⠋ |        1111 | widget-tree                                                   
+⠙ |        1122 | widget-tree                                                   
+⠦ |        1137 | widget-tree                                                   
+⠙ |        1152 | widget-tree                                                   
+⠸ |        1164 | widget-tree                                                   
+⠦ |        1177 | widget-tree                                                   
+⠋ |        1191 | widget-tree                                                   
+⠹ |        1203 | widget-tree                                                   
+⠼ |        1215 | widget-tree                                                   
+⠏ |        1230 | widget-tree                                                   
+⠋ |        1241 | widget-tree                                                   
+⠼ |        1255 | widget-tree                                                   
+⠏ |        1270 | widget-tree                                                   
+⠹ |        1283 | widget-tree                                                   
+⠏ |        1300 | widget-tree                                                   
+⠴ |        1326 | widget-tree                                                   
+⠧ |        1338 | widget-tree                                                   
+⠹ |        1353 | widget-tree                                                   
+⠹ |        1363 | widget-tree                                                   
+⠦ |        1377 | widget-tree                                                   
+⠹ |        1393 | widget-tree                                                   
+⠸ |        1404 | widget-tree                                                   
+⠴ |        1416 | widget-tree                                                   
+⠇ |        1429 | widget-tree                                                   
+⠋ |        1441 | widget-tree                                                   
+⠴ |        1456 | widget-tree                                                   
+⠋ |        1471 | widget-tree                                                   
+⠙ |        1482 | widget-tree                                                   
+⠙ |        1492 | widget-tree                                                   
+⠴ |        1506 | widget-tree                                                   
+⠧ |        1518 | widget-tree                                                   
+⠴ |        1536 | widget-tree                                                   
+⠧ |        1548 | widget-tree                                                   
+⠦ |        1567 | widget-tree                                                   
+⠏ |        1600 | widget-tree                                                   
+⠋ |        1611 | widget-tree                                                   
+⠹ |        1623 | widget-tree                                                   
+⠇ |        1639 | widget-tree                                                   
+⠏ |        1650 | widget-tree                                                   
+⠦ |        1667 | widget-tree                                                   
+⠙ |        1682 | widget-tree                                                   
+⠹ |        1693 | widget-tree                                                   
+⠦ |        1707 | widget-tree                                                   
+⠋ |        1721 | widget-tree                                                   
+⠙ |        1732 | widget-tree                                                   
+⠼ |        1745 | widget-tree                                                   
+⠏ |        1760 | widget-tree                                                   
+⠋ |        1771 | widget-tree                                                   
+⠦ |        1787 | widget-tree                                                   
+⠧ |        1798 | widget-tree                                                   
+⠏ |        1810 | widget-tree                                                   
+⠼ |        1825 | widget-tree                                                   
+⠏ |        1840 | widget-tree                                                   
+⠇ |        1849 | widget-tree                                                   
+⠸ |        1864 | widget-tree                                                   
+⠧ |        1878 | widget-tree                                                   
+⠙ |        1892 | widget-tree                                                   
+⠴ |        1906 | widget-tree                                                   
+⠇ |        1919 | widget-tree                                                   
+⠙ |        1932 | widget-tree                                                   
+⠼ |        1945 | widget-tree                                                   
+⠦ |        1957 | widget-tree                                                   
+⠹ |        1973 | widget-tree                                                   
+⠦ |        1987 | widget-tree                                                   
+⠏ |        2000 | widget-tree                                                   
+⠹ |        2013 | widget-tree                                                   
+⠼ |        2025 | widget-tree                                                   
+⠦ |        2037 | widget-tree                                                   
+⠏ |        2050 | widget-tree                                                   
+⠸ |        2064 | widget-tree                                                   
+⠏ |        2080 | widget-tree                                                   
+⠼ |        2095 | widget-tree                                                   
+⠴ |        2106 | widget-tree                                                   
+⠦ |        2117 | widget-tree                                                   
+⠙ |        2132 | widget-tree                                                   
+⠹ |        2143 | widget-tree                                                   
+⠦ |        2157 | widget-tree                                                   
+⠇ |        2169 | widget-tree                                                   
+⠋ |        2181 | widget-tree                                                   
+⠦ |        2197 | widget-tree                                                   
+⠇ |        2209 | widget-tree                                                   
+⠹ |        2223 | widget-tree                                                   
+⠋ |        2241 | widget-tree                                                   
+⠹ |        2253 | widget-tree                                                   
+⠦ |        2267 | widget-tree                                                   
+⠙ |        2282 | widget-tree                                                   
+⠙ |        2292 | widget-tree                                                   
+⠙ |        2302 | widget-tree                                                   
+⠸ |        2314 | widget-tree                                                   
+⠏ |        2330 | widget-tree                                                   
+⠋ |        2341 | widget-tree                                                   
+⠴ |        2356 | widget-tree                                                   
+⠇ |        2369 | widget-tree                                                   
+⠋ |        2381 | widget-tree                                                   
+⠦ |        2397 | widget-tree                                                   
+⠇ |        2409 | widget-tree                                                   
+⠙ |        2422 | widget-tree                                                   
+⠴ |        2436 | widget-tree                                                   
+⠏ |        2450 | widget-tree                                                   
+⠸ |        2464 | widget-tree                                                   
+⠧ |        2478 | widget-tree                                                   
+⠋ |        2491 | widget-tree                                                   
+⠸ |        2504 | widget-tree                                                   
+⠴ |        2516 | widget-tree                                                   
+⠦ |        2527 | widget-tree                                                   
+⠏ |        2540 | widget-tree                                                   
+⠼ |        2555 | widget-tree                                                   
+⠧ |        2568 | widget-tree                                                   
+⠋ |        2581 | widget-tree                                                   
+⠹ |        2593 | widget-tree                                                   
+⠴ |        2606 | widget-tree                                                   
+⠏ |        2620 | widget-tree                                                   
+⠴ |        2636 | widget-tree                                                   
+⠴ |        2646 | widget-tree                                                   
+⠏ |        2660 | widget-tree                                                   
+⠹ |        2673 | widget-tree                                                   
+⠹ |        2683 | widget-tree                                                   
+⠦ |        2697 | widget-tree                                                   
+⠋ |        2711 | widget-tree                                                   
+⠹ |        2723 | widget-tree                                                   
+⠧ |        2738 | widget-tree                                                   
+⠙ |        2752 | widget-tree                                                   
+⠸ |        2764 | widget-tree                                                   
+⠦ |        2777 | widget-tree                                                   
+⠙ |        2792 | widget-tree                                                   
+⠹ |        2803 | widget-tree                                                   
+⠦ |        2817 | widget-tree                                                   
+⠋ |        2831 | widget-tree                                                   
+⠸ |        2844 | widget-tree                                                   
+⠇ |        2859 | widget-tree                                                   
+⠋ |        2871 | widget-tree                                                   
+⠋ |        2881 | widget-tree                                                   
+⠦ |        2907 | widget-tree                                                   
+⠙ |        2922 | widget-tree                                                   
+⠼ |        2935 | widget-tree                                                   
+⠸ |        2954 | widget-tree                                                   
+⠦ |        2967 | widget-tree                                                   
+⠧ |        2978 | widget-tree                                                   
+⠋ |        2991 | widget-tree                                                   
+⠸ |        3004 | widget-tree                                                   
+⠦ |        3017 | widget-tree                                                   
+⠋ |        3031 | widget-tree                                                   
+⠸ |        3044 | widget-tree                                                   
+⠧ |        3058 | widget-tree                                                   
+⠋ |        3071 | widget-tree                                                   
+⠹ |        3083 | widget-tree                                                   
+⠧ |        3098 | widget-tree                                                   
+⠸ |        3114 | widget-tree                                                   
+⠹ |        3123 | widget-tree                                                   
+⠦ |        3137 | widget-tree                                                   
+⠹ |        3153 | widget-tree                                                   
+⠴ |        3156 | widget-tree                                                   
+✔ |        3157 | widget-tree [25.9s]
+
+⠏ |          0 | widgets-extra                                                  
+⠋ |          1 | widgets-extra                                                  
+⠴ |          6 | widgets-extra                                                  
+⠏ |         10 | widgets-extra                                                  
+⠴ |         16 | widgets-extra                                                  
+⠦ |         17 | widgets-extra                                                  
+⠏ |         20 | widgets-extra                                                  
+⠼ |         25 | widgets-extra                                                  
+⠴ |         26 | widgets-extra                                                  
+⠦ |         27 | widgets-extra                                                  
+⠇ |         29 | widgets-extra                                                  
+⠦ |         37 | widgets-extra                                                  
+⠧ |         38 | widgets-extra                                                  
+⠙ |         42 | widgets-extra                                                  
+⠧ |         48 | widgets-extra                                                  
+⠴ |         56 | widgets-extra                                                  
+⠋ |         61 | widgets-extra                                                  
+✔ |         65 | widgets-extra [2.4s]
+
+⠏ |          0 | windows-driver                                                 
+⠸ |         14 | windows-driver                                                 
+⠹ |         33 | windows-driver                                                 
+⠋ |         51 | windows-driver                                                 
+⠸ |         74 | windows-driver                                                 
+⠋ |         91 | windows-driver                                                 
+⠇ |        109 | windows-driver                                                 
+⠸ |        124 | windows-driver                                                 
+⠋ |        141 | windows-driver                                                 
+⠦ |        157 | windows-driver                                                 
+⠴ |        176 | windows-driver                                                 
+⠼ |        195 | windows-driver                                                 
+⠸ |        204 | windows-driver                                                 
+⠏ |        220 | windows-driver                                                 
+⠙ |        232 | windows-driver                                                 
+⠧ |        248 | windows-driver                                                 
+⠋ |        261 | windows-driver                                                 
+⠴ |        276 | windows-driver                                                 
+⠏ |        300 | windows-driver                                                 
+⠦ |        317 | windows-driver                                                 
+⠋ |        331 | windows-driver                                                 
+⠴ |        356 | windows-driver                                                 
+⠴ |        376 | windows-driver                                                 
+✔ |        384 | windows-driver [2.4s]
+
+⠏ |          0 | worker-bootstrap                                               
+⠋ |          1 | worker-bootstrap                                               
+⠏ |         20 | worker-bootstrap                                               
+⠋ |         31 | worker-bootstrap                                               
+⠹ |         33 | worker-bootstrap                                               termr worker job shape: fn_env_chain=local>base>empty args_bytes=48 packages_count=0 rds_bytes=31975
+termr worker parent_before_read_rds: termr-job-70344803c79.rds size=31975 object_bytes=2008
+termr worker parent_after_read_rds: termr-job-70344803c79.rds
+
+⠴ |         36 | worker-bootstrap                                               
+⠙ |         42 | worker-bootstrap                                               
+⠦ |         47 | worker-bootstrap                                               
+⠼ |         55 | worker-bootstrap                                               
+⠦ |         57 | worker-bootstrap                                               
+⠏ |         60 | worker-bootstrap                                               
+⠋ |         61 | worker-bootstrap                                               
+⠦ |         67 | worker-bootstrap                                               
+⠹ |         73 | worker-bootstrap                                               
+⠼ |         75 | worker-bootstrap                                               
+⠙ |         82 | worker-bootstrap                                               
+⠦ |         87 | worker-bootstrap                                               
+✔ |         95 | worker-bootstrap [9.6s]
+
+⠏ |          0 | workers                                                        
+⠋ |          1 | workers                                                        
+⠇ |          9 | workers                                                        
+⠋ |         11 | workers                                                        
+⠴ |         16 | workers                                                        
+✔ |         17 | workers
+
+⠏ |          0 | workers2                                                       
+⠋ |          1 | workers2                                                       
+⠇ |          9 | workers2                                                       
+⠏ |         10 | workers2                                                       
+⠼ |         15 | workers2                                                       
+⠦ |         17 | workers2                                                       
+⠙ |         22 | workers2                                                       
+⠸ |         24 | workers2                                                       
+⠇ |         29 | workers2                                                       
+⠴ |         36 | workers2                                                       
+⠇ |         39 | workers2                                                       
+⠏ |         40 | workers2                                                       
+⠋ |         41 | workers2                                                       
+⠼ |         45 | workers2                                                       
+⠦ |         47 | workers2                                                       
+⠏ |         50 | workers2                                                       
+⠇ |         59 | workers2                                                       
+⠙ |         62 | workers2                                                       
+⠴ |         66 | workers2                                                       
+⠦ |         67 | workers2                                                       
+⠇ |         69 | workers2                                                       
+⠙ |         72 | workers2                                                       
+⠴ |         76 | workers2                                                       
+⠧ |         78 | workers2                                                       
+✔ |         81 | workers2 [18.0s]
+
+⠏ |          0 | workflow-accessibility                                         
+⠋ |          1 | workflow-accessibility                                         
+✔ |          7 | workflow-accessibility
+
+⠏ |          0 | workload                                                       
+✔ |          9 | workload
+
+⠏ |          0 | wrap                                                           
+⠴ |          6 | wrap                                                           
+⠋ |         11 | wrap                                                           
+✔ |         19 | wrap
+
+══ Results ═════════════════════════════════════════════════════════════════════
+Duration: 356.1 s
+
+── Skipped tests (18) ──────────────────────────────────────────────────────────
+• {DBI} is not installed (16): 'test-database-explorer.R:2:3',
+  'test-database-explorer.R:17:3', 'test-database-explorer.R:64:3',
+  'test-database-explorer.R:111:3', 'test-datatable-source-query.R:16:3',
+  'test-datatable-source-query.R:49:3', 'test-datatable-source-query.R:77:3',
+  'test-datatable-source-query.R:98:3', 'test-datatable-source-query.R:125:3',
+  'test-datatable-source-query.R:142:3', 'test-datatable-source-query.R:156:3',
+  'test-datatable-source-query.R:177:3', 'test-datatable-source.R:173:3',
+  'test-datatable-source.R:200:3', 'test-extensions-external.R:59:3',
+  'test-sql.R:84:3'
+• DBI is not installed (1): 'test-sql.R:130:5'
+• On Windows (1): 'test-terminal-posix.R:2:3'
+
+[ FAIL 0 | WARN 0 | SKIP 18 | PASS 8305 ]
+
+TOTAL: 8323 tests, 0 failed, 0 errors, 18 skipped, 0 warnings

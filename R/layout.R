@@ -45,6 +45,64 @@ clear_regions <- function(widget) {
   for (child in widget$children) clear_regions(child)
 }
 
+# Inspect a laid-out tree for content that cannot fit inside a widget's own
+# content box. Scroll views intentionally clip virtual content; their viewport
+# clipping is not reported here.
+collect_layout_diagnostics <- function(widget) {
+  rows <- list()
+  walk <- function(node) {
+    if (is.null(node$region) || !node$visible) return(invisible())
+    st <- node$computed_style()
+    inner <- content_rect(node$region, st)
+    kids <- visible_children(node)
+    required_width <- 0L
+    required_height <- 0L
+    check_width <- TRUE
+    check_height <- TRUE
+
+    if (inherits(node, "ScrollView")) {
+      check_width <- check_height <- FALSE
+    } else if (length(kids)) {
+      measured <- layout_algorithms[[st$layout]]$measure(kids, st)
+      required_width <- as.integer(measured$width())
+      required_height <- as.integer(measured$height(inner$width))
+    } else if (inherits(node, c("TextArea", "LogView", "DataTable", "TreeView", "OptionList"))) {
+      # These widgets have their own scrolling, virtualization or viewport
+      # rules, which cannot be inferred from their natural content size.
+      check_width <- check_height <- FALSE
+    } else {
+      required_width <- as.integer(node$content_width())
+      required_height <- as.integer(node$content_height(inner$width))
+      if (st$wrap != "none") check_width <- FALSE
+      if (inherits(node, "Input")) check_width <- FALSE
+    }
+
+    horizontal <- check_width && required_width > inner$width
+    vertical <- check_height && required_height > inner$height
+    if (horizontal || vertical) {
+      rows[[length(rows) + 1L]] <<- data.frame(
+        widget = class(node)[[1]], id = if (is.null(node$id)) NA_character_ else node$id,
+        available_width = as.integer(inner$width), required_width = required_width,
+        available_height = as.integer(inner$height), required_height = required_height,
+        clipping = if (horizontal && vertical) "both" else if (horizontal) "horizontal" else "vertical",
+        assessment = "potential; fixed dimensions may make this intentional",
+        stringsAsFactors = FALSE
+      )
+    }
+    for (child in node$children) walk(child)
+    invisible()
+  }
+  walk(widget)
+  if (!length(rows)) {
+    return(data.frame(
+      widget = character(), id = character(), available_width = integer(), required_width = integer(),
+      available_height = integer(), required_height = integer(), clipping = character(),
+      assessment = character(), stringsAsFactors = FALSE
+    ))
+  }
+  do.call(rbind, rows)
+}
+
 visible_children <- function(widget) {
   Filter(function(w) w$visible, widget$children)
 }

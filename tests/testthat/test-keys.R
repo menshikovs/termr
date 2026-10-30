@@ -56,6 +56,48 @@ test_that("escape sequences split across reads are reassembled", {
   expect_identical(keys_of(p$feed("15~")), "f5")
 })
 
+test_that("byte-stream parsing is invariant to input chunk boundaries", {
+  parse_chunks <- function(chunks) {
+    p <- KeyParser$new()
+    events <- list()
+    for (chunk in chunks) events <- c(events, p$feed(chunk))
+    c(events, p$flush())
+  }
+  cases <- list(
+    list(bytes = charToRaw("\t\r"), keys = c("tab", "enter")),
+    list(bytes = charToRaw("\t\t\r"), keys = c("tab", "tab", "enter")),
+    list(bytes = charToRaw("hello\t\r"), keys = c(strsplit("hello", "")[[1]], "tab", "enter")),
+    list(bytes = charToRaw("\033[A\033[B"), keys = c("up", "down")),
+    list(bytes = charToRaw(enc2utf8("é😀")), keys = c("é", "😀")),
+    list(bytes = as.raw(c(13L, 9L, 3L, 127L)), keys = c("enter", "tab", "ctrl+c", "backspace"))
+  )
+
+  for (case in cases) {
+    bytes <- case$bytes
+    chunkings <- list(list(bytes))
+    if (length(bytes) > 1L) {
+      chunkings <- c(chunkings, lapply(seq_len(length(bytes) - 1L), function(i) {
+        list(bytes[seq_len(i)], bytes[(i + 1L):length(bytes)])
+      }))
+      chunkings <- c(chunkings, list(lapply(as.list(bytes), as.raw)))
+    }
+    for (chunks in chunkings) {
+      expect_identical(keys_of(parse_chunks(chunks)), case$keys)
+    }
+  }
+})
+
+test_that("incomplete and unknown terminal sequences remain bounded", {
+  p <- KeyParser$new()
+  expect_length(p$feed(as.raw(c(27L, 91L))), 0L)
+  expect_true(p$has_pending())
+  expect_identical(keys_of(p$flush()), c("escape", "["))
+
+  p <- KeyParser$new()
+  expect_identical(keys_of(p$feed("\033[999zq")), "q")
+  expect_false(p$has_pending())
+})
+
 test_that("Windows console key records map to keys", {
   key <- function(...) windows_key_event(...)$key
   expect_identical(key(65L, 97L, 0L), "a")

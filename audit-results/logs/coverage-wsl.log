@@ -1,0 +1,32 @@
+OVERALL 86.52961 
+                    filename covered    n  pct
+          R/widget-process.R       4   48  8.3
+          R/terminal-posix.R      31   76 40.8
+        R/terminal-windows.R      52  107 48.6
+                 R/workers.R     238  354 67.2
+                  R/layout.R     142  206 68.9
+                    R/cell.R       9   13 69.2
+                R/reactive.R       9   13 69.2
+                  R/events.R      32   43 74.4
+                R/examples.R       6    8 75.0
+       R/database-explorer.R     183  240 76.2
+ R/datatable-source-sqlite.R      57   74 77.0
+             R/layout-grid.R      67   87 77.0
+        R/virtual-terminal.R     124  159 78.0
+                R/terminal.R      51   65 78.5
+                   R/theme.R      33   41 80.5
+             R/widget-list.R     107  129 82.9
+  R/datatable-source-query.R      64   77 83.1
+        R/widget-datatable.R    1134 1357 83.6
+                  R/export.R     125  146 85.6
+         R/command-palette.R      48   56 85.7
+                R/bindings.R      32   37 86.5
+         R/widget-treeview.R     216  249 86.7
+              R/stylesheet.R     134  154 87.0
+         R/widget-textarea.R     858  985 87.1
+                   R/style.R     116  133 87.2
+R/dirty.R 93.2 %
+R/widget-scroll.R 93.1 %
+R/widget-input.R 94.2 %
+R/layout.R 68.9 %
+R/testing.R 91.6 %

@@ -1,7 +1,8 @@
 # Widgets
 
-All widgets take `id`, `classes` and `style` arguments. Their state fields
-are reactive: assigning a new value repaints the widget.
+Widgets expose common `id`, `classes`, `style`, `visible` and `disabled`
+fields as appropriate; their state fields are reactive, so assigning a new
+value repaints the widget.
 
 ## Text
 
@@ -82,6 +83,17 @@ vectors and lists compactly and accepts a `format` function. Use
 frame, named list or vector).
 
 ## Dynamic trees
+
+Every widget has a reactive `$visible` field. Hide or show a mounted widget
+with `widget$visible <- FALSE` or `widget$set(visible = TRUE)`. The initial
+`visible` argument is available on `label()`, `vertical()`, `horizontal()`
+and `grid_layout()`; custom constructors returned by `widget()` also accept
+it. Other convenience constructors keep their own focused arguments, and
+their widgets can be hidden immediately after construction through `$visible`.
+The argument is appended to the relevant constructor signatures so existing
+positional calls keep their meaning. See the
+[compact form example](../inst/examples/compact-form.R) for a checkbox that
+shows and hides a wrapped label.
 
 ```r
 container$mount(widget)                    # append

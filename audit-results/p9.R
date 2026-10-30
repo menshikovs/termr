@@ -1,0 +1,8 @@
+suppressMessages(pkgload::load_all(".", quiet = TRUE))
+a <- app(vertical(scroll_view(label(paste(rep("some text", 12), collapse = "\n"), id = "sv"), id = "scr")))
+p <- test_app(a, 20, 6)
+cat("-- before\n"); print(p$screen_text())
+a$query_one("#sv")$update("x"); p$step()
+cat("-- after shrink: terminal\n"); print(p$screen_text())
+cat("-- app frame (renderer belief)\n"); fr <- a$frame; print(if (is.null(fr)) "NULL frame" else fr$to_text())
+cat("-- fresh compose\n"); print(compose_frame(a$screen, 20, 6)$to_text())

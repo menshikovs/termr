@@ -1,0 +1,3 @@
+1001 widgets: build 0.75s | test_app (mount+layout+paint+VT) 2.06s | resize repaint 1.13s | profile share: refresh_screen 83.33%, layout_tree 14.39%, print_char 62.12%, mount/dispatch 1.52%
+2001 widgets: build 2.62s | test_app (mount+layout+paint+VT) 3.96s | resize repaint 1.35s | profile share: refresh_screen 69.85%, layout_tree 30.15%, print_char 33.97%, mount/dispatch 2.67%
+3001 widgets: build 3.31s | test_app (mount+layout+paint+VT) 5.67s | resize repaint 1.66s | profile share: refresh_screen 65%, layout_tree 33.95%, print_char 26.58%, mount/dispatch 1.58%

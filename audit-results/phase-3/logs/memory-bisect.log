@@ -1,0 +1,13 @@
+step only (no events)               +0.00 cons cells/op
+key 'left' (ignored by button)      +0.00 cons cells/op
+key 'tab' (focus ping-pong)         +0.00 cons cells/op
+key 'enter' (press button)         +28.00 cons cells/op
+key 'tab', step every 10            +0.00 cons cells/op
+focus() call alternating            +0.00 cons cells/op
+request_repaint + step              +0.00 cons cells/op
+label update alternating text       +0.00 cons cells/op
+label update alternating text       +0.00 cons cells/op
+--- same, but letting simulated time pass so timers fire ---
+key 'enter' + advance(0.2)          +0.00 cons cells/op
+pending timers after 50 presses without time advancing: 50 
+pending timers after advancing 1 s: 0 

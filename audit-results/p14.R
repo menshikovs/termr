@@ -1,0 +1,5 @@
+suppressMessages(pkgload::load_all(".", quiet = TRUE))
+a <- app(vertical(dropdown(c("one", "two")), input("z")))
+p <- test_app(a, 12, 4); p$press("enter")
+print(p$screen_text()); print(compose_frame(a$screen, 12L, 4L)$to_text())
+cat("layers:", length(a$.__enclos_env__$private$.screens$visible()), "\n")

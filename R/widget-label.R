@@ -53,6 +53,7 @@ Label <- R6::R6Class(
 #' @param style A [style()].
 #' @param wrap Shortcut for `style(wrap = )`: `"none"`, `"word"` or
 #'   `"char"`.
+#' @param visible Is the label shown initially?
 #' @return A `Label` widget. Change its text with `$update()` or by
 #'   assigning `$text`.
 #' @export
@@ -60,10 +61,11 @@ Label <- R6::R6Class(
 #' lbl <- label("Hello", style = style(bold = TRUE))
 #' lbl$update("Goodbye")
 #' render_widget(lbl, 10, 1)
-label <- function(text = "", id = NULL, classes = NULL, style = NULL, wrap = NULL) {
+label <- function(text = "", id = NULL, classes = NULL, style = NULL, wrap = NULL, visible = TRUE) {
   if (!is.null(wrap)) style <- merge_styles(as_style(style), style(wrap = wrap))
   fn <- if (is.function(text)) text
-  w <- Label$new(if (is.null(fn)) text else "", id = id, classes = classes, style = style)
+  w <- Label$new(if (is.null(fn)) text else "", id = id, classes = classes,
+                 style = style, visible = visible)
   if (!is.null(fn)) w$bind_reactive("text", fn)
   w
 }

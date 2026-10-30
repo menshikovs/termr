@@ -1,0 +1,84 @@
+R version 4.5.2 (2025-10-31) 
+shiny 1.14.0 
+plotly 4.12.1 
+ggplot2 4.0.2 
+htmlwidgets 1.6.4 
+jsonlite 2.0.0 
+nanonext 1.10.3 
+roxygen2 7.3.3 
+bench 1.1.4 
+shiny-process: WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWLoading required package: shiny
+
+Attaching package: 'shiny'
+
+The following objects are masked from 'package:termr':
+
+    column, reactive, span
+
+........
+
+══ Warnings ════════════════════════════════════════════════════════════════════
+1. a Shiny session receives an independent publisher and releases its lease ('test-shiny-process.R:25:16') - cannot open file '/tmp/RtmpA4C89F/file5887c0ca9ae/ready.json': No such file or directory
+
+2. a Shiny session receives an independent publisher and releases its lease ('test-shiny-process.R:25:16') - cannot open file '/tmp/RtmpA4C89F/file5887c0ca9ae/ready.json': No such file or directory
+
+3. a Shiny session receives an independent publisher and releases its lease ('test-shiny-process.R:25:16') - cannot open file '/tmp/RtmpA4C89F/file5887c0ca9ae/ready.json': No such file or directory
+
+4. a Shiny session receives an independent publisher and releases its lease ('test-shiny-process.R:25:16') - cannot open file '/tmp/RtmpA4C89F/file5887c0ca9ae/ready.json': No such file or directory
+
+5. a Shiny session receives an independent publisher and releases its lease ('test-shiny-process.R:25:16') - cannot open file '/tmp/RtmpA4C89F/file5887c0ca9ae/ready.json': No such file or directory
+
+6. a Shiny session receives an independent publisher and releases its lease ('test-shiny-process.R:25:16') - cannot open file '/tmp/RtmpA4C89F/file5887c0ca9ae/ready.json': No such file or directory
+
+7. a Shiny session receives an independent publisher and releases its lease ('test-shiny-process.R:25:16') - cannot open file '/tmp/RtmpA4C89F/file5887c0ca9ae/ready.json': No such file or directory
+
+8. a Shiny session receives an independent publisher and releases its lease ('test-shiny-process.R:25:16') - cannot open file '/tmp/RtmpA4C89F/file5887c0ca9ae/ready.json': No such file or directory
+
+9. a Shiny session receives an independent publisher and releases its lease ('test-shiny-process.R:25:16') - cannot open file '/tmp/RtmpA4C89F/file5887c0ca9ae/ready.json': No such file or directory
+
+10. a Shiny session receives an independent publisher and releases its lease ('test-shiny-process.R:25:16') - cannot open file '/tmp/RtmpA4C89F/file5887c0ca9ae/ready.json': No such file or directory
+
+11. a Shiny session receives an independent publisher and releases its lease ('test-shiny-process.R:25:16') - cannot open file '/tmp/RtmpA4C89F/file5887c0ca9ae/ready.json': No such file or directory
+
+12. a Shiny session receives an independent publisher and releases its lease ('test-shiny-process.R:25:16') - cannot open file '/tmp/RtmpA4C89F/file5887c0ca9ae/ready.json': No such file or directory
+
+13. a Shiny session receives an independent publisher and releases its lease ('test-shiny-process.R:25:16') - cannot open file '/tmp/RtmpA4C89F/file5887c0ca9ae/ready.json': No such file or directory
+
+14. a Shiny session receives an independent publisher and releases its lease ('test-shiny-process.R:25:16') - cannot open file '/tmp/RtmpA4C89F/file5887c0ca9ae/ready.json': No such file or directory
+
+15. a Shiny session receives an independent publisher and releases its lease ('test-shiny-process.R:25:16') - cannot open file '/tmp/RtmpA4C89F/file5887c0ca9ae/ready.json': No such file or directory
+
+16. a Shiny session receives an independent publisher and releases its lease ('test-shiny-process.R:25:16') - cannot open file '/tmp/RtmpA4C89F/file5887c0ca9ae/ready.json': No such file or directory
+
+17. a Shiny session receives an independent publisher and releases its lease ('test-shiny-process.R:25:16') - cannot open file '/tmp/RtmpA4C89F/file5887c0ca9ae/ready.json': No such file or directory
+
+18. a Shiny session receives an independent publisher and releases its lease ('test-shiny-process.R:25:16') - cannot open file '/tmp/RtmpA4C89F/file5887c0ca9ae/ready.json': No such file or directory
+
+19. a Shiny session receives an independent publisher and releases its lease ('test-shiny-process.R:25:16') - cannot open file '/tmp/RtmpA4C89F/file5887c0ca9ae/ready.json': No such file or directory
+
+20. a Shiny session receives an independent publisher and releases its lease ('test-shiny-process.R:25:16') - cannot open file '/tmp/RtmpA4C89F/file5887c0ca9ae/ready.json': No such file or directory
+
+21. a Shiny session receives an independent publisher and releases its lease ('test-shiny-process.R:25:16') - cannot open file '/tmp/RtmpA4C89F/file5887c0ca9ae/ready.json': No such file or directory
+
+22. a Shiny session receives an independent publisher and releases its lease ('test-shiny-process.R:25:16') - cannot open file '/tmp/RtmpA4C89F/file5887c0ca9ae/ready.json': No such file or directory
+
+23. a Shiny session receives an independent publisher and releases its lease ('test-shiny-process.R:25:16') - cannot open file '/tmp/RtmpA4C89F/file5887c0ca9ae/ready.json': No such file or directory
+
+24. a Shiny session receives an independent publisher and releases its lease ('test-shiny-process.R:25:16') - cannot open file '/tmp/RtmpA4C89F/file5887c0ca9ae/ready.json': No such file or directory
+
+25. a Shiny session receives an independent publisher and releases its lease ('test-shiny-process.R:25:16') - cannot open file '/tmp/RtmpA4C89F/file5887c0ca9ae/ready.json': No such file or directory
+
+26. a Shiny session receives an independent publisher and releases its lease ('test-shiny-process.R:25:16') - cannot open file '/tmp/RtmpA4C89F/file5887c0ca9ae/ready.json': No such file or directory
+
+27. a Shiny session receives an independent publisher and releases its lease ('test-shiny-process.R:25:16') - cannot open file '/tmp/RtmpA4C89F/file5887c0ca9ae/ready.json': No such file or directory
+
+28. a Shiny session receives an independent publisher and releases its lease ('test-shiny-process.R:25:16') - cannot open file '/tmp/RtmpA4C89F/file5887c0ca9ae/ready.json': No such file or directory
+
+29. a Shiny session receives an independent publisher and releases its lease ('test-shiny-process.R:25:16') - cannot open file '/tmp/RtmpA4C89F/file5887c0ca9ae/ready.json': No such file or directory
+
+30. a Shiny session receives an independent publisher and releases its lease ('test-shiny-process.R:25:16') - cannot open file '/tmp/RtmpA4C89F/file5887c0ca9ae/ready.json': No such file or directory
+
+31. a Shiny session receives an independent publisher and releases its lease ('test-shiny-process.R:25:16') - cannot open file '/tmp/RtmpA4C89F/file5887c0ca9ae/ready.json': No such file or directory
+
+══ DONE ════════════════════════════════════════════════════════════════════════
+TOTAL 39 expectations; 0 failures; 0 errors; 0 skips; 31 warnings

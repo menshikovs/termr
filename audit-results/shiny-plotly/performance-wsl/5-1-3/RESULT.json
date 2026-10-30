@@ -1,0 +1,49 @@
+{
+  "sessions": 5,
+  "rate": 1,
+  "duration": 3,
+  "elapsed": 3.343,
+  "cpu_seconds": 0.143,
+  "cpu_percent_one_core": 4.2776,
+  "transport_ms": [36.9669, 69.8381, 74.0056],
+  "reactive_ms": [7.5287, 9.6053, 10.3619],
+  "publisher_to_reactive_ms": [44.3308, 84.4402, 85.3388],
+  "diagnostic": {
+    "sessions": 5,
+    "observers": 1,
+    "polls": 67,
+    "processed": 4,
+    "coalesced": 0,
+    "duplicates": 0,
+    "out_of_order": 0,
+    "poll_errors": 0,
+    "history": 4
+  },
+  "source_status": {
+    "state": "live",
+    "source_id": "p873-1793303867523889-file36974b4a3c5",
+    "sequence": 4,
+    "gaps": 0,
+    "invalid": 0,
+    "resyncs": 2,
+    "last_error": null,
+    "needs_sync": false,
+    "pending": 1
+  },
+  "delivered": [4, 4, 4, 4, 4],
+  "rss_mib": [214.2422, 214.2422, 214.2422, 214.2422, 214.2422, 214.2422, 214.2422],
+  "rss_at": [0.014, 0.53, 1.055, 1.57, 2.1, 2.615, 3.137],
+  "publisher": {
+    "events": 3,
+    "elapsed": 3.002,
+    "status": {
+      "closed": false,
+      "sequence": 4,
+      "sent": 4,
+      "snapshots": 2,
+      "errors": 0,
+      "last_error": null,
+      "pending": 1
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "platform": "Linux",
+  "R": "R version 4.5.2 (2025-10-31)",
+  "nanonext": "1.10.3",
+  "endpoints": {
+    "endpoint": "tcp://127.0.0.1:42287",
+    "snapshot_endpoint": "tcp://127.0.0.1:41499",
+    "source": "p38514-1793292921149614-file967279c60b83",
+    "R": "R version 4.5.2 (2025-10-31)",
+    "nanonext": "1.10.3"
+  },
+  "subscribers": 1,
+  "events": 100,
+  "elapsed": 0.791,
+  "observed_events_per_second": 126.4223,
+  "reports": [
+    {
+      "latest": {
+        "n": 100,
+        "sent_at": 1793292924.2719
+      },
+      "status": {
+        "state": "live",
+        "source_id": "p38514-1793292921149614-file967279c60b83",
+        "sequence": 101,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 14,
+        "last_error": null,
+        "needs_sync": false,
+        "pending": 1
+      },
+      "delivered": 101,
+      "latency_ms": {
+        "50%": 2.1414,
+        "95%": 4.6885,
+        "99%": 12.4213
+      },
+      "rss_bytes": 146669568,
+      "history": 16
+    }
+  ],
+  "publisher": {
+    "n": 100,
+    "emit_seconds": 0.138,
+    "status": {
+      "closed": false,
+      "sequence": 101,
+      "sent": 101,
+      "snapshots": 14,
+      "errors": 0,
+      "last_error": null,
+      "pending": 1
+    }
+  }
+}

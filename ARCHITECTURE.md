@@ -247,6 +247,17 @@ and app shutdown cancel owned workers.
 tick and turns them into `worker.*` events and callbacks. Animations share one 30 fps timer and use
 the app clock, so headless tests are deterministic.
 
+## Optional mirai runtime
+
+The optional UI-independent mirai runtime lives in `tasks_mirai.R` and
+`mirai_progress.R`. A pool owns an isolated compute profile and delegates
+scheduling to mirai's dispatcher. Admission count and serialized input sizes
+are bounded; terminal result handles remain caller-owned. Metadata events use
+the existing stream ring, while a bounded nonblocking loopback push/pull channel
+carries explicit worker progress. Native mirai promises integrate with Shiny
+ExtendedTask. App/widget processx workers and their event loop are unchanged;
+examples own a poll timer/receiver and close their pool explicitly.
+
 ## Terminal drivers
 
 * **Windows**: a PowerShell helper reads console input records (keys and

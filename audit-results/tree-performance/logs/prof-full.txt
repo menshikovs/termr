@@ -1,0 +1,68 @@
+sampling 1.02 s
+                                 total.time total.pct self.time self.pct
+"App$new"                             1.020    100.00     0.005     0.49
+"app"                                 1.020    100.00     0.000     0.00
+"initialize"                          1.010     99.02     0.005     0.49
+"private$add_items"                   1.010     99.02     0.000     0.00
+"lapply"                              0.975     95.59     0.150    14.71
+"vertical"                            0.915     89.71     0.000     0.00
+"Vertical$new"                        0.915     89.71     0.000     0.00
+"FUN"                                 0.910     89.22     0.050     4.90
+"Horizontal$new"                      0.870     85.29     0.015     1.47
+"horizontal"                          0.870     85.29     0.000     0.00
+"as_style"                            0.375     36.76     0.000     0.00
+"self$default_style"                  0.360     35.29     0.005     0.49
+"style"                               0.345     33.82     0.010     0.98
+"parse_style_props"                   0.315     30.88     0.005     0.49
+"super$initialize"                    0.310     30.39     0.015     1.47
+"style_property_parsers[[name]]"      0.270     26.47     0.000     0.00
+"Input$new"                           0.235     23.04     0.015     1.47
+"input"                               0.235     23.04     0.000     0.00
+"tolower"                             0.225     22.06     0.005     0.49
+"Button$new"                          0.220     21.57     0.005     0.49
+"parse_size"                          0.220     21.57     0.005     0.49
+"button"                              0.220     21.57     0.000     0.00
+"trimws"                              0.205     20.10     0.005     0.49
+"mysub"                               0.180     17.65     0.005     0.49
+"sub"                                 0.175     17.16     0.175    17.16
+"Label$new"                           0.160     15.69     0.015     1.47
+"label"                               0.160     15.69     0.000     0.00
+"create_super_env"                    0.135     13.24     0.010     0.98
+"merge_styles"                        0.135     13.24     0.000     0.00
+"is.factor"                           0.115     11.27     0.000     0.00
+"check_unique_ids_batch"              0.110     10.78     0.000     0.00
+"assign_func_envs"                    0.100      9.80     0.005     0.49
+"<Anonymous>"                         0.095      9.31     0.010     0.98
+"unlist"                              0.095      9.31     0.000     0.00
+"merge_vectors"                       0.085      8.33     0.035     3.43
+"self$mount"                          0.075      7.35     0.005     0.49
+"vapply"                              0.060      5.88     0.040     3.92
+"lockBinding"                         0.045      4.41     0.045     4.41
+"recursive_merge"                     0.045      4.41     0.005     0.49
+"new_style"                           0.035      3.43     0.010     0.98
+--- self ---
+                    self.time self.pct total.time total.pct
+"sub"                   0.175    17.16      0.175     17.16
+"lapply"                0.150    14.71      0.975     95.59
+"FUN"                   0.050     4.90      0.910     89.22
+"lockBinding"           0.045     4.41      0.045      4.41
+"vapply"                0.040     3.92      0.060      5.88
+"merge_vectors"         0.035     3.43      0.085      8.33
+"$"                     0.030     2.94      0.030      2.94
+"gsub"                  0.025     2.45      0.030      2.94
+"list2env"              0.025     2.45      0.025      2.45
+"duplicated"            0.020     1.96      0.025      2.45
+"c"                     0.020     1.96      0.020      1.96
+"Horizontal$new"        0.015     1.47      0.870     85.29
+"super$initialize"      0.015     1.47      0.310     30.39
+"Input$new"             0.015     1.47      0.235     23.04
+"Label$new"             0.015     1.47      0.160     15.69
+"structure"             0.015     1.47      0.025      2.45
+"makeActiveBinding"     0.015     1.47      0.020      1.96
+"grepl"                 0.015     1.47      0.015      1.47
+"style"                 0.010     0.98      0.345     33.82
+"create_super_env"      0.010     0.98      0.135     13.24
+gc/memory:
+          used  (Mb) gc trigger  (Mb) max used  (Mb)
+Ncells 2137902 114.2    4313038 230.4  2608667 139.4
+Vcells 3282452  25.1    8388608  64.0  3720805  28.4

@@ -4,7 +4,7 @@ Generated from the checked-in `NAMESPACE`, top-level definitions in `R/`, and cu
 
 ## Scope and counting
 
-- Explicit `export()` symbols: **155**.
+- Explicit `export()` symbols: **165**.
 - Registered S3 methods: **29** (listed separately; they are registrations, not `export(name)` directives).
 - Exported symbols without a matching Rd alias: **0**.
 - Exports without an Rd usage section: **0**.
@@ -17,6 +17,16 @@ Generated from the checked-in `NAMESPACE`, top-level definitions in `R/`, and cu
 
 | Name | Type | Implementation | Rd | Usage | Example | Direct references |
 |---|---|---|---|---|---|---|
+| `termr_mirai_pool` | function (experimental) | [tasks_mirai.R](../R/tasks_mirai.R) | [yes](../man/termr_mirai_pool.Rd) | yes | yes | docs, examples, tests |
+| `termr_mirai_submit` | function (experimental) | [tasks_mirai.R](../R/tasks_mirai.R) | [yes](../man/termr_mirai_submit.Rd) | yes | yes | docs, examples, tests |
+| `termr_stream_data` | function (experimental) | [stream_data.R](../R/stream_data.R) | [yes](../man/termr_stream_data.Rd) | yes | yes | docs, examples, tests |
+| `termr_shiny_receiver` | function (experimental) | [shiny_streams.R](../R/shiny_streams.R) | [yes](../man/termr_shiny_receiver.Rd) | yes | yes | docs, examples, tests |
+| `termr_shiny_reactive` | function (experimental) | [shiny_streams.R](../R/shiny_streams.R) | [yes](../man/shiny_streams.Rd) | yes | yes | docs, examples, tests |
+| `termr_shiny_history` | function (experimental) | [shiny_streams.R](../R/shiny_streams.R) | [yes](../man/shiny_streams.Rd) | yes | yes | docs, examples, tests |
+| `termr_shiny_status` | function (experimental) | [shiny_streams.R](../R/shiny_streams.R) | [yes](../man/shiny_streams.Rd) | yes | yes | docs, examples, tests |
+| `termr_stream` | function (experimental) | [streams.R](../R/streams.R) | [yes](../man/termr_stream.Rd) | yes | yes | docs, examples, tests |
+| `termr_nano_publish` | function (experimental) | [transport_nanonext.R](../R/transport_nanonext.R) | [yes](../man/nanonext_transport.Rd) | yes | yes | docs, examples, tests |
+| `termr_nano_connect` | function (experimental) | [transport_nanonext.R](../R/transport_nanonext.R) | [yes](../man/nanonext_transport.Rd) | yes | yes | docs, examples, tests |
 | `Animation` | R6 class | [animation.R](../R/animation.R#L45) | [yes](../man/Animation.Rd) | yes | no | ? |
 | `App` | R6 class | [app.R](../R/app.R#L23) | [yes](../man/App-class.Rd) | yes | no | tests |
 | `BlurEvent` | R6 class | [events.R](../R/events.R#L187) | [yes](../man/Event.Rd) | yes | no | ? |

@@ -1,0 +1,4 @@
+PASS 50 independent subscribers; 200 events; 2.537 seconds
+Median client p50/p95 ms: 4.842341 7.214963 
+RSS range MiB: 74.55078 74.83594 
+Logs: /mnt/c/programming_pj/r_textualize/audit-results/nanonext/fanout-Linux-50-39698 

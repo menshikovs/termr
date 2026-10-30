@@ -1,0 +1,49 @@
+{
+  "sessions": 20,
+  "rate": 100,
+  "duration": 3,
+  "elapsed": 3.33,
+  "cpu_seconds": 1.27,
+  "cpu_percent_one_core": 38.1381,
+  "transport_ms": [48.7309, 93.811, 104.769],
+  "reactive_ms": [24.9909, 38.5449, 42.1474],
+  "publisher_to_reactive_ms": [30.6795, 67.0252, 140.2788],
+  "diagnostic": {
+    "sessions": 20,
+    "observers": 1,
+    "polls": 38,
+    "processed": 301,
+    "coalesced": 269,
+    "duplicates": 0,
+    "out_of_order": 0,
+    "poll_errors": 0,
+    "history": 64
+  },
+  "source_status": {
+    "state": "live",
+    "source_id": "p33992-1793304053869824-file84c836034f0e",
+    "sequence": 301,
+    "gaps": 0,
+    "invalid": 0,
+    "resyncs": 2,
+    "last_error": null,
+    "needs_sync": false,
+    "pending": 1
+  },
+  "delivered": [32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32],
+  "rss_mib": [245.3711, 245.9297, 245.0859, 245.8672, 246.1641, 248.2148, 246.3984],
+  "rss_at": [0.03, 0.6, 1.11, 1.61, 2.19, 2.69, 3.21],
+  "publisher": {
+    "events": 300,
+    "elapsed": 3.01,
+    "status": {
+      "closed": false,
+      "sequence": 301,
+      "sent": 301,
+      "snapshots": 2,
+      "errors": 0,
+      "last_error": null,
+      "pending": 1
+    }
+  }
+}

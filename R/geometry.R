@@ -71,12 +71,17 @@ rect_shrink <- function(r, edges) {
 }
 
 # Normalise CSS-like shorthand (1, 2 or 4 values) to c(top, right, bottom, left).
+# Cell counts above this are meaningless in a terminal. Clamping keeps sums of
+# many sizes far below the integer limit, so layout arithmetic cannot overflow.
+max_cells <- 1000000L
+clamp_cells <- function(x) as.integer(pmin(x, max_cells))
+
 as_edges <- function(x, arg = "edges") {
   if (is.null(x)) return(c(0L, 0L, 0L, 0L))
   if (!is.numeric(x) || anyNA(x) || any(x < 0)) {
     stop(sprintf("`%s` must contain non-negative numbers.", arg), call. = FALSE)
   }
-  x <- as.integer(x)
+  x <- clamp_cells(x)
   switch(
     as.character(length(x)),
     "1" = rep(x, 4L),

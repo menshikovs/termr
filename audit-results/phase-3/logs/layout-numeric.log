@@ -1,0 +1,76 @@
+style(width = NA )+render                            ERROR: Invalid `width`: use a number of cells, "auto", "<n>fr" or "<n>%". 
+style(width = NA_integer_ )+render                   ERROR: Invalid `width`: use a number of cells, "auto", "<n>fr" or "<n>%". 
+style(width = NA_real_ )+render                      ERROR: Invalid `width`: use a number of cells, "auto", "<n>fr" or "<n>%". 
+style(width = NaN )+render                           ERROR: Invalid `width`: use a number of cells, "auto", "<n>fr" or "<n>%". 
+style(width = Inf )+render                           ERROR: missing value where TRUE/FALSE needed 
+style(width = -Inf )+render                          ERROR: Invalid `width`: use a number of cells, "auto", "<n>fr" or "<n>%". 
+style(width = -1 )+render                            ERROR: Invalid `width`: use a number of cells, "auto", "<n>fr" or "<n>%". 
+style(width = 0 )+render                             ok 
+style(width = 1.5 )+render                           ok 
+style(width = 2147483647L )+render                   ok 
+style(width = 2147483646L )+render                   ok 
+style(width = 2147483648 )+render                    ERROR: missing value where TRUE/FALSE needed 
+style(width = 1e+10 )+render                         ERROR: missing value where TRUE/FALSE needed 
+style(width = "NA" )+render                          ERROR: Invalid `width`: use a number of cells, "auto", "<n>fr" or "<n>%". 
+style(width = "Infpx" )+render                       ERROR: Invalid `width`: use a number of cells, "auto", "<n>fr" or "<n>%". 
+style(width = "1fr" )+render                         ok 
+style(width = "-1fr" )+render                        ERROR: Invalid `width`: use a number of cells, "auto", "<n>fr" or "<n>%". 
+style(width = "0fr" )+render                         ok 
+style(width = "1e9fr" )+render                       ERROR: Invalid `width`: use a number of cells, "auto", "<n>fr" or "<n>%". 
+style(width = "150%" )+render                        ok 
+style(width = "-5%" )+render                         ERROR: Invalid `width`: use a number of cells, "auto", "<n>fr" or "<n>%". 
+style(width = "NaN%" )+render                        ERROR: Invalid `width`: use a number of cells, "auto", "<n>fr" or "<n>%". 
+style(height = NA )+render                           ERROR: Invalid `height`: use a number of cells, "auto", "<n>fr" or "<n>%". 
+style(height = Inf )+render                          ok 
+style(height = 2147483647L )+render                  ERROR: missing value where TRUE/FALSE needed 
+style(height = 1e+10 )+render                        ok 
+style(height = -1 )+render                           ERROR: Invalid `height`: use a number of cells, "auto", "<n>fr" or "<n>%". 
+style(height = 1.5 )+render                          ok 
+style(padding = NA)                                  ERROR: `padding` must contain non-negative numbers. 
+style(padding = Inf)                                 ok 
+style(padding = 2147483647L)                         ok 
+style(padding = -1)                                  ERROR: `padding` must contain non-negative numbers. 
+style(padding = 1e+10)                               ok 
+style(margin = NA)                                   ERROR: `margin` must contain non-negative numbers. 
+style(margin = Inf)                                  ERROR: missing value where TRUE/FALSE needed 
+style(margin = 2147483647L)                          ERROR: missing value where TRUE/FALSE needed 
+style(margin = -1)                                   ERROR: `margin` must contain non-negative numbers. 
+style(margin = 1e+10)                                ERROR: missing value where TRUE/FALSE needed 
+style(gap = NA)                                      ERROR: unused argument (gap = NA) 
+style(gap = Inf)                                     ERROR: unused argument (gap = Inf) 
+style(gap = 2147483647L)                             ERROR: unused argument (gap = 2147483647) 
+style(gap = -1)                                      ERROR: unused argument (gap = -1) 
+style(gap = 1e+10)                                   ERROR: unused argument (gap = 1e+10) 
+style(min_width = NA)                                ERROR: `min_width` must be a non-negative number. 
+style(min_width = Inf)                               ERROR: missing value where TRUE/FALSE needed 
+style(min_width = 2147483647L)                       ok 
+style(min_width = -1)                                ERROR: `min_width` must be a non-negative number. 
+style(min_width = 1e+10)                             ERROR: missing value where TRUE/FALSE needed 
+style(max_width = NA)                                ERROR: `max_width` must be a non-negative number. 
+style(max_width = Inf)                               ERROR: missing value where TRUE/FALSE needed 
+style(max_width = 2147483647L)                       ok 
+style(max_width = -1)                                ERROR: `max_width` must be a non-negative number. 
+style(max_width = 1e+10)                             ERROR: missing value where TRUE/FALSE needed 
+style(min_height = NA)                               ERROR: `min_height` must be a non-negative number. 
+style(min_height = Inf)                              ERROR: missing value where TRUE/FALSE needed 
+style(min_height = 2147483647L)                      ERROR: missing value where TRUE/FALSE needed 
+style(min_height = -1)                               ERROR: `min_height` must be a non-negative number. 
+style(min_height = 1e+10)                            ERROR: missing value where TRUE/FALSE needed 
+style(max_height = NA)                               ERROR: `max_height` must be a non-negative number. 
+style(max_height = Inf)                              ERROR: missing value where TRUE/FALSE needed 
+style(max_height = 2147483647L)                      ok 
+style(max_height = -1)                               ERROR: `max_height` must be a non-negative number. 
+style(max_height = 1e+10)                            ERROR: missing value where TRUE/FALSE needed 
+grid columns = NA                                    ERROR: `grid_columns` must be a number of tracks or a vector of sizes. 
+grid columns = Inf                                   ERROR: invalid 'times' argument 
+grid columns = 2147483647L                           ERROR: reached elapsed time limit 
+grid columns = 0                                     ok 
+grid columns = 1.5                                   ok 
+fixed width imax at 10 cols: no overflow             ERROR: missing value where TRUE/FALSE needed 
+deep nest 300 levels                                 ok 
+wide char label width 1 box                          ok 
+test_app size c(0, 5)                                ok 
+test_app size c(5, 0)                                ok 
+test_app size c(NA, 5)                               ERROR: `width` and `height` must be non-negative numbers. 
+test_app size c(-1, 3)                               ERROR: `width` and `height` must be non-negative numbers. 
+test_app size c(2147483647, 2)                       

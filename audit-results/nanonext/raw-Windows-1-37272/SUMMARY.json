@@ -1,0 +1,33 @@
+{
+  "platform": "Windows",
+  "R": "R version 4.6.1 (2026-06-24 ucrt)",
+  "nanonext": "1.10.3",
+  "endpoints": {
+    "endpoint": "tcp://127.0.0.1:55453",
+    "snapshot_endpoint": "unused",
+    "source": "raw"
+  },
+  "subscribers": 1,
+  "events": 20000,
+  "elapsed": 1.26,
+  "observed_events_per_second": 15873.0159,
+  "delivered_per_second": 10511.9048,
+  "raw_mode": true,
+  "offered_interval": 0,
+  "reports": [
+    {
+      "latest": {
+        "n": 20000
+      },
+      "delivered": 13245,
+      "status": {
+        "pending": 1
+      },
+      "rss_bytes": 83591168,
+      "history": 0
+    }
+  ],
+  "publisher": {
+    "n": 20000
+  }
+}

@@ -1,0 +1,31 @@
+R version 4.5.2 (2025-10-31) 
+ Linux 
+# A tibble: 8 × 5
+  expression      median `itr/sec` mem_alloc `gc/sec`
+  <bch:expr>    <bch:tm>     <dbl> <bch:byt>    <dbl>
+1 create          6.22µs   148345.      840B      0  
+2 emit_0          3.77µs   219650.        0B      0  
+3 latest        455.07ns   998812.        0B      0  
+4 history_1000    1.97ms      463.    19.7KB     22.2
+5 callback_only 156.93ns  1336607.        0B      0  
+6 emit_1         10.25µs    70612.        0B     70.6
+7 emit_10        64.18µs    13098.        0B     39.3
+8 emit_100      629.67µs     1383.        0B     36.0
+# A tibble: 1 × 5
+  expression    median `itr/sec` mem_alloc `gc/sec`
+  <bch:expr>  <bch:tm>     <dbl> <bch:byt>    <dbl>
+1 emit_100000    367ms      2.73     182KB     29.1
+Retained slot bytes after 1k / 101k: 7728 7728 slots: 64 
+               total.time total.pct mem.total self.time self.pct
+"bulk"               5.09    100.00    2860.7      0.60    11.79
+"x$emit"             4.26     83.69    2374.2      2.47    48.53
+"assign"             1.52     29.86     916.8      0.95    18.66
+"as.character"       0.57     11.20     350.9      0.57    11.20
+"$"                  0.19      3.73     120.8      0.19     3.73
+"min"                0.16      3.14      65.5      0.16     3.14
+"assert_open"        0.11      2.16      74.1      0.11     2.16
+"FUN"                0.04      0.79      27.0      0.02     0.39
+"...elt"             0.04      0.79      27.0      0.00     0.00
+"lapply"             0.04      0.79      27.0      0.00     0.00
+"stopifnot"          0.04      0.79      27.0      0.00     0.00
+"x$history"          0.04      0.79      27.0      0.00     0.00

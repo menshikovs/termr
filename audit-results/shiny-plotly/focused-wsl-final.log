@@ -1,0 +1,23 @@
+R version 4.5.2 (2025-10-31) 
+shiny 1.14.0 
+plotly 4.12.1 
+ggplot2 4.0.2 
+htmlwidgets 1.6.4 
+jsonlite 2.0.0 
+nanonext 1.10.3 
+roxygen2 7.3.3 
+bench 1.1.4 
+plotly-live: ................................Loading required package: shiny
+
+Attaching package: 'shiny'
+
+The following objects are masked from 'package:termr':
+
+    column, reactive, span
+
+....
+shiny-streams: .............................................
+stream-data: .......................
+
+══ DONE ════════════════════════════════════════════════════════════════════════
+TOTAL 104 expectations; 0 failures; 0 errors; 0 skips; 0 warnings

@@ -1,0 +1,68 @@
+$direction
+[1] "windows-to-wsl"
+
+$client_R
+[1] "R version 4.5.2 (2025-10-31)"
+
+$nanonext
+[1] "1.10.3"
+
+$endpoint
+[1] "tcp://127.0.0.1:59482"
+
+$snapshot_endpoint
+[1] "tcp://127.0.0.1:59483"
+
+$publisher
+$publisher$endpoint
+[1] "tcp://127.0.0.1:59482"
+
+$publisher$snapshot_endpoint
+[1] "tcp://127.0.0.1:59483"
+
+$publisher$source
+[1] "p39316-1793293727176997-file9994340c70fc"
+
+$publisher$R
+[1] "R version 4.6.1 (2026-06-24 ucrt)"
+
+$publisher$nanonext
+[1] "1.10.3"
+
+
+$connected
+[1] FALSE
+
+$latest
+NULL
+
+$status
+$status$state
+[1] "connecting"
+
+$status$source_id
+NULL
+
+$status$sequence
+[1] 0
+
+$status$gaps
+[1] 0
+
+$status$invalid
+[1] 0
+
+$status$resyncs
+[1] 0
+
+$status$last_error
+NULL
+
+$status$needs_sync
+[1] TRUE
+
+$status$pending
+[1] 1
+
+
+[1] TRUE

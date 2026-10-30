@@ -48,3 +48,7 @@ the widget is removed. For other widgets use `widget$bind_reactive("field", fn)`
 `button(on_press = )` takes a callback.
 
 Signals hold their subscribers: `dispose()` watchers you no longer need.
+
+For a sequence that delivers every observation, including repeated values,
+use [Data streams](data-streams.md). A stream subscription can explicitly
+update a signal; it does not create a second dependency graph.

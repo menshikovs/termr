@@ -1,0 +1,33 @@
+{
+  "platform": "Linux",
+  "R": "R version 4.5.2 (2025-10-31)",
+  "nanonext": "1.10.3",
+  "endpoints": {
+    "endpoint": "tcp://127.0.0.1:42577",
+    "snapshot_endpoint": "unused",
+    "source": "raw"
+  },
+  "subscribers": 1,
+  "events": 20000,
+  "elapsed": 1.74,
+  "observed_events_per_second": 11494.2529,
+  "delivered_per_second": 2416.092,
+  "raw_mode": true,
+  "offered_interval": 0,
+  "reports": [
+    {
+      "latest": {
+        "n": 20000
+      },
+      "delivered": 4204,
+      "status": {
+        "pending": 1
+      },
+      "rss_bytes": 75100160,
+      "history": 0
+    }
+  ],
+  "publisher": {
+    "n": 20000
+  }
+}

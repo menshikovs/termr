@@ -406,7 +406,14 @@ Widget <- R6::R6Class(
         relayout <- !private$same_layout_in(before, after)
         bump_epoch(layout = relayout)
       }
-      if (!relayout && name %in% self$paint_states) self$invalidate_paint() else self$invalidate()
+      if (!relayout && name %in% self$paint_states) {
+        self$invalidate_paint()
+      } else if (!relayout && private$paint_only_change(name, old, value)) {
+        clear_size_caches(self)
+        self$invalidate_paint()
+      } else {
+        self$invalidate()
+      }
       private$state_changed(name, old, value)
       invisible(TRUE)
     },
@@ -748,6 +755,10 @@ Widget <- R6::R6Class(
 
     # Hook for subclasses: called after a state field changed.
     state_changed = function(name, old, new) invisible(),
+
+    # Hook for subclasses: can this change of a non-paint state field alter
+    # any geometry? TRUE only when it provably cannot (the layout is skipped).
+    paint_only_change = function(name, old, new) FALSE,
 
     # Hook for subclasses: short description for print().
     describe = function() ""

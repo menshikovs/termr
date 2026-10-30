@@ -73,3 +73,20 @@ test_that("VirtualTerminal tracks private modes and SGR", {
   vt$feed(ansi_cursor_visible(FALSE))
   expect_false(vt$cursor_visible)
 })
+
+test_that("incremental repaint does not split a wide character next to a changed widget", {
+  a <- app(vertical(horizontal(
+    label("你好世界你好世界", id = "wide"),
+    button("OK", id = "b"),
+    input("你好", id = "i")
+  )))
+  pilot <- test_app(a, 40, 6)
+  on.exit(pilot$stop(), add = TRUE)
+  for (id in c("#b", "#i", "#b")) {
+    w <- a$query_one(id)
+    w$visible <- !w$visible
+    pilot$step()
+    expect_identical(pilot$screen_text(), compose_frame(a$screen, 40L, 6L)$to_text())
+  }
+  expect_match(pilot$screen_text()[[1]], "^你好世界你好世界")
+})

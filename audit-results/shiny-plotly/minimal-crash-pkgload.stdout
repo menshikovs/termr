@@ -1,0 +1,2 @@
+BODY COMPLETED pkgload 
+LOADED compiler cli graphics utils grDevices stats datasets pkgload methods rlang base 

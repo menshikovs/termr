@@ -226,3 +226,64 @@ test_that("password values stay out of print, inspection, event logs and clipboa
   expect_false(any(grepl("hunter2", unlist(pilot$app$event_log()), fixed = TRUE)))
   expect_identical(pw$value, "hunter2")
 })
+
+test_that("a focused input renders when its cursor character is wider than the box", {
+  for (txt in c("你好", "a你", "\U0001F600")) {
+    for (cursor in 0:1) {
+      w <- input(txt)
+      pilot <- test_app(app(w), 10, 3)
+      w$focus()
+      w$cursor_position <- cursor
+      expect_no_error(w$render_lines(1L))
+      pilot$driver$feed(ResizeEvent$new(1L, 1L))
+      expect_no_error(pilot$step())
+      pilot$stop()
+    }
+  }
+})
+
+test_that("editing an input skips the layout pass only when no ancestor can observe its width", {
+  typed_layouts <- function(ui, size = c(40, 8)) {
+    a <- app(ui)
+    pilot <- test_app(a, size[[1]], size[[2]])
+    on.exit(pilot$stop(), add = TRUE)
+    a$query_one("#in")$focus()
+    before <- a$frame_stats[["layouts"]]
+    pilot$type("hello wide 你好")
+    pilot$press("backspace")
+    expect_identical(pilot$screen_text(), compose_frame(a$screen, size[[1]], size[[2]])$to_text())
+    a$frame_stats[["layouts"]] - before
+  }
+  # fr width all the way up: nothing observes the text width.
+  expect_identical(typed_layouts(vertical(horizontal(label("n"), input(id = "in")))), 0L)
+  expect_identical(typed_layouts(vertical(input(id = "in", style = style(width = 20)))), 0L)
+  # auto width on the input, or on any ancestor, or a non-plain parent: layout needed.
+  expect_gt(typed_layouts(vertical(input(id = "in", style = style(width = "auto")))), 0L)
+  expect_gt(typed_layouts(horizontal(vertical(input(id = "in"), style = style(width = "auto")), label("x"))), 0L)
+  expect_gt(typed_layouts(scroll_view(input(id = "in"), direction = "both")), 0L)
+  expect_gt(typed_layouts(grid_layout(input(id = "in"), label("x"), columns = c("auto", "1fr"))), 0L)
+})
+
+test_that("input edits keep incremental output identical to a full render across layouts", {
+  uis <- list(
+    function() vertical(horizontal(label("a"), input(id = "in"), button("b")), label("below")),
+    function() horizontal(vertical(input(id = "in"), style = style(width = "auto")), label("side")),
+    function() horizontal(input(id = "in", style = style(width = "auto")), input(), button("ok")),
+    function() panel(vertical(input(id = "in"), label("x"))),
+    function() grid_layout(input(id = "in"), label("x"), columns = c("auto", "1fr")),
+    function() vertical(split_pane(input(id = "in"), label("r")))
+  )
+  texts <- c("a", "你好", "\U0001F600", "é", strrep("w", 30))
+  for (make in uis) {
+    a <- app(make())
+    pilot <- test_app(a, 30, 8)
+    a$query_one("#in")$focus()
+    for (k in c(texts, "backspace", "backspace", "home", "x", "end", "ctrl+a")) {
+      if (nchar(k) > 1 && k %in% c("backspace", "home", "end", "ctrl+a")) pilot$press(k) else pilot$type(k)
+      expect_identical(pilot$screen_text(), compose_frame(a$screen, 30L, 8L)$to_text())
+    }
+    pilot$resize(12, 5)
+    expect_identical(pilot$screen_text(), compose_frame(a$screen, 12L, 5L)$to_text())
+    pilot$stop()
+  }
+})

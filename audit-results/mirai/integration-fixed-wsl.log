@@ -1,0 +1,19 @@
+R version 4.5.2 (2025-10-31) 
+mirai 2.7.3 
+nanonext 1.10.3 
+promises 1.5.0 
+shiny 1.14.0 
+later 1.4.6 
+mirai-integration: .....Loading required package: shiny
+
+Attaching package: 'shiny'
+
+The following objects are masked from 'package:termr':
+
+    column, reactive, span
+
+..............
+mirai: ............................................................................
+
+══ DONE ════════════════════════════════════════════════════════════════════════
+TOTAL 95 expectations; 0 failures; 0 errors; 0 skips; 0 warnings

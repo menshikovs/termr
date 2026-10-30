@@ -5,9 +5,9 @@
 \alias{horizontal}
 \title{Layout containers}
 \usage{
-vertical(..., id = NULL, classes = NULL, style = NULL)
+vertical(..., id = NULL, classes = NULL, style = NULL, visible = TRUE)
 
-horizontal(..., id = NULL, classes = NULL, style = NULL)
+horizontal(..., id = NULL, classes = NULL, style = NULL, visible = TRUE)
 }
 \arguments{
 \item{...}{Child widgets.}
@@ -17,6 +17,8 @@ horizontal(..., id = NULL, classes = NULL, style = NULL)
 \item{classes}{Optional classes (for \code{.class} selectors).}
 
 \item{style}{A \code{\link[=style]{style()}}.}
+
+\item{visible}{Is the container shown initially?}
 }
 \value{
 A \code{Vertical} or \code{Horizontal} widget.

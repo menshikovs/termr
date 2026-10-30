@@ -131,3 +131,24 @@ test_that("scroll changes send a message", {
   pilot$press("down")
   expect_identical(got, list(x = 0L, y = 1L))
 })
+
+test_that("incremental repaint follows scroll bar changes caused by child content", {
+  long <- paste(rep("some text", 12), collapse = "\n")
+  a <- app(vertical(scroll_view(label(long, id = "content"), id = "scroll")))
+  pilot <- test_app(a, 20, 6)
+  on.exit(pilot$stop(), add = TRUE)
+  expect_true(any(grepl("█", pilot$screen_text(), fixed = TRUE)))
+
+  # Content shrinks: the narrow label's dirty rectangle does not reach the
+  # scroll bar column, so the view itself must be repainted.
+  a$query_one("#content")$update("x")
+  pilot$step()
+  expect_identical(pilot$screen_text(), compose_frame(a$screen, 20L, 6L)$to_text())
+  expect_false(any(grepl("[█│]", pilot$screen_text())))
+
+  # Content grows again: the bar must appear without a full repaint.
+  a$query_one("#content")$update(long)
+  pilot$step()
+  expect_identical(pilot$screen_text(), compose_frame(a$screen, 20L, 6L)$to_text())
+  expect_true(any(grepl("█", pilot$screen_text(), fixed = TRUE)))
+})

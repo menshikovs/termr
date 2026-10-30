@@ -1,0 +1,5 @@
+render       hung_until_ctrlc=False status=3 modes_restored=True log=started|run error:  render boom | err=b''
+layout       hung_until_ctrlc=False status=3 modes_restored=True log=started|run error:  layout boom | err=b''
+timer        hung_until_ctrlc=False status=3 modes_restored=True log=started|run error:  timer boom | err=b''
+worker       hung_until_ctrlc=True status=0 modes_restored=True log=started|worker error seen|returned| err=b''
+stopfail     hung_until_ctrlc=False status=0 modes_restored=True log=started|returned| err=b''

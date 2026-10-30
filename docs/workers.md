@@ -97,3 +97,8 @@ Ctrl+X cancels, Ctrl+R restarts, `process.finished` is sent at the end.
 `inline = TRUE` runs a function in the current process (deterministic);
 `pilot$run_worker(fn)`, `pilot$wait_for_workers()` and `pilot$wait_for()` handle
 real processes. There is no worker pool: start as many workers as you need.
+
+This describes the existing processx backend. The separate optional
+[mirai task API](mirai.md) provides bounded reusable daemons, explicit ownership,
+native result/progress channels and event-driven promises. It does not change
+`run_worker()` fields, callbacks, output streaming or app/widget cleanup.

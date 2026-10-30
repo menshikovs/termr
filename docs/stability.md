@@ -44,8 +44,19 @@ NEWS and in [migration notes](migration-to-1.0.md).
   `sql_highlighter()`).
 - Reactive graph functions: `signal()`, `computed()`, `watch()`, `batch()`,
   `peek()`, `untracked()`, `dispose()`, and `update_signal()`.
+- Local data streams: `termr_stream()` and its subscription/history lifecycle
+  (see [Data streams](data-streams.md)).
+- Optional telemetry: `termr_nano_publish()` and `termr_nano_connect()`
+  (see [nanonext transport](nanonext.md)).
+- Optional Shiny integration: `termr_shiny_receiver()`,
+  `termr_shiny_reactive()`, `termr_shiny_history()` and `termr_shiny_status()`
+  (see [Shiny](shiny.md)); ordinary frame conversion through
+  `termr_stream_data()` (see [visualization](data-stream-visualization.md)).
 - Workers and subprocesses: `run_worker()`, `run_process()`, and worker
   lifecycle details.
+- Optional reusable tasks: `termr_mirai_pool()` and `termr_mirai_submit()`;
+  explicit pool/task ownership, native progress and promise integration
+  (see [mirai backend](mirai.md)).
 - Custom widget construction and low-level widget subclassing through
   `widget()`, `Widget`, `ScreenBuffer`, and `region()`.
 - Custom layout registration through `register_layout()` and

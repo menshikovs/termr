@@ -1,0 +1,129 @@
+R version 4.5.2 (2025-10-31) 
+mirai 2.7.3 
+nanonext 1.10.3 
+promises 1.5.0 
+shiny 1.14.0 
+later 1.4.6 
+$initialize
+function (func) 
+{
+    private$func <- func
+    with_no_otel_collect({
+        private$rv_status <- reactiveVal("initial", label = "ExtendedTask$private$status")
+        private$rv_value <- reactiveVal(NULL, label = "ExtendedTask$private$value")
+        private$rv_error <- reactiveVal(NULL, label = "ExtendedTask$private$error")
+    })
+    private$invocation_queue <- fastmap::fastqueue()
+    domain <- getDefaultReactiveDomain()
+    call_srcref <- get_call_srcref(-1)
+    label <- rassignSrcrefToLabel(call_srcref, defaultLabel = "<anonymous>")
+    private$otel_span_label <- otel_span_label_extended_task(label, 
+        domain = domain)
+    private$otel_log_label_add_to_queue <- otel_log_label_extended_task_add_to_queue(label, 
+        domain = domain)
+    private$otel_attrs <- c(otel_srcref_attributes(call_srcref, 
+        "ExtendedTask"), otel_session_id_attrs(domain)) %||% 
+        list()
+    private$is_recording_otel <- has_otel_collect("reactivity")
+}
+<bytecode: 0x65157a345700>
+<environment: namespace:shiny>
+
+$invoke
+function (...) 
+{
+    args <- rlang::dots_list(..., .ignore_empty = "none")
+    call <- rlang::caller_call(n = 0)
+    if (isolate(private$rv_status()) == "running" || private$invocation_queue$size() > 
+        0) {
+        otel_log(private$otel_log_add_to_queue_label, severity = "debug", 
+            attributes = c(private$otel_attrs, list(queue_size = private$invocation_queue$size() + 
+                1L)))
+        private$invocation_queue$add(list(args = args, call = call))
+    }
+    else {
+        if (private$is_recording_otel) {
+            private$otel_span <- start_otel_span(private$otel_span_label, 
+                attributes = private$otel_attrs)
+            otel::local_active_span(private$otel_span)
+        }
+        private$do_invoke(args, call = call)
+    }
+    invisible(NULL)
+}
+<bytecode: 0x65157a349490>
+<environment: namespace:shiny>
+
+$status
+function () 
+{
+    private$rv_status()
+}
+<bytecode: 0x65157a34afc0>
+<environment: namespace:shiny>
+
+$result
+function () 
+{
+    switch(private$rv_status(), running = req(FALSE, cancelOutput = "progress"), 
+        success = if (private$rv_value()$visible) {
+            private$rv_value()$value
+        } else {
+            invisible(private$rv_value()$value)
+        }, error = stop(private$rv_error()), req(FALSE))
+}
+<bytecode: 0x65157a34adc8>
+<environment: namespace:shiny>
+
+$do_invoke
+function (args, call = NULL) 
+{
+    private$rv_status("running")
+    private$rv_value(NULL)
+    private$rv_error(NULL)
+    p <- promise_resolve(maskReactiveContext(do.call(private$func, 
+        args)))
+    p <- promises::then(p, onFulfilled = function(value, .visible) {
+        if (is_otel_span(private$otel_span)) {
+            private$otel_span$end(status_code = "ok")
+            private$otel_span <- NULL
+        }
+        private$on_success(list(value = value, visible = .visible))
+    }, onRejected = function(error) {
+        if (is_otel_span(private$otel_span)) {
+            private$otel_span$end(status_code = "error")
+            private$otel_span <- NULL
+        }
+        private$on_error(error, call = call)
+    })
+    promises::finally(p, onFinally = function() {
+        if (private$invocation_queue$size() > 0) {
+            next_call <- private$invocation_queue$remove()
+            private$do_invoke(next_call$args, next_call$call)
+        }
+    })
+    invisible(NULL)
+}
+<bytecode: 0x65157a338b30>
+<environment: namespace:shiny>
+
+$on_error
+function (err, call = NULL) 
+{
+    cli::cli_warn("ERROR: An error occurred when invoking the ExtendedTask.", 
+        parent = err, call = call)
+    private$rv_status("error")
+    private$rv_error(err)
+}
+<bytecode: 0x65157a346228>
+<environment: namespace:shiny>
+
+$on_success
+function (value) 
+{
+    private$rv_status("success")
+    private$rv_value(value)
+}
+<bytecode: 0x65157a345b60>
+<environment: namespace:shiny>
+

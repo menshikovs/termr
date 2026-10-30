@@ -1,0 +1,47 @@
+R version 4.5.2 (2025-10-31) 
+shiny 1.10.0 
+plotly 4.12.1 
+ggplot2 4.0.2 
+htmlwidgets 1.6.4 
+jsonlite 2.0.0 
+nanonext 1.10.3 
+roxygen2 7.3.3 
+bench 1.1.4 
+also installing the dependency ‘promises’
+
+trying URL 'https://cloud.r-project.org/src/contrib/promises_1.5.0.tar.gz'
+trying URL 'https://cloud.r-project.org/src/contrib/shiny_1.14.0.tar.gz'
+* installing *source* package ‘promises’ ...
+** this is package ‘promises’ version ‘1.5.0’
+** package ‘promises’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+*** copying figures
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded from temporary location
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (promises)
+* installing *source* package ‘shiny’ ...
+** this is package ‘shiny’ version ‘1.14.0’
+** package ‘shiny’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+*** copying figures
+** building package indices
+** testing if installed package can be loaded from temporary location
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (shiny)
+
+The downloaded source packages are in
+	‘/tmp/RtmphIYK8s/downloaded_packages’

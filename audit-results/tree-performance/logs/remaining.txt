@@ -1,0 +1,15 @@
+# A tibble: 5 × 3
+  expression       median mem_alloc
+  <bch:expr>     <bch:tm> <bch:byt>
+1 r6_new_widget   209.1µs    3.66KB
+2 r6_new_label    295.9µs    7.23KB
+3 label_fn        306.2µs  789.25KB
+4 merge_default    54.1µs   81.69KB
+5 computed_style  554.5µs    7.23KB
+# A tibble: 1 × 2
+  expression        median
+  <bch:expr>      <bch:tm>
+1 new_env_300_fns   2.61ms
+methods in Widget public env: 54  active: 10  private: 9 
+Label chain: Label > Widget > R6 
+total R6 members instantiated for a Label: 80  Input: 127  Button: 85 

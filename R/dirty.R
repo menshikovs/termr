@@ -47,10 +47,23 @@ merge_rects <- function(rects) {
   rects
 }
 
+# A rectangle that starts or ends in the middle of a wide character of
+# `frame` would blank half of it, and the clipped repaint cannot restore the
+# glyph. Grow the rectangle to cover the whole character.
+keep_wide_chars_whole <- function(r, frame) {
+  rows <- seq.int(r$y, rect_bottom(r))
+  left <- r$x
+  right <- rect_right(r)
+  if (left > 1L && any(frame$chars[rows, left] == "")) left <- left - 1L
+  if (right < frame$width && any(frame$chars[rows, right + 1L] == "")) right <- right + 1L
+  rect(left, r$y, right - left + 1L, r$height)
+}
+
 # Dirty rectangles for widgets: their regions clipped to `bounds`, widened
 # by one column each side, merged. At most `max_rects` are kept (more
-# than that collapses into their bounding box).
-dirty_rects <- function(widgets, bounds, max_rects = 12L, extra = list()) {
+# than that collapses into their bounding box). With the previous `frame`,
+# rectangles are also grown so that they do not split wide characters.
+dirty_rects <- function(widgets, bounds, max_rects = 12L, extra = list(), frame = NULL) {
   rects <- list()
   for (r in extra) {
     r <- rect_intersect(rect(r$x - 1L, r$y, r$width + 2L, r$height), bounds)
@@ -62,6 +75,7 @@ dirty_rects <- function(widgets, bounds, max_rects = 12L, extra = list()) {
     r <- rect_intersect(rect(r$x - 1L, r$y, r$width + 2L, r$height), bounds)
     if (!rect_is_empty(r)) rects[[length(rects) + 1L]] <- r
   }
+  if (!is.null(frame)) rects <- lapply(rects, keep_wide_chars_whole, frame = frame)
   rects <- merge_rects(rects)
   if (length(rects) > max_rects) {
     box <- rects[[1]]

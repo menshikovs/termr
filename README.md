@@ -101,6 +101,16 @@ cancellation and process cleanup. Static rendering exports text, Markdown,
 HTML, SVG and JSON for scripts and optional knitr/Quarto output. These are
 screen snapshots; static rendering does not start an app event loop.
 
+Experimental [data streams](docs/data-streams.md) provide local subscriptions
+and bounded event history. The [live system monitor](inst/examples/system-monitor-live/README.md)
+shares real collector snapshots with independently running termr and Shiny clients.
+Optional [nanonext telemetry](docs/nanonext.md) adds live pub/sub with snapshot
+recovery, bounded polling and independent clients while retaining file mode.
+Optional [mirai task pools](docs/mirai.md) reuse bounded background R workers,
+stream progress metadata and expose native results/promises independently of
+the TUI. [Task-monitor examples](inst/examples/mirai-tasks/README.md) cover
+keyboard cancellation, Shiny ExtendedTask and an independent task producer.
+
 ## Installation
 
 termr requires R >= 4.1.
@@ -195,6 +205,13 @@ pre-1.0 cycle also remain experimental. The complete classification is in
 and [NEWS](NEWS.md) for changes.
 
 ## Documentation
+
+Use [Shiny stream adapters](docs/shiny.md) to share one telemetry receiver across
+sessions, [ordinary data frames and ggplot2](docs/data-stream-visualization.md)
+for history charts, and [incremental Plotly](docs/plotly.md) for live CPU/RAM
+traces. These integrations are experimental and their packages remain optional.
+The [system-monitor example](inst/examples/system-monitor-live/README.md)
+includes independent collector, TUI and full web dashboard launch commands.
 
 Start with [Getting started](https://github.com/menshikovs/termr/blob/main/docs/getting-started.md), then explore
 [widgets](https://github.com/menshikovs/termr/blob/main/docs/widgets.md), [layouts](https://github.com/menshikovs/termr/blob/main/docs/layout.md), [events](https://github.com/menshikovs/termr/blob/main/docs/events.md),

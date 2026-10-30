@@ -1,0 +1,11 @@
+PASS: collector publishes real snapshots 
+PASS: independent TUI receives live data 
+PASS: independent Shiny session receives live data 
+PASS: TUI exit leaves collector and Shiny running
+PASS: TUI restarts independently 
+PASS: Shiny restarts independently 
+PASS: 300 concurrent reads contain valid complete snapshots; bounded retention
+PASS: TUI detects stopped collector 
+PASS: Shiny detects stopped collector 
+PASS: all child processes exit cleanly
+Artifacts: /mnt/c/programming_pj/r_textualize/audit-results/data-streams/integration-Linux-33333 

@@ -69,13 +69,57 @@ test_that("align and valign position children inside a container", {
 
 test_that("hidden widgets take no space", {
   a <- label("a")
-  b <- label("b")
+  b <- label("b", visible = FALSE)
   c <- label("c")
   root <- vertical(a, b, c)
-  b$visible <- FALSE
   layout_tree(root, rect(1, 1, 10, 5))
   expect_null(b$region)
   expect_identical(c$region$y, 2L)
+  b$visible <- TRUE
+  layout_tree(root, rect(1, 1, 10, 5))
+  expect_identical(c$region$y, 3L)
+  expect_false(vertical(visible = FALSE)$visible)
+  expect_false(horizontal(visible = FALSE)$visible)
+  expect_false(grid_layout(visible = FALSE)$visible)
+})
+
+test_that("app layout diagnostics report possible clipping without painting", {
+  compact <- app(vertical(
+    label("first", id = "first"),
+    label("second", id = "second"),
+    id = "form",
+    style = style(height = 1)
+  ))
+  issues <- compact$layout_diagnostics(width = 20, height = 2)
+  expect_null(compact$frame)
+  expect_true(any(issues$id == "form" & issues$clipping == "vertical"))
+  expect_identical(issues$assessment[[1]], "potential; fixed dimensions may make this intentional")
+
+  wide <- app(label("resume details that do not fit", id = "summary"))
+  wide_pilot <- test_app(wide, 20, 4)
+  on.exit(wide_pilot$stop(), add = TRUE)
+  summary_widget <- wide$query_one("#summary")
+  original_region <- summary_widget$region
+  issues <- wide$layout_diagnostics(width = 8, height = 3)
+  expect_true(any(issues$id == "summary" & issues$clipping == "horizontal"))
+  expect_identical(summary_widget$region, original_region)
+
+  compact_input <- app(input(id = "b1", style = style(height = 1)))
+  issues <- compact_input$layout_diagnostics(width = 20, height = 1)
+  expect_true(any(issues$id == "b1" & issues$clipping == "vertical"))
+
+  compact_choices <- app(radio_set(
+    radio_button("first"), radio_button("second"), id = "choices",
+    style = style(height = 1)
+  ))
+  issues <- compact_choices$layout_diagnostics(width = 20, height = 4)
+  expect_true(any(issues$id == "choices" & issues$clipping == "vertical"))
+
+  wrapped <- app(label("words wrap to fit", id = "wrapped", wrap = "word"))
+  expect_false("wrapped" %in% wrapped$layout_diagnostics(width = 5, height = 3)$id)
+
+  scrolled <- app(scroll_view(label("one\ntwo\nthree", id = "items"), id = "scroll"))
+  expect_false("scroll" %in% scrolled$layout_diagnostics(width = 10, height = 1)$id)
 })
 
 test_that("auto sizes of nested containers are measured from children", {
@@ -118,4 +162,12 @@ test_that("register_layout(replace = TRUE) replaces a custom layout on purpose",
   expect_identical(render_lines(box, 3, 3), c("a", "", "b"))
   expect_error(register_layout("vertical", one_row, measure, replace = TRUE), "custom_")
   expect_error(register_layout("custom_reload", one_row, measure, replace = NA), "replace")
+})
+
+test_that("layout_diagnostics rejects sizes that are not usable integers", {
+  a <- app(label("x"))
+  for (bad in list(Inf, 3e9, 0)) {
+    expect_error(suppressWarnings(a$layout_diagnostics(width = bad, height = 3)), "positive|non-negative")
+  }
+  expect_error(suppressWarnings(a$layout_diagnostics(width = 3, height = Inf)), "positive|non-negative")
 })

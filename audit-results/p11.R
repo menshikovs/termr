@@ -1,0 +1,8 @@
+suppressMessages(pkgload::load_all(".", quiet = TRUE))
+a <- app(vertical(scroll_view(label(paste(rep("some text", 12), collapse = "\n"), id = "sv"), id = "scr")))
+p <- test_app(a, 20, 6); lb <- a$query_one("#sv")
+old <- layout_snapshot(list(a$screen)); print(old$regions); print(sapply(old$widgets, function(w) class(w)[1]))
+lb$update("x"); p$step()
+new <- layout_snapshot(list(a$screen)); print(new$regions)
+ch <- snapshot_changes(old, new); str(ch)
+print(dirty_rects(list(), rect(1L,1L,20L,6L), extra = ch))

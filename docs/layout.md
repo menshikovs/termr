@@ -58,6 +58,32 @@ scrolls to show it.
 widget's width, by display width and grapheme; `"auto"` heights grow with
 the wrapped text and re-wrap when the terminal is resized.
 
+## Diagnosing clipping
+
+Inspect the current screen at the app's size, or at an explicit terminal size:
+
+```r
+issues <- my_app$layout_diagnostics(width = 80, height = 24)
+issues[, c("widget", "id", "available_width", "required_width",
+           "available_height", "required_height", "clipping", "assessment")]
+```
+
+The result reports widgets whose measured content or children need more space
+than their content box provides. It is an on-demand check: it runs layout but
+does not paint, warn, or change the app's normal rendering. A fixed size may
+make clipping intentional, so review the `assessment` field in context.
+`scroll_view()` deliberately clips its virtual content and is not reported as
+a clipping issue. Specialized viewport widgets such as tables and text areas
+are also omitted because their visible content is managed internally.
+
+For a compact 80x24 form, check both the parent rows and individual labels.
+Use `style(wrap = "word")` for prose and a `scroll_view()` for long option or
+log lists. The runnable [compact form example](../inst/examples/compact-form.R)
+shows labels, inputs, radio buttons, checkboxes, wrapping and dynamic
+visibility. Every widget has a reactive `$visible` field; assign it after
+construction when its helper does not expose an initial `visible` argument.
+`label()` also accepts `visible = FALSE` at construction.
+
 ## Unicode
 
 Text is split into grapheme clusters: `"é"`, CJK characters, emoji

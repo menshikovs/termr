@@ -1,0 +1,31 @@
+R version 4.5.2 (2025-10-31) 
+mirai ABSENT 
+nanonext 1.10.3 
+promises 1.5.0 
+shiny 1.14.0 
+later 1.4.6 
+trying URL 'https://cloud.r-project.org/src/contrib/mirai_2.7.3.tar.gz'
+Content type 'application/x-gzip' length 211492 bytes (206 KB)
+==================================================
+downloaded 206 KB
+
+* installing *source* package ‘mirai’ ...
+** this is package ‘mirai’ version ‘2.7.3’
+** package ‘mirai’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+*** copying figures
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded from temporary location
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (mirai)
+
+The downloaded source packages are in
+	‘/tmp/Rtmpzvclyo/downloaded_packages’
+Installed mirai 2.7.3 

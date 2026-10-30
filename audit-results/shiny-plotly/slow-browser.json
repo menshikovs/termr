@@ -1,0 +1,1 @@
+{"before":{"extendTraces":36,"restyle":1,"sequence":546},"held":{"extendTraces":37,"restyle":1,"sequence":547},"paused":{"extendTraces":37,"restyle":1,"sequence":549},"bounded":true,"recovered":true,"method":"withhold live_ack while two source revisions arrive, then release the held acknowledgement"}

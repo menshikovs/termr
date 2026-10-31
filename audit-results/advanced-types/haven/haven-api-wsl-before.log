@@ -1,0 +1,108 @@
+R: R version 4.5.2 (2025-10-31)
+haven installed: TRUE
+haven version: 2.5.5
+requested exports: TRUE,TRUE,TRUE,TRUE,TRUE,TRUE
+
+-- haven::labelled --
+function (x = double(), labels = NULL, label = NULL) 
+NULL
+
+-- haven::labelled_spss --
+function (x = double(), labels = NULL, na_values = NULL, na_range = NULL, 
+    label = NULL) 
+NULL
+
+-- haven::tagged_na --
+function (...) 
+NULL
+
+-- haven::is_tagged_na --
+function (x, tag = NULL) 
+NULL
+
+-- haven::na_tag --
+function (x) 
+NULL
+
+-- haven::as_factor --
+function (x, ...) 
+NULL
+labelled class/type/attributes:
+$class
+[1] "haven_labelled" "vctrs_vctr"     "integer"       
+
+$typeof
+[1] "integer"
+
+$attributes
+$attributes$labels
+  Male Female 
+     1      2 
+
+$attributes$label
+[1] "Sex"
+
+$attributes$class
+[1] "haven_labelled" "vctrs_vctr"     "integer"       
+
+
+SPSS class/type/attributes/is.na:
+$class
+[1] "haven_labelled_spss" "haven_labelled"      "vctrs_vctr"         
+[4] "double"             
+
+$typeof
+[1] "double"
+
+$attributes
+$attributes$labels
+   Male Refused 
+      1      99 
+
+$attributes$label
+[1] "Answer"
+
+$attributes$na_values
+[1] 99
+
+$attributes$na_range
+[1] 90 95
+
+$attributes$class
+[1] "haven_labelled_spss" "haven_labelled"      "vctrs_vctr"         
+[4] "double"             
+
+
+$is_na
+[1] FALSE FALSE  TRUE
+
+tagged missing probes:
+$value
+[1] "    1" "NA(a)" "NA(z)" "   NA" "  NaN"
+
+$is_tagged
+[1] FALSE  TRUE  TRUE FALSE FALSE
+
+$tag
+[1] NA  "a" "z" NA  NA 
+
+$is_nan
+[1] FALSE FALSE FALSE FALSE  TRUE
+
+as_factor modes:
+default : [1] Male   Female <NA>  
+attr(,"label")
+[1] Sex
+Levels: Male Female
+labels : [1] Male   Female <NA>  
+attr(,"label")
+[1] Sex
+Levels: Male Female
+values : [1] 1    2    <NA>
+attr(,"label")
+[1] Sex
+Levels: 1 2
+both : [1] [1] Male   [2] Female <NA>      
+attr(,"label")
+[1] Sex
+Levels: [1] Male [2] Female

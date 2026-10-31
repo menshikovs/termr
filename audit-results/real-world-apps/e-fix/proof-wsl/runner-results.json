@@ -1,0 +1,84 @@
+[
+  {
+    "name": "api-audit",
+    "seconds": 4.795,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "terminal-gates",
+    "seconds": 10.921,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "browser-gates",
+    "status": "SKIP",
+    "reason": "Run entrypoint-browser.R --wsl-server from native Windows R for Chrome against WSL Shiny."
+  },
+  {
+    "name": "app-tests",
+    "seconds": 23.631,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "process",
+    "seconds": 15.536,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "expect-showcase",
+    "seconds": 4.683,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "expect-monitor",
+    "seconds": 4.324,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "tmux",
+    "seconds": 8.644,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "recording",
+    "seconds": 18.497,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "lint",
+    "seconds": 28.811,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "profile",
+    "seconds": 48.597,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "benchmark",
+    "seconds": 97.255,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  }
+]

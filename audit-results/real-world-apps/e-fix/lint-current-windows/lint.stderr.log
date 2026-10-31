@@ -1,0 +1,29 @@
+During startup - Warning messages:
+1: Setting LC_COLLATE=C.UTF-8 failed 
+2: Setting LC_CTYPE=C.UTF-8 failed 
+3: Setting LC_MONETARY=C.UTF-8 failed 
+4: Setting LC_TIME=C.UTF-8 failed 
+Error in `lint_impl_()`:
+! Linter `linter()` failed in
+  'C:/programming_pj/r_textualize/integration-apps/01-termr-showcase/app.R':
+Caused by error in `validate_lint_object()`:
+! `ranges` must satisfy 0 <= range[1L] <= range[2L] <= 83 (nchar(line) +
+  1).
+Backtrace:
+     x
+  1. \-lintr::lint(file, cache = FALSE)
+  2.   \-lintr:::lint_impl_(linters, lint_cache, filename, source_expressions)
+  3.     +-base::withCallingHandlers(...)
+  4.     \-lintr:::get_lints(...)
+  5.       +-lintr:::flatten_lints(linter_fun(expr))
+  6.       | \-lintr:::flatten_list(x, class = "lint")
+  7.       \-lintr (local) linter_fun(expr)
+  8.         \-lintr::xml_nodes_to_lints(...)
+  9.           \-base::.mapply(...)
+ 10.             \-lintr (local) `<fn>`(...)
+ 11.               \-lintr::Lint(...)
+ 12.                 \-lintr:::validate_lint_object(message, line, line_number, column_number, ranges)
+ 13.                   \-lintr:::check_ranges(ranges, max_col)
+ 14.                     \-cli::cli_abort(...)
+ 15.                       \-rlang::abort(...)
+Execution halted

@@ -1,0 +1,42 @@
+#!/usr/bin/expect -f
+# Independent smoke, not a reimplementation of the Python PTY scenarios.
+set timeout 30
+set root [file normalize [file join [file dirname [info script]] ../..]]
+cd $root
+set app [lindex $argv 0]
+set out [lindex $argv 1]
+if {$app ni {showcase monitor}} {error "expected showcase or monitor"}
+file mkdir $out
+set env(TERM) xterm-256color
+set env(LANG) C.UTF-8
+set env(LC_ALL) C.UTF-8
+set env(TERMR_PROJECT_ROOT) $root
+set env(TERMR_USE_INSTALLED) 1
+log_file -noappend [file join $out expect-$app.log]
+set command "Rscript integration-apps/run.R --app=$app --mode=terminal"
+set shell [format {before=$(stty -g); %s; rc=$?; after=$(stty -g); if [ "$before" = "$after" ]; then printf '\nEXPECT_RESTORED\n'; else printf '\nEXPECT_BROKEN\n'; fi; exit "$rc"} $command]
+spawn -noecho /bin/bash -c $shell
+expect {
+  -re {Termr Data Workbench|Distributed Task & Stream Monitor} {}
+  timeout {close; wait; error "startup timeout"}
+  eof {error "unexpected startup exit"}
+}
+send -- "\t\033\[Z"
+if {$app eq "showcase"} {send -- "\033OS"} else {send -- "n"}
+send -- "q"
+expect {
+  "EXPECT_RESTORED" {}
+  "EXPECT_BROKEN" {error "terminal settings changed"}
+  timeout {close; wait; error "shutdown timeout"}
+}
+expect eof
+set result [wait]
+if {[lindex $result 3] != 0} {error "application failed: $result"}
+# An independent controlled timeout path, only our own sleep child is stopped.
+spawn -noecho /bin/sleep 4
+set pid [exp_pid]
+expect -timeout 1 {
+  timeout {exec kill -TERM $pid; expect eof; wait}
+  eof {error "timeout fixture exited too early"}
+}
+puts "EXPECT PASS $app startup keyboard quit restoration timeout"

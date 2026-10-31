@@ -1,0 +1,18 @@
+╰──────────────────────╯█Valiant
+╭─────────────╮         █Duster 360
+│ Filter [F5] │         █Merc 240D
+╰─────────────╯         │Merc 230
+╭────────────╮          │Merc 280
+│ Reset view │          │Merc 280C
+╰────────────╯          │Merc 450SE
+╭──────────────────────╮│Merc 450SL
+│ Merc                 ││Merc 450SLC
+╰──────────────────────╯│Cadillac Fleetwoo
+╭────────╮              │Lincoln Continent
+│  Find  │              │Chrysler Imperial
+╰────────╯              │Fiat 128
+╭────────────╮          │Honda Civic
+│ Sort value │          │Toyota Corolla
+╰────────────╯          │Toyota Corona
+╭───────────────╮       │Dodge Challenger
+Theme: light (inkr)

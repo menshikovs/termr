@@ -1,5 +1,47 @@
 # Unreleased development notes
 
+* Add an optional standalone `inkr` stylesheet layer for app/widget trees.
+  The adapter uses inkr's public compute/provenance API and a bounded per-app
+  selector-path cache, maps typed properties into termr styles, supports local files and compiled sheets, and
+  exposes `App$explain_inkr_style()` for rule explanations. `inkr` stays in
+  Suggests; the existing RTCSS and inline style behavior remains available
+  without it.
+* Add bounded DataTable R-code exports for typed selections, reproducible local
+  view pipelines and local edits. The command palette can copy each form while
+  ordinary Ctrl+C TSV remains unchanged. A typed source model distinguishes
+  final view state, bounded local edit state and unknown source identity;
+  unsupported classes and remote writes fail closed. No DuckDB, dbplyr or
+  Arrow source adapter was added.
+* Add five native terminal charts: line, scatter, bar, histogram and heatmap.
+  They use the existing widget, layout, focus, theme and selection systems and
+  do not depend on termrcharts. Line and scatter charts can bind to existing
+  termr streams with bounded history, source restart/gap handling, strict
+  scalar extractors and explicit unsubscribe; subscriptions are released on
+  widget removal and app shutdown.
+* Extend DataTable's typed adapter resolution to unknown S3/vctrs classes.
+  Standard pillar, `format()`, `type_sum()` and `vec_ptype_abbr()` methods are
+  isolated behind bounded output validation. Custom vctrs vectors are editable
+  only through a verified character-to-prototype cast that preserves storage
+  type, class and attributes; unknown classes remain read-only by default.
+  No public handler registry or exported API was added.
+* Add optional sf geometry display to DataTable. Spatial cells use point
+  previews or bounded summaries; metadata includes geometry type, dimensions,
+  CRS, precision, active column and bounding box. Geometry stays read-only.
+  Attribute edits preserve sf frame metadata and geometry, and row-index
+  sorting keeps feature/attribute associations intact.
+* Preserve R column types through DataTable metadata, visible-cell formatting,
+  filtering, sorting and editing. Add strict typed edits for base vectors,
+  factors, Date, POSIXct and difftime; hms, integer64 and physical units use
+  optional adapters. Unit labels appear in column metadata and typed headers;
+  compatible unit input converts through the units package while retaining the
+  column's original unit. List columns are summarized and read-only.
+  `column_info()` exposes typed metadata and `show_types = TRUE` adds a compact
+  type header. vctrs, pillar, tibble, dplyr, hms, bit64 and units remain optional.
+* Support optional haven labelled and SPSS-labelled vectors in DataTable.
+  Raw and labelled display modes retain the underlying values. `column_info()`
+  exposes value/variable labels and special missing definitions; edits preserve
+  labelled attributes, reject ambiguous labels, and distinguish tagged NA from
+  ordinary NA and NaN. haven stays optional.
 * Add optional mirai task pools with isolated compute profiles, bounded
   admission, native result transport, explicit cancellation/timeouts/restart,
   and bounded nonblocking progress events backed by termr_stream.

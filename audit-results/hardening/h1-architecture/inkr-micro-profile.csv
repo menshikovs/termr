@@ -1,0 +1,5 @@
+"operation","elapsed_s"
+"element_path_1000",0.81
+"public_compute_1000",0.969999999999999
+"bridge_cache_hit_1000",0.259999999999998
+"tree_walk_100",0.0599999999999987

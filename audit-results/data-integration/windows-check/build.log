@@ -1,0 +1,7 @@
+﻿* checking for file '..\package-stage/DESCRIPTION' ... OK
+* preparing 'termr':
+* checking DESCRIPTION meta-information ... OK
+* checking for LF line-endings in source and make files and shell scripts
+* checking for empty or unneeded directories
+Removed empty directory 'termr/vignettes'
+* building 'termr_1.0.1.tar.gz'

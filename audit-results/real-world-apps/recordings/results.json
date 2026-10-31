@@ -1,0 +1,34 @@
+[
+  {
+    "app": "showcase",
+    "status": "PASS",
+    "ready_ms": 1495.9084999999277,
+    "exit_status": 0,
+    "terminal_restored": true,
+    "events": 35,
+    "recording": "audit-results/real-world-apps/recordings/showcase.cast"
+  },
+  {
+    "app": "analytics",
+    "status": "PASS",
+    "ready_ms": 931.9985859999633,
+    "exit_status": 0,
+    "terminal_restored": true,
+    "events": 8,
+    "recording": "audit-results/real-world-apps/recordings/analytics.cast"
+  },
+  {
+    "app": "monitor",
+    "status": "PASS",
+    "ready_ms": 1456.4697250000336,
+    "exit_status": 0,
+    "terminal_restored": true,
+    "events": 41,
+    "recording": "audit-results/real-world-apps/recordings/monitor.cast"
+  },
+  {
+    "app": "rtop",
+    "status": "FAIL",
+    "error": "[Errno 61] No data available"
+  }
+]

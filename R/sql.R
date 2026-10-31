@@ -247,6 +247,14 @@ SQLEditor <- R6::R6Class(
       super$initialize(value = value, id = id, line_numbers = line_numbers, tab_behavior = "indent",
                        tab_size = tab_size, highlighter = sql_highlighter(), ...)
       if (!is.null(self$connection)) self$bind(execute_key, "sql_execute", "Execute SQL")
+      cleanup <- list(dispose = function() {
+        if (!is.null(self$connection) && isTRUE(self$connection$owned)) {
+          self$connection$disconnect()
+        }
+        invisible(NULL)
+      })
+      wp <- widget_private(self)
+      wp$.reactive_bindings <- c(wp$.reactive_bindings, list(cleanup))
     },
     execute = function() {
       sql <- self$selection

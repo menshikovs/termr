@@ -1,0 +1,7 @@
+"rows","class","first_render_ms","scrolling_render_ms","visible_20_format_ms","read_only_edit_rejection_ms"
+100,list<raw>,20,14,1.3,0
+100,blob-shaped list-of-raw,9.99999999999979,14,1.3,0
+10000,list<raw>,10.0000000000007,14,1.2,0
+10000,blob-shaped list-of-raw,19.9999999999996,13,1.2,0
+100000,list<raw>,19.9999999999996,14,1.3,0
+100000,blob-shaped list-of-raw,19.9999999999996,14.0000000000001,1.39999999999999,0

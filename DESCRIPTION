@@ -6,7 +6,7 @@ Authors@R:
            role = c("aut", "cre", "cph"))
 Description: Build interactive terminal user interfaces (TUIs) in R using
     reusable widgets, layouts, events, focus management and themes.
-    Compose reactive applications, terminal dashboards and data explorers.
+    Compose reactive applications, terminal chart dashboards and data explorers.
     A virtual screen buffer and incremental rendering update changed cells,
     while a headless driver supports deterministic application tests.
     Advanced features include experimental reactive graph APIs, lazy table
@@ -23,24 +23,37 @@ Depends:
 Imports:
     codetools,
     grDevices,
+    graphics,
+    methods,
     R6,
     processx,
     ps,
     stats,
     utils
 Suggests:
+    bit64,
+    blob,
     DBI,
+    dplyr,
     ggplot2,
+    haven,
+    hms,
     htmlwidgets,
+    inkr (>= 0.1.0),
     jsonlite,
     knitr,
     mirai (>= 2.7.3),
     nanonext (>= 1.10.0),
+    pillar,
     plotly,
     promises,
     RSQLite,
+    sf,
     shiny,
     testthat (>= 3.0.0),
+    tibble,
+    units,
+    vctrs,
     withr
 Config/testthat/edition: 3
-Config/roxygen2/version: 8.1.0
+Config/roxygen2/version: 8.1.1

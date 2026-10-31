@@ -12,6 +12,30 @@ test_that("a table source can turn fetch failures into a visible table error", {
   expect_match(paste(out$to_text(), collapse = "\n"), "Source error: fixture fetch failed")
 })
 
+test_that("refresh clears a transient source error and reads fresh pages", {
+  state <- new.env(parent = emptyenv())
+  state$fail <- TRUE
+  source <- table_source(
+    row_count = 1L,
+    column_names = "value",
+    get_rows = function(start, count, columns = NULL) {
+      if (state$fail) stop("temporary backend outage")
+      data.frame(value = rep(7L, count))
+    },
+    on_error = function(error, start, count, columns) {
+      data.frame(value = rep(NA_integer_, count))
+    }
+  )
+  tbl <- data_table(source, cursor = "none")
+  expect_match(paste(render_widget(tbl, 40L, 6L)$to_text(), collapse = "\n"),
+               "Source error: temporary backend outage")
+
+  state$fail <- FALSE
+  tbl$refresh()
+  expect_identical(tbl$row_data(1L)$value, 7L)
+  expect_equal(tbl$source_stats()$fetch_errors, 0L)
+})
+
 test_that("SQLite query sources wrap one result query and page bounded rows", {
   skip_if_not_installed("DBI")
   skip_if_not_installed("RSQLite")

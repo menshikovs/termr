@@ -20,6 +20,8 @@ A virtualised table for data frames or lazy table sources. See \code{\link[=data
 
     \item{\code{show_header}}{Show the header row?}
 
+    \item{\code{show_types}}{Show a second header row with compact column types?}
+
     \item{\code{zebra}}{Stripe alternate rows?}
 
     \item{\code{row_style}}{\code{NULL} or \verb{function(row, data)} returning a style for
@@ -87,6 +89,9 @@ the current sort keys.}
     \item \href{#method-DataTable-selected_row}{\code{DataTable$selected_row()}}
     \item \href{#method-DataTable-row_data}{\code{DataTable$row_data()}}
     \item \href{#method-DataTable-selected_data}{\code{DataTable$selected_data()}}
+    \item \href{#method-DataTable-reproducible_code}{\code{DataTable$reproducible_code()}}
+    \item \href{#method-DataTable-copy_reproducible_code}{\code{DataTable$copy_reproducible_code()}}
+    \item \href{#method-DataTable-commands}{\code{DataTable$commands()}}
     \item \href{#method-DataTable-visible_data}{\code{DataTable$visible_data()}}
     \item \href{#method-DataTable-reorder_column}{\code{DataTable$reorder_column()}}
     \item \href{#method-DataTable-select_range}{\code{DataTable$select_range()}}
@@ -212,14 +217,15 @@ the current sort keys.}
   id = NULL,
   classes = NULL,
   style = NULL,
-  disabled = FALSE
+  disabled = FALSE,
+  show_types = FALSE
 )}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
     \if{html}{\out{<div class="arguments">}}
     \describe{
-      \item{\code{data}}{A data frame, matrix, or \code{\link[=table_source]{table_source()}}.}
+      \item{\code{data}}{A data frame (including tibbles), matrix, or \code{\link[=table_source]{table_source()}}.}
       \item{\code{cursor}}{Cursor type.}
       \item{\code{columns}}{Named list of \code{\link[=column]{column()}} options.}
       \item{\code{formatters}}{Named list of formatter functions.}
@@ -230,6 +236,7 @@ the current sort keys.}
       \item{\code{max_column_width}}{Upper limit for estimated widths.}
       \item{\code{frozen_columns, header_sort, editable, on_edit}}{See the fields.}
       \item{\code{id, classes, style, disabled}}{See \link{Widget}.}
+      \item{\code{show_types}}{Display compact type summaries beneath column headers?}
       \item{\code{filters}}{Named column filters for \code{filter_columns()}.}
     }
     \if{html}{\out{</div>}}
@@ -273,7 +280,7 @@ the current sort keys.}
   \subsection{Arguments}{
     \if{html}{\out{<div class="arguments">}}
     \describe{
-      \item{\code{data}}{A data frame, matrix, or \code{\link[=table_source]{table_source()}}.}
+      \item{\code{data}}{A data frame (including tibbles), matrix, or \code{\link[=table_source]{table_source()}}.}
     }
     \if{html}{\out{</div>}}
   }
@@ -496,6 +503,80 @@ cursor row is returned when no range is selected.
 }
 
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-DataTable-reproducible_code"></a>}}
+\if{latex}{\out{\hypertarget{method-DataTable-reproducible_code}{}}}
+\subsection{\code{DataTable$reproducible_code()}}{
+  Build safe, bounded R code for the current selection,
+final table view, or recorded local edits.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataTable$reproducible_code(
+  kind = c("value", "pipeline", "edits"),
+  max_rows = 1000L,
+  max_bytes = 1000000L
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{kind}}{One of \code{"value"} (self-contained selected value),
+\code{"pipeline"} (current supported local filter, sort, selection and
+visible-column state), or \code{"edits"} (recorded local cell changes).}
+      \item{\code{max_rows}}{Maximum selected rows to include in a value export.}
+      \item{\code{max_bytes}}{Maximum generated source size. The implementation also
+applies hard internal row, cell, edit and source-size limits.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A \code{termr_reproducible_code} list with \code{code}, \code{status},
+\code{reason}, optional package requirements, source-binding information,
+and a compact typed model. \code{status} is \code{"exact"}, \code{"limited"} or
+\code{"unsupported"}.
+  }
+}
+
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-DataTable-copy_reproducible_code"></a>}}
+\if{latex}{\out{\hypertarget{method-DataTable-copy_reproducible_code}{}}}
+\subsection{\code{DataTable$copy_reproducible_code()}}{
+  Copy one reproducible-code result using the app clipboard.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataTable$copy_reproducible_code(
+  kind = c("value", "pipeline", "edits"),
+  system = TRUE
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{kind}}{See \code{reproducible_code()}.}
+      \item{\code{system}}{Also send the generated R code through the system clipboard
+when the current driver supports it.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    The code result, invisibly.
+  }
+}
+
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-DataTable-commands"></a>}}
+\if{latex}{\out{\hypertarget{method-DataTable-commands}{}}}
+\subsection{\code{DataTable$commands()}}{
+  Offer reproducible-code actions in the command palette.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataTable$commands()}
+    \if{html}{\out{</div>}}
+  }
+}
+
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataTable-visible_data"></a>}}
 \if{latex}{\out{\hypertarget{method-DataTable-visible_data}{}}}
 \subsection{\code{DataTable$visible_data()}}{
@@ -691,11 +772,24 @@ the view; slow for millions of rows).}
 \if{html}{\out{<a id="method-DataTable-column_info"></a>}}
 \if{latex}{\out{\hypertarget{method-DataTable-column_info}{}}}
 \subsection{\code{DataTable$column_info()}}{
-  Describe the columns: name, label, width, visible, sortable.
+  Describe each column's layout and typed data metadata.
+The result includes its name, label, compact type, class, storage type,
+prototype, attributes, missing-value support, formatter, editability,
+display position, width, visibility and sortability. Labelled columns
+also expose base type, variable label, value labels and SPSS missing
+definitions. Spatial columns expose geometry type, coordinate dimension,
+CRS, active geometry status, precision and bounding-box metadata.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
     \preformatted{DataTable$column_info()}
     \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A data frame with one row per column. \code{prototype}, \code{attributes},
+\code{value_labels}, \code{na_values}, \code{na_range}, \code{missing_definitions},
+\code{geometry_crs}, \code{geometry_bbox} and \code{geometry_metadata} are
+list-columns. Non-labelled, non-spatial columns have \code{NULL} optional
+metadata.
   }
 }
 

@@ -1,0 +1,11 @@
+{
+  "app": "monitor",
+  "command": "Rscript integration-apps/run.R --app=monitor --mode=terminal",
+  "loader_environment": "TERMR_USE_INSTALLED unset",
+  "platform": "linux",
+  "start": true,
+  "render": true,
+  "status": "FAIL",
+  "error": "[Errno 61] No data available",
+  "traceback": "Traceback (most recent call last):\n  File \"/mnt/c/programming_pj/r_textualize/integration-apps/automation/entrypoint-pty.py\", line 103, in scenario\n    send('d');wait(lambda:seen('disconnect'))\n              ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/mnt/c/programming_pj/r_textualize/integration-apps/automation/entrypoint-pty.py\", line 60, in wait\n    if predicate():return\n       ~~~~~~~~~^^\n  File \"/mnt/c/programming_pj/r_textualize/integration-apps/automation/entrypoint-pty.py\", line 103, in <lambda>\n    send('d');wait(lambda:seen('disconnect'))\n                          ~~~~^^^^^^^^^^^^^^\n  File \"/mnt/c/programming_pj/r_textualize/integration-apps/automation/entrypoint-pty.py\", line 55, in seen\n    return any(item.get('event')==event and all(item.get(key)==value for key,value in fields.items()) for item in read_events(marker))\n                                                                                                                  ~~~~~~~~~~~^^^^^^^^\n  File \"/mnt/c/programming_pj/r_textualize/integration-apps/automation/entrypoint-pty.py\", line 14, in read_events\n    for line in path.read_text(encoding='utf-8',errors='replace').splitlines():\n                ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.14/pathlib/__init__.py\", line 789, in read_text\n    return f.read()\n           ~~~~~~^^\nOSError: [Errno 61] No data available\n"
+}

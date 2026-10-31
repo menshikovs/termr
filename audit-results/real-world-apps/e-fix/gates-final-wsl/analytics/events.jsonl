@@ -1,0 +1,6 @@
+{"event":"analytics","at":1.468,"source":"alpha","sequence":1,"rows":1,"empty":false} 
+{"event":"ready","at":1.495,"app":"analytics"} 
+{"event":"analytics","at":1.644,"source":"alpha","sequence":2,"rows":2,"empty":false} 
+{"event":"analytics","at":1.964,"source":"beta","sequence":1,"rows":3,"empty":false} 
+{"event":"analytics","at":2.036,"source":"beta","sequence":2,"rows":0,"empty":true} 
+{"event":"stopped","at":2.144,"app":"analytics","source":"beta","sequence":2,"rows":0,"closed":true} 

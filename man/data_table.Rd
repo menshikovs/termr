@@ -21,7 +21,8 @@ data_table(
   on_edit = NULL,
   id = NULL,
   classes = NULL,
-  style = NULL
+  style = NULL,
+  show_types = FALSE
 )
 }
 \arguments{
@@ -68,12 +69,14 @@ applied; return \code{NULL}/\code{TRUE} to accept or a message to reject.}
 \item{classes}{Optional classes.}
 
 \item{style}{A \code{\link[=style]{style()}}; by default the table fills its parent.}
+
+\item{show_types}{Show compact type summaries under the column headers?}
 }
 \value{
 A \code{DataTable} widget.
 }
 \description{
-A fast, read-only viewer for data frames: a header, optional row names,
+A fast viewer for data frames: a header, optional row names,
 automatic column widths, keyboard and mouse navigation, horizontal and
 vertical scrolling, and a row or cell cursor. Only the visible rows are
 formatted and painted, so tables with millions of rows scroll smoothly.
@@ -90,7 +93,8 @@ Clicking a row selects it; clicking the header sends
 \code{"datatable.header_selected"} (and sorts with \code{header_sort}); dragging the
 separator between two header cells resizes a column; the wheel scrolls.
 The header and the first \code{frozen_columns} columns stay in place while the
-rest scrolls.
+rest scrolls. Set \code{show_types = TRUE} to add a compact type-summary row;
+detailed type metadata is available from \code{column_info()}.
 
 Messages (\code{event$data}):
 \itemize{
@@ -111,7 +115,9 @@ Methods: \code{set_data()}, \code{sort(by, decreasing)} (several columns allowed
 \code{goto_row()}, \code{scroll_to_row()}, \code{selected_row()}, \code{row_data(row)},
 \code{set_column_width()}, \code{auto_size_column()}, \code{auto_size_all()},
 \code{set_column_visible()}, \code{column_info()}, \code{find()}, \code{find_next()},
-\code{find_previous()}, \code{edit_cell()}, \code{set_cell()}.
+\code{find_previous()}, \code{edit_cell()}, \code{set_cell()}, \code{reproducible_code()} and
+\code{copy_reproducible_code()}. Ctrl+P offers R-value, current-pipeline and
+local-edit copy commands; ordinary Ctrl+C remains TSV.
 }
 \examples{
 tbl <- data_table(mtcars, id = "cars", zebra = TRUE,

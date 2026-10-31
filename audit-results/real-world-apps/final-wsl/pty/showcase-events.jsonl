@@ -1,0 +1,35 @@
+{"event":"sample","at":0.615,"sequence":1} 
+{"event":"ready","at":0.87,"app":"showcase"} 
+{"event":"key","at":1.087,"key":"tab"} 
+{"event":"key","at":1.106,"key":"shift+tab"} 
+{"event":"sample","at":1.308,"sequence":2} 
+{"event":"key","at":1.327,"key":"down"} 
+{"event":"sample","at":1.634,"sequence":3} 
+{"event":"key","at":1.736,"key":"escape"} 
+{"event":"sample","at":2.134,"sequence":4} 
+{"event":"sample","at":2.637,"sequence":5} 
+{"event":"key","at":2.704,"key":"f2"} 
+{"event":"status","at":2.773,"message":"iris local/editable columns only"} 
+{"event":"source","at":2.775,"dataset":"iris","lazy":false,"rows":150} 
+{"event":"key","at":2.842,"key":"alt+s"} 
+{"event":"status","at":2.861,"message":"cars lazy/read-only 10000 rows"} 
+{"event":"source","at":2.868,"dataset":"cars","lazy":true,"rows":10000} 
+{"event":"key","at":2.936,"key":"alt+s"} 
+{"event":"status","at":2.959,"message":"cars local/editable columns only"} 
+{"event":"source","at":2.963,"dataset":"cars","lazy":false,"rows":32} 
+{"event":"key","at":3.03,"key":"f4"} 
+{"event":"status","at":3.046,"message":"Theme: light (inkr)"} 
+{"event":"theme","at":3.051,"theme":"light"} 
+{"event":"key","at":3.119,"key":"f7"} 
+{"event":"select","at":3.137} 
+{"event":"sample","at":3.163,"sequence":6} 
+{"event":"key","at":3.176,"key":"f8"} 
+{"event":"status","at":3.187,"message":"R value exact"} 
+{"event":"copy","at":3.2,"kind":"value","status":"exact"} 
+{"event":"sample","at":3.634,"sequence":7} 
+{"event":"sample","at":4.137,"sequence":8} 
+{"event":"key","at":4.206,"key":"alt+c"} 
+{"event":"status","at":4.277,"message":"Selected stream point 2"} 
+{"event":"chart-selection","at":4.283,"index":2} 
+{"event":"key","at":4.351,"key":"q"} 
+{"event":"stopped","at":4.375,"app":"showcase","dataset":"cars","rows":32,"samples":8,"subscribers":0,"closed":true} 

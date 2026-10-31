@@ -1,0 +1,38 @@
+{
+  "status": "PASS",
+  "apps": [
+    {
+      "app": "Showcase",
+      "start": "PASS",
+      "render": "PASS",
+      "interact": "PASS",
+      "integration": "PASS",
+      "shutdown": "PASS"
+    },
+    {
+      "app": "Analytics TUI",
+      "start": "PASS",
+      "render": "PASS",
+      "interact": "PASS",
+      "integration": "PASS",
+      "shutdown": "PASS"
+    },
+    {
+      "app": "Analytics Web",
+      "start": "PASS",
+      "render": "PASS",
+      "interact": "PASS",
+      "integration": "PASS",
+      "shutdown": "PASS"
+    },
+    {
+      "app": "Task Monitor",
+      "start": "PASS",
+      "render": "PASS",
+      "interact": "PASS",
+      "integration": "PASS",
+      "shutdown": "PASS"
+    }
+  ],
+  "generated_at": "2026-10-31T20:14:30.673806+00:00"
+}

@@ -18,7 +18,7 @@ A list of class \code{termr_inspection}.
 \description{
 Collects what termr knows about a widget: type, id, classes, region,
 states, reactive state values, computed style, matching stylesheet
-rules, bindings, parent and children. Printing the result gives a
+rules, inkr property explanations, bindings, parent and children. Printing the result gives a
 readable report.
 }
 \examples{

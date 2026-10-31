@@ -1,0 +1,9 @@
+[
+  {
+    "name": "process",
+    "seconds": 9.38,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  }
+]

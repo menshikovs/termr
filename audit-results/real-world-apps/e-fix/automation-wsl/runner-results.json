@@ -1,0 +1,44 @@
+[
+  {
+    "name": "process",
+    "seconds": 15.404,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "expect-showcase",
+    "seconds": 3.497,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "expect-monitor",
+    "seconds": 3.464,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "tmux",
+    "seconds": 7.84,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "recording",
+    "seconds": 19.823,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "lint",
+    "seconds": 29.434,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  }
+]

@@ -1,0 +1,72 @@
+{
+  "scenarios": [
+    {
+      "scenario": "startup",
+      "values_equal": true,
+      "screen_equal": true,
+      "state_equal": true
+    },
+    {
+      "scenario": "refresh",
+      "values_equal": true,
+      "screen_equal": true,
+      "state_equal": true
+    },
+    {
+      "scenario": "sort-c",
+      "values_equal": true,
+      "screen_equal": true,
+      "state_equal": true
+    },
+    {
+      "scenario": "sort-m",
+      "values_equal": true,
+      "screen_equal": true,
+      "state_equal": true
+    },
+    {
+      "scenario": "sort-p",
+      "values_equal": true,
+      "screen_equal": true,
+      "state_equal": true
+    },
+    {
+      "scenario": "filter",
+      "values_equal": true,
+      "screen_equal": true,
+      "state_equal": true
+    },
+    {
+      "scenario": "selection",
+      "values_equal": true,
+      "screen_equal": true,
+      "state_equal": true
+    },
+    {
+      "scenario": "resize-small",
+      "values_equal": true,
+      "screen_equal": true,
+      "state_equal": true
+    },
+    {
+      "scenario": "resize-large",
+      "values_equal": true,
+      "screen_equal": true,
+      "state_equal": true
+    },
+    {
+      "scenario": "controls",
+      "values_equal": true,
+      "screen_equal": true,
+      "state_equal": true
+    },
+    {
+      "scenario": "shutdown",
+      "values_equal": true,
+      "screen_equal": true,
+      "state_equal": true
+    }
+  ],
+  "status": "PASS",
+  "normalization": "Only wall-clock HH:MM:SS replaced with <CLOCK>; original UI and fixture data retained"
+}

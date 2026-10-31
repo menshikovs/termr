@@ -1,0 +1,23 @@
+[
+  {
+    "name": "api-audit",
+    "seconds": 2.02,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "terminal-gates",
+    "seconds": 17.13,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "browser-gates",
+    "seconds": 10.87,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  }
+]

@@ -1,0 +1,4 @@
+{"app": "showcase", "status": "PASS", "ready_ms": 1524.6503599999999, "exit_status": 0, "terminal_restored": true, "events": 35, "recording": "audit-results/real-world-apps/final-recordings/recording/showcase.cast"}
+{"app": "analytics", "status": "PASS", "ready_ms": 870.011053999999, "exit_status": 0, "terminal_restored": true, "events": 8, "recording": "audit-results/real-world-apps/final-recordings/recording/analytics.cast"}
+{"app": "monitor", "status": "PASS", "ready_ms": 1532.2702929999998, "exit_status": 0, "terminal_restored": true, "events": 40, "recording": "audit-results/real-world-apps/final-recordings/recording/monitor.cast"}
+{"app": "rtop", "status": "PASS", "ready_ms": 1128.286149000001, "exit_status": 0, "terminal_restored": true, "events": 11, "recording": "audit-results/real-world-apps/final-recordings/recording/rtop.cast"}

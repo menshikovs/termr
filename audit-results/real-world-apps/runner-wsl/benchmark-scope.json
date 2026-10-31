@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "warmup": 1,
+  "runs": 5,
+  "commands": {
+    "showcase": "'/usr/lib/R/bin/Rscript' integration-apps/run.R --app=showcase --mode=headless --steps=0",
+    "analytics": "'/usr/lib/R/bin/Rscript' integration-apps/run.R --app=analytics --mode=headless --steps=0",
+    "monitor": "'/usr/lib/R/bin/Rscript' integration-apps/run.R --app=monitor --mode=headless --steps=0",
+    "rtop-baseline": "'/usr/lib/R/bin/Rscript' integration-apps/legacy-rtop/run.R --mode=headless --library=baseline",
+    "rtop-candidate": "'/usr/lib/R/bin/Rscript' integration-apps/legacy-rtop/run.R --mode=headless --library=candidate"
+  },
+  "scope": "Whole-process headless startup, initial frame, shutdown. rtop additionally executes eleven scripted scenarios. No terminal I/O latency claim."
+}

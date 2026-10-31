@@ -1,0 +1,6 @@
+{
+  "library": "baseline",
+  "version": "1.0.1",
+  "scenarios": ["startup", "refresh", "sort-c", "sort-m", "sort-p", "filter", "selection", "resize-small", "resize-large", "controls", "shutdown"],
+  "status": "PASS"
+}

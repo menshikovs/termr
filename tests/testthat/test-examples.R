@@ -4,8 +4,39 @@ test_that("all examples are listed", {
   expect_setequal(run_example(), c("buffer-demo", "compact-form", "counter", "dataframe-browser", "file-tree", "form", "hello",
                                    "keys", "kitchen-sink", "model-monitor", "system-monitor", "data-explorer",
                                    "task-runner", "terminal-dashboard", "editor", "accessibility-demo", "custom-widget",
-                                   "sql-workspace", "database-explorer", "export-report", "data-workbench"))
+                                   "sql-workspace", "database-explorer", "export-report", "data-workbench",
+                                   "typed-data-table", "reproducible-code", "native-charts-dashboard", "native-charts-static",
+                                   "native-charts-stream", "inkr-dashboard", "inkr-datatable", "inkr-focus",
+                                   "inkr-native-chart", "inkr-stylesheet", "inkr-theme-switch", "no-inkr-stylesheet"))
   expect_error(run_example("nope"), "Unknown example")
+})
+
+test_that("the typed data table example builds and applies typed edits", {
+  expect_no_error(run_example("typed-data-table"))
+})
+
+test_that("the reproducible code example builds bounded value, pipeline and edit code", {
+  expect_no_error(run_example("reproducible-code"))
+})
+
+test_that("the native chart examples build as static, interactive and live apps", {
+  static <- test_app(load_example("native-charts-static"), 120, 36)
+  expect_true(any(nzchar(trimws(static$screen_text()))))
+  static$stop()
+
+  dashboard <- test_app(load_example("native-charts-dashboard"), 120, 36)
+  on.exit(dashboard$stop(), add = TRUE)
+  before <- dashboard$screen_text()
+  dashboard$press("r")
+  dashboard$step()
+  expect_true(any(nzchar(trimws(dashboard$screen_text()))))
+  expect_length(before, 36L)
+
+  live <- test_app(load_example("native-charts-stream"), 90, 24)
+  on.exit(live$stop(), add = TRUE)
+  live$advance(0.6)
+  expect_null(live$query_one("#live-chart")$stream_error)
+  expect_true(any(nzchar(trimws(live$screen_text()))))
 })
 
 test_that("the hello example greets the user", {

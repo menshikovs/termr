@@ -1,0 +1,29 @@
+{
+  "quiet-exit": {
+    "status": "PASS"
+  },
+  "stderr-separate": {
+    "status": "PASS"
+  },
+  "nonzero-exit": {
+    "status": "PASS"
+  },
+  "timeout": {
+    "status": "PASS"
+  },
+  "owned-child-cleanup": {
+    "status": "PASS"
+  },
+  "real-showcase": {
+    "status": "PASS"
+  },
+  "real-analytics": {
+    "status": "PASS"
+  },
+  "real-monitor": {
+    "status": "PASS"
+  },
+  "missing-optional-diagnostic": {
+    "status": "PASS"
+  }
+}

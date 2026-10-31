@@ -1,0 +1,13 @@
+{
+  "app": "showcase",
+  "command": "Rscript integration-apps/run.R --app=showcase --mode=terminal",
+  "loader_environment": "TERMR_USE_INSTALLED unset",
+  "platform": "linux",
+  "start": true,
+  "render": true,
+  "interact": true,
+  "status": "PASS",
+  "shutdown": true,
+  "exit_code": 0,
+  "reader_errors": []
+}

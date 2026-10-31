@@ -29,10 +29,6 @@ loop tick produce a single repaint.
 \section{Public fields}{
   \if{html}{\out{<div class="r6-fields">}}
   \describe{
-    \item{\code{id}}{Unique identifier used by \verb{#id} selectors, or \code{NULL}.}
-
-    \item{\code{classes}}{Character vector of classes used by \code{.class} selectors.}
-
     \item{\code{help}}{Optional help text (Markdown) shown on the help screen
 (F1) while this widget or a descendant has focus.}
 
@@ -55,6 +51,10 @@ repaint (see \code{invalidate_paint()}); used by \code{set_state()}.}
     \item{\code{app}}{The \link{App} this widget belongs to, or \code{NULL}.}
 
     \item{\code{type}}{Widget type name used by type selectors.}
+
+    \item{\code{id}}{Unique identifier used by \verb{#id} selectors, or \code{NULL}.}
+
+    \item{\code{classes}}{Character vector of classes used by \code{.class} selectors.}
 
     \item{\code{visible}}{Is the widget shown? Hidden widgets take no space.}
 

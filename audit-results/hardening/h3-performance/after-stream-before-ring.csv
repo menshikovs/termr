@@ -1,0 +1,4 @@
+"phase","group","id","n","rep","elapsed","allocated","allocations","inkr_reset_bytes"
+"after","stream","continuous-stream",384,1,0.41,103584480,16260,0
+"after","stream","continuous-stream",384,2,0.84,103584480,16260,0
+"after","stream","continuous-stream",384,3,0.81,103584480,16260,0

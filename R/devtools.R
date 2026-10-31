@@ -4,7 +4,7 @@
 #'
 #' Collects what termr knows about a widget: type, id, classes, region,
 #' states, reactive state values, computed style, matching stylesheet
-#' rules, bindings, parent and children. Printing the result gives a
+#' rules, inkr property explanations, bindings, parent and children. Printing the result gives a
 #' readable report.
 #'
 #' @param x An [App] or a widget.
@@ -28,6 +28,7 @@ inspect_widget <- function(x, selector = NULL) {
       }
     }
   }
+  inkr <- inspect_inkr_properties(app, widget)
   state <- as.list(widget_private(widget)$.state)
   if (isTRUE(widget$password) && !is.null(state$value)) state$value <- "<hidden>"
   structure(
@@ -46,12 +47,27 @@ inspect_widget <- function(x, selector = NULL) {
       style = st[c("width", "height", "margin", "padding", "border", "layout", "align", "valign",
                    "wrap", "foreground", "background", "border_color")],
       stylesheet_rules = unique(rules),
+      inkr = inkr,
       bindings = vapply(widget$bindings(), format, character(1)),
       parent = if (is.null(widget$parent)) NA_character_ else widget$parent$format(),
       children = vapply(widget$children, function(w) w$format(), character(1))
     ),
     class = "termr_inspection"
   )
+}
+
+inspect_inkr_properties <- function(app, widget) {
+  if (is.null(app) || is.null(app$inkr_stylesheet)) return(NULL)
+  properties <- c("color", "background", "text-style", "padding", "margin", "border", "width", "height")
+  out <- list()
+  for (property in properties) {
+    explanation <- app$explain_inkr_style(widget, property)
+    effective <- explanation$resolution$effective_source$provenance
+    declared <- !is.null(explanation$winner) ||
+      (identical(explanation$origin, "inherited") && !is.null(effective$rule_index))
+    if (declared) out[[property]] <- explanation
+  }
+  out
 }
 
 #' @export
@@ -77,6 +93,14 @@ print.termr_inspection <- function(x, ...) {
   cat("style:\n")
   for (n in names(x$style)) cat(sprintf("  %-12s %s\n", n, show(x$style[[n]])))
   if (length(x$stylesheet_rules)) cat("rules:      ", paste(x$stylesheet_rules, collapse = " | "), "\n")
+  if (length(x$inkr)) {
+    cat("inkr rules:\n")
+    for (name in names(x$inkr)) {
+      item <- x$inkr[[name]]
+      rule <- if (is.null(item$winner)) "inherited" else paste0("rule ", item$winner$rule_index)
+      cat(sprintf("  %-12s %s (%s)\n", name, format(item$value), rule))
+    }
+  }
   if (length(x$bindings)) cat("bindings:   ", paste(x$bindings, collapse = " "), "\n")
   invisible(x)
 }

@@ -1,0 +1,55 @@
+{
+  "stage": "exit",
+  "pid": 745,
+  "R": "R version 4.5.2 (2025-10-31)",
+  "locale": "LC_CTYPE=C.UTF-8;LC_NUMERIC=C;LC_TIME=C.UTF-8;LC_COLLATE=C.UTF-8;LC_MONETARY=C.UTF-8;LC_MESSAGES=C.UTF-8;LC_PAPER=C.UTF-8;LC_NAME=C;LC_ADDRESS=C;LC_TELEPHONE=C;LC_MEASUREMENT=C.UTF-8;LC_IDENTIFICATION=C",
+  "utf8": true,
+  "command": ["/usr/lib/R/bin/exec/R", "--no-echo", "--no-restore", "--file=integration-apps/run.R", "--args", "--app=analytics", "--mode=web"],
+  "cwd": "/mnt/c/programming_pj/r_textualize",
+  "lib_paths": ["/mnt/c/programming_pj/r_textualize/integration-apps/.deps/current-linux", "/mnt/c/programming_pj/r_textualize/integration-apps/.deps/R-linux", "/home/user001/R/x86_64-pc-linux-gnu-library/4.5", "/usr/local/lib/R/site-library", "/usr/lib/R/site-library", "/usr/lib/R/library"],
+  "termr_loaded": true,
+  "packages": [
+    {
+      "package": "termr",
+      "loaded": true,
+      "version": "1.0.1",
+      "namespace_path": "/mnt/c/programming_pj/r_textualize/integration-apps/.deps/current-linux/termr"
+    },
+    {
+      "package": "inkr",
+      "loaded": false,
+      "version": null,
+      "namespace_path": null
+    },
+    {
+      "package": "mirai",
+      "loaded": false,
+      "version": null,
+      "namespace_path": null
+    },
+    {
+      "package": "nanonext",
+      "loaded": false,
+      "version": null,
+      "namespace_path": null
+    },
+    {
+      "package": "shiny",
+      "loaded": true,
+      "version": "1.10.0",
+      "namespace_path": "/usr/lib/R/site-library/shiny"
+    },
+    {
+      "package": "ggplot2",
+      "loaded": true,
+      "version": "4.0.2",
+      "namespace_path": "/usr/lib/R/site-library/ggplot2"
+    },
+    {
+      "package": "plotly",
+      "loaded": true,
+      "version": "4.10.4",
+      "namespace_path": "/usr/lib/R/site-library/plotly"
+    }
+  ]
+}

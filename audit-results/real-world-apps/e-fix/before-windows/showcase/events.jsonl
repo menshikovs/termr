@@ -1,0 +1,17 @@
+{"event":"sample","at":1.26,"sequence":1} 
+{"event":"ready","at":2.35,"app":"showcase"} 
+{"event":"sample","at":2.79,"sequence":2} 
+{"event":"key","at":3.03,"key":"f2"} 
+{"event":"status","at":3.12,"message":"iris local/editable columns only"} 
+{"event":"source","at":3.12,"dataset":"iris","lazy":false,"rows":150} 
+{"event":"sample","at":3.32,"sequence":3} 
+{"event":"key","at":3.34,"key":"alt+s"} 
+{"event":"status","at":3.35,"message":"cars lazy/read-only 10000 rows"} 
+{"event":"source","at":3.35,"dataset":"cars","lazy":true,"rows":10000} 
+{"event":"key","at":3.39,"key":"f4"} 
+{"event":"status","at":3.39,"message":"Theme: light (inkr)"} 
+{"event":"theme","at":3.4,"theme":"light"} 
+{"event":"sample","at":3.81,"sequence":4} 
+{"event":"sample","at":4.32,"sequence":5} 
+{"event":"key","at":4.56,"key":"q"} 
+{"event":"stopped","at":4.67,"app":"showcase","dataset":"cars","rows":10000,"samples":5,"subscribers":0,"closed":true} 

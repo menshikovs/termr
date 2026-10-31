@@ -1,0 +1,12 @@
+RUN process 
+PASS process 
+RUN expect-showcase 
+PASS expect-showcase 
+RUN expect-monitor 
+PASS expect-monitor 
+RUN tmux 
+PASS tmux 
+RUN recording 
+PASS recording 
+RUN lint 
+PASS lint 

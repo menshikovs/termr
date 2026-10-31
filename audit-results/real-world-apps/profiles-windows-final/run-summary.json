@@ -1,0 +1,14 @@
+{
+  "platform": ["Windows", "10 x64", "build 26100", "LAPTOP-RBSL4FGN", "x86-64", "User001", "User001", "User001", "LAPTOP-RBSL4FGN"],
+  "app": "all",
+  "modes": "profile",
+  "results": [
+    {
+      "name": "profile",
+      "seconds": 30.44,
+      "status": "PASS",
+      "exit_code": 0,
+      "timeout": false
+    }
+  ]
+}

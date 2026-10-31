@@ -1,0 +1,9 @@
+file,function_label,hit,expressions,covered_expressions
+integration-apps/01-termr-showcase/app.R,workbench_fixtures,True,13,13
+integration-apps/01-termr-showcase/app.R,workbench_app,True,131,124
+integration-apps/02-shiny-visual-analytics/app.R,analytics_model,True,33,32
+integration-apps/02-shiny-visual-analytics/app.R,analytics_terminal,True,21,21
+integration-apps/02-shiny-visual-analytics/app.R,analytics_dashboard,True,89,68
+integration-apps/03-mirai-nanonext-monitor/app.R,monitor_work,False,8,0
+integration-apps/03-mirai-nanonext-monitor/app.R,distributed_model,True,84,76
+integration-apps/03-mirai-nanonext-monitor/app.R,distributed_monitor,True,60,52

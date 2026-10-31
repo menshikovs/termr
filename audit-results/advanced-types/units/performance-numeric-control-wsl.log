@@ -1,0 +1,8 @@
+   rows scroll_40_down_ms format_20_visible_cells_100x_ms edit_cell_ms
+    100              1109                               3         0.58
+  10000               836                               3         0.98
+ 100000               827                               3         1.26
+ edit_cell_alloc_bytes
+                 19512
+                182008
+                902008

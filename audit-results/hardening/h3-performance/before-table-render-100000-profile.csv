@@ -1,0 +1,17 @@
+"","total.time","total.pct","self.time","self.pct"
+"""measure""",0.04,100,0,0
+"""system.time""",0.035,87.5,0,0
+"""unname""",0.035,87.5,0,0
+"""gc""",0.025,62.5,0.025,62.5
+"""buffer$put_text""",0.01,25,0.005,12.5
+"""compose_frame""",0.01,25,0,0
+"""paint_tree""",0.01,25,0,0
+"""render_widget""",0.01,25,0,0
+"""run""",0.01,25,0,0
+"""widget$paint""",0.01,25,0,0
+"""$""",0.005,12.5,0.005,12.5
+"""Rprof""",0.005,12.5,0.005,12.5
+"""draw_scrollbar""",0.005,12.5,0,0
+"""private$paint_scrollbars""",0.005,12.5,0,0
+"""rect_bottom""",0.005,12.5,0,0
+"""rect_intersect""",0.005,12.5,0,0

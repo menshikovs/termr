@@ -1,0 +1,13 @@
+[
+  {
+    "app": "showcase",
+    "command": "Rscript integration-apps/run.R --app=showcase --mode=terminal",
+    "loader_environment": "TERMR_USE_INSTALLED unset",
+    "platform": "win32",
+    "start": true,
+    "render": true,
+    "status": "FAIL",
+    "error": "0",
+    "traceback": "Traceback (most recent call last):\n  File \"C:\\programming_pj\\r_textualize\\integration-apps\\automation\\entrypoint-pty.py\", line 117, in scenario\n    assert code!=0 if crash else code==0,code\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 0\n"
+  }
+]

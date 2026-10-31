@@ -1,0 +1,42 @@
+{"event":"sample","at":0.984,"sequence":1} 
+{"event":"ready","at":1.174,"app":"showcase"} 
+{"event":"key","at":1.431,"key":"f2"} 
+{"event":"status","at":1.505,"message":"iris local/editable columns only"} 
+{"event":"source","at":1.508,"dataset":"iris","lazy":false,"rows":150} 
+{"event":"sample","at":1.756,"sequence":2} 
+{"event":"key","at":1.779,"key":"f11"} 
+{"event":"status","at":1.794,"message":"cars lazy/read-only 10000 rows"} 
+{"event":"source","at":1.797,"dataset":"cars","lazy":true,"rows":10000} 
+{"event":"key","at":1.864,"key":"f4"} 
+{"event":"status","at":1.88,"message":"Theme: light (inkr)"} 
+{"event":"theme","at":1.883,"theme":"light"} 
+{"event":"sample","at":2.005,"sequence":3} 
+{"event":"key","at":2.049,"key":"f11"} 
+{"event":"status","at":2.058,"message":"cars local/editable columns only"} 
+{"event":"source","at":2.062,"dataset":"cars","lazy":false,"rows":32} 
+{"event":"key","at":2.119,"key":"f5"} 
+{"event":"status","at":2.132,"message":"Filtered: 14 rows"} 
+{"event":"filter","at":2.138,"rows":14} 
+{"event":"key","at":2.203,"key":"f6"} 
+{"event":"cell-changed","at":2.411,"row":1,"column":"value","value":12.5} 
+{"event":"key","at":2.473,"key":"f7"} 
+{"event":"select","at":2.476} 
+{"event":"key","at":2.483,"key":"f8"} 
+{"event":"status","at":2.491,"message":"R value exact"} 
+{"event":"copy","at":2.502,"kind":"value","status":"exact"} 
+{"event":"sample","at":2.549,"sequence":4} 
+{"event":"key","at":2.764,"key":"f9"} 
+{"event":"status","at":2.831,"message":"R pipeline exact"} 
+{"event":"copy","at":2.838,"kind":"pipeline","status":"exact"} 
+{"event":"sample","at":3.005,"sequence":5} 
+{"event":"key","at":3.099,"key":"f12"} 
+{"event":"status","at":3.167,"message":"Selected stream point 2"} 
+{"event":"chart-selection","at":3.171,"index":2} 
+{"event":"key","at":3.236,"key":"shift+tab"} 
+{"event":"chart-tab","at":3.288,"index":2} 
+{"event":"chart-tab","at":3.351,"index":3} 
+{"event":"chart-tab","at":3.417,"index":4} 
+{"event":"chart-tab","at":3.485,"index":5} 
+{"event":"sample","at":3.529,"sequence":6} 
+{"event":"key","at":3.551,"key":"q"} 
+{"event":"stopped","at":3.571,"app":"showcase","dataset":"cars","rows":13,"samples":6,"subscribers":0,"closed":true} 

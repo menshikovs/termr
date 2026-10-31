@@ -266,7 +266,7 @@ termr_mirai_pool <- function(workers = 2L, max_pending = 128L, history = 256L,
 #'
 #' With `progress=TRUE`, `fn` must accept `progress` (or `...`). The injected
 #' function accepts `progress(value=NA_real_, message="")`: known fractions
-#' must be monotonic in [0,1]; NA means unknown. Calls are throttled and native
+#' must be monotonic in `[0, 1]`; NA means unknown. Calls are throttled and native
 #' sends never wait for a slow consumer. Messages are bounded raw JSON; final
 #' envelopes reconcile dropped latest progress. Results use mirai's local R
 #' serialization, not JSON. Reference-bearing inputs are rejected; lexical

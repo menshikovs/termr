@@ -23,6 +23,9 @@ will be called out in NEWS and migration notes.
   `termr_theme()`, and documented built-in theme names.
 - In-memory data tables: `data_table()` with a data frame or matrix,
   `column()`, sorting, filtering, selection and documented table events.
+  Typed display, `show_types`, and the type metadata returned by
+  `column_info()` follow this stable data-view contract. Cell editing remains
+  experimental; see [Data tools](data.md#data-table-20).
 - App testing and basic rendering: `test_app()`, `render_widget()`,
   `render_text()`, `render_lines()`, `strip_ansi()`, and the documented pilot
   methods.
@@ -46,6 +49,9 @@ NEWS and in [migration notes](migration-to-1.0.md).
   `peek()`, `untracked()`, `dispose()`, and `update_signal()`.
 - Local data streams: `termr_stream()` and its subscription/history lifecycle
   (see [Data streams](data-streams.md)).
+- Native terminal charts: `line_chart()`, `scatter_chart()`, `bar_chart()`,
+  `histogram()` and `heatmap_chart()` are experimental additive widgets. Their
+  event payloads and stream binding contract may evolve; see [Native charts](charts.md).
 - Optional telemetry: `termr_nano_publish()` and `termr_nano_connect()`
   (see [nanonext transport](nanonext.md)).
 - Optional Shiny integration: `termr_shiny_receiver()`,
@@ -72,6 +78,9 @@ NEWS and in [migration notes](migration-to-1.0.md).
   `write_rendered()`.
 - Diagnostic and low-level rendering APIs such as `inspect_widget()`,
   `inspect_signal()`, `patch_to_ansi()`, and `diff_screen()`.
+- Optional inkr integration: `App$set_inkr_stylesheet()`,
+  `App$clear_inkr_stylesheet()` and `App$explain_inkr_style()`; it depends on
+  the separately installed `inkr` package (see [inkr integration](inkr-integration.md)).
 
 Optional packages such as DBI, RSQLite, jsonlite and knitr remain optional;
 they are not runtime dependencies.

@@ -1,0 +1,6 @@
+PTY child: TERM='xterm-256color' COLORTERM='' TERM_PROGRAM='' tty_mode=controlling
+PASS raw ESC/NUL/FF/invalid UTF-8 render as hex
+PASS Unicode column label reaches the PTY
+PASS binary output contains no terminal control bytes
+PASS binary PTY app exits normally
+all binary PTY checks passed

@@ -1,0 +1,16 @@
+[
+  {
+    "name": "browser",
+    "seconds": 8.7,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "lint",
+    "seconds": 9.35,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  }
+]

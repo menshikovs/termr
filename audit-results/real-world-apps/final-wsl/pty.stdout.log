@@ -1,0 +1,4 @@
+{"app": "showcase", "status": "PASS", "ready_ms": 907.3537319999971, "exit_status": 0, "terminal_restored": true, "events": 35, "recording": null}
+{"app": "analytics", "status": "PASS", "ready_ms": 557.4814840000001, "exit_status": 0, "terminal_restored": true, "events": 8, "recording": null}
+{"app": "monitor", "status": "PASS", "ready_ms": 972.9631229999995, "exit_status": 0, "terminal_restored": true, "events": 40, "recording": null}
+{"app": "rtop", "status": "PASS", "ready_ms": 810.0454669999948, "exit_status": 0, "terminal_restored": true, "events": 11, "recording": null}

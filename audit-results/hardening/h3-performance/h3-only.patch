@@ -1,0 +1,415 @@
+--- baseline/R/app.R
++++ R/app.R
+@@ -1119,8 +1119,10 @@
+ 
+     widget_unmounting = function(widget, dispose = TRUE) {
+       removed <- widget$walk()
+-      inkr_release_widget_tree(widget)
+-      inkr_reset_style_cache(self)
++      if (!is.null(private$.inkr_stylesheet)) {
++        inkr_release_widget_tree(widget)
++        inkr_reset_style_cache(self)
++      }
+       if (dispose) {
+         for (w in removed) widget_private(w)$cancel_timers()
+         for (worker in private$.workers) {
+@@ -1143,8 +1145,10 @@
+     },
+ 
+     screen_leaving = function(screen) {
+-      inkr_release_widget_tree(screen)
+-      inkr_reset_style_cache(self)
++      if (!is.null(private$.inkr_stylesheet)) {
++        inkr_release_widget_tree(screen)
++        inkr_reset_style_cache(self)
++      }
+       private$.focus$release(screen)
+       private$.focus$lost <- FALSE
+       private$.mouse_down <- NULL
+--- baseline/R/chart-widget.R
++++ R/chart-widget.R
+@@ -89,6 +89,7 @@
+       state$active <- TRUE
+       state$flush_scheduled <- FALSE
+       state$pending_render <- FALSE
++      state$next_publish <- -Inf
+       state$flush_count <- 0L
+       state$queue <- chart_stream_queue_new(max_points)
+       callback <- function(event) private$consume_stream_event(event, x, y, max_points, state)
+@@ -349,8 +350,14 @@
+       }
+       state$flush_count <- state$flush_count + 1L
+       batch <- chart_stream_queue_drain(state$queue, limit = 16L)
++      app <- self$app
++      clock <- if (is.null(app)) now_seconds else app$.__enclos_env__$private$clock
++      # Keep a continuously non-empty queue fresh without repainting every
++      # 1 ms processing chunk. A finite burst still publishes its final view.
++      publish <- !state$queue$size || clock() >= state$next_publish
+       private$apply_stream_batch(batch$events, batch$dropped, x, y, max_points, state,
+-                                 render = !state$queue$size)
++                                 render = publish)
++      if (publish) state$next_publish <- clock() + 1 / 60
+       if (isTRUE(state$active) && state$queue$size) {
+         # Let the app paint between chunks so a large burst cannot monopolize
+         # one event-loop turn. Widget timers are cancelled with the app.
+--- baseline/R/event-queue.R
++++ R/event-queue.R
+@@ -2,32 +2,62 @@
+ EventQueue <- R6::R6Class(
+   "EventQueue",
+   public = list(
++    initialize = function() private$items <- new.env(hash = TRUE, parent = emptyenv()),
++
+     push = function(event) {
+-      private$items[[length(private$items) + 1L]] <- event
++      if (is.null(event)) return(invisible(self))
++      if (private$count == private$capacity) private$grow()
++      private$items[[as.character(private$tail)]] <- event
++      private$tail <- if (private$tail == private$capacity) 1L else private$tail + 1L
++      private$count <- private$count + 1L
+       invisible(self)
+     },
+ 
+     pop = function() {
+-      if (private$head > length(private$items)) return(NULL)
+-      item <- private$items[[private$head]]
+-      private$items[private$head] <- list(NULL)
+-      private$head <- private$head + 1L
+-      if (private$head > 64L && private$head > length(private$items) / 2) {
+-        private$items <- private$items[-seq_len(private$head - 1L)]
+-        private$head <- 1L
++      if (!private$count) return(NULL)
++      key <- as.character(private$head)
++      item <- private$items[[key]]
++      rm(list = key, envir = private$items)
++      private$head <- if (private$head == private$capacity) 1L else private$head + 1L
++      private$count <- private$count - 1L
++      if (!private$count) {
++        # Drop a burst's expanded hash table once drained. Small queues reuse
++        # their storage, avoiding a new environment for each ordinary event.
++        if (private$capacity > 64L) private$items <- new.env(hash = TRUE, parent = emptyenv())
++        private$capacity <- 64L
++        private$head <- private$tail <- 1L
+       }
+       item
+     },
+ 
+-    size = function() length(private$items) - private$head + 1L,
++    size = function() private$count,
+ 
+     is_empty = function() self$size() == 0L,
+ 
+     clear = function() {
+-      private$items <- list()
+-      private$head <- 1L
++      private$items <- new.env(hash = TRUE, parent = emptyenv())
++      private$head <- private$tail <- 1L
++      private$count <- 0L
++      private$capacity <- 64L
+       invisible(self)
+     }
+   ),
+-  private = list(items = list(), head = 1L)
++  private = list(
++    items = NULL, head = 1L, tail = 1L, count = 0L, capacity = 64L,
++    grow = function() {
++      if (private$capacity == .Machine$integer.max) stop("Too many pending events.", call. = FALSE)
++      capacity <- as.integer(min(as.double(private$capacity) * 2, .Machine$integer.max))
++      items <- new.env(hash = TRUE, parent = emptyenv())
++      index <- private$head
++      for (i in seq_len(private$count)) {
++        items[[as.character(i)]] <- private$items[[as.character(index)]]
++        index <- if (index == private$capacity) 1L else index + 1L
++      }
++      private$items <- items
++      private$capacity <- capacity
++      private$head <- 1L
++      private$tail <- private$count + 1L
++      invisible()
++    }
++  )
+ )
+--- baseline/R/inkr-integration.R
++++ R/inkr-integration.R
+@@ -47,16 +47,29 @@
+ }
+ 
+ inkr_element_for_widget <- function(widget, states = NULL) {
+-  path <- rev(c(list(widget), widget$ancestors()))
+-  parent <- NULL
+-  for (node in path) {
+-    active <- if (identical(node, widget)) states %||% node$pseudo_states() else node$pseudo_states()
+-    parent <- inkr_call(
+-      "ink_element", type = node$type, id = node$id,
+-      classes = node$classes, states = active %||% character(), parent = parent
+-    )
+-  }
+-  parent
++  active <- states %||% widget$pseudo_states() %||% character()
++  cached <- widget_cache_get(widget, "inkr_element")
++  if (!is.null(cached) && identical(cached$states, active)) return(cached$element)
++  parent <- widget$parent
++  element <- inkr_call(
++    "ink_element", type = widget$type, id = widget$id,
++    classes = widget$classes, states = active,
++    parent = if (!is.null(parent)) inkr_element_for_widget(parent) else NULL
++  )
++  widget_cache_set(widget, "inkr_element", list(states = active, element = element))
++  element
++}
++
++inkr_path_key_for_widget <- function(widget, states = NULL) {
++  active <- states %||% widget$pseudo_states() %||% character()
++  cached <- widget_cache_get(widget, "inkr_path_key")
++  if (!is.null(cached) && identical(cached$states, active)) return(cached$key)
++  node <- paste(widget$type, widget$id %||% "",
++    paste(widget$classes, collapse = "\035"), paste(active, collapse = "\035"), sep = "\034")
++  parent <- widget$parent
++  key <- if (is.null(parent)) node else paste(inkr_path_key_for_widget(parent), node, sep = "\036")
++  widget_cache_set(widget, "inkr_path_key", list(states = active, key = key))
++  key
+ }
+ 
+ inkr_clear_widget_caches <- function(app) {
+@@ -67,7 +80,11 @@
+   for (root in roots) {
+     for (widget in root$walk()) {
+       widget_state <- widget_private(widget)
+-      if (is.list(widget_state$.cache)) widget_state$.cache$inkr_explicit <- NULL
++      if (is.list(widget_state$.cache)) {
++        widget_state$.cache$inkr_explicit <- NULL
++        widget_state$.cache$inkr_element <- NULL
++        widget_state$.cache$inkr_path_key <- NULL
++      }
+     }
+   }
+   invisible()
+@@ -84,7 +101,11 @@
+ inkr_release_widget_tree <- function(widget) {
+   for (node in widget$walk()) {
+     private <- widget_private(node)
+-    if (is.list(private$.cache)) private$.cache$inkr_explicit <- NULL
++    if (is.list(private$.cache)) {
++      private$.cache$inkr_explicit <- NULL
++      private$.cache$inkr_element <- NULL
++      private$.cache$inkr_path_key <- NULL
++    }
+   }
+   invisible()
+ }
+@@ -92,14 +113,9 @@
+ inkr_style_for_widget <- function(app, widget, states = widget$pseudo_states()) {
+   private <- app$.__enclos_env__$private
+   if (is.null(private$.inkr_stylesheet)) return(NULL)
+-  path <- rev(c(list(widget), widget$ancestors()))
+-  signature <- lapply(path, function(node) {
+-    list(
+-      type = node$type, id = node$id, classes = node$classes,
+-      states = (if (identical(node, widget)) states else node$pseudo_states()) %||% character()
+-    )
+-  })
+-  key <- inkr_signature_key(private$.inkr_generation, signature)
++  # These widget-local entries use the existing style epoch, so ancestor,
++  # focus, class and tree changes invalidate them with computed styles.
++  key <- paste(private$.inkr_generation, inkr_path_key_for_widget(widget, states), sep = "\034")
+   if (exists(key, envir = private$.inkr_cache, inherits = FALSE)) {
+     cached <- get(key, envir = private$.inkr_cache, inherits = FALSE)
+     widget_cache_set(widget, "inkr_explicit", cached$explicit)
+@@ -110,6 +126,7 @@
+     "ink_compute", private$.inkr_stylesheet,
+     inkr_element_for_widget(widget, states)
+   )
++  path <- rev(c(list(widget), widget$ancestors()))
+   explicit_ancestors <- lapply(path[-length(path)], function(node) {
+     flags <- widget_cache_get(node, "inkr_explicit")
+     if (is.null(flags)) {
+--- baseline/docs/charts.md
++++ docs/charts.md
+@@ -115,11 +115,13 @@
+ removing the widget or shutting down its app also releases the subscription.
+ The source calls its subscribers synchronously. After a chart is mounted, its
+ callback places events into a bounded queue and starts a bounded drain on the
+-next event-loop turn. Bursts coalesce into one chart normalization and repaint
+-after the pending queue drains.
+-Each turn processes at most 16 pending events. Larger bursts continue on a
+-short widget timer so the app can paint between chunks; the chart is normalized
+-and repainted once the pending queue drains. The queue holds at most
++next event-loop turn. Each turn processes at most 16 pending events. Larger
++bursts continue on a short widget timer so the app can handle input between
++chunks. The first chunk and final drain publish immediately. While the queue
++stays non-empty, intermediate chart normalization and repaint requests coalesce
++to at most 60 per second, so a continuous producer still updates the display.
++This cadence follows the app clock; it is not a real-time frame guarantee.
++The queue holds at most
+ `max_points` pending events; if it overflows, the oldest pending events are
+ dropped. Before mount, records update the chart synchronously. Keep extractors
+ small and `max_points` bounded. This adapter creates no worker or transport
+--- baseline/docs/inkr-integration.md
++++ docs/inkr-integration.md
+@@ -38,7 +38,9 @@
+ framebuffer has no alpha channel.
+ 
+ For a cache miss, termr constructs the public `ink_element()` path and calls
+-`ink_compute()`. Each app has a bounded cache keyed by selector path (type, id,
++`ink_compute()`. Parent elements and path prefixes are reused within the
++existing widget style epoch and released on unmount or stylesheet changes.
++Each app has a bounded cache keyed by selector path (type, id,
+ classes and pseudo states). A focus change therefore reuses unchanged paths'
+ mapped styles even though termr recomputes their outer styles. Reparenting or an
+ ancestor state/class change changes the path key; stylesheet replacement and
+--- baseline/tests/testthat/test-chart-streams.R
++++ tests/testthat/test-chart-streams.R
+@@ -164,8 +164,8 @@
+   expect_identical(state$queue$size, 74L)
+   expect_true(state$flush_scheduled)
+   expect_identical(state$flush_count, 1L)
+-  expect_true(state$pending_render)
+-  expect_length(chart$.__enclos_env__$private$.spec$data$x, 0L)
++  expect_false(state$pending_render)
++  expect_length(chart$.__enclos_env__$private$.spec$data$x, 16L)
+ 
+   pilot$advance(0.01)
+   expect_identical(state$queue$size, 0L)
+--- baseline/tests/testthat/test-h2-contracts.R
++++ tests/testthat/test-h2-contracts.R
+@@ -314,7 +314,8 @@
+   pilot$step()
+   state <- chart$.__enclos_env__$private$.stream_state
+   expect_true(state$flush_scheduled)
+-  expect_true(state$pending_render)
++  expect_false(state$pending_render)
++  expect_length(chart$.__enclos_env__$private$.spec$data$x, 16L)
+   pilot$advance(0.05)
+   displayed_pts <- length(chart$.__enclos_env__$private$.spec$data$x)
+   expect_gt(displayed_pts, 0L)
+--- /dev/null
++++ tests/testthat/test-h3-performance-contracts.R
+@@ -0,0 +1,128 @@
++test_that("event bursts avoid quadratic list copies and preserve FIFO", {
++  skip_if_not(capabilities("profmem"))
++  q <- EventQueue$new()
++  path <- tempfile()
++  on.exit({Rprofmem(NULL); unlink(path)}, add = TRUE)
++  values <- as.list(seq_len(1000L))
++  Rprofmem(path)
++  for (value in values) q$push(value)
++  Rprofmem(NULL)
++  bytes <- suppressWarnings(as.numeric(sub(":.*$", "", readLines(path, warn = FALSE))))
++  expect_lt(sum(bytes, na.rm = TRUE), 2000000)
++  for (i in 1:500) expect_identical(q$pop(), i)
++  for (i in 1001:1100) q$push(i)
++  expect_identical(q$size(), 600L)
++  for (i in 501:1100) expect_identical(q$pop(), i)
++  expect_true(q$is_empty())
++  expect_null(q$pop())
++  q$push(NULL)
++  expect_true(q$is_empty())
++  q$push(1L); q$clear()
++  expect_null(q$pop())
++  q$push(2L)
++  expect_identical(q$pop(), 2L)
++  expect_true(EventQueue$new()$is_empty())
++  # Environment binding names intern R symbols. Reuse slots during sustained
++  # non-empty traffic rather than retaining a new symbol for every event.
++  q$push(0L)
++  received <- integer(10000L)
++  for (i in 1:10000) {q$push(i); received[[i]] <- q$pop()}
++  expect_identical(received, 0:9999)
++  expect_lte(q$.__enclos_env__$private$head, 64L)
++  expect_lte(q$.__enclos_env__$private$tail, 64L)
++  expect_identical(q$pop(), 10000L)
++  # Grow while the logical FIFO is split across the end of the ring.
++  for (i in 1:50) q$push(i)
++  expect_identical(vapply(1:40, function(i) q$pop(), 1L), 1:40)
++  for (i in 51:200) q$push(i)
++  expect_identical(vapply(41:200, function(i) q$pop(), 1L), 41:200)
++})
++
++test_that("unmount without an inkr sheet leaves the unused bridge cache alone", {
++  root <- vertical(label("a"), label("b"))
++  a <- app(root)
++  cache <- a$.__enclos_env__$private$.inkr_cache
++  root$remove_children()
++  expect_true(identical(a$.__enclos_env__$private$.inkr_cache, cache))
++  expect_length(root$children, 0L)
++})
++
++test_that("public inkr elements share parent construction within an epoch", {
++  skip_if_not_installed("inkr")
++  root <- vertical(label("a"), label("b"))
++  a <- app(root, inkr_stylesheet = "Label { color: cyan; }")
++  original <- inkr_call
++  calls <- 0L
++  local_mocked_bindings(inkr_call = function(name, ...) {
++    if (name == "ink_element") calls <<- calls + 1L
++    original(name, ...)
++  })
++  first <- inkr_element_for_widget(root$children[[1L]])
++  second <- inkr_element_for_widget(root$children[[2L]])
++  expect_lte(calls, 4L) # screen, parent, two children
++  before <- calls
++  expect_identical(inkr_element_for_widget(root$children[[1L]]), first)
++  expect_identical(calls, before)
++  root$add_class("changed")
++  updated <- inkr_element_for_widget(root$children[[1L]])
++  expect_gt(calls, before)
++  expect_false(identical(first, updated))
++  override <- inkr_element_for_widget(root$children[[1L]], "focus")
++  expect_false(identical(override, updated))
++  expect_identical(inkr_element_for_widget(root$children[[1L]]), updated)
++})
++
++test_that("continuously backlogged charts publish at a bounded cadence", {
++  s <- termr_stream(history = 0L)
++  chart <- line_chart(numeric(), numeric(), interactive = FALSE)
++  p <- test_app(app(chart))
++  on.exit({p$stop(); s$close()})
++  chart$bind_stream(s, function(v) v$x, function(v) v$y, max_points = 100L)
++  paints_before <- sum(p$app$frame_stats[c("full", "incremental")])
++  counter <- 0L
++  emit <- function(n) for (i in seq_len(n)) {
++    counter <<- counter + 1L
++    s$emit(list(x = counter, y = counter))
++  }
++  emit(64L); p$step()
++  previous <- 0
++  for (i in 1:40) {
++    emit(16L); p$advance(.001)
++    state <- chart$.__enclos_env__$private
++    expect_gt(state$.stream_state$queue$size, 0L)
++    expect_lte(length(state$.spec$data$x), 100L)
++    latest <- tail(state$.spec$data$x, 1L)
++    expect_length(latest, 1L)
++    if (length(latest) && i %% 20L == 0L) {
++      expect_gt(latest, previous)
++      previous <- latest
++    }
++    if (!state$.stream_state$pending_render) expect_equal(state$.spec$data$x, state$.stream_state$x)
++  }
++  expect_lte(sum(p$app$frame_stats[c("full", "incremental")]) - paints_before, 4L)
++  chart$remove()
++  expect_identical(s$subscriber_count(), 0L)
++  emit(20L); p$advance(1)
++  expect_null(chart$.__enclos_env__$private$.stream_state)
++})
++
++test_that("inkr path caches invalidate across sheets, ancestors and reparenting", {
++  skip_if_not_installed("inkr")
++  w <- label("one", classes = "item")
++  root <- vertical(w, classes = "red")
++  a <- app(root, inkr_stylesheet = ".red .item { color: red; } .blue .item { color: blue; }")
++  get_style <- function() inkr_style_for_widget(a, w)$props$foreground
++  red <- get_style()
++  root$classes <- "blue"
++  blue <- get_style()
++  expect_false(identical(red, blue))
++  a$set_inkr_stylesheet(".item { color: green; }")
++  expect_false(identical(blue, get_style()))
++  other <- vertical(classes = "red")
++  root$mount(other)
++  w$remove(); other$mount(w)
++  expect_identical(inkr_element_for_widget(w), inkr::ink_element(type = w$type, id = w$id,
++    classes = w$classes, states = w$pseudo_states() %||% character(), parent = inkr_element_for_widget(other)))
++  a$clear_inkr_stylesheet()
++  expect_null(inkr_style_for_widget(a, w))
++})

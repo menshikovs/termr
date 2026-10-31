@@ -1,0 +1,4 @@
+"scenario","widgets","elapsed_s","cache_entries","cache_payload_bytes"
+"no_inkr",2000,0.83,0,48
+"repeated_paths",2000,1.77,3,6096
+"unique_paths",2000,6.67,2002,4850088

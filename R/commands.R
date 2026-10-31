@@ -88,6 +88,13 @@ collect_commands <- function(app) {
     for (b in rev(node$bindings())) {
       if (!is.null(b$description)) add(from_binding(b, node, source))
     }
+    if (inherits(node, "DataTable")) {
+      for (cmd in node$commands()) {
+        cmd$widget <- node
+        cmd$source <- "widget_command"
+        add(cmd)
+      }
+    }
   }
   for (b in rev(app$bindings())) {
     if (!is.null(b$description) && !identical(b$action, "command_palette")) {
@@ -129,7 +136,7 @@ help_markdown <- function(app) {
     lines <- c(lines, table(bindings))
   }
   lines <- c(lines, "## Application", "", table(app$bindings()))
-  cmds <- Filter(function(cmd) cmd$source == "command", collect_commands(app))
+  cmds <- Filter(function(cmd) cmd$source %in% c("command", "widget_command"), collect_commands(app))
   if (length(cmds)) {
     cats <- vapply(cmds, function(cmd) cmd$category %||% "General", "")
     lines <- c(lines, "## Commands", "")

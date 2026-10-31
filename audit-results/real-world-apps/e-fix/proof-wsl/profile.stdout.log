@@ -1,0 +1,5 @@
+PROFILE app_startup 
+PROFILE table_and_events 
+PROFILE chart_stream 
+PROFILE shiny_updates 
+PROFILE mirai_nanonext 

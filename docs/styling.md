@@ -73,3 +73,6 @@ palette. Named `termr_theme()` so it does not mask `ggplot2::theme()`.
 Built-in themes: `"default"`, `"dark"`, `"light"`, `"high-contrast"`. Without
 colour (`NO_COLOR`) highlights become reverse video, errors bold underline and
 the focused widget gets a heavier border. See [terminal.md](terminal.md).
+
+For an optional standalone parser and cascade engine, see
+[inkr integration](inkr-integration.md).

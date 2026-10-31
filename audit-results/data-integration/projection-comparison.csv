@@ -1,0 +1,3 @@
+stage,columns_per_fetch,rows_per_fetch,viewport_width,fetches
+before,20,100,25,2
+after,4,100,25,2

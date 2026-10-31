@@ -1,0 +1,366 @@
+{
+  "status": "PASS",
+  "startup_shutdown": 100,
+  "ui_actions": 1000,
+  "source_changes": 100,
+  "theme_changes": 100,
+  "chart_updates": 100,
+  "worker_cycles": 5,
+  "reconnects": 20,
+  "render_action_seconds": {
+    "50%": 0.04,
+    "95%": 0.055,
+    "99%": 0.071
+  },
+  "samples": [
+    {
+      "label": "cold",
+      "at": 0.242,
+      "rss": 77639680,
+      "live_heap_mb": 28.7,
+      "children": 0,
+      "r_connections": 3,
+      "descriptors": 6
+    },
+    {
+      "label": "startup-10",
+      "at": 4.111,
+      "rss": 219717632,
+      "live_heap_mb": 73.3,
+      "children": 0,
+      "r_connections": 3,
+      "descriptors": 6
+    },
+    {
+      "label": "startup-20",
+      "at": 7.059,
+      "rss": 220016640,
+      "live_heap_mb": 73.3,
+      "children": 0,
+      "r_connections": 3,
+      "descriptors": 6
+    },
+    {
+      "label": "startup-30",
+      "at": 9.855,
+      "rss": 220352512,
+      "live_heap_mb": 73.3,
+      "children": 0,
+      "r_connections": 3,
+      "descriptors": 6
+    },
+    {
+      "label": "startup-40",
+      "at": 13.169,
+      "rss": 220815360,
+      "live_heap_mb": 73.3,
+      "children": 0,
+      "r_connections": 3,
+      "descriptors": 6
+    },
+    {
+      "label": "startup-50",
+      "at": 16.064,
+      "rss": 220958720,
+      "live_heap_mb": 73.3,
+      "children": 0,
+      "r_connections": 3,
+      "descriptors": 6
+    },
+    {
+      "label": "startup-60",
+      "at": 18.969,
+      "rss": 221097984,
+      "live_heap_mb": 73.3,
+      "children": 0,
+      "r_connections": 3,
+      "descriptors": 6
+    },
+    {
+      "label": "startup-70",
+      "at": 22.326,
+      "rss": 221097984,
+      "live_heap_mb": 73.3,
+      "children": 0,
+      "r_connections": 3,
+      "descriptors": 6
+    },
+    {
+      "label": "startup-80",
+      "at": 25.195,
+      "rss": 221097984,
+      "live_heap_mb": 73.3,
+      "children": 0,
+      "r_connections": 3,
+      "descriptors": 6
+    },
+    {
+      "label": "startup-90",
+      "at": 28.09,
+      "rss": 221196288,
+      "live_heap_mb": 73.3,
+      "children": 0,
+      "r_connections": 3,
+      "descriptors": 6
+    },
+    {
+      "label": "startup-100",
+      "at": 31.417,
+      "rss": 221196288,
+      "live_heap_mb": 73.3,
+      "children": 0,
+      "r_connections": 3,
+      "descriptors": 6
+    },
+    {
+      "label": "1000-actions-100-sources-themes-charts",
+      "at": 93.804,
+      "rss": 231141376,
+      "live_heap_mb": 78.1,
+      "children": 0,
+      "r_connections": 3,
+      "descriptors": 6
+    },
+    {
+      "label": "workbench-closed",
+      "at": 93.944,
+      "rss": 231141376,
+      "live_heap_mb": 76.4,
+      "children": 0,
+      "r_connections": 3,
+      "descriptors": 6
+    },
+    {
+      "label": "worker-cycle-1",
+      "at": 95.051,
+      "rss": 232624128,
+      "live_heap_mb": 80.1,
+      "children": 0,
+      "r_connections": 3,
+      "descriptors": 8
+    },
+    {
+      "label": "worker-cycle-2",
+      "at": 96.166,
+      "rss": 232648704,
+      "live_heap_mb": 80.1,
+      "children": 0,
+      "r_connections": 3,
+      "descriptors": 8
+    },
+    {
+      "label": "worker-cycle-3",
+      "at": 97.428,
+      "rss": 232660992,
+      "live_heap_mb": 80.2,
+      "children": 0,
+      "r_connections": 3,
+      "descriptors": 8
+    },
+    {
+      "label": "worker-cycle-4",
+      "at": 98.633,
+      "rss": 232669184,
+      "live_heap_mb": 80.2,
+      "children": 0,
+      "r_connections": 3,
+      "descriptors": 8
+    },
+    {
+      "label": "worker-cycle-5",
+      "at": 99.778,
+      "rss": 232677376,
+      "live_heap_mb": 80.2,
+      "children": 0,
+      "r_connections": 3,
+      "descriptors": 8
+    },
+    {
+      "label": "final",
+      "at": 99.911,
+      "rss": 232677376,
+      "live_heap_mb": 80.1,
+      "children": 0,
+      "r_connections": 3,
+      "descriptors": 8
+    }
+  ],
+  "worker_final": [
+    {
+      "closed": true,
+      "pool": {
+        "pool_id": "termr-12009-file2ee9360cbe57-1793469358283039",
+        "closed": true,
+        "workers": 1,
+        "pending": 0,
+        "max_pending": 8,
+        "counters": {
+          "submitted": 1,
+          "completed": 1,
+          "failed": 0,
+          "cancelled": 0,
+          "timed_out": 0,
+          "progress": 3
+        },
+        "history": 6,
+        "invalid_progress": 0,
+        "late_progress": 0,
+        "backend": null
+      },
+      "transport": {
+        "state": "closed",
+        "source_id": "p12009-1793469358810186-file2ee9799861f1",
+        "sequence": 4,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": null,
+        "needs_sync": false,
+        "pending": 0
+      },
+      "retained_events": 6,
+      "subscriptions": 0
+    },
+    {
+      "closed": true,
+      "pool": {
+        "pool_id": "termr-12009-file2ee9606816a0-1793469359266761",
+        "closed": true,
+        "workers": 1,
+        "pending": 0,
+        "max_pending": 8,
+        "counters": {
+          "submitted": 1,
+          "completed": 1,
+          "failed": 0,
+          "cancelled": 0,
+          "timed_out": 0,
+          "progress": 3
+        },
+        "history": 6,
+        "invalid_progress": 0,
+        "late_progress": 0,
+        "backend": null
+      },
+      "transport": {
+        "state": "closed",
+        "source_id": "p12009-1793469359908284-file2ee93c7dd1ad",
+        "sequence": 4,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": null,
+        "needs_sync": false,
+        "pending": 0
+      },
+      "retained_events": 6,
+      "subscriptions": 0
+    },
+    {
+      "closed": true,
+      "pool": {
+        "pool_id": "termr-12009-file2ee949740aac-1793469360385656",
+        "closed": true,
+        "workers": 1,
+        "pending": 0,
+        "max_pending": 8,
+        "counters": {
+          "submitted": 1,
+          "completed": 1,
+          "failed": 0,
+          "cancelled": 0,
+          "timed_out": 0,
+          "progress": 3
+        },
+        "history": 6,
+        "invalid_progress": 0,
+        "late_progress": 0,
+        "backend": null
+      },
+      "transport": {
+        "state": "closed",
+        "source_id": "p12009-1793469361143224-file2ee92bb5662c",
+        "sequence": 4,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": null,
+        "needs_sync": false,
+        "pending": 0
+      },
+      "retained_events": 6,
+      "subscriptions": 0
+    },
+    {
+      "closed": true,
+      "pool": {
+        "pool_id": "termr-12009-file2ee968631375-1793469361654247",
+        "closed": true,
+        "workers": 1,
+        "pending": 0,
+        "max_pending": 8,
+        "counters": {
+          "submitted": 1,
+          "completed": 1,
+          "failed": 0,
+          "cancelled": 0,
+          "timed_out": 0,
+          "progress": 3
+        },
+        "history": 6,
+        "invalid_progress": 0,
+        "late_progress": 0,
+        "backend": null
+      },
+      "transport": {
+        "state": "closed",
+        "source_id": "p12009-1793469362371583-file2ee920b8fe66",
+        "sequence": 4,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": null,
+        "needs_sync": false,
+        "pending": 0
+      },
+      "retained_events": 6,
+      "subscriptions": 0
+    },
+    {
+      "closed": true,
+      "pool": {
+        "pool_id": "termr-12009-file2ee930a579a8-1793469362866260",
+        "closed": true,
+        "workers": 1,
+        "pending": 0,
+        "max_pending": 8,
+        "counters": {
+          "submitted": 1,
+          "completed": 1,
+          "failed": 0,
+          "cancelled": 0,
+          "timed_out": 0,
+          "progress": 3
+        },
+        "history": 6,
+        "invalid_progress": 0,
+        "late_progress": 0,
+        "backend": null
+      },
+      "transport": {
+        "state": "closed",
+        "source_id": "p12009-1793469363541530-file2ee9ff2f470",
+        "sequence": 4,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": null,
+        "needs_sync": false,
+        "pending": 0
+      },
+      "retained_events": 6,
+      "subscriptions": 0
+    }
+  ],
+  "limits": ["Short controlled run, not an H4 soak test", "App private timers/cache/callback registry not inspected", "No database connections created; R connection/OS descriptor counts are observable proxies"]
+}

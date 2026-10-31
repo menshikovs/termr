@@ -1,0 +1,22 @@
+{
+  "app": "monitor",
+  "command": "Rscript integration-apps/run.R --app=monitor --mode=terminal",
+  "loader_environment": "TERMR_USE_INSTALLED unset",
+  "platform": "linux",
+  "start": true,
+  "render": true,
+  "interact": true,
+  "owned_processes_verified": 1,
+  "status": "PASS",
+  "shutdown": true,
+  "exit_code": 0,
+  "expected_failure": false,
+  "reader_errors": [],
+  "event_log_read_retries": [
+    {
+      "path": "/mnt/c/programming_pj/r_textualize/audit-results/real-world-apps/e-fix/final-gates-wsl/showcase/events.jsonl",
+      "errno": 61,
+      "attempt": 1
+    }
+  ]
+}

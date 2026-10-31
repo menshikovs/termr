@@ -1,0 +1,34 @@
+[[1]]
+phase_e_main()
+
+[[2]]
+phase_e_run(demo)
+
+[[3]]
+tryCatch(termr::run(application$app), finally = {
+    application$close()
+    phase_e_mark("stopped", application$summary())
+})
+
+[[4]]
+tryCatchList(expr, classes, parentenv, handlers)
+
+[[5]]
+termr::run(application$app)
+
+[[6]]
+x$run(...)
+
+[[7]]
+stop(result)
+
+[[8]]
+(function () 
+{
+    target <- Sys.getenv("TERMR_E_RUNTIME", "")
+    if (nzchar(target)) 
+        writeLines(capture.output(sys.calls()), file.path(dirname(target), 
+            "traceback.txt"))
+    .efix_record_runtime("error")
+})()
+

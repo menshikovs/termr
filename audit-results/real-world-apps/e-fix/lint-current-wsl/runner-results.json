@@ -1,0 +1,9 @@
+[
+  {
+    "name": "lint",
+    "seconds": 19.07,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  }
+]

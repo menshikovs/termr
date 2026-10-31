@@ -1,0 +1,11 @@
+{"event":"web-frame","at":2.79,"rows":1,"source":"alpha","sequence":1,"cpu":43.9263363615538} 
+{"event":"web-frame","at":3.81,"rows":2,"source":"alpha","sequence":2,"cpu":47.4204376368368} 
+{"event":"web-frame","at":4.03,"rows":1,"source":"beta","sequence":1,"cpu":53.9263363615538} 
+{"event":"web-frame","at":4.18,"rows":0,"source":"beta","sequence":2,"cpu":null} 
+{"event":"web-frame","at":4.32,"rows":3,"source":"beta","sequence":3,"cpu":60.0976518176948} 
+{"event":"web-frame","at":4.5,"rows":4,"source":"beta","sequence":4,"cpu":"NA"} 
+{"event":"web-frame","at":4.68,"rows":1,"source":"alpha","sequence":1,"cpu":43.9263363615538} 
+{"event":"web-frame","at":5.03,"rows":1,"source":"alpha","sequence":1,"cpu":43.9263363615538} 
+{"event":"web-frame","at":5.86,"rows":1,"source":"alpha","sequence":1,"cpu":43.9263363615538} 
+{"event":"web-frame","at":6.67,"rows":1,"source":"alpha","sequence":1,"cpu":43.9263363615538} 
+{"event":"web-stopped","at":7.68,"sessions":0,"observers":0,"polls":16,"processed":7,"coalesced":0,"duplicates":0,"out_of_order":0,"poll_errors":0,"history":1,"frame_builds":10,"widget_builds":4,"producer_observers":0} 

@@ -16,7 +16,9 @@ data_profile(
 )
 }
 \arguments{
-\item{data}{An atomic vector, factor, Date, or POSIXct vector.}
+\item{data}{An atomic vector, factor, Date, POSIXct, or difftime vector.
+\code{hms} and \code{bit64::integer64} vectors are supported when their optional
+packages are installed.}
 
 \item{name}{Heading for the profile.}
 

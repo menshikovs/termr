@@ -1,0 +1,38 @@
+[
+  {
+    "app": "showcase",
+    "status": "PASS",
+    "ready_ms": 3309.7681709999733,
+    "exit_status": 0,
+    "terminal_restored": true,
+    "events": 36,
+    "recording": "audit-results/real-world-apps/e-fix/automation-wsl/recording/showcase.cast"
+  },
+  {
+    "app": "analytics",
+    "status": "PASS",
+    "ready_ms": 1842.6809679999678,
+    "exit_status": 0,
+    "terminal_restored": true,
+    "events": 8,
+    "recording": "audit-results/real-world-apps/e-fix/automation-wsl/recording/analytics.cast"
+  },
+  {
+    "app": "monitor",
+    "status": "PASS",
+    "ready_ms": 4205.447040999957,
+    "exit_status": 0,
+    "terminal_restored": true,
+    "events": 43,
+    "recording": "audit-results/real-world-apps/e-fix/automation-wsl/recording/monitor.cast"
+  },
+  {
+    "app": "rtop",
+    "status": "PASS",
+    "ready_ms": 1755.4497660000834,
+    "exit_status": 0,
+    "terminal_restored": true,
+    "events": 11,
+    "recording": "audit-results/real-world-apps/e-fix/automation-wsl/recording/rtop.cast"
+  }
+]

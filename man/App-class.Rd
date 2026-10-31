@@ -52,6 +52,8 @@ This is the app's own clipboard, not the operating system's.}
 
     \item{\code{stylesheets}}{The stylesheets of the app.}
 
+    \item{\code{inkr_stylesheet}}{The current compiled inkr stylesheet, or \code{NULL}.}
+
     \item{\code{hovered}}{The widget under the mouse pointer, or \code{NULL}.}
 
     \item{\code{size}}{Terminal size: \code{c(width =, height =)}.}
@@ -101,6 +103,9 @@ layout passes so far.}
     \item \href{#method-App-set_focus}{\code{App$set_focus()}}
     \item \href{#method-App-add_stylesheet}{\code{App$add_stylesheet()}}
     \item \href{#method-App-clear_stylesheets}{\code{App$clear_stylesheets()}}
+    \item \href{#method-App-set_inkr_stylesheet}{\code{App$set_inkr_stylesheet()}}
+    \item \href{#method-App-clear_inkr_stylesheet}{\code{App$clear_inkr_stylesheet()}}
+    \item \href{#method-App-explain_inkr_style}{\code{App$explain_inkr_style()}}
     \item \href{#method-App-stylesheet_style}{\code{App$stylesheet_style()}}
     \item \href{#method-App-push_screen}{\code{App$push_screen()}}
     \item \href{#method-App-pop_screen}{\code{App$pop_screen()}}
@@ -137,7 +142,8 @@ layout passes so far.}
   stylesheet = NULL,
   theme = "default",
   debug = FALSE,
-  reduce_motion = NULL
+  reduce_motion = NULL,
+  inkr_stylesheet = NULL
 )}
     \if{html}{\out{</div>}}
   }
@@ -156,6 +162,8 @@ layout passes so far.}
       \item{\code{reduce_motion}}{\code{TRUE} to turn decorative animation off, \code{NULL}
 to follow \code{options(termr.reduce_motion)} / the \code{TERMR_REDUCE_MOTION}
 environment variable.}
+      \item{\code{inkr_stylesheet}}{Optional inkr stylesheet text, a local file path,
+parsed AST or compiled stylesheet. Requires the optional package \code{inkr}.}
     }
     \if{html}{\out{</div>}}
   }
@@ -636,6 +644,60 @@ widgets are repainted when the layout did not change.}
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
     \preformatted{App$clear_stylesheets()}
+    \if{html}{\out{</div>}}
+  }
+}
+
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-App-set_inkr_stylesheet"></a>}}
+\if{latex}{\out{\hypertarget{method-App-set_inkr_stylesheet}{}}}
+\subsection{\code{App$set_inkr_stylesheet()}}{
+  Set or replace the optional \href{https://github.com/menshikovs/inkr}{inkr}
+stylesheet. The input can be a file path, stylesheet text, a parsed
+\code{ink_stylesheet_ast}, or a compiled \code{ink_compiled_stylesheet}.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{App$set_inkr_stylesheet(sheet)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{sheet}}{An inkr stylesheet input.}
+    }
+    \if{html}{\out{</div>}}
+  }
+}
+
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-App-clear_inkr_stylesheet"></a>}}
+\if{latex}{\out{\hypertarget{method-App-clear_inkr_stylesheet}{}}}
+\subsection{\code{App$clear_inkr_stylesheet()}}{
+  Remove the inkr stylesheet from this app.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{App$clear_inkr_stylesheet()}
+    \if{html}{\out{</div>}}
+  }
+}
+
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-App-explain_inkr_style"></a>}}
+\if{latex}{\out{\hypertarget{method-App-explain_inkr_style}{}}}
+\subsection{\code{App$explain_inkr_style()}}{
+  Explain why an inkr property has its current value for a
+mounted widget. This calls inkr's public \code{ink_explain()} API.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{App$explain_inkr_style(widget, property)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{widget}}{A widget in this app.}
+      \item{\code{property}}{One of inkr's registered properties.}
+    }
     \if{html}{\out{</div>}}
   }
 }

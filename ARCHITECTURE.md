@@ -7,7 +7,7 @@ describes the implementation in the 1.0 release-candidate source tree.
 ## Layers
 
 ```text
- R application         app(), widget(), on(), bind(), style(), stylesheet()
+ R application         app(), widget(), on(), bind(), style(), stylesheet(), inkr stylesheet
       |
  Widget tree           Widget + containers + widgets (widget-*.R)
       |
@@ -19,7 +19,7 @@ describes the implementation in the 1.0 release-candidate source tree.
  animations
  Screens               ScreenStack, ModalScreen, toast layer              screens.R, notifications.R
       |
- Style                 cascade: defaults < stylesheet < inline; themes    style.R, stylesheet.R, theme.R, selectors.R
+ Style                 defaults < RTCSS < inkr < inline; themes           style.R, stylesheet.R, inkr-integration.R, theme.R, selectors.R
       |
  Layout engine         layout_tree(): regions                             layout.R, layout-grid.R
       |

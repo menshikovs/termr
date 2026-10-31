@@ -1,0 +1,4 @@
+{"app": "showcase", "status": "PASS", "ready_ms": 3332.5733799999994, "exit_status": 0, "terminal_restored": true, "events": 35, "recording": "audit-results/real-world-apps/e-fix/proof-wsl/recording/showcase.cast"}
+{"app": "analytics", "status": "PASS", "ready_ms": 2903.6069510000007, "exit_status": 0, "terminal_restored": true, "events": 8, "recording": "audit-results/real-world-apps/e-fix/proof-wsl/recording/analytics.cast"}
+{"app": "monitor", "status": "PASS", "ready_ms": 2193.400745999995, "exit_status": 0, "terminal_restored": true, "events": 43, "recording": "audit-results/real-world-apps/e-fix/proof-wsl/recording/monitor.cast"}
+{"app": "rtop", "status": "PASS", "ready_ms": 2063.380111000001, "exit_status": 0, "terminal_restored": true, "events": 11, "recording": "audit-results/real-world-apps/e-fix/proof-wsl/recording/rtop.cast"}

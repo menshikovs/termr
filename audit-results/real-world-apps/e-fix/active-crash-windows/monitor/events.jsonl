@@ -1,0 +1,13 @@
+{"event":"monitor","at":1.82,"pending":0,"completed":0,"failed":0,"connection":"connecting","transport_sequence":0} 
+{"event":"ready","at":1.82,"app":"monitor"} 
+{"event":"owned-processes","at":2.68,"processes":[{"pid":20636,"created":1793475649.42539},{"pid":31596,"created":1793475649.89193},{"pid":32872,"created":1793475649.42896}]} 
+{"event":"monitor","at":2.75,"pending":0,"completed":0,"failed":0,"connection":"connecting","transport_sequence":0} 
+{"event":"task-event","at":2.81,"type":"task_submitted","status":"queued"} 
+{"event":"submit","at":2.81,"kind":"long"} 
+{"event":"monitor","at":2.82,"pending":1,"completed":0,"failed":0,"connection":"live","transport_sequence":3} 
+{"event":"task-event","at":3.04,"type":"task_started","status":"running"} 
+{"event":"task-event","at":3.04,"type":"task_progress","status":"running"} 
+{"event":"task-event","at":3.04,"type":"task_progress","status":"running"} 
+{"event":"task-event","at":3.04,"type":"task_progress","status":"running"} 
+{"event":"monitor","at":3.06,"pending":1,"completed":0,"failed":0,"connection":"live","transport_sequence":4} 
+{"event":"stopped","at":3.45,"app":"monitor","closed":true,"pool_closed":true,"transport_closed":true,"source_closed":true,"retained":1,"subscriptions":0} 

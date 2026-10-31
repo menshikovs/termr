@@ -1,0 +1,11 @@
+{
+  "app": "analytics",
+  "command": "Rscript integration-apps/run.R --app=analytics --mode=terminal",
+  "loader_environment": "TERMR_USE_INSTALLED unset",
+  "platform": "win32",
+  "start": true,
+  "render": true,
+  "status": "FAIL",
+  "error": "Timed out waiting for required application state",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\programming_pj\\r_textualize\\integration-apps\\automation\\entrypoint-pty.py\", line 76, in scenario\n    send('\\x1bs');wait(lambda:seen('analytics',source='beta'))\n                  ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\programming_pj\\r_textualize\\integration-apps\\automation\\entrypoint-pty.py\", line 60, in wait\n    raise AssertionError('Timed out waiting for required application state')\nAssertionError: Timed out waiting for required application state\n"
+}

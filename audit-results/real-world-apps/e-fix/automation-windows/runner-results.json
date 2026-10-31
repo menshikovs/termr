@@ -1,0 +1,30 @@
+[
+  {
+    "name": "process",
+    "seconds": 7.28,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "lint",
+    "seconds": 16.36,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "profile",
+    "seconds": 57.84,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "benchmark",
+    "seconds": 25.19,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  }
+]

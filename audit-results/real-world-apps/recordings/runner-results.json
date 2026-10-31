@@ -1,0 +1,9 @@
+[
+  {
+    "name": "recording",
+    "seconds": 11.904,
+    "status": "FAIL",
+    "exit_code": 1,
+    "timeout": false
+  }
+]

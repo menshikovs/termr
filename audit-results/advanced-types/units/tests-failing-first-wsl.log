@@ -1,0 +1,86 @@
+datatable-units: ...1....23W45..6789abcde
+
+══ Warnings ════════════════════════════════════════════════════════════════════
+1. units formatting preserves special values and stays slice bounded ('test-datatable-units.R:30:3') - NAs introduced by coercion
+
+══ Failed ══════════════════════════════════════════════════════════════════════
+── 1. Failure ('test-datatable-units.R:11:3'): units columns expose their unit m
+Expected `info$editable[[1L]]` to be TRUE.
+Differences:
+`actual`:   FALSE
+`expected`: TRUE 
+
+
+── 2. Failure ('test-datatable-units.R:28:3'): units formatting preserves specia
+Expected `formatted[1L]` to be identical to "NaN".
+Differences:
+`actual`:   "NaN [m/s^2]"
+`expected`: "NaN"        
+
+
+── 3. Failure ('test-datatable-units.R:29:3'): units formatting preserves specia
+Expected `formatted[2L]` to be identical to "-Inf".
+Differences:
+`actual`:   "-Inf [m/s^2]"
+`expected`: "-Inf"        
+
+
+── 4. Failure ('test-datatable-units.R:30:3'): units formatting preserves specia
+Expected `as.numeric(formatted[[3L]])` to be identical to 1.25.
+Differences:
+  `actual`:  NA
+`expected`: 1.2
+
+
+── 5. Failure ('test-datatable-units.R:31:3'): units formatting preserves specia
+Expected `any(grepl("\\[m", formatted))` to be FALSE.
+Differences:
+`actual`:   TRUE 
+`expected`: FALSE
+
+
+── 6. Error ('test-datatable-units.R:46:3'): units edits convert compatible inpu
+Error: Column "distance" is read-only for this type.
+Backtrace:
+    ▆
+ 1. └─table$set_cell(1L, "distance", "12.5") at test-datatable-units.R:46:3
+
+── 7. Failure ('test-datatable-units.R:72:5'): units parser keeps NA, NaN and in
+Expected `parsed$error` to be NULL.
+Differences:
+`actual` is a character vector ('Values of type units are read-only.')
+`expected` is NULL
+
+
+── 8. Failure ('test-datatable-units.R:73:5'): units parser keeps NA, NaN and in
+Expected `class(parsed$value)` to be identical to `class(template)`.
+Differences:
+`actual`:   "NULL" 
+`expected`: "units"
+
+
+── 9. Error ('test-datatable-units.R:74:5'): units parser keeps NA, NaN and infi
+Error in `UseMethod("units")`: no applicable method for 'units' applied to an object of class "NULL"
+Backtrace:
+    ▆
+ 1. ├─testthat::expect_identical(base::units(parsed$value), base::units(template)) at test-datatable-units.R:74:5
+ 2. │ └─testthat::quasi_label(enquo(object), label)
+ 3. │   └─rlang::eval_bare(expr, quo_get_env(quo))
+ 4. └─base::units(parsed$value)
+
+── 10. Failure ('test-datatable-units.R:105:7'): compatible unit conversions sat
+Expected `parsed$error` to be NULL.
+Differences:
+`actual` is a character vector ('Values of type units are read-only.')
+`expected` is NULL
+
+km to cm
+  ... and 4 more
+
+
+Maximum number of 10 failures reached, some test results may be missing.
+
+══ DONE ════════════════════════════════════════════════════════════════════════
+Error:
+! Test failures.
+Execution halted

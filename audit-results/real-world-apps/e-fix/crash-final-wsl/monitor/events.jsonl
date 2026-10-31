@@ -1,0 +1,5 @@
+{"event":"monitor","at":1.315,"pending":0,"completed":0,"failed":0,"connection":"connecting","transport_sequence":0} 
+{"event":"ready","at":1.322,"app":"monitor"} 
+{"event":"monitor","at":1.424,"pending":0,"completed":0,"failed":0,"connection":"connecting","transport_sequence":0} 
+{"event":"monitor","at":1.485,"pending":0,"completed":0,"failed":0,"connection":"live","transport_sequence":3} 
+{"event":"stopped","at":1.742,"app":"monitor","closed":true,"pool_closed":true,"transport_closed":true,"source_closed":true,"retained":0,"subscriptions":0} 

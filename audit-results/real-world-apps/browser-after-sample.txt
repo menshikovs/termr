@@ -1,0 +1,27 @@
+{
+  "status": "Source: alpha | sequence: 2 | live | updated: 2026-10-31 17:22:15 | Метрικές 東京",
+  "agreement": "2 rows shared by ggplot2, Plotly and termr",
+  "traces": [
+    {
+      "y": [
+        43.92633636155383,
+        47.42043763683684
+      ],
+      "ids": [
+        "alpha:1",
+        "alpha:2"
+      ]
+    },
+    {
+      "y": [
+        58.92026631136497,
+        58.68424397601154
+      ],
+      "ids": [
+        "alpha:1",
+        "alpha:2"
+      ]
+    }
+  ],
+  "errors": []
+}

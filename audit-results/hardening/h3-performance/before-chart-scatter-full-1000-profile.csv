@@ -1,0 +1,16 @@
+"","total.time","total.pct","self.time","self.pct"
+"""measure""",0.025,100,0,0
+"""system.time""",0.025,100,0,0
+"""unname""",0.025,100,0,0
+"""gc""",0.015,60,0.015,60
+"""<Anonymous>""",0.01,40,0,0
+"""draw_lines""",0.01,40,0,0
+"""paint_layers""",0.01,40,0,0
+"""paint_tree""",0.01,40,0,0
+"""private$refresh_screen""",0.01,40,0,0
+"""run""",0.01,40,0,0
+"""super$paint""",0.01,40,0,0
+"""widget$paint""",0.01,40,0,0
+"""buffer$put_text""",0.005,20,0.005,20
+"""list""",0.005,20,0.005,20
+"""resolve_style""",0.005,20,0,0

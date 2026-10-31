@@ -1,0 +1,42 @@
+{
+  "platform": ["Linux", "6.18.54.1-microsoft-standard-WSL2", "#1 SMP PREEMPT_DYNAMIC Tue Oct  6 19:13:07 UTC 2026", "LAPTOP-RBSL4FGN", "x86_64", "unknown", "user001", "user001"],
+  "app": "all",
+  "modes": ["headless", "process", "lint"],
+  "results": [
+    {
+      "name": "headless-showcase",
+      "seconds": 2.285,
+      "status": "PASS",
+      "exit_code": 0,
+      "timeout": false
+    },
+    {
+      "name": "headless-analytics",
+      "seconds": 1.463,
+      "status": "PASS",
+      "exit_code": 0,
+      "timeout": false
+    },
+    {
+      "name": "headless-monitor",
+      "seconds": 1.779,
+      "status": "PASS",
+      "exit_code": 0,
+      "timeout": false
+    },
+    {
+      "name": "process",
+      "seconds": 9.301,
+      "status": "PASS",
+      "exit_code": 0,
+      "timeout": false
+    },
+    {
+      "name": "lint",
+      "seconds": 17.875,
+      "status": "PASS",
+      "exit_code": 0,
+      "timeout": false
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+[
+  {
+    "chunk_id": "df79e6",
+    "wall_time_seconds": 1.014515,
+    "session_id": 4498,
+    "original_token_count": 222,
+    "output": "\u001b[1m\u001b[4;35Hvalue species    width           \u001b[22m\u001b[2m\u001b[5;35Hdbl   fct     \u001b[13C   \u001b[22m\u001b[4m\u001b[7m\u001b[6;26HIris 1     5.1 setosa       3.5           \u001b[24m\u001b[27m\u001b[7;26HIris 2     4.9 setosa       3.0\u001b[11X\u001b[8;26HIris 3     4.7 setosa       3.2\u001b[11X\u001b[23C|\u001b[9;26HIris 4     4.6 setosa       3.1\u001b[11X\u001b[23C|\u001b[10;26HIris 5     5.0 setosa       3.6\u001b[11X\u001b[23C|\u001b[11;26HIris 6 \u001b[4C5.4 setosa       3.9\u001b[11X\u001b[23C|\u001b[12;26HIris 7     4.6 setosa       3.4\u001b[11X\u001b[23C|\u001b[13;26HIris 8     5.0 setosa       3.4\u001b[11X\u001b[23C|\u001b[14;26HIris 9     4.4 setosa       2.9\u001b[11X\u001b[15;26HIris 10    4.9 setosa       3.1\u001b[11X\u001b[16;26HIris 11    5.4 setosa       3.7\u001b[11X\u001b[17;26HIris 12    4.8 setosa       3.4\u001b[11X\u001b[18;26HIris 13    4.8 setosa       3.0\u001b[11X\u001b[19;26HIris 14    4.3 setosa       3.0\u001b[11X\u001b[20;26HIris 15    5.8 setosa       4.0\u001b[11X\u001b[21;26HIris 16    5.7 setosa       4.4           \r\niris local/editable columns only"
+  },
+  {
+    "chunk_id": "91bcc6",
+    "wall_time_seconds": 1.0105069,
+    "session_id": 4498,
+    "original_token_count": 294,
+    "output": "\u001b[1m\u001b[HTermr Data Workbench\u001b[22m\u001b[3;1H+--------------+\r\n| Dataset [F2] |\u001b[1m\u001b[18C           value cylinders weight\u001b[22m\r\n+--------------+\u001b[2m\u001b[18C           dbl\u001b[13Cdbl\u001b[22m\r\n+--------------------+  #\u001b[4m\u001b[7mMazda RX4            21.0         6  2.620\u001b[24m\u001b[27m\r\n| Local/lazy [Alt+S] |  #Mazda RX4 Wag        21.0         6  2.875\u001b[12C|\r\n+--------------------+  #Datsun 710           22.8         4  2.320\u001b[9;26HHornet 4 Drive       21.4         6  3.215\u001b[10;26HHornet Sportabout    18.7         8  3.440\u001b[11;26HValiant\u001b[4C          18.1         6  3.460\r\n+-------------+\u001b[10CDuster 360           14.3         8  3.570\r\n| Filter [F5] |\u001b[10CMerc 240D            24.4         4  3.190\r\n+-------------+\u001b[10CMerc 230             22.8         4  3.150\r\n+------------+\u001b[11CMerc 280             19.2         6  3.440\r\n| Reset view |\u001b[11CMerc 280C            17.8         6  3.440\r\n+------------+\u001b[11CMerc 450SE           16.4         8  4.070\u001b[18;26HMerc 450SL           17.3         8  3.730\u001b[19;26HMerc 450SLC          15.2         8  3.780\u001b[20;26HCadillac Fleetwood   10.4         8  5.250\r\n+--------+\u001b[15CLincoln Continental  10.4         8  5.424\r\nTheme: light (inkr)\u001b[13X\u001b[13C"
+  },
+  {
+    "chunk_id": "c5cd51",
+    "wall_time_seconds": 0.107397,
+    "exit_code": 0,
+    "original_token_count": 25,
+    "output": "\u001b[?25h\u001b[?1003;1006l\u001b]0;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\u0007\u001b[?9001l\u001b[?1004l"
+  }
+]

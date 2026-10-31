@@ -1,0 +1,5 @@
+{"event":"sample","at":0.6,"sequence":1} 
+{"event":"ready","at":1.75,"app":"showcase"} 
+{"event":"sample","at":1.95,"sequence":2} 
+{"event":"key","at":2.12,"key":"ctrl+e"} 
+{"event":"stopped","at":2.21,"app":"showcase","dataset":"cars","rows":32,"samples":2,"subscribers":0,"closed":true} 

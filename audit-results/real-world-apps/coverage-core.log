@@ -1,0 +1,92 @@
+* installing *source* package ‘termr’ ...
+** this is package ‘termr’ version ‘1.0.1’
+** using non-staged installation
+** R
+** inst
+** tests
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+  converting help for package ‘termr’
+    animate                                 example
+    app                                     example
+    bar_chart                               example
+    bind                                    example
+    browse_data                             example
+    button                                  example
+    cell                                    example
+    checkbox                                example
+    column                                  example
+    command                                 example
+    data_profile                            example
+    data_table                              example
+    db_explorer                             example
+    diff_screen                             example
+    dropdown                                example
+    grid_layout                             example
+    input                                   example
+    inspect_widget                          example
+    json_view                               example
+    key_event                               example
+    key_value                               example
+    label                                   example
+    line_chart                              example
+    log_view                                example
+    markdown_view                           example
+    metric                                  example
+    modal                                   example
+    motion_reduced                          example
+    nanonext_transport                      example
+    on                                      example
+    option_list                             example
+    panel                                   example
+    patch_to_ansi                           example
+    process_view                            example
+    progress_bar                            example
+    property_grid                           example
+    radio_set                               example
+    reactive                                example
+    record_view                             example
+    region                                  example
+    render_html                             example
+    render_markdown                         example
+    render_text                             example
+    render_widget                           example
+    rule                                    example
+    run_example                             example
+    run_worker                              example
+    scatter_chart                           example
+    screen_buffer                           example
+    screen_snapshot                         example
+    scroll_view                             example
+    set_timeout                             example
+    shiny_streams                           example
+    signals                                 example
+    span                                    example
+    sparkline                               example
+    spinner                                 example
+    split_pane                              example
+    status_bar                              example
+    strip_ansi                              example
+    style                                   example
+    stylesheet                              example
+    tabs                                    example
+    terminal_capabilities                   example
+    termr_mirai_pool                        example
+    termr_mirai_submit                      example
+    termr_shiny_receiver                    example
+    termr_stream                            example
+    termr_stream_data                       example
+    termr_theme                             example
+    test_app                                example
+    text_area                               example
+    tree_node                               example
+    tree_view                               example
+    vertical                                example
+    widget                                  example
+** building package indices
+** testing if installed package can be loaded
+* DONE (termr)
+Running specific tests for package ‘termr’
+  Running ‘testthat.R’
+[1] 79.04393

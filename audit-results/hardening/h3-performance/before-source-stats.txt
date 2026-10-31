@@ -1,0 +1,21 @@
+$cache_misses
+[1] 80
+
+$rows_rendered
+[1] 480
+
+$cells_rendered
+[1] 5760
+
+$fetch_calls
+[1] 81
+
+$fetch_errors
+[1] 0
+
+$rows_requested
+[1] 8100
+
+$cache_hits
+[1] 0
+

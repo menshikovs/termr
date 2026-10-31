@@ -91,6 +91,17 @@ trees, Markdown, metrics and sparklines. Add generated help, modal dialogs,
 notifications and a command palette. Stylesheets and themes include
 monochrome/`NO_COLOR`, high contrast and reduced motion.
 
+Five native terminal charts cover line, scatter, bar, histogram and heatmap
+views. They use termr's widgets and events and do not require ggplot2, Plotly,
+Shiny or the optional `termrcharts` package. See [native charts](docs/charts.md)
+and run `run_example("native-charts-dashboard")` for an interactive dashboard.
+
+Stylesheets can also use the standalone optional [`inkr`](https://github.com/menshikovs/inkr)
+CSS-like parser and cascade engine. It integrates as a typed layer in the
+existing widget style pipeline; termr continues to own layout, color
+capabilities and rendering. See [inkr integration](docs/inkr-integration.md)
+and run `run_example("inkr-stylesheet")` when `inkr` is installed.
+
 ![termr widget showcase with tabs, metrics, progress and a sparkline](https://raw.githubusercontent.com/menshikovs/termr/main/docs/images/widget-showcase.png)
 
 This screenshot comes from the RC1 source tree and displays its package

@@ -1,0 +1,6 @@
+Loading required package: shiny
+Error in vapply(strsplit(memstuff, ":"), as.numeric, numeric(4L)) : 
+  values must be length 4,
+ but FUN(X[[59]]) result is length 0
+Calls: summaryRprof -> pmax -> apply -> vapply
+Execution halted

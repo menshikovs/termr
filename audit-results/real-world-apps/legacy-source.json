@@ -1,0 +1,8 @@
+{
+  "rtop_commit": "0856d8c1dc33c0c9c7ca6bf0d94204349be56722",
+  "termr_release_tag": "v1.0.1",
+  "termr_release_commit": "79d6871d18f700197a31a17b7756c424c5ac7d66",
+  "candidate_version": "1.0.1",
+  "candidate_branch": "2.0-termr",
+  "note": "Candidate still reports 1.0.1; the original gate does not reject it. No version metadata was changed."
+}

@@ -1,0 +1,35 @@
+{
+  "quiet-exit": {
+    "status": "PASS"
+  },
+  "stderr-separate": {
+    "status": "PASS"
+  },
+  "nonzero-exit": {
+    "status": "PASS"
+  },
+  "timeout": {
+    "status": "FAIL",
+    "error": "inherits(x, \"system_command_timeout_error\") is not TRUE"
+  },
+  "owned-child-cleanup": {
+    "status": "FAIL",
+    "error": "Child ready timeout"
+  },
+  "real-showcase": {
+    "status": "FAIL",
+    "error": "x$status == 0L is not TRUE"
+  },
+  "real-analytics": {
+    "status": "FAIL",
+    "error": "x$status == 0L is not TRUE"
+  },
+  "real-monitor": {
+    "status": "FAIL",
+    "error": "x$status == 0L is not TRUE"
+  },
+  "missing-optional-diagnostic": {
+    "status": "FAIL",
+    "error": "grepl(\"Missing optional packages\", x$stderr) is not TRUE"
+  }
+}

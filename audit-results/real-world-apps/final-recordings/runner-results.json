@@ -1,0 +1,16 @@
+[
+  {
+    "name": "recording",
+    "seconds": 12.302,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "lint",
+    "seconds": 19.687,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  }
+]

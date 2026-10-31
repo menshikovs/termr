@@ -1,0 +1,14 @@
+analytics: ......................
+monitor: ....................1.
+showcase: .......................................
+
+══ Failed ══════════════════════════════════════════════════════════════════════
+── 1. Error ('test-monitor.R:47:3'): cancel/completion races and active shutdown
+Error: Condition timed out
+Backtrace:
+    ▆
+ 1. └─wait_real(...) at test-monitor.R:47:3
+
+══ DONE ════════════════════════════════════════════════════════════════════════
+Don't worry, you'll get it.
+APP TOTAL: {"expectations":82,"failed":0,"errors":1,"skipped":0,"warnings":0} 

@@ -1,0 +1,12 @@
+{
+  "head": "1b10370d1df50e54a63706673b150feaf7b04889",
+  "branch": "2.0-termr",
+  "baseline_files": 563,
+  "unchanged": 561,
+  "changed": [
+    "R/testing.R",
+    "R/widget-datatable.R"
+  ],
+  "staged_numstat": "",
+  "windows_wsl_source_archive_sha256": "B8C61329FD88EBDFD6E03F6D51562984306E9626818D31142B5CAD5718FB7507"
+}

@@ -131,6 +131,9 @@ format_compact_value <- function(x, max_items = 3L) {
     return(paste0("<", kind, if (length(x)) paste0("[", length(x), "]") else "", ">"))
   }
   if (length(x) == 1L) {
+    if (inherits(x, "integer64") || inherits(x, "hms") || inherits(x, "difftime")) {
+      return(table_format_values(x)[[1L]])
+    }
     if (is.na(x)) return("NA")
     if (inherits(x, "POSIXt")) return(format(x, usetz = TRUE))
     if (inherits(x, "Date")) return(format(x, "%Y-%m-%d"))
@@ -346,10 +349,12 @@ profile_summary <- function(x, sample = NULL, top_n = 5L) {
   sampled <- profile_sample(x, sample)
   values <- sampled$values
   n <- sampled$n
-  missing <- sum(is.na(values))
-  non_missing <- values[!is.na(values)]
+  missing_mask <- table_missing_mask(values)
+  missing <- sum(missing_mask)
+  non_missing <- values[!missing_mask]
   unique_n <- length(unique(non_missing))
-  type <- if (inherits(x, "POSIXt")) "POSIXct" else if (inherits(x, "Date")) "Date" else
+  type <- if (inherits(x, "integer64")) "integer64" else if (inherits(x, "hms")) "hms" else
+    if (inherits(x, "difftime")) "difftime" else if (inherits(x, "POSIXt")) "POSIXct" else if (inherits(x, "Date")) "Date" else
     if (is.factor(x)) "factor" else if (is.logical(x)) "logical" else if (is.integer(x)) "integer" else
       if (is.numeric(x)) "numeric" else if (is.character(x)) "character" else paste(class(x), collapse = "/")
   out <- list(Type = type, Length = n)
@@ -367,7 +372,7 @@ profile_summary <- function(x, sample = NULL, top_n = 5L) {
     if (length(finite)) {
       nums <- as.numeric(finite)
       restore <- if (inherits(x, "Date")) function(z) as.Date(z, origin = "1970-01-01") else
-        function(z) as.POSIXct(z, origin = "1970-01-01", tz = "UTC")
+        function(z) structure(z, class = class(x), tzone = attr(x, "tzone"))
       out$Min <- restore(min(nums))
       out$Median <- restore(stats::median(nums))
       out$Max <- restore(max(nums))
@@ -375,6 +380,26 @@ profile_summary <- function(x, sample = NULL, top_n = 5L) {
       out$Min <- NA
       out$Median <- NA
       out$Max <- NA
+    }
+  } else if (inherits(x, "hms") || inherits(x, "difftime")) {
+    units <- attr(x, "units") %||% "secs"
+    nums <- as.numeric(non_missing, units = units)
+    finite <- nums[is.finite(nums)]
+    restore <- if (inherits(x, "hms")) function(z) structure(z, class = class(x), units = attr(x, "units")) else
+      function(z) as.difftime(z, units = units)
+    out$Min <- if (length(finite)) restore(min(finite)) else table_na_value(x)
+    out$Median <- if (length(finite)) restore(stats::median(finite)) else table_na_value(x)
+    out$Max <- if (length(finite)) restore(max(finite)) else table_na_value(x)
+  } else if (inherits(x, "integer64")) {
+    if (requireNamespace("bit64", quietly = TRUE)) {
+      counts <- sort(table(as.character(non_missing)), decreasing = TRUE)
+      if (length(counts)) {
+        for (i in seq_len(min(top_n, length(counts)))) {
+          out[[paste0("Top ", i)]] <- paste0(names(counts)[[i]], " (", counts[[i]], ")")
+        }
+      }
+    } else {
+      out$Values <- "Inspecting integer64 values requires the optional bit64 package."
     }
   } else if (is.numeric(x)) {
     finite <- non_missing[is.finite(non_missing)]
@@ -507,7 +532,9 @@ DataProfile <- R6::R6Class(
 #' is rejected to prevent an implicit full scan; fetch or sample data
 #' explicitly first. `data` may also be a reactive function.
 #'
-#' @param data An atomic vector, factor, Date, or POSIXct vector.
+#' @param data An atomic vector, factor, Date, POSIXct, or difftime vector.
+#'   `hms` and `bit64::integer64` vectors are supported when their optional
+#'   packages are installed.
 #' @param name Heading for the profile.
 #' @param sample Optional positive number of evenly spaced values to analyze.
 #' @param top_n Number of frequent character/factor values to display.

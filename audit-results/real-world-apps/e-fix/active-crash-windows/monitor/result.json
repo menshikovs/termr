@@ -1,0 +1,15 @@
+{
+  "app": "monitor",
+  "command": "Rscript integration-apps/run.R --app=monitor --mode=terminal",
+  "loader_environment": "TERMR_USE_INSTALLED unset",
+  "platform": "win32",
+  "start": true,
+  "render": true,
+  "owned_processes_verified": 3,
+  "status": "PASS",
+  "shutdown": true,
+  "exit_code": 1,
+  "expected_failure": true,
+  "reader_errors": [],
+  "event_log_read_retries": []
+}

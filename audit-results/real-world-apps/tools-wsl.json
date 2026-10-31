@@ -1,0 +1,64 @@
+[
+  {
+    "tool": "python",
+    "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+    "available": true,
+    "path": "/usr/bin/python3",
+    "version": "Python 3.14.4",
+    "exit": 0,
+    "installation": "pre-existing executable; no Phase E global installation"
+  },
+  {
+    "tool": "Rscript",
+    "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+    "available": true,
+    "path": "/usr/bin/Rscript",
+    "version": "Rscript (R) version 4.5.2 (2025-10-31)",
+    "exit": 0,
+    "installation": "pre-existing executable; no Phase E global installation"
+  },
+  {
+    "tool": "hyperfine",
+    "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+    "available": true,
+    "path": "/usr/bin/hyperfine",
+    "version": "hyperfine 1.19.0",
+    "exit": 0,
+    "installation": "pre-existing executable; no Phase E global installation"
+  },
+  {
+    "tool": "tmux",
+    "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+    "available": true,
+    "path": "/usr/bin/tmux",
+    "version": "tmux 3.6",
+    "exit": 0,
+    "installation": "pre-existing executable; no Phase E global installation"
+  },
+  {
+    "tool": "Expect",
+    "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+    "available": true,
+    "path": "/usr/bin/expect",
+    "version": "expect version 5.45.4",
+    "exit": 0,
+    "installation": "pre-existing executable; no Phase E global installation"
+  },
+  {
+    "tool": "asciinema",
+    "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+    "available": true,
+    "path": "/usr/bin/asciinema",
+    "version": "asciinema 2.4.0",
+    "exit": 0,
+    "installation": "pre-existing executable; no Phase E global installation"
+  },
+  {
+    "tool": "pexpect",
+    "version": "4.9.0",
+    "path": "/usr/lib/python3/dist-packages/pexpect/__init__.py",
+    "available": true,
+    "installation": "pre-existing Python package",
+    "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.43"
+  }
+]

@@ -1,0 +1,12 @@
+"","total.time","total.pct","self.time","self.pct"
+"""measure""",0.02,100,0,0
+"""system.time""",0.02,100,0,0
+"""unname""",0.02,100,0,0
+"""gc""",0.015,75,0.015,75
+"""handler_method_name""",0.005,25,0.005,25
+"""<Anonymous>""",0.005,25,0,0
+"""batch""",0.005,25,0,0
+"""private$deliver""",0.005,25,0,0
+"""private$dispatch""",0.005,25,0,0
+"""private$process_queue""",0.005,25,0,0
+"""run""",0.005,25,0,0

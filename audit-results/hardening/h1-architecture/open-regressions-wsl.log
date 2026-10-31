@@ -1,0 +1,53 @@
+regressions-open: .123456
+
+══ Failed ══════════════════════════════════════════════════════════════════════
+── 1. Failure ('regressions-open.R:9:3'): H1-F01 failed source replacement prese
+Expected `table$.__enclos_env__$private$.source` to be identical to `old_source`.
+Differences:
+`actual` is an S3 object of class <termr_table_source>, a list
+`expected` is NULL
+
+
+── 2. Failure ('regressions-open.R:19:3'): H1-F02 an exact pipeline reproduces t
+Expected `actual` to be identical to `expected`.
+Differences:
+  `attr(actual, 'row.names')`: 2 3 1
+`attr(expected, 'row.names')`: 1 2 3
+
+actual vs expected
+                 x
+- actual[1, ]    2
++ expected[1, ] 10
+- actual[2, ]    3
++ expected[2, ]  2
+- actual[3, ]   10
++ expected[3, ]  3
+
+  `actual$x`:  2 3 10
+`expected$x`: 10 2  3
+
+
+── 3. Failure ('regressions-open.R:35:3'): H1-F03 chart display advances while a
+Expected `length(chart$.__enclos_env__$private$.spec$data$x)` > 0L.
+Actual comparison: 0 <= 0
+Difference: 0 <= 0
+
+── 4. Failure ('regressions-open.R:48:3'): H1-F04 detached ancestors do not rece
+Expected `delivered` to be identical to 0L.
+Differences:
+  `actual`: 1
+`expected`: 0
+
+
+── 5. Failure ('regressions-open.R:59:3'): H1-F08 an unmounted owned SQL connect
+Expected `DBI::dbIsValid(con)` to be FALSE.
+Differences:
+`actual`:   TRUE 
+`expected`: FALSE
+
+
+── 6. Failure ('regressions-open.R:64:3'): H1-F09 log capacity rejects non-finit
+Expected `suppressWarnings(application$log_events(size = Inf))` to throw a error.
+
+══ DONE ════════════════════════════════════════════════════════════════════════
+OPEN REGRESSIONS: 6 failed, 0 errors, 0 skipped

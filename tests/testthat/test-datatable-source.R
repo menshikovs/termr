@@ -32,6 +32,65 @@ test_that("lazy sources render only cached chunks and jump directly", {
   expect_error(tbl$filter_columns(list(row = function(x) x > 10)), "not supported")
 })
 
+test_that("lazy table rendering requests only the columns in its viewport", {
+  columns <- paste0("col", seq_len(20L))
+  calls <- new.env(parent = emptyenv())
+  calls$columns <- list()
+  src <- table_source(
+    row_count = 1000L,
+    column_names = columns,
+    get_rows = function(start, count, columns = NULL) {
+      calls$columns[[length(calls$columns) + 1L]] <- columns
+      out <- as.data.frame(
+        stats::setNames(lapply(columns, function(name) seq.int(start, length.out = count)), columns),
+        check.names = FALSE
+      )
+      out
+    }
+  )
+  column_options <- stats::setNames(lapply(columns, function(name) column(width = 6L)), columns)
+  tbl <- data_table(src, cursor = "none", columns = column_options)
+
+  # Ignore the bounded schema sample read made while the source is attached.
+  calls$columns <- list()
+  tbl$scroll_to_row(500L)
+  invisible(render_widget(tbl, 25L, 8L))
+
+  expect_gt(length(calls$columns), 0L)
+  expect_true(all(vapply(calls$columns, length, integer(1)) < length(columns)))
+  expect_true(all(vapply(calls$columns, function(x) all(x %in% columns), logical(1))))
+})
+
+test_that("lazy source pages keep the schema type and attributes stable", {
+  src <- table_source(
+    row_count = 200L,
+    column_names = "value",
+    get_rows = function(start, count, columns = NULL) {
+      values <- seq.int(start, length.out = count)
+      value <- if (start == 1L) as.integer(values) else as.character(values)
+      data.frame(value = value)
+    }
+  )
+  tbl <- data_table(src, cursor = "none")
+
+  expect_error(tbl$row_data(150L), "column `value`.*different type or attributes")
+
+  zone_src <- table_source(
+    row_count = 200L,
+    column_names = "when",
+    get_rows = function(start, count, columns = NULL) {
+      value <- structure(
+        as.double(seq.int(start, length.out = count)),
+        class = c("POSIXct", "POSIXt"),
+        tzone = if (start == 1L) "UTC" else "America/New_York"
+      )
+      data.frame(when = value)
+    }
+  )
+  zone_tbl <- data_table(zone_src, cursor = "none")
+  expect_error(zone_tbl$row_data(150L), "column `when`.*different type or attributes")
+})
+
 test_that("lazy source sort and filters are delegated", {
   values <- data.frame(id = c(4L, 1L, 3L, 2L), group = c("b", "a", "b", "a"))
   state <- new.env(parent = emptyenv())

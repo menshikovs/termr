@@ -1,0 +1,12 @@
+"scenario","values_equal","screen_equal","state_equal"
+"startup",TRUE,TRUE,TRUE
+"refresh",TRUE,TRUE,TRUE
+"sort-c",TRUE,TRUE,TRUE
+"sort-m",TRUE,TRUE,TRUE
+"sort-p",TRUE,TRUE,TRUE
+"filter",TRUE,TRUE,TRUE
+"selection",TRUE,TRUE,TRUE
+"resize-small",TRUE,TRUE,TRUE
+"resize-large",TRUE,TRUE,TRUE
+"controls",TRUE,TRUE,TRUE
+"shutdown",TRUE,TRUE,TRUE

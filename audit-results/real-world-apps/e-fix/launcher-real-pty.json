@@ -1,0 +1,16 @@
+[
+  {
+    "chunk_id": "411ddb",
+    "wall_time_seconds": 10.0068458,
+    "session_id": 3277,
+    "original_token_count": 560,
+    "output": "\u001b[?9001h\u001b[?1004h\u001b[?25l\u001b[2J\u001b[m\u001b[HThe interface runs in this terminal. Press q to close it.\u001b]0;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\u0007\u001b[?25h\r\nDuring startup - Warning messages:\r\n1: Setting LC_COLLATE=C.UTF-8 failed \r\n2: Setting LC_CTYPE=C.UTF-8 failed \r\n3: Setting LC_MONETARY=C.UTF-8 failed \r\n4: Setting LC_TIME=C.UTF-8 failed \r\n\u001b]0;Windows PowerShell\u0007\u001b[?1003;1006h\u001b[?25l\u001b[2J\u001b[H\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\u001b[80C\u001b[2J\u001b[1m\u001b[HTermr Data Workbench\u001b[22m\u001b[K\u001b[1m\r\nDATA WORKBENCH\u001b[22m          #\u001b[1m Data \u001b[22m  Charts   Types   Help\u001b[K\r\n+--------------+        #======-------------------------------------------------\r\n| Dataset [F2] |        #\u001b[1mname                value cylinders weight            \u001b[22m \r\n+--------------+        #\u001b[2mchr                 dbl   dbl       dbl               \u001b[22m \r\n+------------------+    #\u001b[4m\u001b[7mMazda RX4            21.0         6  2.620            \u001b[24m\u001b[27m#\r\n| Local/lazy [F11] |    #Mazda RX4 Wag        21.0         6  2.875            #\r\n+------------------+    #Datsun 710           22.8         4  2.320            #\r\n+----------------------+|Hornet 4 Drive       21.4         6  3.215            #\r\n| 20                   ||Hornet Sportabout    18.7         8  3.440            #\r\n+----------------------+|Valiant              18.1\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\r\n\u001b[K\u001b[80C\u001b[11;58H  6  3.460            #\r\n+-------------+\u001b[9C|Duster 360\u001b[11C14.3\u001b[9C8  3.570\u001b[12C#\r\n| Filter [F5] |\u001b[9C|Merc 240D            24.4         4  3.190            #\r\n+-------------+\u001b[9C|Merc 230\u001b[13C22.8\u001b[9C4  3.150\u001b[12C|\r\n+------------+\u001b[10C|Merc 280             19.2         6  3.440            |\r\n| Reset view |\u001b[10C|Merc 280C\u001b[12C17.8\u001b[9C6  3.440\u001b[12C|\r\n+------------+\u001b[10C|Merc 450SE           16.4         8  4.070            |\r\n+----------------------+|Merc 450SL\u001b[11C17.3\u001b[9C8  3.730\u001b[12C|\r\n| Merc\u001b[17C||Merc 450SLC          15.2         8  3.780            |\r\n+----------------------+|Cadillac Fleetwood   10.4\u001b[9C8  5.250\u001b[12C|\r\n+--------+\u001b[14C|Lincoln Continental  10.4         8  5.424            |\r\nReady: local cars\u001b[24;1HF2 data  F11 source  F4 theme  F12 charts  q quit"
+  },
+  {
+    "chunk_id": "8e7009",
+    "wall_time_seconds": 0.2663429,
+    "exit_code": 0,
+    "original_token_count": 25,
+    "output": "\u001b[?25h\u001b[?1003;1006l\u001b]0;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\u0007\u001b[?9001l\u001b[?1004l"
+  }
+]

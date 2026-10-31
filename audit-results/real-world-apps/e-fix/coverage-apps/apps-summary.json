@@ -1,0 +1,6 @@
+{
+  "line_percent": 91.8699,
+  "files": ["integration-apps/01-termr-showcase/app.R", "integration-apps/02-shiny-visual-analytics/app.R", "integration-apps/03-mirai-nanonext-monitor/app.R"],
+  "native_workload": "real uninstrumented body; worker lines remain uncovered",
+  "branch_coverage": "not measured"
+}

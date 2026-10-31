@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "initial_files": 615,
+  "changed_initial_files": [
+    "integration-apps/01-termr-showcase/app.R",
+    "integration-apps/02-shiny-visual-analytics/app.R",
+    "integration-apps/03-mirai-nanonext-monitor/app.R",
+    "integration-apps/README.md",
+    "integration-apps/automation/browser-e2e.py",
+    "integration-apps/automation/coverage-apps-tests.R",
+    "integration-apps/automation/lifecycle.R",
+    "integration-apps/automation/profile.R",
+    "integration-apps/automation/pty-e2e.py",
+    "integration-apps/bootstrap.R",
+    "integration-apps/run.R",
+    "integration-apps/tests/helper-load.R",
+    "tools/integration/run-all.R",
+    "tools/integration/stage-package.py"
+  ],
+  "core_api_docs_H1_H2_H3_unchanged": true,
+  "index_unchanged": true,
+  "head_unchanged": true,
+  "git_diff_check_exit": 0,
+  "archives": [
+    {
+      "platform": "windows",
+      "checked_files": 374,
+      "sha256": "d0e345d676a087f9b746a560be9e5a60cfa4e909351b6f07aa2522e1b15aa1d3"
+    },
+    {
+      "platform": "wsl",
+      "checked_files": 374,
+      "sha256": "5cc8aeae023dc58ad7011d616dc9e4cfec0d4e5f9c6eb943040894f0eb3a834a"
+    }
+  ]
+}

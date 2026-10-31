@@ -32,10 +32,16 @@ tbl <- data_table(src)
 `get_rows(start, count, columns)` returns a data frame with exactly the
 requested column names and the number of rows available in that range. The
 table validates every response and reports the requested range when a source
-errors or returns malformed data. It requests 100-row chunks for the visible
-columns and keeps those chunks in a small per-table cache. Repainting or
-scrolling within a cached chunk reuses the values. A jump to a distant row
-requests that range directly.
+errors or returns malformed data. Attaching a source reads one bounded
+100-row sample across all columns so the existing typed column handlers can
+derive their prototypes and metadata. Successful later pages must keep each
+column's storage type, class, type-defining attributes, and S4 slots stable;
+the table rejects a page that changes them rather than silently formatting a
+different type. Slice-dependent `sfc` bounds are excluded from that check.
+Painting a later viewport requests its visible columns together, and a cached
+wider page can satisfy a narrower projection. Pages are kept in a bounded
+per-table cache. Repainting or scrolling within a cached chunk reuses the
+values. A jump to a distant row requests that range directly.
 
 ## Capabilities and delegated operations
 
@@ -134,8 +140,9 @@ on query shape and supported operations.
 
 ## Limits
 
-The row count must be available and fit R's integer row indexing. Sources must
-return a data frame. The cache is local to one DataTable and invalidates on
-sort, filter, edit, and refresh. Lazy sort, filter, and search require source
-callbacks; termr does not silently fall back to a full scan. DataTable still
-uses the same formatting and viewport rendering path for the rows it fetches.
+The row count must be exact, available, and fit R's integer row indexing;
+unknown and estimated totals are not supported. Sources must return a data
+frame. The cache is local to one DataTable and invalidates on sort, filter,
+edit, and refresh. Lazy sort, filter, and search require source callbacks;
+termr does not silently fall back to a full scan. DataTable still uses the
+same formatting and viewport rendering path for the rows it fetches.

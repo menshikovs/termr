@@ -1,0 +1,56 @@
+{
+  "platform": ["Windows", "10 x64", "build 26100", "LAPTOP-RBSL4FGN", "x86-64", "User001", "User001", "User001", "LAPTOP-RBSL4FGN"],
+  "app": "all",
+  "modes": ["unit", "headless", "process", "browser", "lint"],
+  "results": [
+    {
+      "name": "app-tests",
+      "seconds": 17.09,
+      "status": "PASS",
+      "exit_code": 0,
+      "timeout": false
+    },
+    {
+      "name": "headless-showcase",
+      "seconds": 2.28,
+      "status": "PASS",
+      "exit_code": 0,
+      "timeout": false
+    },
+    {
+      "name": "headless-analytics",
+      "seconds": 1.71,
+      "status": "PASS",
+      "exit_code": 0,
+      "timeout": false
+    },
+    {
+      "name": "headless-monitor",
+      "seconds": 1.72,
+      "status": "PASS",
+      "exit_code": 0,
+      "timeout": false
+    },
+    {
+      "name": "process",
+      "seconds": 8.14,
+      "status": "PASS",
+      "exit_code": 0,
+      "timeout": false
+    },
+    {
+      "name": "browser",
+      "seconds": 8.01,
+      "status": "PASS",
+      "exit_code": 0,
+      "timeout": false
+    },
+    {
+      "name": "lint",
+      "seconds": 8.71,
+      "status": "PASS",
+      "exit_code": 0,
+      "timeout": false
+    }
+  ]
+}

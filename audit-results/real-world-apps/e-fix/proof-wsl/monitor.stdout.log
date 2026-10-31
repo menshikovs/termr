@@ -1,0 +1,33 @@
+READY monitor 
+Distributed Task & Stream Monitor                                                                   
+n submit | l long | e fail | c cancel | d disconnect | r reconnect | q quit                         
+ Tasks   Stream   Actions                                                                           
+━━━━━━━─────────────────────────────────────────────────────────────────────────────────────────────
+task      status    progress error                                                                  
+1 compute completed        1                                                                        
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100%
+Workers: 2 | pending jobs: 0 | transport: live | AIO: 1 | completed: 1                              
+Throughput: 1.29 jobs/s | bounded history: 6                                                        
+task_progress running                                                                               
+task_progress running                                                                               
+task_completed completed                                                                            
+Select a task; Enter opens details                                                                  
+                                                                                                     
+{"app":"monitor","closed":true,"pool_closed":true,"transport_closed":true,"source_closed":true,"retained":1,"subscriptions":0} 
+

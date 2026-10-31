@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "warmup": 1,
+  "runs": 5,
+  "commands": {
+    "showcase": "\"C:/PROGRA~1/R/R-46~1.1/bin/x64/Rscript\" integration-apps/run.R --app=showcase --mode=headless --steps=0",
+    "analytics": "\"C:/PROGRA~1/R/R-46~1.1/bin/x64/Rscript\" integration-apps/run.R --app=analytics --mode=headless --steps=0",
+    "monitor": "\"C:/PROGRA~1/R/R-46~1.1/bin/x64/Rscript\" integration-apps/run.R --app=monitor --mode=headless --steps=0"
+  },
+  "scope": "Whole-process headless startup, initial frame, shutdown. rtop additionally executes eleven scripted scenarios. No terminal I/O latency claim."
+}

@@ -1,0 +1,160 @@
+testing installed termr 1.0.1
+PTY child: TERM='xterm-256color' COLORTERM='' TERM_PROGRAM='' tty_mode=controlling
+PTY child identity: pid=2505 pgid=2505 sid=2505
+PASS PTY harness provides a controlling terminal
+PASS hello app ready
+PASS raw mode while running (no ICANON, no ECHO)
+PASS alternate screen entered
+PASS typing reaches input
+PASS Tab focuses button
+PASS Enter presses button
+INFO result label text contiguous on the stream: True (a diff renderer may split it into several cursor-addressed runs)
+PASS escape sequences are parsed
+PASS resize redraws
+PASS Ctrl+C quits with status 0
+PASS alternate screen disabled at exit
+PASS bracketed paste disabled at exit
+PASS mouse reporting disabled at exit
+PASS SGR mouse disabled at exit
+PASS cursor shown again
+PTY child: TERM='xterm-256color' COLORTERM='' TERM_PROGRAM='' tty_mode=controlling
+PASS combined-input app ready
+PASS one PTY write delivers text, Tab focus and Enter activation in order
+PASS combined Tab+Enter fires focus and press once
+PASS combined-input app exits normally
+PASS alternate screen disabled at exit
+PASS bracketed paste disabled at exit
+PASS mouse reporting disabled at exit
+PASS SGR mouse disabled at exit
+PASS cursor shown again
+PTY child: TERM='xterm-256color' COLORTERM='' TERM_PROGRAM='' tty_mode=controlling
+PASS keys app starts
+PASS controlling terminal verified
+PASS ready marker follows raw mode
+PASS worker stdin detached
+PASS alternate screen enabled for capable TERM
+PASS bracketed paste enabled for capable TERM
+PASS mouse reporting enabled for capable TERM
+PASS SGR mouse enabled for capable TERM
+PASS ASCII, accented and emoji characters
+PASS key enter
+PASS key tab
+PASS key shift+tab
+PASS key escape
+PASS key up
+PASS key down
+PASS key right
+PASS key left
+PASS key home
+PASS key end
+PASS key home
+PASS key end
+PASS key delete
+PASS key backspace
+PASS key pageup
+PASS key pagedown
+PASS key f1
+PASS key f5
+PASS key f12
+PASS key alt+x
+PASS key ctrl+left
+PASS key shift+up
+PASS key ctrl+a
+PASS mouse press/release/wheel
+PASS mouse drag press/move/release
+PASS terminal size 1x1
+PASS terminal size 2048x40
+PASS resize storm reaches final size
+PASS resize event
+PASS timers fire
+PASS SIGINT exits cleanly
+PASS alternate screen disabled at exit
+PASS bracketed paste disabled at exit
+PASS mouse reporting disabled at exit
+PASS SGR mouse disabled at exit
+PASS cursor shown again
+PTY child: TERM='xterm-256color' COLORTERM='' TERM_PROGRAM='' tty_mode=controlling
+PASS fragments app starts
+PASS escape sequence split across reads
+PASS escape sequence split across reads: no stray Escape or bracket keys
+PASS UTF-8 split across reads
+PASS UTF-8 split across reads: no stray Escape or bracket keys
+PASS bracketed paste fragmented
+PASS bracketed paste fragmented: no stray Escape or bracket keys
+PASS lone Escape is flushed as the Escape key after the timeout
+PASS fragments session exits
+PASS alternate screen disabled at exit
+PASS bracketed paste disabled at exit
+PASS mouse reporting disabled at exit
+PASS SGR mouse disabled at exit
+PASS cursor shown again
+PTY child: TERM='xterm-256color' COLORTERM='' TERM_PROGRAM='' tty_mode=controlling
+PASS an error exits with a non-zero status
+PASS the error is printed after the screen is restored
+PASS alternate screen disabled at exit
+PASS bracketed paste disabled at exit
+PASS mouse reporting disabled at exit
+PASS SGR mouse disabled at exit
+PASS cursor shown again
+PTY child: TERM='xterm-256color' COLORTERM='' TERM_PROGRAM='' tty_mode=controlling
+PASS no-termr stty control exits (stdin_only=False)
+PASS no-termr stty control snapshots (stdin_only=False)
+PASS no-termr stty control changes only PENDIN (stdin_only=False)
+INFO no-termr stty control stdin_only=False: exact match
+PTY child: TERM='xterm-256color' COLORTERM='' TERM_PROGRAM='' tty_mode=stdin
+PASS no-termr stty control exits (stdin_only=True)
+PASS no-termr stty control snapshots (stdin_only=True)
+PASS no-termr stty control changes only PENDIN (stdin_only=True)
+INFO no-termr stty control stdin_only=True: exact match
+PTY child: TERM='xterm-256color' COLORTERM='' TERM_PROGRAM='' tty_mode=controlling
+PASS stty restored (stdin_only=False, TERM=xterm-256color, error=False)
+PASS restoration session status
+PASS alternate screen disabled at exit
+PASS bracketed paste disabled at exit
+PASS mouse reporting disabled at exit
+PASS SGR mouse disabled at exit
+PASS cursor shown again
+PTY child: TERM='xterm-256color' COLORTERM='' TERM_PROGRAM='' tty_mode=stdin
+PASS stdin-only PTY has no controlling terminal
+PASS stdin-only PTY app starts
+PASS stdin-only PTY key input works
+PASS stdin-only PTY resize works
+PASS stdin-only PTY normal exit
+PASS alternate screen disabled at exit
+PASS bracketed paste disabled at exit
+PASS mouse reporting disabled at exit
+PASS SGR mouse disabled at exit
+PASS cursor shown again
+PASS no-TTY subprocess has no terminal
+PASS no-TTY session fails with a termr error
+PASS no-TTY error is not opaque ENXIO
+PTY child: TERM='dumb' COLORTERM='' TERM_PROGRAM='' tty_mode=controlling
+PASS TERM=dumb starts
+PASS TERM=dumb input usable
+PASS TERM=dumb normal exit
+PASS TERM=dumb omits unsupported mode 1049
+PASS TERM=dumb omits unsupported mode 2004
+PASS TERM=dumb omits unsupported mode 1000
+PASS TERM=dumb omits unsupported mode 1006
+PASS cursor shown again
+PTY child: TERM='xterm-256color' COLORTERM='' TERM_PROGRAM='' tty_mode=stdin
+PASS stty restored (stdin_only=True, TERM=xterm-256color, error=False)
+PASS restoration session status
+PASS alternate screen disabled at exit
+PASS bracketed paste disabled at exit
+PASS mouse reporting disabled at exit
+PASS SGR mouse disabled at exit
+PASS cursor shown again
+PTY child: TERM='dumb' COLORTERM='' TERM_PROGRAM='' tty_mode=controlling
+PASS stty restored (stdin_only=False, TERM=dumb, error=False)
+PASS restoration session status
+PASS cursor shown again
+PTY child: TERM='xterm-256color' COLORTERM='' TERM_PROGRAM='' tty_mode=controlling
+PASS stty restored (stdin_only=False, TERM=xterm-256color, error=True)
+PASS restoration session status
+PASS alternate screen disabled at exit
+PASS bracketed paste disabled at exit
+PASS mouse reporting disabled at exit
+PASS SGR mouse disabled at exit
+PASS cursor shown again
+all PTY checks passed

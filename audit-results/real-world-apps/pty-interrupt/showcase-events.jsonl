@@ -1,0 +1,6 @@
+{"event":"sample","at":0.68,"sequence":1} 
+{"event":"ready","at":0.878,"app":"showcase"} 
+{"event":"key","at":1.063,"key":"alt+c"} 
+{"event":"sample","at":1.26,"sequence":2} 
+{"event":"key","at":1.289,"key":"ctrl+c"} 
+{"event":"stopped","at":1.316,"app":"showcase","dataset":"cars","rows":32,"samples":2,"subscribers":0,"closed":true} 

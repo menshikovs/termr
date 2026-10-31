@@ -1,0 +1,15 @@
+$screen_cells
+[1] 1920
+
+$repainted_cells
+[1] 391
+
+$rects
+[1] 1
+
+$full
+[1] FALSE
+
+$ansi_bytes
+[1] 1203
+

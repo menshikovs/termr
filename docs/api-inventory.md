@@ -4,11 +4,11 @@ Generated from the checked-in `NAMESPACE`, top-level definitions in `R/`, and cu
 
 ## Scope and counting
 
-- Explicit `export()` symbols: **165**.
+- Explicit `export()` symbols: **170**.
 - Registered S3 methods: **29** (listed separately; they are registrations, not `export(name)` directives).
 - Exported symbols without a matching Rd alias: **0**.
 - Exports without an Rd usage section: **0**.
-- Exports without an Rd examples section: **72**.
+- Exports without an Rd examples section: **69**.
 - Exports with no direct occurrence in README/docs/examples/tests: **24**.
 
 ?Used? below means a textual symbol occurrence in the named area; it does not prove runtime reachability. S3 methods are not counted as direct exports. `Rd usage` means a top-level Rd `\usage{}` section or an R6 method usage subsection. R6 class entries can be types returned by constructors even when their class names do not occur directly in examples.
@@ -33,7 +33,7 @@ Generated from the checked-in `NAMESPACE`, top-level definitions in `R/`, and cu
 | `Button` | R6 class | [widget-button.R](../R/widget-button.R#L13) | [yes](../man/Button-class.Rd) | yes | no | docs, tests |
 | `Checkbox` | R6 class | [widget-controls.R](../R/widget-controls.R#L7) | [yes](../man/Checkbox-class.Rd) | yes | no | ? |
 | `DataProfile` | R6 class | [widget-workflows.R](../R/widget-workflows.R#L420) | [yes](../man/DataProfile-class.Rd) | yes | no | tests |
-| `DataTable` | R6 class | [widget-datatable.R](../R/widget-datatable.R#L88) | [yes](../man/DataTable-class.Rd) | yes | no | docs |
+| `DataTable` | R6 class | [widget-datatable.R](../R/widget-datatable.R#L88) | [yes](../man/DataTable-class.Rd) | yes | no | docs (including typed selection, pipeline and edit export) |
 | `Event` | R6 class | [events.R](../R/events.R#L20) | [yes](../man/Event.Rd) | yes | no | docs |
 | `FocusEvent` | R6 class | [events.R](../R/events.R#L175) | [yes](../man/Event.Rd) | yes | no | ? |
 | `Grid` | R6 class | [widget-containers.R](../R/widget-containers.R#L46) | [yes](../man/Grid.Rd) | yes | no | docs, tests |
@@ -82,6 +82,7 @@ Generated from the checked-in `NAMESPACE`, top-level definitions in `R/`, and cu
 | `alert_dialog` | function | [screens.R](../R/screens.R#L218) | [yes](../man/modal.Rd) | yes | yes | docs, tests |
 | `animate` | function | [animation.R](../R/animation.R#L164) | [yes](../man/animate.Rd) | yes | yes | docs, tests |
 | `app` | function | [app.R](../R/app.R#L1183) | [yes](../man/app.Rd) | yes | yes | README, docs, examples, tests |
+| `bar_chart` | function (experimental) | [chart-api.R](../R/chart-api.R) | [yes](../man/bar_chart.Rd) | yes | yes | docs, examples, tests |
 | `batch` | function | [signals.R](../R/signals.R#L290) | [yes](../man/signals.Rd) | yes | yes | README, docs, examples, tests |
 | `bind` | function | [bindings.R](../R/bindings.R#L27) | [yes](../man/bind.Rd) | yes | yes | docs, examples, tests |
 | `browse_data` | function | [browse-data.R](../R/browse-data.R#L26) | [yes](../man/browse_data.Rd) | yes | yes | README, docs, examples |
@@ -105,6 +106,8 @@ Generated from the checked-in `NAMESPACE`, top-level definitions in `R/`, and cu
 | `dispose` | function | [signals.R](../R/signals.R#L275) | [yes](../man/signals.Rd) | yes | yes | docs, tests |
 | `dropdown` | function | [widget-controls.R](../R/widget-controls.R#L386) | [yes](../man/dropdown.Rd) | yes | yes | README, docs, examples, tests |
 | `grid_layout` | function | [widget-containers.R](../R/widget-containers.R#L81) | [yes](../man/grid_layout.Rd) | yes | yes | docs, examples, tests |
+| `heatmap_chart` | function (experimental) | [chart-heatmap-api.R](../R/chart-heatmap-api.R) | [yes](../man/heatmap_chart.Rd) | yes | no | docs, examples, tests |
+| `histogram` | function (experimental) | [chart-api.R](../R/chart-api.R) | [yes](../man/histogram.Rd) | yes | no | docs, examples, tests |
 | `horizontal` | function | [widget-containers.R](../R/widget-containers.R#L114) | [yes](../man/vertical.Rd) | yes | yes | README, docs, examples, tests |
 | `input` | function | [widget-input.R](../R/widget-input.R#L479) | [yes](../man/input.Rd) | yes | yes | README, docs, examples, tests |
 | `inspect_signal` | helper | [signals.R](../R/signals.R#L334) | [yes](../man/inspect_signal.Rd) | yes | no | docs, tests |
@@ -114,6 +117,7 @@ Generated from the checked-in `NAMESPACE`, top-level definitions in `R/`, and cu
 | `key_value` | function | [widget-display.R](../R/widget-display.R#L553) | [yes](../man/key_value.Rd) | yes | yes | README, docs, examples, tests |
 | `knit_termr` | function | [export.R](../R/export.R#L268) | [yes](../man/knit_termr.Rd) | yes | no | docs, tests |
 | `label` | function | [widget-label.R](../R/widget-label.R#L63) | [yes](../man/label.Rd) | yes | yes | README, docs, examples, tests |
+| `line_chart` | function (experimental) | [chart-api.R](../R/chart-api.R) | [yes](../man/line_chart.Rd) | yes | yes | docs, examples, tests |
 | `log_view` | function | [widget-log.R](../R/widget-log.R#L141) | [yes](../man/log_view.Rd) | yes | yes | README, docs, examples, tests |
 | `markdown_view` | function | [markdown.R](../R/markdown.R#L457) | [yes](../man/markdown_view.Rd) | yes | yes | README, docs, examples, tests |
 | `metric` | function | [widget-display.R](../R/widget-display.R#L484) | [yes](../man/metric.Rd) | yes | yes | README, docs, examples, tests |
@@ -130,6 +134,7 @@ Generated from the checked-in `NAMESPACE`, top-level definitions in `R/`, and cu
 | `r_highlighter` | function | [widget-textarea.R](../R/widget-textarea.R#L1582) | [yes](../man/r_highlighter.Rd) | yes | no | docs, tests |
 | `radio_button` | function | [widget-controls.R](../R/widget-controls.R#L239) | [yes](../man/radio_set.Rd) | yes | yes | docs, examples, tests |
 | `radio_set` | function | [widget-controls.R](../R/widget-controls.R#L230) | [yes](../man/radio_set.Rd) | yes | yes | README, docs, examples, tests |
+| `scatter_chart` | function (experimental) | [chart-api.R](../R/chart-api.R) | [yes](../man/scatter_chart.Rd) | yes | yes | docs, examples, tests |
 | `reactive` | function | [reactive.R](../R/reactive.R#L17) | [yes](../man/reactive.Rd) | yes | yes | README, docs, examples, tests |
 | `record_view` | function | [widget-workflows.R](../R/widget-workflows.R#L302) | [yes](../man/record_view.Rd) | yes | yes | docs, examples, tests |
 | `region` | helper | [geometry.R](../R/geometry.R#L17) | [yes](../man/region.Rd) | yes | yes | README, docs, examples, tests |
@@ -254,6 +259,10 @@ These exported names share topics or neighboring roles; none is marked deprecate
 - `run_worker()` / `run_process()` are parallel worker entry points for an R function and an external process.
 - `set_timeout()` / `set_interval()` are paired timer helpers.
 - `stylesheet()` / `stylesheet_file()` parse stylesheet text or a file.
+- `App$set_inkr_stylesheet()` / `App$clear_inkr_stylesheet()` manage the
+  optional standalone inkr cascade; `App$explain_inkr_style()` forwards to
+  inkr's public explanation API. This is an R6 method surface and adds no
+  exported symbol.
 - `render_text()` / `render_lines()` overlap; one returns a newline-joined scalar, the other a vector of lines. `render_widget()` returns the lower-level `ScreenBuffer`.
 - `inspect_widget()`, `widget_snapshot()`, and `widget_snapshot_json()` cover rich inspection, a redacted structural snapshot, and JSON serialization of that snapshot; `screen_snapshot()` / `screen_snapshot_json()` are the same pair for the rendered screen.
 - `table_source()` is the generic source protocol; `db_table_source()` supplies the SQLite/DB-backed adapter.

@@ -1,0 +1,3 @@
+{"event":"sample","at":0.808,"sequence":1} 
+{"event":"ready","at":1.085,"app":"showcase"} 
+{"event":"key","at":1.285,"key":"ctrl+e"} 

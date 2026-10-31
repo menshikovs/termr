@@ -14,5 +14,9 @@
 ^vignettes/articles$
 ^audit-results$
 ^\.playwright-mcp$
+^\.agents$
+^\.serena$
 ^tests/testthat/_snaps/.*\.new\.md$
 ^tests/testthat/_problems$
+^integration-apps$
+^typescript$

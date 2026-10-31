@@ -21,7 +21,11 @@
 #'   `set_column_visible()`.)
 #' @param sortable Can the table be sorted by this column?
 #' @param editable Can cells be edited (when the table is `editable`)?
-#'   `NULL`: yes for numeric, logical, character, factor and date columns.
+#'   `NULL`: yes for built-in typed adapters; unsupported objects and list
+#'   columns stay read-only.
+#' @param label_mode How haven labelled values are displayed: `"raw"` shows
+#'   stored values; `"labels"` shows a matching value label together with its
+#'   raw value in brackets. This never changes the stored vector.
 #' @return An object of class `termr_column`.
 #' @export
 #' @examples
@@ -29,13 +33,14 @@
 #'        formatter = function(x) sprintf("%.1f", x))
 column <- function(label = NULL, width = NULL, align = NULL, formatter = NULL,
                    min_width = NULL, max_width = NULL, visible = TRUE, sortable = TRUE,
-                   editable = NULL) {
+                   editable = NULL, label_mode = "raw") {
   check_scalar_character(label, "label", allow_null = TRUE)
   check_function(formatter, "formatter", allow_null = TRUE)
   if (is.character(width) && identical(width, "auto")) width <- NULL
   check_flag(visible)
   check_flag(sortable)
   if (!is.null(editable)) check_flag(editable)
+  label_mode <- check_choice(label_mode, c("raw", "labels"), "label_mode")
   structure(
     list(
       label = label,
@@ -46,7 +51,8 @@ column <- function(label = NULL, width = NULL, align = NULL, formatter = NULL,
       max_width = check_count(max_width, "max_width"),
       visible = visible,
       sortable = sortable,
-      editable = editable
+      editable = editable,
+      label_mode = label_mode
     ),
     class = "termr_column"
   )
@@ -97,6 +103,8 @@ DataTable <- R6::R6Class(
     cursor_type = "row",
     #' @field show_header Show the header row?
     show_header = TRUE,
+    #' @field show_types Show a second header row with compact column types?
+    show_types = FALSE,
     #' @field zebra Stripe alternate rows?
     zebra = FALSE,
     #' @field row_style `NULL` or `function(row, data)` returning a style for
@@ -119,7 +127,7 @@ DataTable <- R6::R6Class(
     on_edit = NULL,
 
     #' @description Create a table. See [data_table()].
-    #' @param data A data frame, matrix, or [table_source()].
+    #' @param data A data frame (including tibbles), matrix, or [table_source()].
     #' @param cursor Cursor type.
     #' @param columns Named list of [column()] options.
     #' @param formatters Named list of formatter functions.
@@ -129,16 +137,18 @@ DataTable <- R6::R6Class(
     #' @param row_style,cell_style Style hooks.
     #' @param max_column_width Upper limit for estimated widths.
     #' @param frozen_columns,header_sort,editable,on_edit See the fields.
+    #' @param show_types Display compact type summaries beneath column headers?
     #' @param filters Named column filters for `filter_columns()`.
     #' @param id,classes,style,disabled See [Widget].
     initialize = function(data, cursor = "row", columns = NULL, formatters = NULL, row_names = NA,
                           header = TRUE, zebra = FALSE, row_style = NULL, cell_style = NULL,
                           max_column_width = 40L, frozen_columns = 0L, header_sort = FALSE,
                           editable = FALSE, on_edit = NULL, id = NULL, classes = NULL, style = NULL,
-                          disabled = FALSE) {
+                          disabled = FALSE, show_types = FALSE) {
       super$initialize(id = id, classes = classes, style = style, disabled = disabled)
       check_flag(header_sort)
       check_flag(editable)
+      check_flag(show_types)
       check_function(on_edit, "on_edit", allow_null = TRUE)
       self$frozen_columns <- check_count(frozen_columns, "frozen_columns")
       self$header_sort <- header_sort
@@ -153,6 +163,7 @@ DataTable <- R6::R6Class(
         stop("`row_names` must be TRUE, FALSE or NA.", call. = FALSE)
       }
       self$show_header <- header
+      self$show_types <- show_types
       self$zebra <- zebra
       self$row_style <- row_style
       self$cell_style <- cell_style
@@ -160,7 +171,8 @@ DataTable <- R6::R6Class(
         columns = check_named_list(columns, "columns"),
         formatters = check_named_functions(formatters, "formatters"),
         row_names = row_names,
-        max_width = check_count(max_column_width, "max_column_width")
+        max_width = check_count(max_column_width, "max_column_width"),
+        show_types = show_types
       )
       for (opt in private$.options$columns) {
         if (!inherits(opt, "termr_column")) stop("`columns` must contain column() options.", call. = FALSE)
@@ -191,45 +203,121 @@ DataTable <- R6::R6Class(
     },
 
     #' @description Replace the data. Resets the view, cursor and scroll.
-    #' @param data A data frame, matrix, or [table_source()].
+    #' @param data A data frame (including tibbles), matrix, or [table_source()].
     set_data = function(data) {
       opts <- private$.options
-      private$.source_error <- NULL
       if (is_table_source(data)) {
+        if (isTRUE(data$is_closed %||% FALSE)) stop("This table source is closed.", call. = FALSE)
+        names_data <- tryCatch(data$column_names(), error = function(e) {
+          stop("`table_source$column_names()` failed: ", conditionMessage(e), call. = FALSE)
+        })
+        if (!is.character(names_data) || length(names_data) < 1L || anyNA(names_data) ||
+            any(names_data == "") || anyDuplicated(names_data)) {
+          stop("`table_source$column_names()` must return non-empty, unique character names.", call. = FALSE)
+        }
+        n_raw <- tryCatch(data$row_count(), error = function(e) {
+          stop("`table_source$row_count()` failed: ", conditionMessage(e), call. = FALSE)
+        })
+        if (!is.numeric(n_raw) || length(n_raw) != 1L || is.na(n_raw) || !is.finite(n_raw) ||
+            n_raw < 0 || n_raw != floor(n_raw) || n_raw > .Machine$integer.max) {
+          stop("`table_source$row_count()` must return a non-negative whole number no larger than .Machine$integer.max.", call. = FALSE)
+        }
+        n <- as.integer(n_raw)
+        seed_count <- if (n > 0L) min(100L, n) else 0L
+        failed_seed <- FALSE
+        seed_error_msg <- NULL
+        seed <- tryCatch(data$get_rows(1L, seed_count, names_data), error = function(e) {
+          if (is.null(data$on_error)) {
+            stop("`table_source$get_rows()` failed: ", conditionMessage(e), call. = FALSE)
+          }
+          failed_seed <<- TRUE
+          seed_error_msg <<- conditionMessage(e)
+          tryCatch(data$on_error(e, 1L, seed_count, names_data), error = function(handler_error) {
+            stop(sprintf("`table_source$get_rows()` failed: %s; source error handler failed: %s",
+                         seed_error_msg, conditionMessage(handler_error)), call. = FALSE)
+          })
+        })
+        if (!is.data.frame(seed)) {
+          stop("`table_source$get_rows()` must return a data.frame.", call. = FALSE)
+        }
+        if (nrow(seed) != seed_count) {
+          stop(sprintf("`table_source$get_rows()` returned %d rows; expected %d.", nrow(seed), seed_count), call. = FALSE)
+        }
+        if (!identical(names(seed), names_data)) {
+          stop("`table_source$get_rows()` returned inconsistent column names.", call. = FALSE)
+        }
+        unknown <- setdiff(c(names(opts$columns), names(opts$formatters)), names_data)
+        if (length(unknown)) {
+          stop(sprintf("Unknown column \"%s\" in data_table() options.", unknown[[1]]), call. = FALSE)
+        }
+        cand_data <- seed[integer(), , drop = FALSE]
+        cand_schema <- seed
+        active_geometry <- if (inherits(cand_data, "sf")) attr(cand_data, "sf_column", exact = TRUE) else NULL
+        cand_specs <- lapply(names_data, function(name) {
+          table_column_spec(cand_schema[[name]], name, opts, active_geometry = active_geometry)
+        })
+        if (is.null(data$sort)) {
+          for (i in seq_along(cand_specs)) cand_specs[[i]]$sortable <- FALSE
+        }
+        show_rn <- isTRUE(opts$row_names)
+        cand_rn <- if (!show_rn) NULL else list(auto = TRUE, width = as.integer(max(1L, nchar(as.character(n)))))
+        cand_cache <- new.env(parent = emptyenv())
+        cand_lru <- character()
+        cand_stats <- new.env(parent = emptyenv())
+        cand_stats$fetch_calls <- if (seed_count > 0L) 1L else 0L
+        cand_stats$rows_requested <- seed_count
+        cand_stats$cache_hits <- 0L
+        cand_stats$cache_misses <- 0L
+        cand_stats$rows_rendered <- 0L
+        cand_stats$cells_rendered <- 0L
+        cand_stats$fetch_errors <- if (failed_seed) 1L else 0L
+        if (seed_count > 0L) {
+          col_key <- paste0(nchar(names_data, type = "bytes"), ":", names_data, collapse = "")
+          cache_key <- paste(1L, seed_count, col_key, sep = "|")
+          assign(cache_key, seed, envir = cand_cache)
+          cand_lru <- cache_key
+        }
+        # Atomically commit validated source state
         private$.source <- data
         private$.source_closed <- FALSE
-        private$.source_cache <- new.env(parent = emptyenv())
-        private$.source_lru <- character()
-        private$.source_stats <- new.env(parent = emptyenv())
-        private$.source_stats$fetch_calls <- 0L
-        private$.source_stats$rows_requested <- 0L
-        private$.source_stats$cache_hits <- 0L
-        private$.source_stats$cache_misses <- 0L
-        private$.source_stats$rows_rendered <- 0L
-        private$.source_stats$cells_rendered <- 0L
-        private$.source_stats$fetch_errors <- 0L
-        names_data <- private$source_column_names()
-        n <- private$source_row_count()
-        seed <- if (n) private$get_source_page(1L, min(100L, n), names_data) else
-          private$get_source_page(1L, 0L, names_data)
-        data <- seed[integer(), , drop = FALSE]
-        private$.source_schema <- seed
+        private$.source_schema <- cand_schema
+        private$.source_cache <- cand_cache
+        private$.source_lru <- cand_lru
+        private$.source_stats <- cand_stats
+        private$.source_error <- seed_error_msg
+        private$.data <- cand_data
+        if (failed_seed) {
+          self$post_message("datatable.source_error", list(
+            message = sprintf("`table_source$get_rows(start=1, count=%d)` failed: %s", seed_count, seed_error_msg),
+            error = seed_error_msg, start = 1L, count = seed_count
+          ))
+        }
       } else {
-        data <- as_table_data(data)
-        names_data <- names(data)
+        cand_data <- as_table_data(data)
+        names_data <- names(cand_data)
+        unknown <- setdiff(c(names(opts$columns), names(opts$formatters)), names_data)
+        if (length(unknown)) {
+          stop(sprintf("Unknown column \"%s\" in data_table() options.", unknown[[1]]), call. = FALSE)
+        }
+        active_geometry <- if (inherits(cand_data, "sf")) attr(cand_data, "sf_column", exact = TRUE) else NULL
+        cand_specs <- lapply(names_data, function(name) {
+          table_column_spec(cand_data[[name]], name, opts, active_geometry = active_geometry)
+        })
+        show_rn <- if (is.na(opts$row_names)) .row_names_info(cand_data) > 0L else opts$row_names
+        cand_rn <- if (!show_rn) NULL else table_row_name_spec(cand_data)
+        # Atomically commit local data state
         private$.source <- NULL
         private$.source_closed <- FALSE
         private$.source_cache <- NULL
         private$.source_lru <- character()
         private$.source_schema <- NULL
+        private$.source_error <- NULL
+        private$.data <- cand_data
       }
-      unknown <- setdiff(c(names(opts$columns), names(opts$formatters)), names(data))
-      if (length(unknown)) {
-        stop(sprintf("Unknown column \"%s\" in data_table() options.", unknown[[1]]), call. = FALSE)
-      }
-      private$.data <- data
+      private$.repro_edits <- list()
+      private$.repro_edits_overflow <- FALSE
       private$.view <- NULL
-      private$.column_order <- seq_along(data)
+      private$.column_order <- seq_along(private$.data)
       private$.selection_anchor <- NA_integer_
       private$.selection_end <- NA_integer_
       private$.base_view <- NULL
@@ -237,20 +325,13 @@ DataTable <- R6::R6Class(
       private$.sort <- NULL
       private$.find <- NULL
       private$.find_hit <- NULL
-      spec_data <- if (is_table_source(private$.source)) private$.source_schema else data
-      private$.specs <- lapply(names_data %||% names(data), function(name) table_column_spec(spec_data[[name]], name, opts))
-      if (is_table_source(private$.source) && is.null(private$.source$sort)) {
-        for (i in seq_along(private$.specs)) private$.specs[[i]]$sortable <- FALSE
-      }
-      show_rn <- if (is_table_source(private$.source)) isTRUE(opts$row_names) else if (is.na(opts$row_names)) .row_names_info(data) > 0L else opts$row_names
-      private$.row_names <- if (!show_rn) NULL else if (is_table_source(private$.source)) {
-        list(auto = TRUE, width = as.integer(max(1L, nchar(as.character(private$source_row_count())))))
-      } else table_row_name_spec(data)
+      private$.specs <- cand_specs
+      private$.row_names <- cand_rn
       private$.state$offset_row <- 0L
       private$.state$offset_col <- 0L
-      n <- private$row_count_data()
-      private$.state$cursor_row <- if (self$cursor_type != "none" && n > 0L) 1L else 0L
-      private$.state$cursor_col <- if (self$cursor_type == "cell" && ncol(data) > 0L) 1L else 0L
+      n_count <- private$row_count_data()
+      private$.state$cursor_row <- if (self$cursor_type != "none" && n_count > 0L) 1L else 0L
+      private$.state$cursor_col <- if (self$cursor_type == "cell" && ncol(private$.data) > 0L) 1L else 0L
       self$invalidate()
       invisible(self)
     },
@@ -298,6 +379,9 @@ DataTable <- R6::R6Class(
         stop("Sorting is not supported by this table source.", call. = FALSE)
       }
       js <- vapply(as.list(by), private$column_index, 1L)
+      if (any(!vapply(private$.specs[js], `[[`, TRUE, "sortable"))) {
+        stop("Sorting is not supported for one or more selected columns.", call. = FALSE)
+      }
       decreasing <- rep_len(as.logical(decreasing), length(js))
       if (anyNA(decreasing)) stop("`decreasing` must be TRUE or FALSE.", call. = FALSE)
       private$.sort <- list(columns = js, decreasing = decreasing)
@@ -348,6 +432,9 @@ DataTable <- R6::R6Class(
         return(invisible(self))
       }
       n <- nrow(private$.data)
+      if (!is.null(rows) && !is.numeric(rows) && !is.logical(rows)) {
+        stop("`rows` must be an integer vector, logical vector, or NULL.", call. = FALSE)
+      }
       if (is.logical(rows)) {
         if (length(rows) != n) stop("A logical filter must have one value per row.", call. = FALSE)
         rows <- which(rows)
@@ -442,6 +529,280 @@ DataTable <- R6::R6Class(
       pos <- private$selected_positions()
       if (is_table_source(private$.source)) return(private$source_read(private$positions_to_rows(pos), private$source_column_names()))
       private$.data[private$view_rows()[pos], , drop = FALSE]
+    },
+
+    #' @description Build safe, bounded R code for the current selection,
+    #'   final table view, or recorded local edits.
+    #' @param kind One of `"value"` (self-contained selected value),
+    #'   `"pipeline"` (current supported local filter, sort, selection and
+    #'   visible-column state), or `"edits"` (recorded local cell changes).
+    #' @param max_rows Maximum selected rows to include in a value export.
+    #' @param max_bytes Maximum generated source size. The implementation also
+    #'   applies hard internal row, cell, edit and source-size limits.
+    #' @return A `termr_reproducible_code` list with `code`, `status`,
+    #'   `reason`, optional package requirements, source-binding information,
+    #'   and a compact typed model. `status` is `"exact"`, `"limited"` or
+    #'   `"unsupported"`.
+    reproducible_code = function(kind = c("value", "pipeline", "edits"),
+                                  max_rows = 1000L, max_bytes = 1000000L) {
+      kind <- match.arg(kind)
+      max_rows <- check_count(max_rows, "max_rows")
+      max_bytes <- check_count(max_bytes, "max_bytes")
+      if (max_rows > 5000L) stop("`max_rows` cannot exceed the internal limit of 5000.", call. = FALSE)
+      if (max_bytes > 5000000L) stop("`max_bytes` cannot exceed the internal limit of 5000000.", call. = FALSE)
+      source_kind <- if (is_table_source(private$.source)) "table_source" else "local_data_frame"
+      model <- list(
+        source = list(kind = source_kind, binding = "data", identity_known = FALSE),
+        view_state = list(
+          base_rows = private$.base_view,
+          filters = termr_r_filter_summary(private$.filters),
+          sort = if (is.null(private$.sort)) NULL else list(
+            columns = names(private$.data)[private$.sort$columns],
+            decreasing = private$.sort$decreasing
+          ),
+          columns = names(private$.data)[private$visible_columns()],
+          selection = if (is.na(private$.selection_anchor) || is.na(private$.selection_end)) NULL else
+            private$selected_positions()
+        ),
+        operation_history = list(
+          available = FALSE,
+          reason = "DataTable exposes current view state, not a historical operation sequence."
+        ),
+        mutations = list(recorded_local_cells = length(private$.repro_edits),
+                         overflow = isTRUE(private$.repro_edits_overflow))
+      )
+
+      if (kind == "value") {
+        positions <- private$selected_positions()
+        columns <- private$visible_columns()
+        if (length(positions) > max_rows) {
+          return(termr_r_result(status = "limited", reason = sprintf(
+            "Selection has %d rows; the requested limit is %d.", length(positions), max_rows), model = model))
+        }
+        if (length(positions) * length(columns) > termr_repro_limits$cells) {
+          return(termr_r_result(status = "limited", reason = sprintf(
+            "Selection exceeds the internal limit of %d cells.", termr_repro_limits$cells), model = model))
+        }
+        if (!length(positions)) {
+          return(termr_r_result(status = "limited", reason = "There is no selected row to export.", model = model))
+        }
+        cell_selection <- self$cursor_type == "cell" &&
+          (is.na(private$.selection_anchor) || is.na(private$.selection_end))
+        if (cell_selection) {
+          column <- private$active_column()
+          name <- names(private$.data)[[column]]
+          if (is_table_source(private$.source)) {
+            data <- self$selected_data()
+            value <- table_slice(data[[name]], 1L)
+          } else {
+            source_row <- private$view_rows()[positions[[1L]]]
+            value <- table_slice(private$.data[[column]], source_row)
+          }
+        } else {
+          value <- self$selected_data()[, columns, drop = FALSE]
+          if (!is_table_source(private$.source)) {
+            source_rows <- private$view_rows()[positions]
+            for (name in names(value)) {
+              j <- match(name, names(private$.data))
+              value <- table_replace_column(value, match(name, names(value)),
+                                            table_slice(private$.data[[j]], source_rows))
+            }
+          } else {
+            for (name in names(value)) {
+              j <- match(name, names(private$.source_schema))
+              if (!identical(class(value[[name]]), class(private$.source_schema[[j]])) ||
+                  !identical(typeof(value[[name]]), typeof(private$.source_schema[[j]]))) {
+                return(termr_r_result(status = "unsupported",
+                  reason = paste0("Source selection lost the type of column '", name, "'."),
+                  model = model))
+              }
+            }
+          }
+        }
+        if (as.numeric(utils::object.size(value)) > max_bytes) {
+          return(termr_r_result(status = "limited", reason = "Selected value exceeds the requested byte limit before source generation.", model = model))
+        }
+        support <- termr_r_value_support(value)
+        if (!support$ok) return(termr_r_result(status = "unsupported", reason = support$reason, model = model))
+        expression <- tryCatch(termr_r_value_ast(value), error = identity)
+        if (inherits(expression, "error")) return(termr_r_result(status = "unsupported", reason = conditionMessage(expression), model = model))
+        code <- tryCatch(termr_r_code(expression, support$packages), error = identity)
+        if (inherits(code, "error")) return(termr_r_result(status = "unsupported", reason = conditionMessage(code), model = model))
+        if (nchar(code, type = "bytes") > max_bytes) {
+          return(termr_r_result(status = "limited", reason = "Generated R source exceeds the requested byte limit.", packages = support$packages, model = model))
+        }
+        return(termr_r_result(code = code, status = "exact", packages = support$packages, model = model))
+      }
+
+      if (kind == "pipeline") {
+        if (is_table_source(private$.source)) {
+          return(termr_r_result(status = "unsupported",
+            reason = "A table_source has no public source-binding or portable query identity; its connection and query details are not exported.",
+            requires_source_binding = TRUE, model = model))
+        }
+        if (!length(private$visible_columns())) {
+          return(termr_r_result(status = "unsupported", reason = "No visible columns are available for a pipeline.",
+                                requires_source_binding = TRUE, model = model))
+        }
+        packages <- character()
+        for (j in private$visible_columns()) {
+          class_support <- termr_r_class_support(private$.data[[j]])
+          if (!class_support$ok) return(termr_r_result(status = "unsupported",
+            reason = paste0("Visible column cannot be reproduced: ", class_support$reason),
+            requires_source_binding = TRUE, model = model))
+          packages <- c(packages, class_support$packages)
+        }
+        if (!is.null(private$.base_view) && length(private$.base_view) > termr_repro_limits$cells) {
+          return(termr_r_result(status = "limited", reason = "The explicit row view exceeds the internal expression limit.",
+                                requires_source_binding = TRUE, model = model))
+        }
+        for (name in names(private$.filters)) {
+          j <- match(name, names(private$.data))
+          reason <- termr_r_filter_supported(private$.filters[[name]], private$.data[[j]])
+          if (!is.null(reason)) return(termr_r_result(status = "unsupported", reason = reason,
+            requires_source_binding = TRUE, model = model))
+          filter <- private$.filters[[name]]
+          values <- if (identical(filter$type, "range")) list(filter$min, filter$max) else
+            if (identical(filter$type, "equals")) list(filter$value) else list()
+          for (value in values) {
+            support <- termr_r_value_support(value)
+            if (!support$ok) return(termr_r_result(status = "unsupported", reason = support$reason,
+              requires_source_binding = TRUE, model = model))
+            packages <- c(packages, support$packages)
+          }
+        }
+        if (!is.null(private$.sort)) {
+          for (j in private$.sort$columns) {
+            support <- termr_r_value_support(private$.data[[j]])
+            if (!support$ok) return(termr_r_result(status = "unsupported",
+              reason = paste0("Sort key cannot be reproduced: ", support$reason),
+              requires_source_binding = TRUE, model = model))
+            packages <- c(packages, support$packages)
+          }
+        }
+        pipeline_state_size <- as.numeric(utils::object.size(list(
+          rows = private$.base_view, filters = lapply(private$.filters, function(filter) {
+            if (!inherits(filter, "termr_table_filter")) return(list(type = "function"))
+            list(type = filter$type, value = filter$value, min = filter$min, max = filter$max)
+          }), columns = names(private$.data)[private$visible_columns()]
+        )))
+        if (pipeline_state_size > max_bytes) return(termr_r_result(status = "limited",
+          reason = "Pipeline state exceeds the requested byte limit before source generation.",
+          requires_source_binding = TRUE, model = model))
+        pipeline_state <- list(
+          base_rows = private$.base_view,
+          filters = private$.filters,
+          sort = if (is.null(private$.sort)) NULL else list(
+            columns = names(private$.data)[private$.sort$columns], decreasing = private$.sort$decreasing
+          ),
+          columns = names(private$.data)[private$visible_columns()],
+          selection = if (is.na(private$.selection_anchor) || is.na(private$.selection_end)) NULL else
+            private$selected_positions()
+        )
+        sim_rows <- private$filter_rows(private$.base_view)
+        sim_rows <- sim_rows %||% seq_len(nrow(private$.data))
+        if (!is.null(private$.sort)) {
+          so <- private$.sort
+          keys <- lapply(so$columns, function(j) private$.data[[j]][sim_rows])
+          ord <- do.call(order, c(keys, list(decreasing = so$decreasing, na.last = TRUE, method = "radix")))
+          sim_rows <- sim_rows[ord]
+        }
+        if (!is.null(pipeline_state$selection)) sim_rows <- sim_rows[pipeline_state$selection]
+        expected_pos <- if (is.na(private$.selection_anchor) || is.na(private$.selection_end)) {
+          private$view_rows()
+        } else {
+          private$view_rows()[private$selected_positions()]
+        }
+        if (!identical(sim_rows, expected_pos)) {
+          return(termr_r_result(status = "unsupported",
+            reason = "Pipeline evaluation diverges from the current displayed row order due to local cell edits.",
+            requires_source_binding = TRUE, model = model))
+        }
+        expression <- tryCatch(termr_r_pipeline_ast(pipeline_state), error = identity)
+        if (inherits(expression, "error")) return(termr_r_result(status = "unsupported", reason = conditionMessage(expression),
+          requires_source_binding = TRUE, model = model))
+        packages <- unique(packages)
+        code <- tryCatch(termr_r_code(expression, packages), error = identity)
+        if (inherits(code, "error")) return(termr_r_result(status = "unsupported", reason = conditionMessage(code),
+          requires_source_binding = TRUE, model = model))
+        if (nchar(code, type = "bytes") > max_bytes) return(termr_r_result(status = "limited",
+          reason = "Generated pipeline exceeds the requested byte limit.", requires_source_binding = TRUE, model = model))
+        return(termr_r_result(code = code, status = "exact", packages = packages,
+                              requires_source_binding = TRUE, model = model))
+      }
+
+      if (is_table_source(private$.source)) {
+        return(termr_r_result(status = "unsupported",
+          reason = "Remote/source edits are never exported as local assignments.",
+          requires_source_binding = TRUE, model = model))
+      }
+      if (isTRUE(private$.repro_edits_overflow)) {
+        return(termr_r_result(status = "limited", reason = "The bounded edit ledger overflowed; some local edits were not recorded.",
+          requires_source_binding = TRUE, model = model))
+      }
+      edits <- private$.repro_edits
+      if (length(edits) > termr_repro_limits$edits) {
+        return(termr_r_result(status = "limited", reason = "Edit ledger exceeds the internal expression limit.",
+          requires_source_binding = TRUE, model = model))
+      }
+      packages <- character()
+      edit_size <- 0
+      for (edit in edits) {
+        j <- match(edit$column, names(private$.data))
+        if (is.na(j) || !private$cell_editable(j)) {
+          return(termr_r_result(status = "unsupported", reason = "At least one recorded edit is not safely assignable.",
+            requires_source_binding = TRUE, model = model))
+        }
+        support <- termr_r_value_support(edit$value)
+        if (!support$ok) return(termr_r_result(status = "unsupported", reason = support$reason,
+          requires_source_binding = TRUE, model = model))
+        packages <- c(packages, support$packages)
+        edit_size <- edit_size + as.numeric(utils::object.size(edit$value))
+      }
+      if (edit_size > max_bytes) return(termr_r_result(status = "limited",
+        reason = "Recorded edit values exceed the requested byte limit before source generation.",
+        requires_source_binding = TRUE, model = model))
+      expression <- tryCatch(termr_r_edit_ast(edits), error = identity)
+      if (inherits(expression, "error")) return(termr_r_result(status = "unsupported", reason = conditionMessage(expression),
+        requires_source_binding = TRUE, model = model))
+      packages <- unique(packages)
+      code <- tryCatch(termr_r_code(expression, packages), error = identity)
+      if (inherits(code, "error")) return(termr_r_result(status = "unsupported", reason = conditionMessage(code),
+        requires_source_binding = TRUE, model = model))
+      if (nchar(code, type = "bytes") > max_bytes) return(termr_r_result(status = "limited",
+        reason = "Generated edit code exceeds the requested byte limit.", packages = packages,
+        requires_source_binding = TRUE, model = model))
+      termr_r_result(code = code, status = "exact", packages = packages,
+                     requires_source_binding = TRUE, model = model)
+    },
+
+    #' @description Copy one reproducible-code result using the app clipboard.
+    #' @param kind See `reproducible_code()`.
+    #' @param system Also send the generated R code through the system clipboard
+    #'   when the current driver supports it.
+    #' @return The code result, invisibly.
+    copy_reproducible_code = function(kind = c("value", "pipeline", "edits"), system = TRUE) {
+      kind <- match.arg(kind)
+      check_flag(system)
+      app <- self$app
+      if (is.null(app)) stop("The table is not attached to an app.", call. = FALSE)
+      result <- self$reproducible_code(kind)
+      if (is.null(result$code)) stop(result$reason %||% "No reproducible R code is available.", call. = FALSE)
+      app$clipboard_write(result$code, system = system)
+      invisible(result)
+    },
+
+    #' @description Offer reproducible-code actions in the command palette.
+    commands = function() {
+      available <- function(app) identical(self$app, app)
+      list(
+        command("Copy selection as R value", action = function(...) self$copy_reproducible_code("value"),
+                category = "Data", enabled = available, description = "Copy selected typed values as bounded R source."),
+        command("Copy current R pipeline", action = function(...) self$copy_reproducible_code("pipeline"),
+                category = "Data", enabled = available, description = "Reproduce supported local filters, sorting and visible columns."),
+        command("Copy local R edits", action = function(...) self$copy_reproducible_code("edits"),
+                category = "Data", enabled = available, description = "Export recorded local edits by original row number.")
+      )
     },
 
     #' @description Data in the current viewport, in display order.
@@ -582,17 +943,52 @@ DataTable <- R6::R6Class(
       invisible(self)
     },
 
-    #' @description Describe the columns: name, label, width, visible, sortable.
+    #' @description Describe each column's layout and typed data metadata.
+    #' The result includes its name, label, compact type, class, storage type,
+    #' prototype, attributes, missing-value support, formatter, editability,
+    #' display position, width, visibility and sortability. Labelled columns
+    #' also expose base type, variable label, value labels and SPSS missing
+    #' definitions. Spatial columns expose geometry type, coordinate dimension,
+    #' CRS, active geometry status, precision and bounding-box metadata.
+    #' @return A data frame with one row per column. `prototype`, `attributes`,
+    #'   `value_labels`, `na_values`, `na_range`, `missing_definitions`,
+    #'   `geometry_crs`, `geometry_bbox` and `geometry_metadata` are
+    #'   list-columns. Non-labelled, non-spatial columns have `NULL` optional
+    #'   metadata.
     column_info = function() {
-      data.frame(
+      out <- data.frame(
         name = vapply(private$.specs, `[[`, "", "name"),
         label = vapply(private$.specs, `[[`, "", "label"),
+        type = vapply(private$.specs, `[[`, "", "type"),
+        base_type = vapply(private$.specs, `[[`, "", "base_type"),
+        label_mode = vapply(private$.specs, `[[`, "", "label_mode"),
+        class = vapply(private$.specs, `[[`, "", "class_label"),
+        typeof = vapply(private$.specs, `[[`, "", "typeof"),
+        allows_missing = vapply(private$.specs, `[[`, TRUE, "allows_missing"),
+        formatter = vapply(private$.specs, `[[`, "", "format"),
+        editable = vapply(private$.specs, `[[`, TRUE, "editable"),
+        geometry_type = vapply(private$.specs, function(spec) spec$geometry_metadata$geometry_type, ""),
+        dimensions = vapply(private$.specs, function(spec) spec$geometry_metadata$dimensions, ""),
+        crs = vapply(private$.specs, function(spec) spec$geometry_metadata$crs_label, ""),
+        geometry_active = vapply(private$.specs, function(spec) spec$geometry_metadata$active, TRUE),
+        geometry_precision = vapply(private$.specs, function(spec) spec$geometry_metadata$precision, 1.0),
         display_position = match(seq_along(private$.specs), private$.column_order),
         width = vapply(private$.specs, `[[`, 1L, "width"),
         visible = vapply(private$.specs, `[[`, TRUE, "visible"),
         sortable = vapply(private$.specs, `[[`, TRUE, "sortable"),
         stringsAsFactors = FALSE
       )
+      out$prototype <- I(lapply(private$.specs, `[[`, "prototype"))
+      out$attributes <- I(lapply(private$.specs, `[[`, "attributes"))
+      out$variable_label <- I(lapply(private$.specs, `[[`, "variable_label"))
+      out$value_labels <- I(lapply(private$.specs, `[[`, "value_labels"))
+      out$na_values <- I(lapply(private$.specs, `[[`, "na_values"))
+      out$na_range <- I(lapply(private$.specs, `[[`, "na_range"))
+      out$missing_definitions <- I(lapply(private$.specs, `[[`, "missing_definitions"))
+      out$geometry_crs <- I(lapply(private$.specs, function(spec) spec$geometry_metadata$crs))
+      out$geometry_bbox <- I(lapply(private$.specs, function(spec) spec$geometry_metadata$bbox))
+      out$geometry_metadata <- I(lapply(private$.specs, `[[`, "geometry_metadata"))
+      out
     },
 
     #' @description Search the formatted cell text and move the cursor to
@@ -648,10 +1044,10 @@ DataTable <- R6::R6Class(
       if (is_table_source(private$.source)) {
         row <- as.integer(position)
         template <- private$.source_schema[[j]]
-        current <- private$source_read(row, names(private$.data)[[j]])[[1L]][[1L]]
+        current <- table_slice(private$source_read(row, names(private$.data)[[j]])[[1L]], 1L)
       } else {
         row <- private$view_rows()[[position]]
-        current <- template[[row]]
+        current <- table_slice(template, row)
       }
       current <- edit_text(current)
       editor <- input(current, id = "cell_editor",
@@ -697,7 +1093,9 @@ DataTable <- R6::R6Class(
           msg <- run_validator(function(v) self$on_edit(row, name, v), value)
           if (!is.null(msg)) stop(msg, call. = FALSE)
         }
-        old <- private$source_read(row, name)[[1L]][[1L]]
+        source_column <- private$source_read(row, name)[[1L]]
+        old <- table_slice(source_column, 1L)
+        value <- table_slice(table_assign_cell(source_column, 1L, value, private$.specs[[j]]), 1L)
         result <- private$.source$set_value(as.integer(row), name, value)
         if (identical(result, FALSE)) stop("The table source rejected the edit.", call. = FALSE)
         private$clear_source_cache()
@@ -708,25 +1106,48 @@ DataTable <- R6::R6Class(
       if (length(row) != 1L || is.na(row) || row < 1L || row > nrow(private$.data)) {
         stop("`row` is out of range.", call. = FALSE)
       }
-      if (!private$cell_editable(j)) stop(sprintf("Column \"%s\" cannot be edited.", name), call. = FALSE)
+      if (!private$cell_editable(j)) stop(sprintf("Column \"%s\" is read-only for this type.", name), call. = FALSE)
       col <- private$.data[[j]]
-      checked <- parse_cell(value, col)
+      checked <- parse_cell(value, private$.specs[[j]]$prototype)
       if (!is.null(checked$error)) stop(checked$error, call. = FALSE)
       value <- checked$value
       if (!is.null(self$on_edit)) {
         msg <- run_validator(function(v) self$on_edit(row, name, v), value)
         if (!is.null(msg)) stop(msg, call. = FALSE)
       }
-      old <- col[[row]]
-      col[row] <- value
-      private$.data[[j]] <- col
+      old <- table_slice(col, row)
+      col <- table_assign_cell(col, row, value, private$.specs[[j]])
+      private$.data <- table_replace_column(private$.data, j, col)
+      edit_keys <- if (length(private$.repro_edits)) vapply(private$.repro_edits, function(edit) {
+        paste(edit$row, edit$column, sep = "\r")
+      }, "") else character()
+      edit_key <- paste(as.integer(row), name, sep = "\r")
+      edit_at <- match(edit_key, edit_keys)
+      if (is.na(edit_at)) {
+        if (!identical(old, value)) {
+          if (length(private$.repro_edits) >= termr_repro_limits$edits) {
+            private$.repro_edits_overflow <- TRUE
+          } else {
+            private$.repro_edits[[length(private$.repro_edits) + 1L]] <-
+              list(row = as.integer(row), column = name, old = old, value = value)
+          }
+        }
+      } else if (identical(private$.repro_edits[[edit_at]]$old, value)) {
+        private$.repro_edits <- private$.repro_edits[-edit_at]
+      } else {
+        private$.repro_edits[[edit_at]]$value <- value
+      }
       if (isTRUE(private$.specs[[j]]$auto_formatter)) private$.specs[[j]]$formatter <- default_formatter(col)
       if (isTRUE(private$.specs[[j]]$auto)) {
         need <- str_width(private$.specs[[j]]$formatter(col[row]))
         cap <- private$.specs[[j]]$max_width %||% private$.options$max_width %||% 1000L
         if (need > private$.specs[[j]]$width) private$.specs[[j]]$width <- as.integer(min(need, cap))
       }
-      self$invalidate()
+      if (!is.null(private$.sort) || length(private$.filters) > 0L) {
+        private$apply_sort(announce = FALSE)
+      } else {
+        self$invalidate()
+      }
       self$post_message("datatable.cell_changed", list(row = row, column = name, old = old, value = value))
       invisible(self)
     },
@@ -919,7 +1340,7 @@ DataTable <- R6::R6Class(
     #' @description Natural height: header plus rows (at most 1000).
     #' @param width Content width.
     content_height = function(width) {
-      min(self$row_count, 1000L) + as.integer(self$show_header)
+      min(self$row_count, 1000L) + if (self$show_header) 1L + as.integer(self$show_types) else 0L
     },
 
     #' @description Draw the visible part of the table.
@@ -948,6 +1369,13 @@ DataTable <- R6::R6Class(
         line <- table_join(if (!is.null(rn)) strrep(" ", rn$width), cells, g$frozen_shown)
         buffer$put_text(g$inner$x, g$inner$y, str_align(line, g$body_w), fg = header_style$foreground,
                         bg = header_style$background, attrs = header_style$attrs, clip = clip)
+        if (self$show_types) {
+          type_style <- resolve_style(style(foreground = "$muted", background = "$surface"), parent = st)
+          type_cells <- pad_cells(vapply(specs, `[[`, "", "type"), g$widths, "left")
+          type_line <- table_join(if (!is.null(rn)) strrep(" ", rn$width), type_cells, g$frozen_shown)
+          buffer$put_text(g$inner$x, g$inner$y + 1L, str_align(type_line, g$body_w), fg = type_style$foreground,
+                          bg = type_style$background, attrs = type_style$attrs, clip = clip)
+        }
       }
       if (!is.null(private$.source_error) && g$body_h > 0L && g$body_w > 0L) {
         error_style <- resolve_style(style(foreground = "$error", bold = TRUE), parent = st)
@@ -965,7 +1393,20 @@ DataTable <- R6::R6Class(
           private$.source_stats$rows_rendered <- private$.source_stats$rows_rendered + length(data_rows)
           private$.source_stats$cells_rendered <- private$.source_stats$cells_rendered + length(data_rows) * length(cols)
         }
-        texts <- lapply(cols, function(j) pad_cells(private$format_values(j, data_rows), g$widths[[match(j, cols)]], private$.specs[[j]]$align))
+        source_page <- if (is_table_source(private$.source)) {
+          private$source_read(data_rows, names(private$.data)[cols])
+        } else {
+          NULL
+        }
+        texts <- lapply(seq_along(cols), function(i) {
+          j <- cols[[i]]
+          values <- if (is.null(source_page)) {
+            private$format_values(j, data_rows)
+          } else {
+            private$format_values(j, data_rows, source_page[[names(private$.data)[[j]]]])
+          }
+          pad_cells(values, g$widths[[i]], private$.specs[[j]]$align)
+        })
         rn_text <- if (is.null(rn)) NULL else {
           rn_labels <- if (is_table_source(private$.source)) as.character(data_rows) else table_row_labels(private$.data, rn, data_rows)
           pad_cells(rn_labels, rn$width, "left")
@@ -1048,6 +1489,8 @@ DataTable <- R6::R6Class(
     .base_view = NULL,
     .filters = list(),
     .sort = NULL,
+    .repro_edits = list(),
+    .repro_edits_overflow = FALSE,
     .find = NULL,
     .find_text = "",
     .find_column = NULL,
@@ -1099,11 +1542,24 @@ DataTable <- R6::R6Class(
       if (isTRUE(private$.source_closed)) stop("This table source is closed.", call. = FALSE)
       n <- private$source_row_count()
       expected <- if (count == 0L || start > n) 0L else min(count, n - start + 1L)
-      key <- paste(start, count, paste(columns, collapse = "\r"), sep = "|")
+      # Column names are arbitrary strings; delimiters alone can alias a
+      # multi-column projection with one name containing that delimiter.
+      columns_key <- paste0(nchar(columns, type = "bytes"), ":", columns, collapse = "")
+      key <- paste(start, count, columns_key, sep = "|")
       if (exists(key, private$.source_cache, inherits = FALSE)) {
         private$.source_stats$cache_hits <- private$.source_stats$cache_hits + 1L
         private$.source_lru <- c(private$.source_lru[private$.source_lru != key], key)
         return(get(key, private$.source_cache, inherits = FALSE))
+      }
+      page_prefix <- paste0(start, "|", count, "|")
+      candidates <- rev(private$.source_lru[startsWith(private$.source_lru, page_prefix)])
+      for (candidate in candidates) {
+        cached <- get(candidate, private$.source_cache, inherits = FALSE)
+        if (all(columns %in% names(cached))) {
+          private$.source_stats$cache_hits <- private$.source_stats$cache_hits + 1L
+          private$.source_lru <- c(private$.source_lru[private$.source_lru != candidate], candidate)
+          return(cached[, columns, drop = FALSE])
+        }
       }
       private$.source_stats$cache_misses <- private$.source_stats$cache_misses + 1L
       private$.source_stats$fetch_calls <- private$.source_stats$fetch_calls + 1L
@@ -1135,6 +1591,18 @@ DataTable <- R6::R6Class(
       if (!identical(names(result), columns)) {
         stop(sprintf("`table_source$get_rows(start=%d, count=%d)` returned inconsistent column names.", start, count), call. = FALSE)
       }
+      if (!failed && !is.null(private$.source_schema)) {
+        schema_columns <- columns[vapply(columns, function(name) {
+          identical(table_source_type_signature(result[[name]]),
+                    table_source_type_signature(private$.source_schema[[name]]))
+        }, logical(1))]
+        inconsistent <- setdiff(columns, schema_columns)
+        if (length(inconsistent)) {
+          stop(sprintf(paste0("`table_source$get_rows(start=%d, count=%d)` returned column `%s` " ,
+                              "with a different type or attributes than its schema sample."),
+                       start, count, inconsistent[[1L]]), call. = FALSE)
+        }
+      }
       if (!failed) private$.source_error <- NULL
       assign(key, result, private$.source_cache)
       private$.source_lru <- c(private$.source_lru, key)
@@ -1150,18 +1618,17 @@ DataTable <- R6::R6Class(
       if (!length(rows)) return(private$empty_source_data(columns))
       n <- private$source_row_count()
       if (anyNA(rows) || any(rows < 1L | rows > n)) stop("A table source row request is out of range.", call. = FALSE)
-      # Pages always hold every source column, so painting several columns
-      # of the same rows costs one source call per page, not one per column.
+      # Fetch the requested columns together so a page paint does not transfer
+      # hidden columns. A cached superset page can satisfy this projection.
       chunk <- 100L
       rows <- as.integer(rows)
-      all_columns <- names(private$.data)
       ids <- (rows - 1L) %/% chunk
       pieces <- list()
       order_at <- integer()
       for (id in unique(ids)) {
         at <- which(ids == id)
         start <- id * chunk + 1L
-        page <- private$get_source_page(start, min(chunk, n - start + 1L), all_columns)
+        page <- private$get_source_page(start, min(chunk, n - start + 1L), columns)
         pieces[[length(pieces) + 1L]] <- page[rows[at] - start + 1L, columns, drop = FALSE]
         order_at <- c(order_at, at)
       }
@@ -1216,10 +1683,18 @@ DataTable <- R6::R6Class(
       j
     },
 
-    format_values = function(j, rows) {
+    format_values = function(j, rows, source_values = NULL) {
       spec <- private$.specs[[j]]
-      values <- if (is_table_source(private$.source)) private$source_read(rows, names(private$.data)[[j]])[[1L]] else private$.data[[j]][rows]
-      out <- spec$formatter(values)
+      values <- if (is_table_source(private$.source)) {
+        source_values %||% private$source_read(rows, names(private$.data)[[j]])[[1L]]
+      } else {
+        table_slice(private$.data[[j]], rows)
+      }
+      out <- if (isTRUE(spec$auto_formatter) && spec$format %in% c("pillar", "summary", "labelled", "geometry", "extension")) {
+        table_format_values(values, width = spec$width, label_mode = spec$label_mode)
+      } else {
+        spec$formatter(values)
+      }
       if (!is.character(out) || length(out) != length(rows)) {
         stop(sprintf("The formatter of column \"%s\" must return one string per value.", spec$name), call. = FALSE)
       }
@@ -1269,7 +1744,7 @@ DataTable <- R6::R6Class(
       st <- self$computed_style()
       inner <- content_rect(region, st)
       if (rect_is_empty(inner)) return(NULL)
-      header_h <- as.integer(self$show_header)
+      header_h <- if (self$show_header) 1L + as.integer(self$show_types) else 0L
       n <- self$row_count
       bar_h <- as.integer(!is.null(private$.bar) && inner$height > header_h + 1L)
       body_h <- max(0L, inner$height - header_h - bar_h)
@@ -1549,21 +2024,31 @@ DataTable <- R6::R6Class(
           if (inherits(filter, "termr_table_filter")) {
             type <- filter$type
             if (type == "missing") {
-              matched <- is.na(values)
+              matched <- table_missing_mask(values)
             } else if (type == "equals") {
-              matched <- if (length(filter$value) == 1L && is.na(filter$value)) is.na(values) else !is.na(values) & values == filter$value
+              if (is.list(values)) {
+                is_missing_filter <- length(filter$value) == 1L && is.atomic(filter$value) &&
+                  tryCatch(isTRUE(is.na(filter$value)), error = function(e) FALSE)
+                matched <- if (is_missing_filter) table_missing_mask(values) else
+                  vapply(values, identical, logical(1), filter$value, USE.NAMES = FALSE)
+              } else {
+                is_missing_filter <- length(filter$value) == 1L && is.atomic(filter$value) &&
+                  tryCatch(isTRUE(is.na(filter$value)), error = function(e) FALSE)
+                matched <- if (is_missing_filter) table_missing_mask(values) else !table_missing_mask(values) & values == filter$value
+              }
             } else if (type == "contains") {
-              chars <- as.character(values)
+              chars <- table_format_values(values)
               pattern <- if (filter$case_sensitive) filter$value else tolower(filter$value)
               text <- if (filter$case_sensitive) chars else tolower(chars)
               matched <- !is.na(text) & grepl(pattern, text, fixed = TRUE)
             } else if (type == "regex") {
-              matched <- !is.na(values) & grepl(filter$value, as.character(values), perl = TRUE,
+              matched <- !table_missing_mask(values) & grepl(filter$value, table_format_values(values), perl = TRUE,
                                                  ignore.case = !filter$case_sensitive)
             } else {
+              if (is.list(values)) stop(sprintf("Range filters are not supported for list column %s.", name), call. = FALSE)
               lower <- if (filter$inclusive) values >= filter$min else values > filter$min
               upper <- if (filter$inclusive) values <= filter$max else values < filter$max
-              matched <- !is.na(values) & lower & upper
+              matched <- !table_missing_mask(values) & lower & upper
             }
           } else {
             matched <- filter(values)
@@ -1668,11 +2153,8 @@ DataTable <- R6::R6Class(
 
     cell_editable = function(j) {
       spec <- private$.specs[[j]]
-      if (is_table_source(private$.source)) return(!is.null(private$.source$set_value) && isTRUE(spec$editable %||% TRUE))
-      x <- private$.data[[j]]
-      if (!is.null(spec$editable)) return(isTRUE(spec$editable) && !is.list(x))
-      is.atomic(x) && !is.list(x) && (is.numeric(x) || is.logical(x) || is.character(x) || is.factor(x) ||
-        inherits(x, "Date"))
+      if (is_table_source(private$.source)) return(!is.null(private$.source$set_value) && isTRUE(spec$editable))
+      isTRUE(spec$editable)
     },
 
     # Columns the search looks at, in reading order.
@@ -1895,58 +2377,11 @@ table_join <- function(row_label, cells, frozen_shown = 0L) {
 # Text shown when editing a value, and the reverse: convert the edited text
 # to the type of the column (a list with `value`, or an `error` message).
 edit_text <- function(x) {
-  if (is.na(x)) return("")
-  if (is.numeric(x) && !is.factor(x)) return(format(x, digits = 15, scientific = FALSE, trim = TRUE))
-  as.character(x)
+  table_edit_text(x)
 }
 
 parse_cell <- function(text, template) {
-  fail <- function(msg) list(value = NULL, error = msg)
-  if (is.factor(template)) {
-    if (!length(text) || is.na(text[[1]]) || identical(text, "")) return(list(value = factor(NA, levels = levels(template)), error = NULL))
-    if (!(as.character(text[[1]]) %in% levels(template))) {
-      return(fail(paste0("Must be one of: ", paste(utils::head(levels(template), 6L), collapse = ", "),
-                         if (nlevels(template) > 6L) ", ...")))
-    }
-    return(list(value = factor(as.character(text[[1]]), levels = levels(template)), error = NULL))
-  }
-  if (!is.character(text)) {
-    # Already a value (set_cell from code): it must fit the column.
-    ok <- if (is.numeric(template)) is.numeric(text) else if (is.logical(template)) is.logical(text) else
-      if (inherits(template, "Date")) inherits(text, "Date") else is.character(text)
-    if (length(text) != 1L || !ok) return(fail(sprintf("The value does not fit a %s column.", class(template)[[1]])))
-    if (is.integer(template) && is.double(text)) {
-      if (!is.na(text) && (text != round(text) || abs(text) > .Machine$integer.max)) return(fail("Enter a whole number."))
-      text <- as.integer(text)
-    }
-    return(list(value = text, error = NULL))
-  }
-  if (length(text) != 1L) return(fail("Enter a single value."))
-  text <- trimws(text)
-  if (inherits(template, "Date")) {
-    if (!nzchar(text)) return(list(value = as.Date(NA), error = NULL))
-    v <- tryCatch(as.Date(text, optional = TRUE), error = function(e) as.Date(NA))
-    if (is.na(v)) return(fail("Enter a date as YYYY-MM-DD."))
-    return(list(value = v, error = NULL))
-  }
-  if (is.logical(template)) {
-    if (!nzchar(text) || tolower(text) == "na") return(list(value = NA, error = NULL))
-    v <- switch(tolower(text), `true` = , t = , yes = , y = , `1` = TRUE, `false` = , f = , no = , n = , `0` = FALSE,
-                "invalid")
-    if (identical(v, "invalid")) return(fail("Enter TRUE or FALSE."))
-    return(list(value = v, error = NULL))
-  }
-  if (is.numeric(template)) {
-    if (!nzchar(text) || identical(text, "NA")) return(list(value = if (is.integer(template)) NA_integer_ else NA_real_, error = NULL))
-    v <- suppressWarnings(as.numeric(text))
-    if (is.na(v)) return(fail("Enter a number."))
-    if (is.integer(template)) {
-      if (v != round(v) || abs(v) > .Machine$integer.max) return(fail("Enter a whole number."))
-      v <- as.integer(v)
-    }
-    return(list(value = v, error = NULL))
-  }
-  list(value = sanitize_text(text), error = NULL)
+  table_parse_cell(text, table_column_metadata(template))
 }
 
 # Styles of table parts (layered over the widget style).
@@ -1982,21 +2417,51 @@ sample_rows <- function(n) {
   if (n <= 1000L) seq_len(n) else c(seq_len(500L), seq.int(n - 499L, n))
 }
 
-table_column_spec <- function(x, name, opts) {
+table_column_spec <- function(x, name, opts, active_geometry = NULL) {
   opt <- opts$columns[[name]] %||% column()
-  formatter <- opt$formatter %||% opts$formatters[[name]] %||% default_formatter(x)
+  metadata <- table_column_metadata(x)
+  geometry_metadata <- metadata$geometry_metadata
+  geometry_metadata$active <- isTRUE(geometry_metadata$is_geometry) &&
+    identical(name, active_geometry)
+  label_mode <- if (metadata$format == "labelled") opt$label_mode else "raw"
+  formatter <- opt$formatter %||% opts$formatters[[name]] %||% default_formatter(x, label_mode)
   label <- opt$label %||% name
-  align <- opt$align %||% (if (is.numeric(x) && !is.factor(x)) "right" else "left")
+  align <- opt$align %||% (if (!geometry_metadata$is_geometry && is.numeric(x) && !is.factor(x)) "right" else "left")
   width <- opt$width
   if (is.null(width)) {
-    sample <- formatter(x[sample_rows(length(x))])
-    sample[is.na(sample)] <- "NA"
-    width <- max(c(str_width(label), str_width(sample), 1L))
+    header_width <- if (isTRUE(opts$show_types)) max(str_width(label), str_width(metadata$type)) else str_width(label)
+    if (geometry_metadata$is_geometry) {
+      width <- max(header_width, min(24L, opt$max_width %||% opts$max_width))
+    } else {
+      sampled <- table_slice(x, sample_rows(length(x)))
+      sample <- if (metadata$handler$id == "extension" &&
+                    is.null(opt$formatter) && is.null(opts$formatters[[name]])) {
+        table_format_values(sampled, width = opts$max_width)
+      } else {
+        formatter(sampled)
+      }
+      sample[is.na(sample)] <- "NA"
+      width <- max(c(header_width, str_width(sample), 1L))
+    }
     width <- min(width, opt$max_width %||% opts$max_width)
     width <- max(width, opt$min_width %||% 1L)
   }
+  editable <- metadata$editable && (is.null(opt$editable) || isTRUE(opt$editable))
+  custom_formatter <- !is.null(opt$formatter) || !is.null(opts$formatters[[name]])
   list(name = name, label = label, align = align, width = as.integer(width), formatter = formatter,
-       visible = opt$visible %||% TRUE, sortable = opt$sortable %||% TRUE, editable = opt$editable,
+       handler = metadata$handler,
+       type = metadata$type, class = metadata$class, class_label = metadata$class_label, typeof = metadata$typeof,
+       base_type = metadata$base_type, label_mode = label_mode,
+       prototype = metadata$prototype, attributes = metadata$attributes,
+       variable_label = metadata$variable_label, value_labels = metadata$value_labels,
+       na_values = metadata$na_values, na_range = metadata$na_range,
+       missing_definitions = metadata$missing_definitions,
+       geometry_metadata = geometry_metadata,
+       allows_missing = metadata$allows_missing,
+       format = if (custom_formatter) "custom" else metadata$format,
+       visible = opt$visible %||% TRUE,
+       sortable = (opt$sortable %||% TRUE) && !is.list(x) && !is.raw(x) && !geometry_metadata$is_geometry,
+       editable = editable,
        auto = is.null(opt$width), min_width = opt$min_width, max_width = opt$max_width,
        auto_formatter = is.null(opt$formatter) && is.null(opts$formatters[[name]]))
 }
@@ -2014,7 +2479,11 @@ table_row_labels <- function(data, spec, rows) {
 
 # A formatter chosen from the type of the column. Doubles get a fixed
 # number of decimals (estimated from a sample) so a column lines up.
-default_formatter <- function(x) {
+default_formatter <- function(x, label_mode = "raw") {
+  handler <- table_type_handler(x)
+  if (handler$id %in% c("raw", "blob", "raw_list", "sfc", "sfg", "sfg_list", "factor", "ordered", "date", "posixct", "difftime", "hms", "integer64", "units", "labelled", "labelled_spss", "list", "extension", "unsupported")) {
+    return(function(v) table_format_values(v, label_mode = label_mode))
+  }
   if (is.double(x) && !inherits(x, c("Date", "POSIXt", "difftime"))) {
     sample <- x[sample_rows(length(x))]
     digits <- decimals_needed(sample[is.finite(sample)])
@@ -2079,7 +2548,7 @@ max_column_offset <- function(widths, avail) {
 
 #' Data table
 #'
-#' A fast, read-only viewer for data frames: a header, optional row names,
+#' A fast viewer for data frames: a header, optional row names,
 #' automatic column widths, keyboard and mouse navigation, horizontal and
 #' vertical scrolling, and a row or cell cursor. Only the visible rows are
 #' formatted and painted, so tables with millions of rows scroll smoothly.
@@ -2095,7 +2564,8 @@ max_column_offset <- function(widths, avail) {
 #' `"datatable.header_selected"` (and sorts with `header_sort`); dragging the
 #' separator between two header cells resizes a column; the wheel scrolls.
 #' The header and the first `frozen_columns` columns stay in place while the
-#' rest scrolls.
+#' rest scrolls. Set `show_types = TRUE` to add a compact type-summary row;
+#' detailed type metadata is available from `column_info()`.
 #'
 #' Messages (`event$data`):
 #' * `"datatable.row_selected"` / `"datatable.cell_selected"`: the cursor
@@ -2114,7 +2584,9 @@ max_column_offset <- function(widths, avail) {
 #' `goto_row()`, `scroll_to_row()`, `selected_row()`, `row_data(row)`,
 #' `set_column_width()`, `auto_size_column()`, `auto_size_all()`,
 #' `set_column_visible()`, `column_info()`, `find()`, `find_next()`,
-#' `find_previous()`, `edit_cell()`, `set_cell()`.
+#' `find_previous()`, `edit_cell()`, `set_cell()`, `reproducible_code()` and
+#' `copy_reproducible_code()`. Ctrl+P offers R-value, current-pipeline and
+#' local-edit copy commands; ordinary Ctrl+C remains TSV.
 #'
 #' @param data A data frame (tibbles work too) or a matrix.
 #' @param cursor `"row"` (default), `"cell"` or `"none"`.
@@ -2131,6 +2603,7 @@ max_column_offset <- function(widths, avail) {
 #' @param cell_style `function(value, row, column)` returning a [style()]
 #'   (or `NULL`) for a cell.
 #' @param max_column_width Upper limit for automatic column widths.
+#' @param show_types Show compact type summaries under the column headers?
 #' @param frozen_columns Number of leading columns that stay in place while
 #'   the others scroll horizontally.
 #' @param header_sort Sort when a header is clicked (again: descending, then
@@ -2152,11 +2625,13 @@ max_column_offset <- function(widths, avail) {
 data_table <- function(data, cursor = "row", columns = NULL, formatters = NULL, row_names = NA,
                        header = TRUE, zebra = FALSE, row_style = NULL, cell_style = NULL,
                        max_column_width = 40L, frozen_columns = 0L, header_sort = FALSE,
-                       editable = FALSE, on_edit = NULL, id = NULL, classes = NULL, style = NULL) {
+                       editable = FALSE, on_edit = NULL, id = NULL, classes = NULL, style = NULL,
+                       show_types = FALSE) {
   DataTable$new(
     data, cursor = cursor, columns = columns, formatters = formatters, row_names = row_names,
     header = header, zebra = zebra, row_style = row_style, cell_style = cell_style,
     max_column_width = max_column_width, frozen_columns = frozen_columns, header_sort = header_sort,
-    editable = editable, on_edit = on_edit, id = id, classes = classes, style = style
+    editable = editable, on_edit = on_edit, id = id, classes = classes, style = style,
+    show_types = show_types
   )
 }

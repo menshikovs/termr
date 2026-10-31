@@ -1,0 +1,11 @@
+[
+  {
+    "app": "showcase",
+    "status": "PASS",
+    "ready_ms": 915.759074999869,
+    "exit_status": 0,
+    "terminal_restored": true,
+    "events": 6,
+    "recording": null
+  }
+]

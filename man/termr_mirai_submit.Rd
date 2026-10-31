@@ -53,7 +53,7 @@ bounded caller metadata. Only the handle retains the full R result.
 
 With \code{progress=TRUE}, \code{fn} must accept \code{progress} (or \code{...}). The injected
 function accepts \code{progress(value=NA_real_, message="")}: known fractions
-must be monotonic in \link{0,1}; NA means unknown. Calls are throttled and native
+must be monotonic in \verb{[0, 1]}; NA means unknown. Calls are throttled and native
 sends never wait for a slow consumer. Messages are bounded raw JSON; final
 envelopes reconcile dropped latest progress. Results use mirai's local R
 serialization, not JSON. Reference-bearing inputs are rejected; lexical

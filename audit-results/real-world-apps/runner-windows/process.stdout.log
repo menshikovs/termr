@@ -1,0 +1,9 @@
+quiet-exit PASS 
+stderr-separate PASS 
+nonzero-exit PASS 
+timeout FAIL 
+owned-child-cleanup FAIL 
+real-showcase FAIL 
+real-analytics FAIL 
+real-monitor FAIL 
+missing-optional-diagnostic FAIL 

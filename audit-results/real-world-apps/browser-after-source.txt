@@ -1,0 +1,22 @@
+{
+  "status": "Source: beta | sequence: 1 | live | updated: 2026-10-31 17:23:06 | Beta",
+  "traces": [
+    {
+      "y": [
+        53.92633636155383
+      ],
+      "ids": [
+        "beta:1"
+      ]
+    },
+    {
+      "y": [
+        68.92026631136497
+      ],
+      "ids": [
+        "beta:1"
+      ]
+    }
+  ],
+  "errors": []
+}

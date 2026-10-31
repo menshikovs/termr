@@ -1,0 +1,65 @@
+[
+  {
+    "name": "app-tests",
+    "seconds": 16.538,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "headless-showcase",
+    "seconds": 2.531,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "headless-analytics",
+    "seconds": 1.558,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "headless-monitor",
+    "seconds": 2.318,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "process",
+    "seconds": 70.039,
+    "status": "FAIL",
+    "exit_code": 1,
+    "timeout": false
+  },
+  {
+    "name": "lifecycle",
+    "seconds": 100.03,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "lint",
+    "seconds": 32.436,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "profile",
+    "seconds": 20.395,
+    "status": "FAIL",
+    "exit_code": 1,
+    "timeout": false
+  },
+  {
+    "name": "benchmark",
+    "seconds": 58.417,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  }
+]

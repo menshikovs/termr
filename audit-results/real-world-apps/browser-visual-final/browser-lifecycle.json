@@ -1,0 +1,16 @@
+{
+  "event": "web-stopped",
+  "at": 8.35,
+  "sessions": 0,
+  "observers": 0,
+  "polls": 22,
+  "processed": 12,
+  "coalesced": 0,
+  "duplicates": 0,
+  "out_of_order": 0,
+  "poll_errors": 0,
+  "history": 6,
+  "frame_builds": 15,
+  "widget_builds": 4,
+  "producer_observers": 0
+}

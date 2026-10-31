@@ -1,0 +1,8 @@
+--- initial/tests/testthat/test-h2-state-machine.R
++++ observed/tests/testthat/test-h2-state-machine.R
+@@ -168,4 +168,4 @@
+   b_mid2$disabled <- FALSE
+   p$press("tab")
+   testthat::expect_identical(a$focused, b_mid2)
+-})
++})

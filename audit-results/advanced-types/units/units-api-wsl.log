@@ -1,0 +1,23 @@
+units: TRUE 1.0.0
+pillar: TRUE 1.11.1
+vctrs: TRUE 0.7.2
+public functions: set_units, as_units, deparse_unit, drop_units, ud_are_convertible, ud_convert, install_unit, remove_unit
+set_units formals: $x   $value   $...   $mode units_options("set_units_mode") 
+as_units formals: $x   $...  
+deparse_unit formals: $x  
+ud_are_convertible formals: $from   $to   $...  
+ud_convert formals: $x   $from   $to  
+install_unit formals: $symbol character(0)  $def character(0)  $name character(0) 
+remove_unit formals: $symbol character(0)  $name character(0) 
+units exported: FALSE
+units lookup: package:base
+Ops.units registered: TRUE
+Math.units registered: TRUE
+SystemRequirements: udunits-2
+length: m 1000
+mass: kg 0.001
+speed: m s-1 0.277777777777778
+area: m2 1e+06
+volume: m3 0.001
+temperature: °C -17.2222222222222
+dimensionless: 1 0.01

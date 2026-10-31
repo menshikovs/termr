@@ -1,0 +1,3783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<style>body{background-color:white;}</style>
+<link href="lib/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="lib/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<link href="lib/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="lib/datatables-binding-0.34.0/datatables.js"></script>
+<script src="lib/jquery-3.7.1/jquery-3.7.1.min.js"></script>
+<link href="lib/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="lib/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="lib/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
+<link href="lib/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet" />
+<script src="lib/crosstalk-1.2.2/js/crosstalk.min.js"></script>
+<link href="lib/highlight.js-6.2/rstudio.css" rel="stylesheet" />
+<script src="lib/highlight.js-6.2/highlight.pack.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="lib/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<link href="lib/bootstrap-3.3.5/css/bootstrap-theme.min.css" rel="stylesheet" />
+<script src="lib/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="lib/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="lib/bootstrap-3.3.5/shim/respond.min.js"></script>
+
+</head>
+<body>
+<div class="container-fluid">
+  <style type="text/css">table tr:hover td {
+  font-weight:bold;text-decoration:none
+}
+table tr.covered td{
+  background-color:rgba(95,151,68,0.3)
+}
+
+table tr:hover.covered .num{
+  background-color:rgba(95,151,68,0.7)
+}
+table tr.missed td{
+  background-color:rgba(185,73,71,0.3)
+}
+table tr:hover.missed .num{
+  background-color:rgba(185,73,71,0.7)
+}
+
+table tr.missed:hover td{
+  -webkit-box-shadow:0 -2px 0 0 #b94947 inset;
+  -moz-box-shadow:0 -2px 0 0 #b94947 inset;
+  box-shadow:0 -2px 0 0 #b94947 inset
+}
+table tr.covered:hover td{
+  -webkit-box-shadow:0 -2px 0 0 #5f9744 inset;
+  -moz-box-shadow:0 -2px 0 0 #5f9744 inset;
+  box-shadow:0 -2px 0 0 #5f9744 inset
+}
+
+table tr.never td{
+  background-color:transparent
+}
+
+table tbody {
+  border-style: solid;
+  border: 1px solid rgba(0,0,0,0.1)
+}
+
+table .num {
+  border-right: 1px solid rgba(0,0,0,0.1)
+}
+
+td.coverage em {
+  opacity: 0.5;
+}
+
+table td.coverage {
+  border-right: 1px solid rgba(0,0,0,0.1);
+  font-weight: bold;
+  text-align: center;
+}
+table.table-condensed pre {
+  background-color: transparent;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 11px;
+}
+div#files td {
+  padding: 0;
+  padding-left: 5px;
+}
+
+div#files td.num {
+  padding-right: 5px;
+}
+
+table.table-condensed {
+  font-size: 11px;
+}</style>
+  <div class="col-md-8 col-md-offset-2">
+    <h2> coverage - 91.92%</h2>
+    <div class="tabbable">
+      <ul class="nav nav-tabs" data-tabsetid="covr">
+        <li class="active">
+          <a href="#tab-covr-1" data-toggle="tab" data-value="Files">Files</a>
+        </li>
+        <li>
+          <a href="#tab-covr-2" data-toggle="tab" data-value="Source">Source</a>
+        </li>
+      </ul>
+      <div class="tab-content" data-tabsetid="covr">
+        <div class="tab-pane active" title="Files" data-value="Files" id="tab-covr-1">
+          <div class="datatables html-widget html-fill-item" id="htmlwidget-07d06e06b773fb6ff818" style="width:100%;height:500px;"></div>
+          <script type="application/json" data-for="htmlwidget-07d06e06b773fb6ff818">{"x":{"filter":"none","vertical":false,"fillContainer":false,"data":[["<a href=\"#\">integration-apps/03-mirai-nanonext-monitor/app.R<\/a>","<a href=\"#\">integration-apps/02-shiny-visual-analytics/app.R<\/a>","<a href=\"#\">integration-apps/01-termr-showcase/app.R<\/a>"],[197,149,174],[168,130,154],[148,116,148],[20,14,6],["34","2","3"],["88.10%","89.23%","96.10%"]],"container":"<table class=\"row-border\">\n  <thead>\n    <tr>\n      <th>File<\/th>\n      <th>Lines<\/th>\n      <th>Relevant<\/th>\n      <th>Covered<\/th>\n      <th>Missed<\/th>\n      <th>Hits / Line<\/th>\n      <th>Coverage<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searching":false,"dom":"t","paging":false,"columnDefs":[{"targets":6,"createdCell":"function(td, cellData, rowData, row, col) {\n  var percent = cellData.replace(\"%\", \"\");\n  if (percent > 90) {\n    var grad = \"linear-gradient(90deg, #edfde7 \" + cellData + \", white \" + cellData + \")\";\n  } else if (percent > 75) {\n    var grad = \"linear-gradient(90deg, #f9ffe5 \" + cellData + \", white \" + cellData + \")\";\n  } else {\n    var grad = \"linear-gradient(90deg, #fcece9 \" + cellData + \", white \" + cellData + \")\";\n  }\n  $(td).css(\"background\", grad);\n}\n"},{"className":"dt-right","targets":[1,2,3,4]},{"name":"File","targets":0},{"name":"Lines","targets":1},{"name":"Relevant","targets":2},{"name":"Covered","targets":3},{"name":"Missed","targets":4},{"name":"Hits / Line","targets":5},{"name":"Coverage","targets":6}],"order":[],"autoWidth":false,"orderClasses":false},"callback":"function(table) {\ntable.on('click.dt', 'a', function() {\n  files = $('div#files div');\n  files.not('div.hidden').addClass('hidden');\n  id = $(this).text();\n  files.filter('div[id=\\'' + id + '\\']').removeClass('hidden');\n  $('ul.nav a[data-value=Source]').text(id).tab('show');\n});\n}","selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":["options.columnDefs.0.createdCell","callback"],"jsHooks":[]}</script>
+        </div>
+        <div class="tab-pane" title="Source" data-value="Source" id="tab-covr-2">
+          <div id="files">
+            <div id="integration-apps/01-termr-showcase/app.R" class="hidden">
+              <table class="table-condensed">
+                <tbody>
+                  <tr class="never">
+                    <td class="num">1</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">workbench_fixtures &lt;- function() {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">2</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  cars &lt;- data.frame(name = rownames(datasets::mtcars), value = datasets::mtcars$mpg,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">3</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    cylinders = datasets::mtcars$cyl, weight = datasets::mtcars$wt)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">4</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  flowers &lt;- data.frame(name = paste('Iris', seq_len(nrow(datasets::iris))),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">5</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    value = datasets::iris$Sepal.Length, species = datasets::iris$Species,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">6</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    width = datasets::iris$Sepal.Width)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">7</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  typed &lt;- data.frame(name = c('Alpha', 'Бета', '東京', 'Delta', 'Echo', 'Foxtrot'),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">8</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    value = c(1, 2.5, NA, NaN, Inf, -3),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">9</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    date = as.Date('2026-01-01') + 0:5,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">10</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    instant = as.POSIXct('2026-01-01', tz = 'UTC') + (0:5) / 4,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">11</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    group = factor(c('a', 'b', 'a', NA, 'b', 'a')))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">12</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  if (requireNamespace('bit64', quietly = TRUE)) typed$id64 &lt;- bit64::as.integer64(c('9007199254740993', '2', NA, '4', '5', '6'))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">13</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  if (requireNamespace('units', quietly = TRUE)) typed$distance &lt;- units::set_units(1:6, 'm', mode = 'standard')</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">14</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  if (requireNamespace('haven', quietly = TRUE)) typed$labelled &lt;- haven::labelled(c(1, 2, haven::tagged_na('a'), NA, 1, 2), c(Yes = 1, No = 2), label = 'Response')</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">15</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  typed$custom &lt;- structure(1:6, class = 'workbench_score', calibration = 'fixture')</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">16</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  if (requireNamespace('vctrs', quietly = TRUE)) typed$vector &lt;- vctrs::new_vctr(as.double(1:6), class = 'workbench_vctr')</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">17</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  list(cars = cars, iris = flowers, typed = typed)</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">18</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">}</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">19</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r"></pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">20</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">workbench_app &lt;- function(use_inkr = requireNamespace('inkr', quietly = TRUE), chart_mode = 'auto') {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">21</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  fixtures &lt;- workbench_fixtures()</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">22</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  state &lt;- new.env(parent = emptyenv())</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">23</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  state$dataset &lt;- 'cars'; state$lazy &lt;- FALSE; state$theme &lt;- 'dark'</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">24</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  state$ticks &lt;- 0L; state$closed &lt;- FALSE; state$last_code &lt;- NULL</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">25</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  state$original &lt;- fixtures$cars</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">26</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  stream &lt;- termr::termr_stream('workbench.metrics', history = 64L)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">27</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  table &lt;- termr::data_table(state$original, id = 'data', editable = TRUE,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">28</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    show_types = TRUE, zebra = TRUE, header_sort = TRUE)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">29</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  types &lt;- termr::data_table(table$column_info()[c('name', 'type', 'class', 'editable')], id = 'types')</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">30</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  status &lt;- termr::label('Ready: local cars', id = 'status', style = termr::style(height = 2))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">31</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  query &lt;- termr::input('20', id = 'filter-value', placeholder = 'Minimum value')</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">32</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  search &lt;- termr::input('Merc', id = 'find-text', placeholder = 'Find text')</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">33</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  edit &lt;- termr::input('12.5', id = 'edit-value', placeholder = 'New row-1 value')</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">34</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  line &lt;- termr::line_chart(numeric(), numeric(), id = 'live-chart', mode = chart_mode)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">35</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  line$bind_stream(stream, function(x) x$sequence, function(x) x$value, max_points = 64L)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">36</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  scatter &lt;- termr::scatter_chart(1:32, fixtures$cars$value, mode = chart_mode, id = 'scatter', title = 'Dataset values')</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">37</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  bars &lt;- termr::bar_chart(fixtures$cars$name[1:8], fixtures$cars$value[1:8], mode = chart_mode, id = 'bar')</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">38</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  histogram &lt;- termr::histogram(fixtures$cars$value, mode = chart_mode, id = 'histogram')</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">39</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  heatmap &lt;- termr::heatmap_chart(matrix(rep(fixtures$cars$value, length.out = 36L), 6), mode = chart_mode, id = 'heatmap')</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">40</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  refresh_charts &lt;- function() {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">41</td>
+                    <td class="coverage">10<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    value &lt;- state$original$value[is.finite(state$original$value)]</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">42</td>
+                    <td class="coverage">10<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    scatter$update_data(x = seq_along(value), y = value)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">43</td>
+                    <td class="coverage">10<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    count &lt;- min(8L, length(value))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">44</td>
+                    <td class="coverage">10<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    bars$update_data(labels = paste('Row', seq_len(count)), values = value[seq_len(count)])</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">45</td>
+                    <td class="coverage">10<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    histogram$update_data(x = value)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">46</td>
+                    <td class="coverage">10<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    heatmap$update_data(z = matrix(if (length(value)) rep(value, length.out = 36L) else NA_real_, 6L, 6L))</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">47</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">48</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  chart_tabs &lt;- termr::tabs(</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">49</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    termr::tab('Line', line),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">50</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    termr::tab('Scatter', scatter), termr::tab('Bar', bars),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">51</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    termr::tab('Histogram', histogram), termr::tab('Heatmap', heatmap),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">52</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    id = 'chart-tabs')</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">53</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  pages &lt;- termr::tabs(termr::tab('Data', table), termr::tab('Charts', chart_tabs),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">54</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    termr::tab('Types', types), termr::tab('Help', termr::label(</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">55</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      'F2 dataset | F11 / Alt+S local/lazy | F4 theme | F5 filter\nF6 edit cell | F7 select | F8 R value | F9 R pipeline\nF10 sample | F12 / Alt+C charts | Alt+T types | Esc data\nDataset plots use finite unfiltered values; line is an independent bounded stream.\nUnknown/custom types remain read-only; export reports its limits.', wrap = 'word')),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">56</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    id = 'pages')</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">57</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  sidebar &lt;- termr::scroll_view(termr::vertical(</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">58</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    termr::label('DATA WORKBENCH', style = termr::style(bold = TRUE)),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">59</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    termr::button('Dataset [F2]', id = 'dataset'), termr::button('Local/lazy [F11]', id = 'source'),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">60</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    query, termr::button('Filter [F5]', id = 'filter'), termr::button('Reset view', id = 'reset'),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">61</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    search, termr::button('Find', id = 'find'), termr::button('Sort value', id = 'sort'),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">62</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    termr::button('Select 3 [F7]', id = 'select'), edit,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">63</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    termr::button('Apply local value', id = 'apply-edit'), termr::button('Edit cell [F6]', id = 'edit'),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">64</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    termr::button('Copy R value [F8]', id = 'copy-value'), termr::button('Copy pipeline [F9]', id = 'copy-pipeline'),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">65</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    termr::button('Theme [F4]', id = 'theme'), termr::button('Chart sample [F10]', id = 'sample'),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">66</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    termr::button('Confirm reset', id = 'confirm-reset'), termr::button('Quit', id = 'quit')),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">67</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    id = 'sidebar', style = termr::style(width = 25, height = '1fr'))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">68</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  notify &lt;- function(message) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">69</td>
+                    <td class="coverage">24<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    status$update(message)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">70</td>
+                    <td class="coverage">24<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    phase_e_mark('status', list(message = message))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">71</td>
+                    <td class="coverage">24<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    invisible(message)</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">72</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">73</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  refresh_types &lt;- function() types$set_data(table$column_info()[c('name', 'type', 'class', 'editable')])</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">74</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  load_data &lt;- function() {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">75</td>
+                    <td class="coverage">10<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    state$original &lt;- fixtures[[state$dataset]]</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">76</td>
+                    <td class="coverage">10<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    value &lt;- state$original</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">77</td>
+                    <td class="coverage">10<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    if (state$lazy) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">78</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      base &lt;- fixtures$cars</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">79</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      value &lt;- termr::table_source(10000L, names(base), function(start, count, columns = NULL) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">80</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        result &lt;- base[((seq.int(start, length.out = count) - 1L) %% nrow(base)) + 1L, , drop = FALSE]</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">81</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        rownames(result) &lt;- NULL</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">82</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        if (!is.null(columns)) result &lt;- result[columns]</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">83</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        result</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">84</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      })</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">85</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">86</td>
+                    <td class="coverage">10<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    table$set_data(value); refresh_types(); refresh_charts()</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">87</td>
+                    <td class="coverage">10<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    notify(paste(state$dataset, if (state$lazy) 'lazy/read-only 10000 rows' else 'local/editable columns only'))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">88</td>
+                    <td class="coverage">10<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    phase_e_mark('source', list(dataset = state$dataset, lazy = state$lazy, rows = table$row_count))</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">89</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">90</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  theme &lt;- function(app) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">91</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    state$theme &lt;- if (state$theme == 'dark') 'light' else 'dark'</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">92</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    if (use_inkr) app$set_inkr_stylesheet(file.path(phase_e_root, 'integration-apps/01-termr-showcase', paste0(state$theme, '.inkr')))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">93</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    else app$theme &lt;- termr::termr_theme(if (state$theme == 'dark') 'dark' else 'light')</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">94</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    notify(paste('Theme:', state$theme, if (use_inkr) '(inkr)' else '(termr fallback)'))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">95</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    phase_e_mark('theme', list(theme = state$theme))</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">96</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">97</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  sample &lt;- function() {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">98</td>
+                    <td class="coverage">4<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    state$ticks &lt;- state$ticks + 1L</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">99</td>
+                    <td class="coverage">4<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    stream$emit(list(sequence = state$ticks, value = 10 + sin(state$ticks / 4)))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">100</td>
+                    <td class="coverage">4<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    phase_e_mark('sample', list(sequence = state$ticks))</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">101</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">102</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  copy_code &lt;- function(app, kind) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">103</td>
+                    <td class="coverage">4<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    state$last_code &lt;- table$reproducible_code(kind)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">104</td>
+                    <td class="coverage">4<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    result &lt;- state$last_code</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">105</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    if (is.null(result$code)) stop(result$reason)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">106</td>
+                    <td class="coverage">4<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    app$clipboard_write(result$code, system = FALSE)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">107</td>
+                    <td class="coverage">4<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    notify(paste('R', kind, result$status))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">108</td>
+                    <td class="coverage">4<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    app$push_screen(termr::alert_dialog(paste(result$status, result$code, sep = '\n'), title = 'Copy as R', width = 64))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">109</td>
+                    <td class="coverage">4<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    phase_e_mark('copy', list(kind = kind, status = result$status))</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">110</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">111</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  actions &lt;- list(</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">112</td>
+                    <td class="coverage">4<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    dataset = function(app) {keys &lt;- names(fixtures); state$dataset &lt;- keys[(match(state$dataset, keys) %% length(keys)) + 1L]; state$lazy &lt;- FALSE; load_data()},</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">113</td>
+                    <td class="coverage">4<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    source = function(app) {state$lazy &lt;- !state$lazy; if (state$lazy) state$dataset &lt;- 'cars'; load_data()},</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">114</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    theme = theme, sample = function(app) sample(),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">115</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    filter = function(app) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">116</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      minimum &lt;- suppressWarnings(as.numeric(query$value))</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">117</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      if (length(minimum) != 1L || !is.finite(minimum)) stop('Enter one finite minimum value.')</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">118</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      table$filter_columns(list(value = termr::table_filter('range', min = minimum, max = .Machine$double.xmax)))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">119</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      notify(paste('Filtered:', table$row_count, 'rows')); phase_e_mark('filter', list(rows = table$row_count))</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">120</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    },</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">121</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    reset = function(app) {load_data(); notify('View reset')},</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">122</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    find = function(app) {table$find(search$value); table$focus(); phase_e_mark('find', list(query = search$value))},</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">123</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    sort = function(app) {table$sort('value', decreasing = TRUE); phase_e_mark('sort')},</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">124</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    select = function(app) {if (table$row_count) table$select_range(1L, min(3L, table$row_count)); phase_e_mark('select')},</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">125</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    `apply-edit` = function(app) {table$set_cell(1L, 'value', edit$value); notify('Local cell edited'); phase_e_mark('edit', list(value = edit$value))},</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">126</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    edit = function(app) table$edit_cell(1L, 'value'),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">127</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    `copy-value` = function(app) copy_code(app, 'value'),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">128</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    `copy-pipeline` = function(app) copy_code(app, 'pipeline'),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">129</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    `confirm-reset` = function(app) app$push_screen(termr::confirm_dialog('Discard local view edits?', on_confirm = function(app) load_data())),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">130</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    quit = function(app) app$exit()</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">131</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  )</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">132</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  dispatch &lt;- function(name, app) tryCatch(actions[[name]](app), error = function(e) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">133</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    notify(paste('Rejected:', conditionMessage(e))); app$notify(conditionMessage(e), severity = 'warning')</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">134</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    phase_e_mark('rejected', list(action = name, message = conditionMessage(e)))</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">135</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  })</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">136</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  view &lt;- termr::app(termr::vertical(</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">137</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    termr::label('Termr Data Workbench', id = 'heading', classes = 'heading', style = termr::style(height = 1)),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">138</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    termr::horizontal(sidebar, pages, style = termr::style(height = '1fr')),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">139</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    status, termr::label('F2 data  F11 source  F4 theme  F12 charts  q quit', id = 'footer')),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">140</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    title = 'Termr Data Workbench',</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">141</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    stylesheet = termr::stylesheet('#heading { bold: true; }'),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">142</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    inkr_stylesheet = if (use_inkr) file.path(phase_e_root, 'integration-apps/01-termr-showcase/dark.inkr') else NULL,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">143</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    termr::on('button.pressed', function(event, app) if (event$sender$id %in% names(actions)) dispatch(event$sender$id, app)),</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">144</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    termr::bind('q', 'quit'), termr::bind('escape', function(app) {pages$activate(1L); table$focus()}),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">145</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    termr::bind('alt+c', function(app) {pages$activate(2L); line$focus()}),</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">146</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    termr::bind('f12', function(app) {pages$activate(2L); line$focus()}),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">147</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    termr::bind('alt+t', function(app) pages$activate(3L)))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">148</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  for (pair in list(c('f2', 'dataset'), c('alt+s', 'source'), c('f4', 'theme'), c('f5', 'filter'),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">149</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    c('f6', 'edit'), c('f7', 'select'), c('f8', 'copy-value'), c('f9', 'copy-pipeline'), c('f10', 'sample'))) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">150</td>
+                    <td class="coverage">18<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    local({key &lt;- pair[[1L]]; action &lt;- pair[[2L]]; view$bind(key, function(app) dispatch(action, app))})</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">151</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">152</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  view$bind('f11', function(app) dispatch('source', app))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">153</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  resize &lt;- function(app) sidebar$set(visible = app$size[['width']] &gt;= 70L)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">154</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  view$on('resize', handler = function(event, app) resize(app))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">155</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  view$on('termrcharts.line.selected', '#live-chart', function(event, app) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">156</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    notify(paste('Selected stream point', event$data$index))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">157</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    phase_e_mark('chart-selection', list(index = event$data$index))</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">158</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  })</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">159</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  view$on('datatable.cell_changed', '#data', function(event, app) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">160</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    phase_e_mark('cell-changed', list(row = event$data$row, column = event$data$column, value = event$data$value))</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">161</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  })</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">162</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  view$on('tabs.changed', '#chart-tabs', function(event, app) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">163</td>
+                    <td class="coverage">8<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    phase_e_mark('chart-tab', list(index = event$data$index))</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">164</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  })</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">165</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  view$on('key', handler = function(event, app) phase_e_mark('key', list(key = event$key)))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">166</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  view$on('mount', '#heading', function(event, app) {resize(app); phase_e_mark('ready', list(app = 'showcase')); table$focus()})</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">167</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  view$set_interval(.5, function(app) sample())</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">168</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  sample()</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">169</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  list(app = view, table = table, types = types, stream = stream, fixtures = fixtures,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">170</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    state = state, action = function(name) dispatch(name, view),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">171</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    close = function() {if (!state$closed) {stream$close(); state$closed &lt;- TRUE}},</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">172</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    summary = function() list(app = 'showcase', dataset = state$dataset, rows = table$row_count,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">173</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      samples = state$ticks, subscribers = stream$subscriber_count(), closed = state$closed))</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">174</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">}</pre>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div id="integration-apps/03-mirai-nanonext-monitor/app.R" class="hidden">
+              <table class="table-condensed">
+                <tbody>
+                  <tr class="never">
+                    <td class="num">1</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">monitor_work &lt;- function(chunks = 12L, fail = FALSE, progress) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">2</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  total &lt;- 0</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">3</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  for (i in seq_len(chunks)) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">4</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    total &lt;- total + sum(sqrt(seq_len(50000L) + i))</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">5</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    progress(i / chunks, paste('chunk', i, 'of', chunks))</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">6</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    if (fail &amp;&amp; i == 2L) stop('Controlled Phase E task failure')</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">7</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    Sys.sleep(.01)</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">8</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  }</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">9</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  list(sum = total, chunks = chunks)</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">10</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">}</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">11</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r"></pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">12</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">distributed_model &lt;- function(workers = 2L) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">13</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  phase_e_require(c('mirai', 'nanonext', 'jsonlite'))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">14</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  pool &lt;- termr::termr_mirai_pool(workers, max_pending = 8L, history = 128L, seed = 20261031L)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">15</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  ready &lt;- FALSE</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">16</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  on.exit(if (!ready) pool$close(), add = TRUE)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">17</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  metrics &lt;- termr::termr_stream('phase.e.metrics', history = 128L)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">18</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  publisher &lt;- termr::termr_nano_publish(metrics, 'tcp://127.0.0.1:0', 'tcp://127.0.0.1:0', heartbeat = .1)</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">19</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  on.exit(if (!ready) {publisher$close(); metrics$close()}, add = TRUE)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">20</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  endpoint &lt;- publisher$endpoint; snapshot_endpoint &lt;- publisher$snapshot_endpoint</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">21</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  connect &lt;- function() termr::termr_nano_connect(endpoint, 'phase.e.metrics', snapshot_endpoint,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">22</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    history = 128L, buffer = 32L, resync_interval = .1, stale_after = .5)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">23</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  remote &lt;- connect()</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">24</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  on.exit(if (!ready) remote$close(), add = TRUE)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">25</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  state &lt;- new.env(parent = emptyenv())</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">26</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  state$closed &lt;- FALSE; state$connected &lt;- TRUE; state$sequence &lt;- 0L</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">27</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  state$events &lt;- list(); state$tasks &lt;- list(); state$started &lt;- unname(proc.time()[['elapsed']])</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">28</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  subscription &lt;- pool$events$subscribe(function(event) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">29</td>
+                    <td class="coverage">52<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    state$events &lt;- utils::tail(c(state$events, list(event)), 128L)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">30</td>
+                    <td class="coverage">52<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    phase_e_mark('task-event', list(type = event$event, status = event$status))</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">31</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  })</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">32</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  rows &lt;- function() {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">33</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    if (!length(state$tasks)) return(data.frame(task = character(), status = character(), progress = numeric(), error = character()))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">34</td>
+                    <td class="coverage">141<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    do.call(rbind, lapply(seq_along(state$tasks), function(i) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">35</td>
+                    <td class="coverage">420<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      info &lt;- state$tasks[[i]]$info()</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">36</td>
+                    <td class="coverage">420<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      data.frame(task = paste(i, info$task_type), status = info$status,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">37</td>
+                    <td class="coverage">420<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        progress = if (is.null(info$progress)) NA_real_ else info$progress,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">38</td>
+                    <td class="coverage">420<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        error = if (is.null(info$error)) '' else substr(info$error, 1L, 128L))</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">39</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    }))</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">40</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">41</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  submit &lt;- function(fail = FALSE, slow = FALSE) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">42</td>
+                    <td class="coverage">3<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    if (length(state$tasks) &gt;= 24L) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">43</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      finished &lt;- which(vapply(state$tasks, function(task) task$ready(), TRUE))</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">44</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      if (!length(finished)) stop('Retained task limit reached; wait or cancel.')</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">45</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      state$tasks &lt;- state$tasks[-finished[[1L]]]</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">46</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">47</td>
+                    <td class="coverage">3<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    task &lt;- pool$submit(monitor_work, args = list(chunks = if (slow) 200L else 12L, fail = fail),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">48</td>
+                    <td class="coverage">3<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      progress = TRUE, task_type = if (fail) 'failure' else if (slow) 'long' else 'compute', timeout = 20)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">49</td>
+                    <td class="coverage">3<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    state$tasks[[length(state$tasks) + 1L]] &lt;- task</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">50</td>
+                    <td class="coverage">3<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    phase_e_mark('submit', list(kind = if (fail) 'failure' else if (slow) 'long' else 'compute'))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">51</td>
+                    <td class="coverage">3<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    invisible(task)</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">52</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">53</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  poll &lt;- function(emit = TRUE) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">54</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    if (state$closed) return(invisible())</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">55</td>
+                    <td class="coverage">141<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    pool$poll()</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">56</td>
+                    <td class="coverage">141<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    if (emit) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">57</td>
+                    <td class="coverage">141<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      state$sequence &lt;- state$sequence + 1L</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">58</td>
+                    <td class="coverage">141<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      diag &lt;- pool$diagnostics()</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">59</td>
+                    <td class="coverage">141<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      elapsed &lt;- max(.001, unname(proc.time()[['elapsed']]) - state$started)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">60</td>
+                    <td class="coverage">141<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      metrics$emit(list(timestamp = as.numeric(Sys.time()), sequence = state$sequence,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">61</td>
+                    <td class="coverage">141<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        pending = diag$pending, completed = diag$counters$completed,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">62</td>
+                    <td class="coverage">141<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        throughput = diag$counters$completed / elapsed))</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">63</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">64</td>
+                    <td class="coverage">140<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    if (state$connected) publisher$poll()</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">65</td>
+                    <td class="coverage">141<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    remote$poll()</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">66</td>
+                    <td class="coverage">141<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    invisible(remote$latest())</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">67</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">68</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  cancel &lt;- function(index = NULL) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">69</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    active &lt;- which(!vapply(state$tasks, function(task) task$ready(), TRUE))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">70</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    selected &lt;- if (is.null(index)) utils::head(active, 1L) else index</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">71</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    if (length(selected) &amp;&amp; selected %in% active) state$tasks[[selected]]$cancel()</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">72</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    phase_e_mark('cancel')</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">73</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    invisible()</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">74</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">75</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  disconnect &lt;- function() {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">76</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    if (state$connected) publisher$close()</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">77</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    state$connected &lt;- FALSE</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">78</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    phase_e_mark('disconnect')</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">79</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">80</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  reconnect &lt;- function() {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">81</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    remote$close()</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">82</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    if (!state$connected) publisher &lt;&lt;- termr::termr_nano_publish(metrics, endpoint, snapshot_endpoint, heartbeat = .1)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">83</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    state$connected &lt;- TRUE; remote &lt;&lt;- connect()</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">84</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    phase_e_mark('reconnect')</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">85</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    invisible(remote)</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">86</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">87</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  close &lt;- function() {</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">88</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    if (state$closed) return(invisible())</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">89</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    state$closed &lt;- TRUE</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">90</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    subscription$unsubscribe(); remote$close(); publisher$close(); metrics$close(); pool$close()</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">91</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">92</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  ready &lt;- TRUE</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">93</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  list(pool = pool, metrics = metrics, remote = function() remote, rows = rows,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">94</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    state = state, submit = submit, cancel = cancel, poll = poll, disconnect = disconnect,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">95</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    reconnect = reconnect, close = close,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">96</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    diagnostics = function() list(closed = state$closed, pool = pool$diagnostics(),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">97</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      transport = remote$status(), retained_events = length(state$events),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">98</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      subscriptions = pool$events$subscriber_count()))</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">99</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">}</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">100</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r"></pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">101</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">distributed_monitor &lt;- function(workers = 2L) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">102</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  model &lt;- distributed_model(workers)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">103</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  ready &lt;- FALSE; on.exit(if (!ready) model$close(), add = TRUE)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">104</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  table &lt;- termr::data_table(model$rows(), id = 'tasks', header_sort = TRUE)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">105</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  chart &lt;- termr::line_chart(numeric(), numeric(), id = 'task-chart', title = 'Pending jobs via nanonext')</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">106</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  bind_chart &lt;- function() chart$bind_stream(model$remote(), function(x) x$sequence,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">107</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    function(x) x$pending, max_points = 128L)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">108</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  bind_chart()</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">109</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  counts &lt;- termr::label('', id = 'counts', style = termr::style(height = 2))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">110</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  details &lt;- termr::label('Select a task; Enter opens details', id = 'details', style = termr::style(height = 2))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">111</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  history &lt;- termr::label('', id = 'messages', style = termr::style(height = 3))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">112</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  progress &lt;- termr::progress_bar(NA_real_, id = 'progress')</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">113</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  last_rows &lt;- NULL</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">114</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  refresh &lt;- function() {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">115</td>
+                    <td class="coverage">141<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    model$poll()</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">116</td>
+                    <td class="coverage">141<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    rows &lt;- model$rows()</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">117</td>
+                    <td class="coverage">141<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    if (!identical(rows, last_rows)) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">118</td>
+                    <td class="coverage">47<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      position &lt;- table$cursor_row</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">119</td>
+                    <td class="coverage">47<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      table$set_data(rows)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">120</td>
+                    <td class="coverage">45<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      if (nrow(rows) &amp;&amp; position &gt; 0L) table$move_cursor(row = min(position, nrow(rows)))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">121</td>
+                    <td class="coverage">47<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      last_rows &lt;&lt;- rows</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">122</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">123</td>
+                    <td class="coverage">141<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    diag &lt;- model$diagnostics()</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">124</td>
+                    <td class="coverage">141<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    counts$update(paste('Workers:', diag$pool$workers, '| pending jobs:', diag$pool$pending,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">125</td>
+                    <td class="coverage">141<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      '| transport:', diag$transport$state, '| AIO:', diag$transport$pending,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">126</td>
+                    <td class="coverage">141<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      '| completed:', diag$pool$counters$completed,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">127</td>
+                    <td class="coverage">141<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      '\nThroughput:', round(model$metrics$latest()$throughput, 2), 'jobs/s | bounded history:', diag$retained_events))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">128</td>
+                    <td class="coverage">140<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    if (nrow(rows)) progress$set(value = utils::tail(rows$progress, 1L))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">129</td>
+                    <td class="coverage">141<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    recent &lt;- utils::tail(model$state$events, 3L)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">130</td>
+                    <td class="coverage">141<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    history$update(paste(vapply(recent, function(e) paste(e$event, e$status), ''), collapse = '\n'))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">131</td>
+                    <td class="coverage">141<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    phase_e_mark('monitor', list(pending = diag$pool$pending, completed = diag$pool$counters$completed,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">132</td>
+                    <td class="coverage">141<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      failed = diag$pool$counters$failed, connection = diag$transport$state,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">133</td>
+                    <td class="coverage">141<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      transport_sequence = diag$transport$sequence))</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">134</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">135</td>
+                    <td class="coverage">7<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  safe &lt;- function(fn) function(app) tryCatch({fn(app); refresh()}, error = function(e) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">136</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    app$notify(conditionMessage(e), severity = 'warning'); phase_e_mark('rejected', list(message = conditionMessage(e)))</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">137</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  })</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">138</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  actions &lt;- list(</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">139</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    submit = safe(function(app) model$submit()),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">140</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    slow = safe(function(app) model$submit(slow = TRUE)),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">141</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    fail = safe(function(app) model$submit(fail = TRUE)),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">142</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    cancel = safe(function(app) model$cancel()),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">143</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    refresh = safe(function(app) invisible()),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">144</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    disconnect = safe(function(app) model$disconnect()),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">145</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    reconnect = safe(function(app) {chart$unbind_stream(); model$reconnect(); bind_chart()}),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">146</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    details = safe(function(app) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">147</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      row_index &lt;- table$selected_row()</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">148</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      if (!is.na(row_index)) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">149</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        row &lt;- table$row_data(row_index)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">150</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        index &lt;- match(row$task, model$rows()$task)</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">151</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        if (is.na(index)) stop('Selected task is no longer retained.')</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">152</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        task &lt;- model$state$tasks[[index]]</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">153</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        info &lt;- task$info()</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">154</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        result &lt;- if (info$status == 'completed') capture.output(str(task$result(), max.level = 2L)) else character()</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">155</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        text &lt;- paste(c(paste('Task:', row$task), paste('Status:', info$status),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">156</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">          result, if (!is.null(info$error)) paste('Error:', info$error)), collapse = '\n')</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">157</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        app$push_screen(termr::alert_dialog(text, title = 'Task details'))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">158</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        phase_e_mark('task-details', list(status = info$status, result = if (info$status == 'completed') task$result() else NULL))</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">159</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      }</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">160</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    }))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">161</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  buttons &lt;- lapply(names(actions), function(name) termr::button(name, id = paste0('task-', name)))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">162</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  view &lt;- termr::app(termr::vertical(</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">163</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    termr::label('Distributed Task &amp; Stream Monitor', id = 'monitor-heading'),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">164</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    termr::label('n submit | l long | e fail | c cancel | d disconnect | r reconnect | q quit'),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">165</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    termr::tabs(termr::tab('Tasks', table), termr::tab('Stream', chart),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">166</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      termr::tab('Actions', termr::scroll_view(termr::vertical(buttons))), id = 'monitor-tabs'),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">167</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    progress, counts, history, details),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">168</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    termr::bind('q', 'quit'),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">169</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    termr::on('button.pressed', function(event, app) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">170</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      action &lt;- sub('^task-', '', event$sender$id)</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">171</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      if (action %in% names(actions)) actions[[action]](app)</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">172</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    }))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">173</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  for (pair in list(c('n', 'submit'), c('l', 'slow'), c('e', 'fail'), c('c', 'cancel'),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">174</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    c('d', 'disconnect'), c('r', 'reconnect'), c('f5', 'refresh'))) local({</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">175</td>
+                    <td class="coverage">7<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      key &lt;- pair[[1L]]; action &lt;- pair[[2L]]; view$bind(key, actions[[action]])</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">176</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    })</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">177</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  view$on('datatable.row_selected', '#tasks', function(event, app) details$update(paste(unlist(event$data$value), collapse = ' | ')))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">178</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  view$on('datatable.row_activated', '#tasks', function(event, app) actions$details(app))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">179</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  view$on('mount', '#monitor-heading', function(event, app) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">180</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    refresh()</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">181</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    phase_e_mark('ready', list(app = 'monitor'))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">182</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    if (nzchar(Sys.getenv('TERMR_E_EVENTS',''))) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">183</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      children &lt;- ps::ps_children(ps::ps_handle(), recursive = TRUE)</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">184</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      phase_e_mark('owned-processes', list(processes = lapply(children, function(handle)</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">185</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        list(pid = ps::ps_pid(handle), created = as.numeric(ps::ps_create_time(handle))))))</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">186</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">187</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    table$focus()</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">188</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  })</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">189</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  view$set_interval(.05, function(app) refresh())</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">190</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  ready &lt;- TRUE</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">191</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  list(app = view, model = model, table = table, chart = chart, refresh = refresh,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">192</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    close = function() {chart$unbind_stream(); model$close()},</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">193</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    summary = function() list(app = 'monitor', closed = model$state$closed,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">194</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      pool_closed = model$pool$is_closed(), transport_closed = model$remote()$is_closed(),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">195</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      source_closed = model$metrics$is_closed(),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">196</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      retained = length(model$state$tasks), subscriptions = model$pool$events$subscriber_count()))</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">197</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">}</pre>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div id="integration-apps/02-shiny-visual-analytics/app.R" class="hidden">
+              <table class="table-condensed">
+                <tbody>
+                  <tr class="never">
+                    <td class="num">1</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">analytics_model &lt;- function() {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">2</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  stream &lt;- termr::termr_stream('analytics.metrics', history = 120L)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">3</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  state &lt;- new.env(parent = emptyenv())</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">4</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  state$source &lt;- 'alpha'; state$sequence &lt;- 0L; state$ticks &lt;- 0L</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">5</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  state$empty &lt;- FALSE; state$closed &lt;- FALSE</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">6</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  advance &lt;- function(invalid = FALSE) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">7</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    if (state$closed) stop('Analytics source is closed.')</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">8</td>
+                    <td class="coverage">12<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    state$sequence &lt;- state$sequence + 1L; state$ticks &lt;- state$ticks + 1L</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">9</td>
+                    <td class="coverage">12<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    offset &lt;- if (state$source == 'alpha') 0 else 10</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">10</td>
+                    <td class="coverage">12<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    stream$emit(list(source_id = state$source, sequence = state$sequence,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">11</td>
+                    <td class="coverage">12<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      timestamp = as.numeric(Sys.time()),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">12</td>
+                    <td class="coverage">12<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      cpu = if (invalid) NaN else 40 + offset + 12 * sin(state$sequence / 3),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">13</td>
+                    <td class="coverage">12<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      ram = if (invalid) NA_real_ else 55 + offset + 4 * cos(state$sequence / 5),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">14</td>
+                    <td class="coverage">12<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      empty = state$empty, label = if (state$source == 'alpha') 'Метрικές 東京' else 'Beta'))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">15</td>
+                    <td class="coverage">12<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    invisible(stream$latest())</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">16</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">17</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  frame &lt;- function() {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">18</td>
+                    <td class="coverage">7<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    data &lt;- termr::termr_stream_data(stream, c('cpu', 'ram'), max_points = 120L)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">19</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    if (state$empty) data &lt;- data[0, , drop = FALSE]</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">20</td>
+                    <td class="coverage">7<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    data</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">21</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">22</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  change &lt;- function() {state$source &lt;- if (state$source == 'alpha') 'beta' else 'alpha'; state$sequence &lt;- 0L; state$empty &lt;- FALSE; advance()}</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">23</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  empty &lt;- function() {state$empty &lt;- !state$empty; advance()}</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">24</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  advance()</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">25</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  list(stream = stream, state = state, advance = advance, frame = frame, change = change, empty = empty,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">26</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    close = function() {if (!state$closed) {stream$close(); state$closed &lt;- TRUE}})</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">27</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">}</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">28</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r"></pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">29</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">analytics_terminal &lt;- function(model = analytics_model()) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">30</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  table &lt;- termr::data_table(model$frame()[c('timestamp', 'cpu', 'ram', 'sequence')], show_types = TRUE, id = 'analytics-data')</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">31</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  chart &lt;- termr::line_chart(numeric(), numeric(), mode = 'auto', id = 'analytics-chart')</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">32</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  bind_chart &lt;- function() chart$bind_stream(model$stream, function(x) x$sequence,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">33</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    function(x) if (!isTRUE(x$empty) &amp;&amp; is.finite(x$cpu)) x$cpu else NA_real_, max_points = 120L)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">34</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  bind_chart()</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">35</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  chart_empty &lt;- FALSE</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">36</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  status &lt;- termr::label('', id = 'analytics-status')</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">37</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  refresh &lt;- function() {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">38</td>
+                    <td class="coverage">6<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    table$set_data(model$frame()[c('timestamp', 'cpu', 'ram', 'sequence')])</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">39</td>
+                    <td class="coverage">6<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    if (model$state$empty &amp;&amp; !chart_empty) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">40</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      chart$unbind_stream()</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">41</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      chart$update_data(x = numeric(), y = numeric())</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">42</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    } else if (!model$state$empty &amp;&amp; chart_empty) bind_chart()</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">43</td>
+                    <td class="coverage">6<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    chart_empty &lt;&lt;- model$state$empty</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">44</td>
+                    <td class="coverage">6<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    status$update(paste('Source', model$state$source, 'sequence', model$state$sequence,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">45</td>
+                    <td class="coverage">6<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      if (model$state$empty) 'EMPTY' else 'live', '| Метрικές 東京'))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">46</td>
+                    <td class="coverage">6<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    phase_e_mark('analytics', list(source = model$state$source, sequence = model$state$sequence,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">47</td>
+                    <td class="coverage">6<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      rows = table$row_count, empty = model$state$empty))</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">48</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">49</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  view &lt;- termr::app(termr::vertical(</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">50</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    termr::label('Shiny Visual Analytics Bridge', id = 'analytics-heading'),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">51</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    termr::label('F2 sample | F11 source (Alt+S) | F4 empty | F5 NA/NaN | q quit'),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">52</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    table, chart, status),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">53</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    termr::bind('f2', function(app) {model$advance(); refresh()}),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">54</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    termr::bind('alt+s', function(app) {model$change(); refresh()}),</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">55</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    termr::bind('f11', function(app) {model$change(); refresh()}),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">56</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    termr::bind('f4', function(app) {model$empty(); refresh()}),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">57</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    termr::bind('f5', function(app) {model$advance(TRUE); refresh()}),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">58</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    termr::bind('q', 'quit'))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">59</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  view$on('mount', '#analytics-heading', function(event, app) {refresh(); phase_e_mark('ready', list(app = 'analytics'))})</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">60</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  list(app = view, model = model, table = table, chart = chart,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">61</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    close = function() {chart$unbind_stream(); model$close()},</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">62</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    summary = function() list(app = 'analytics', source = model$state$source,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">63</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      sequence = model$state$sequence, rows = table$row_count, closed = model$state$closed))</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">64</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">}</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">65</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r"></pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">66</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">analytics_dashboard &lt;- function(model = analytics_model(), interval = 500L) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">67</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  phase_e_require(c('shiny', 'ggplot2', 'plotly', 'htmlwidgets'))</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">68</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  # Reuse the existing example's bounded proxy/ready/ack implementation.</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">69</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  helpers &lt;- new.env(parent = environment())</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">70</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  sys.source(file.path(phase_e_root, 'inst/examples/system-monitor-live/visualization.R'), helpers)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">71</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  receiver &lt;- termr::termr_shiny_receiver(model$stream, max_points = 120L, interval = interval)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">72</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  state &lt;- new.env(parent = emptyenv())</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">73</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  state$closed &lt;- FALSE; state$frames &lt;- 0L; state$widgets &lt;- 0L; state$auto &lt;- FALSE</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">74</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  producer &lt;- shiny::observe({</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">75</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    shiny::invalidateLater(interval)</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">76</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    if (state$auto &amp;&amp; receiver$diagnostics()$sessions &gt; 0L) model$advance()</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">77</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  }, domain = NULL)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">78</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  ui &lt;- shiny::fluidPage(</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">79</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    shiny::tags$head(shiny::tags$link(rel = 'icon', href = 'data:,')),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">80</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    shiny::titlePanel('Shiny Visual Analytics Bridge'),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">81</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    shiny::p('Read-only termr snapshot. Browser controls change demonstration data, never a running TUI.'),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">82</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    shiny::fluidRow(shiny::column(12,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">83</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      shiny::actionButton('next_sample', 'Next sample'), shiny::actionButton('source', 'Switch source'),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">84</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      shiny::actionButton('empty', 'Toggle empty'), shiny::actionButton('invalid', 'NA / NaN sample'),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">85</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      shiny::checkboxInput('auto', 'Automatic samples', FALSE))),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">86</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    shiny::textOutput('source_status'), shiny::textOutput('agreement'),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">87</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    shiny::fluidRow(shiny::column(6, shiny::plotOutput('ggplot', height = '260px')),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">88</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      shiny::column(6, plotly::plotlyOutput('live', height = '320px'))),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">89</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    shiny::tableOutput('values'), shiny::h4('termr read-only snapshot'), shiny::verbatimTextOutput('terminal'))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">90</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  server &lt;- function(input, output, session) {</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">91</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    latest &lt;- termr::termr_shiny_reactive(receiver, session)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">92</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    history &lt;- termr::termr_shiny_history(receiver, session, max_points = 120L)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">93</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    status &lt;- termr::termr_shiny_status(receiver, session)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">94</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    frame &lt;- shiny::reactive({</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">95</td>
+                    <td class="coverage">4<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      history(); value &lt;- latest()</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">96</td>
+                    <td class="coverage">4<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      data &lt;- termr::termr_stream_data(receiver, c('cpu', 'ram'), max_points = 120L)</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">97</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      if (isTRUE(value$empty)) data &lt;- data[0, , drop = FALSE]</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">98</td>
+                    <td class="coverage">4<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      state$frames &lt;- state$frames + 1L</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">99</td>
+                    <td class="coverage">4<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      phase_e_mark('web-frame', list(rows = nrow(data), source = value$source_id,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">100</td>
+                    <td class="coverage">4<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        sequence = value$sequence, cpu = if (nrow(data)) utils::tail(data$cpu, 1L) else NULL))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">101</td>
+                    <td class="coverage">4<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      data</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">102</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    })</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">103</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    shiny::observeEvent(input$next_sample, {model$advance(); receiver$poll()})</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">104</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    shiny::observeEvent(input$source, {model$change(); receiver$poll()})</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">105</td>
+                    <td class="coverage">2<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    shiny::observeEvent(input$empty, {model$empty(); receiver$poll()})</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">106</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    shiny::observeEvent(input$invalid, {model$advance(TRUE); receiver$poll()})</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">107</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    shiny::observeEvent(input$auto, {state$auto &lt;- isTRUE(input$auto)})</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">108</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    output$source_status &lt;- shiny::renderText({</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">109</td>
+                    <td class="coverage">4<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      value &lt;- latest(); s &lt;- status()</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">110</td>
+                    <td class="coverage">4<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      paste('Source:', value$source_id, '| sequence:', value$sequence, '|', s$state,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">111</td>
+                    <td class="coverage">4<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        '| updated:', format(as.POSIXct(value$timestamp, origin = '1970-01-01', tz = 'UTC'), tz = 'UTC'),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">112</td>
+                    <td class="coverage">4<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        '|', value$label, if (isTRUE(value$empty)) '| EMPTY' else '')</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">113</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    })</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">114</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    output$agreement &lt;- shiny::renderText(paste(nrow(frame()), 'rows shared by ggplot2, Plotly and termr'))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">115</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    output$values &lt;- shiny::renderTable(utils::tail(frame()[c('timestamp', 'cpu', 'ram', 'sequence')], 8L))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">116</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    output$terminal &lt;- shiny::renderText(termr::render_text(</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">117</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      termr::data_table(utils::tail(frame()[c('cpu', 'ram', 'sequence')], 8L), show_types = TRUE), width = 62L, height = 10L))</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">118</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    output$ggplot &lt;- shiny::renderPlot({</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">119</td>
+                    <td class="coverage">4<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      data &lt;- frame()</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">120</td>
+                    <td class="coverage">4<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      ggplot2::ggplot(data, ggplot2::aes(timestamp, cpu, group = segment)) +</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">121</td>
+                    <td class="coverage">4<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        (if (nrow(data) &gt; 1L) ggplot2::geom_line(na.rm = TRUE) else NULL) + ggplot2::geom_point(na.rm = TRUE) +</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">122</td>
+                    <td class="coverage">4<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">        ggplot2::labs(title = 'CPU | shared numeric data', x = 'UTC', y = 'CPU') + ggplot2::theme_minimal()</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">123</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    })</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">124</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    output$live &lt;- plotly::renderPlotly({state$widgets &lt;- state$widgets + 1L; helpers$monitor_plotly_widget(FALSE)})</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">125</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    previous &lt;- NULL; ready_id &lt;- NULL; waiting &lt;- FALSE; ack_seen &lt;- 0</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">126</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    shiny::observe({</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">127</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      if (is.null(input$live_ready)) return(invisible(NULL))</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">128</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      ack &lt;- input$live_ack</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">129</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      count &lt;- if (is.list(ack) &amp;&amp; identical(ack$ready, input$live_ready)) ack$count else 0</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">130</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      if (!is.numeric(count) || length(count) != 1L || !is.finite(count)) count &lt;- 0</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">131</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      if (!identical(ready_id, input$live_ready)) {previous &lt;&lt;- NULL; waiting &lt;&lt;- FALSE; ready_id &lt;&lt;- input$live_ready; ack_seen &lt;&lt;- count}</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">132</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      if (waiting &amp;&amp; count &lt;= ack_seen) return(invisible(NULL))</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">133</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      waiting &lt;&lt;- FALSE; ack_seen &lt;&lt;- count</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">134</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      plan &lt;- helpers$monitor_plotly_plan(previous, frame(), status())</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">135</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      helpers$monitor_plotly_send(session, 'live', plan, 120L)</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">136</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      if (plan$type != 'noop') {previous &lt;&lt;- plan; waiting &lt;&lt;- TRUE}</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">137</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    })</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">138</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    # Expose read-only reactive functions to testServer, not remote TUI controls.</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">139</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    session$userData$frame &lt;- frame</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">140</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    session$userData$status &lt;- status</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">141</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">142</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  close &lt;- function() {</pre>
+                    </td>
+                  </tr>
+                  <tr class="missed">
+                    <td class="num">143</td>
+                    <td class="coverage">!</td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    if (state$closed) return(invisible())</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">144</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    state$closed &lt;- TRUE; producer$destroy(); receiver$close(); model$close()</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">145</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  }</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">146</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">  list(app = shiny::shinyApp(ui, server), server = server, model = model, receiver = receiver,</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">147</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">    close = close, diagnostics = function() c(receiver$diagnostics(),</pre>
+                    </td>
+                  </tr>
+                  <tr class="covered">
+                    <td class="num">148</td>
+                    <td class="coverage">1<em>x</em></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">      list(frame_builds = state$frames, widget_builds = state$widgets, producer_observers = if (state$closed) 0L else 1L)))</pre>
+                    </td>
+                  </tr>
+                  <tr class="never">
+                    <td class="num">149</td>
+                    <td class="coverage"></td>
+                    <td class="col-sm-12">
+                      <pre class="language-r">}</pre>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <script>$('div#files pre').each(function(i, block) {
+    hljs.highlightBlock(block);
+});</script>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

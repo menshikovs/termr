@@ -1,0 +1,12 @@
+{
+  "platform": ["Windows", "10 x64", "build 26100", "LAPTOP-RBSL4FGN", "x86-64", "User001", "User001", "User001", "LAPTOP-RBSL4FGN"],
+  "app": "rtop",
+  "modes": "headless",
+  "results": [
+    {
+      "name": "headless-rtop",
+      "status": "SKIP",
+      "reason": "Use --mode=legacy on Linux."
+    }
+  ]
+}

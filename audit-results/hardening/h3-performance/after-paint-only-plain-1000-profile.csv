@@ -1,0 +1,12 @@
+"","total.time","total.pct","self.time","self.pct"
+"""measure""",0.05,100,0,0
+"""system.time""",0.05,100,0,0
+"""unname""",0.05,100,0,0
+"""gc""",0.03,60,0.03,60
+"""rect_intersect""",0.02,40,0.02,40
+"""<Anonymous>""",0.02,40,0,0
+"""paint_tree""",0.02,40,0,0
+"""run""",0.02,40,0,0
+"""buffer$put_text""",0.005,10,0,0
+"""draw_lines""",0.005,10,0,0
+"""widget$paint""",0.005,10,0,0

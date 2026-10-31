@@ -1,0 +1,10 @@
+{
+  "app": "analytics",
+  "command": "Rscript integration-apps/run.R --app=analytics --mode=terminal",
+  "loader_environment": "TERMR_USE_INSTALLED unset",
+  "platform": "win32",
+  "status": "FAIL",
+  "error": "Entrypoint exited before required state",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\programming_pj\\r_textualize\\integration-apps\\automation\\entrypoint-pty.py\", line 59, in scenario\n    wait(lambda:seen('ready',app=app))\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\programming_pj\\r_textualize\\integration-apps\\automation\\entrypoint-pty.py\", line 54, in wait\n    if not child.isalive():raise AssertionError('Entrypoint exited before required state')\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Entrypoint exited before required state\n",
+  "event_log_read_retries": []
+}

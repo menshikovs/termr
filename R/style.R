@@ -273,8 +273,8 @@ check_optional_flag <- function(x, arg) {
 
 check_count <- function(x, arg) {
   if (is.null(x)) return(NULL)
-  if (!is_scalar_number(x) || x < 0) {
-    stop(sprintf("`%s` must be a non-negative number.", arg), call. = FALSE)
+  if (!is_scalar_number(x) || !is.finite(x) || x < 0 || x > .Machine$integer.max || x != floor(x)) {
+    stop(sprintf("`%s` must be a non-negative whole number.", arg), call. = FALSE)
   }
   as.integer(x)
 }

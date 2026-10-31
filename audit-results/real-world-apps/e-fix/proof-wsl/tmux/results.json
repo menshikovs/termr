@@ -1,0 +1,24 @@
+{
+  "socket": "termr-phase-e-5d3fe111c3de",
+  "cases": [
+    {
+      "app": "showcase",
+      "status": "PASS",
+      "resize": "42x18",
+      "terminal_restored": true
+    },
+    {
+      "app": "monitor",
+      "status": "PASS",
+      "resize": "42x18",
+      "terminal_restored": true
+    },
+    {
+      "app": "rtop",
+      "status": "PASS",
+      "resize": "42x18",
+      "terminal_restored": true
+    }
+  ],
+  "cleanup": true
+}

@@ -1,0 +1,23 @@
+RUN api-audit 
+PASS api-audit 
+RUN terminal-gates 
+PASS terminal-gates 
+SKIP browser-gates : Run entrypoint-browser.R --wsl-server from native Windows R for Chrome against WSL Shiny. 
+RUN app-tests 
+PASS app-tests 
+RUN process 
+PASS process 
+RUN expect-showcase 
+PASS expect-showcase 
+RUN expect-monitor 
+PASS expect-monitor 
+RUN tmux 
+PASS tmux 
+RUN recording 
+PASS recording 
+RUN lint 
+PASS lint 
+RUN profile 
+PASS profile 
+RUN benchmark 
+PASS benchmark 

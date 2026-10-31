@@ -10,8 +10,11 @@ if (mode %in% c("all", "install", "doc")) {
 if (mode %in% c("all", "test")) {
   res <- testthat::test_local(".", reporter = testthat::ProgressReporter$new(show_praise = FALSE), stop_on_failure = FALSE)
   df <- as.data.frame(res)
+  failures <- sum(df$failed, na.rm = TRUE)
+  errors <- sum(df$error, na.rm = TRUE)
   cat(sprintf("\nTOTAL: %d tests, %d failed, %d errors, %d skipped, %d warnings\n",
-              sum(df$nb), sum(df$failed), sum(df$error), sum(df$skipped), sum(df$warning)))
+              sum(df$nb), failures, errors, sum(df$skipped), sum(df$warning)))
+  if (failures > 0L || errors > 0L) quit(status = 1L)
 }
 if (mode == "install") {
   install.packages(".", repos = NULL, type = "source", quiet = TRUE)

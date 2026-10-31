@@ -1,0 +1,51 @@
+[
+  {
+    "name": "app-tests",
+    "seconds": 24.57,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "process",
+    "seconds": 19.81,
+    "status": "FAIL",
+    "exit_code": 1,
+    "timeout": false
+  },
+  {
+    "name": "browser",
+    "seconds": 11.45,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "lifecycle",
+    "seconds": 138.94,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "lint",
+    "seconds": 8.39,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "profile",
+    "seconds": 24.25,
+    "status": "FAIL",
+    "exit_code": 1,
+    "timeout": false
+  },
+  {
+    "name": "benchmark",
+    "seconds": 21.92,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  }
+]

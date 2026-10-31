@@ -1,0 +1,33 @@
+READY showcase 
+Termr Data Workbench                                                                                
+DATA WORKBENCH          █ Data   Charts   Types   Help                                              
+╭──────────────╮        █━━━━━━─────────────────────────────────────────────────────────────────────
+│ Dataset [F2] │        █name                value cylinders weight                                 
+╰──────────────╯        █chr                 dbl   dbl       dbl                                    
+╭──────────────────╮    █Mazda RX4            21.0         6  2.620                                █
+│ Local/lazy [F11] │    █Mazda RX4 Wag        21.0         6  2.875                                █
+╰──────────────────╯    █Datsun 710           22.8         4  2.320                                █
+╭──────────────────────╮█Hornet 4 Drive       21.4         6  3.215                                █
+│ 20                   │█Hornet Sportabout    18.7         8  3.440                                █
+╰──────────────────────╯█Valiant              18.1         6  3.460                                █
+╭─────────────╮         █Duster 360           14.3         8  3.570                                █
+│ Filter [F5] │         █Merc 240D            24.4         4  3.190                                █
+╰─────────────╯         │Merc 230             22.8         4  3.150                                █
+╭────────────╮          │Merc 280             19.2         6  3.440                                █
+│ Reset view │          │Merc 280C            17.8         6  3.440                                █
+╰────────────╯          │Merc 450SE           16.4         8  4.070                                █
+╭──────────────────────╮│Merc 450SL           17.3         8  3.730                                █
+│ Merc                 ││Merc 450SLC          15.2         8  3.780                                █
+╰──────────────────────╯│Cadillac Fleetwood   10.4         8  5.250                                █
+╭────────╮              │Lincoln Continental  10.4         8  5.424                                │
+│  Find  │              │Chrysler Imperial    14.7         8  5.345                                │
+╰────────╯              │Fiat 128             32.4         4  2.200                                │
+╭────────────╮          │Honda Civic          30.4         4  1.615                                │
+│ Sort value │          │Toyota Corolla       33.9         4  1.835                                │
+╰────────────╯          │Toyota Corona        21.5         4  2.465                                │
+╭───────────────╮       │Dodge Challenger     15.5         8  3.520                                │
+Theme: light (inkr)                                                                                 
+                                                                                                    
+F2 data  F11 source  F4 theme  F12 charts  q quit                                                    
+{"app":"showcase","dataset":"cars","rows":32,"samples":2,"subscribers":0,"closed":true} 
+

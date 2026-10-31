@@ -1,0 +1,11 @@
+"","total.time","total.pct","self.time","self.pct"
+"""measure""",0.05,100,0,0
+"""system.time""",0.045,90,0,0
+"""unname""",0.045,90,0,0
+"""gc""",0.025,50,0.025,50
+"""private$filter_rows""",0.02,40,0.015,30
+"""private$apply_sort""",0.02,40,0,0
+"""run""",0.02,40,0,0
+"""t$filter_columns""",0.02,40,0,0
+"""match""",0.005,10,0.005,10
+"""Rprof""",0.005,10,0.005,10

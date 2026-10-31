@@ -1,0 +1,366 @@
+{
+  "status": "PASS",
+  "startup_shutdown": 100,
+  "ui_actions": 1000,
+  "source_changes": 100,
+  "theme_changes": 100,
+  "chart_updates": 100,
+  "worker_cycles": 5,
+  "reconnects": 20,
+  "render_action_seconds": {
+    "50%": 0.05,
+    "95%": 0.07,
+    "99%": 0.0701
+  },
+  "samples": [
+    {
+      "label": "cold",
+      "at": 0.21,
+      "rss": 81674240,
+      "live_heap_mb": 28.3,
+      "children": 1,
+      "r_connections": 3,
+      "descriptors": 171
+    },
+    {
+      "label": "startup-10",
+      "at": 6.87,
+      "rss": 201613312,
+      "live_heap_mb": 65.7,
+      "children": 1,
+      "r_connections": 3,
+      "descriptors": 177
+    },
+    {
+      "label": "startup-20",
+      "at": 12.87,
+      "rss": 201662464,
+      "live_heap_mb": 65.7,
+      "children": 1,
+      "r_connections": 3,
+      "descriptors": 177
+    },
+    {
+      "label": "startup-30",
+      "at": 18.78,
+      "rss": 201351168,
+      "live_heap_mb": 65.7,
+      "children": 1,
+      "r_connections": 3,
+      "descriptors": 177
+    },
+    {
+      "label": "startup-40",
+      "at": 24.21,
+      "rss": 201281536,
+      "live_heap_mb": 65.7,
+      "children": 1,
+      "r_connections": 3,
+      "descriptors": 177
+    },
+    {
+      "label": "startup-50",
+      "at": 30.03,
+      "rss": 194273280,
+      "live_heap_mb": 65.7,
+      "children": 1,
+      "r_connections": 3,
+      "descriptors": 178
+    },
+    {
+      "label": "startup-60",
+      "at": 35.03,
+      "rss": 204136448,
+      "live_heap_mb": 65.7,
+      "children": 1,
+      "r_connections": 3,
+      "descriptors": 178
+    },
+    {
+      "label": "startup-70",
+      "at": 39.56,
+      "rss": 200736768,
+      "live_heap_mb": 65.7,
+      "children": 1,
+      "r_connections": 3,
+      "descriptors": 178
+    },
+    {
+      "label": "startup-80",
+      "at": 44.32,
+      "rss": 202858496,
+      "live_heap_mb": 65.7,
+      "children": 1,
+      "r_connections": 3,
+      "descriptors": 178
+    },
+    {
+      "label": "startup-90",
+      "at": 49.18,
+      "rss": 201383936,
+      "live_heap_mb": 65.7,
+      "children": 1,
+      "r_connections": 3,
+      "descriptors": 178
+    },
+    {
+      "label": "startup-100",
+      "at": 54.28,
+      "rss": 200826880,
+      "live_heap_mb": 65.7,
+      "children": 1,
+      "r_connections": 3,
+      "descriptors": 178
+    },
+    {
+      "label": "1000-actions-100-sources-themes-charts",
+      "at": 126.34,
+      "rss": 211243008,
+      "live_heap_mb": 70.5,
+      "children": 1,
+      "r_connections": 3,
+      "descriptors": 179
+    },
+    {
+      "label": "workbench-closed",
+      "at": 127.34,
+      "rss": 164798464,
+      "live_heap_mb": 68.6,
+      "children": 1,
+      "r_connections": 3,
+      "descriptors": 179
+    },
+    {
+      "label": "worker-cycle-1",
+      "at": 129.34,
+      "rss": 171556864,
+      "live_heap_mb": 72.8,
+      "children": 1,
+      "r_connections": 3,
+      "descriptors": 280
+    },
+    {
+      "label": "worker-cycle-2",
+      "at": 131.2,
+      "rss": 168415232,
+      "live_heap_mb": 72.8,
+      "children": 1,
+      "r_connections": 3,
+      "descriptors": 286
+    },
+    {
+      "label": "worker-cycle-3",
+      "at": 133.15,
+      "rss": 169308160,
+      "live_heap_mb": 72.8,
+      "children": 1,
+      "r_connections": 3,
+      "descriptors": 285
+    },
+    {
+      "label": "worker-cycle-4",
+      "at": 135.06,
+      "rss": 168640512,
+      "live_heap_mb": 72.8,
+      "children": 1,
+      "r_connections": 3,
+      "descriptors": 287
+    },
+    {
+      "label": "worker-cycle-5",
+      "at": 136.95,
+      "rss": 169299968,
+      "live_heap_mb": 72.8,
+      "children": 1,
+      "r_connections": 3,
+      "descriptors": 289
+    },
+    {
+      "label": "final",
+      "at": 137.92,
+      "rss": 168386560,
+      "live_heap_mb": 72.7,
+      "children": 1,
+      "r_connections": 3,
+      "descriptors": 289
+    }
+  ],
+  "worker_final": [
+    {
+      "closed": true,
+      "pool": {
+        "pool_id": "termr-32040-file7d283a191c81-1793469495856257",
+        "closed": true,
+        "workers": 1,
+        "pending": 0,
+        "max_pending": 8,
+        "counters": {
+          "submitted": 1,
+          "completed": 1,
+          "failed": 0,
+          "cancelled": 0,
+          "timed_out": 0,
+          "progress": 4
+        },
+        "history": 7,
+        "invalid_progress": 0,
+        "late_progress": 0,
+        "backend": null
+      },
+      "transport": {
+        "state": "closed",
+        "source_id": "p32040-1793469496545135-file7d28801584",
+        "sequence": 4,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": null,
+        "needs_sync": false,
+        "pending": 0
+      },
+      "retained_events": 7,
+      "subscriptions": 0
+    },
+    {
+      "closed": true,
+      "pool": {
+        "pool_id": "termr-32040-file7d287a0f495b-1793469497813243",
+        "closed": true,
+        "workers": 1,
+        "pending": 0,
+        "max_pending": 8,
+        "counters": {
+          "submitted": 1,
+          "completed": 1,
+          "failed": 0,
+          "cancelled": 0,
+          "timed_out": 0,
+          "progress": 3
+        },
+        "history": 6,
+        "invalid_progress": 0,
+        "late_progress": 0,
+        "backend": null
+      },
+      "transport": {
+        "state": "closed",
+        "source_id": "p32040-1793469498423150-file7d2814a014a8",
+        "sequence": 3,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": null,
+        "needs_sync": false,
+        "pending": 0
+      },
+      "retained_events": 6,
+      "subscriptions": 0
+    },
+    {
+      "closed": true,
+      "pool": {
+        "pool_id": "termr-32040-file7d2818d52c34-1793469499760852",
+        "closed": true,
+        "workers": 1,
+        "pending": 0,
+        "max_pending": 8,
+        "counters": {
+          "submitted": 1,
+          "completed": 1,
+          "failed": 0,
+          "cancelled": 0,
+          "timed_out": 0,
+          "progress": 3
+        },
+        "history": 6,
+        "invalid_progress": 0,
+        "late_progress": 0,
+        "backend": null
+      },
+      "transport": {
+        "state": "closed",
+        "source_id": "p32040-1793469500370503-file7d2847fe7608",
+        "sequence": 4,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": null,
+        "needs_sync": false,
+        "pending": 0
+      },
+      "retained_events": 6,
+      "subscriptions": 0
+    },
+    {
+      "closed": true,
+      "pool": {
+        "pool_id": "termr-32040-file7d2865064e68-1793469501699713",
+        "closed": true,
+        "workers": 1,
+        "pending": 0,
+        "max_pending": 8,
+        "counters": {
+          "submitted": 1,
+          "completed": 1,
+          "failed": 0,
+          "cancelled": 0,
+          "timed_out": 0,
+          "progress": 3
+        },
+        "history": 6,
+        "invalid_progress": 0,
+        "late_progress": 0,
+        "backend": null
+      },
+      "transport": {
+        "state": "closed",
+        "source_id": "p32040-1793469502252492-file7d285f7167cf",
+        "sequence": 4,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": null,
+        "needs_sync": false,
+        "pending": 0
+      },
+      "retained_events": 6,
+      "subscriptions": 0
+    },
+    {
+      "closed": true,
+      "pool": {
+        "pool_id": "termr-32040-file7d281e1553ce-1793469503543628",
+        "closed": true,
+        "workers": 1,
+        "pending": 0,
+        "max_pending": 8,
+        "counters": {
+          "submitted": 1,
+          "completed": 1,
+          "failed": 0,
+          "cancelled": 0,
+          "timed_out": 0,
+          "progress": 3
+        },
+        "history": 6,
+        "invalid_progress": 0,
+        "late_progress": 0,
+        "backend": null
+      },
+      "transport": {
+        "state": "closed",
+        "source_id": "p32040-1793469504144870-file7d287b697a5b",
+        "sequence": 4,
+        "gaps": 0,
+        "invalid": 0,
+        "resyncs": 1,
+        "last_error": null,
+        "needs_sync": false,
+        "pending": 0
+      },
+      "retained_events": 6,
+      "subscriptions": 0
+    }
+  ],
+  "limits": ["Short controlled run, not an H4 soak test", "App private timers/cache/callback registry not inspected", "No database connections created; R connection/OS descriptor counts are observable proxies"]
+}

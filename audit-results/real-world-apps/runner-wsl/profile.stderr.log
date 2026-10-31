@@ -1,0 +1,14 @@
+Loading required package: shiny
+Error in .subset2(x, "impl")$getOutput(name) : 
+  The test referenced an output that hasn't been defined yet: output$rows
+Calls: tryCatch ... <Anonymous> -> .External2 -> $ -> $.shinyoutput -> <Anonymous>
+In addition: Warning messages:
+1: In Rprof(file, interval = 0.005, memory.profiling = TRUE) :
+  interval too short for this platform, using '0.010000'
+2: In Rprof(file, interval = 0.005, memory.profiling = TRUE) :
+  interval too short for this platform, using '0.010000'
+3: In Rprof(file, interval = 0.005, memory.profiling = TRUE) :
+  interval too short for this platform, using '0.010000'
+4: In Rprof(file, interval = 0.005, memory.profiling = TRUE) :
+  interval too short for this platform, using '0.010000'
+Execution halted

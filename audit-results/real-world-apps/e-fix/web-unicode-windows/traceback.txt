@@ -1,0 +1,18 @@
+[[1]]
+phase_e_main()
+
+[[2]]
+source(file.path("integration-apps", file, "app.R"), local = .GlobalEnv, 
+    encoding = "UTF-8")
+
+[[3]]
+(function () 
+{
+    target <- Sys.getenv("TERMR_E_RUNTIME", "")
+    if (nzchar(target)) 
+        writeLines(capture.output(sys.calls()), file.path(dirname(target), 
+            "traceback.txt"))
+    .efix_record_runtime("error")
+    quit(save = "no", status = 1L, runLast = FALSE)
+})()
+

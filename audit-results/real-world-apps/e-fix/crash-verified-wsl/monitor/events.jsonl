@@ -1,0 +1,4 @@
+{"event":"monitor","at":1.505,"pending":0,"completed":0,"failed":0,"connection":"connecting","transport_sequence":0} 
+{"event":"ready","at":1.511,"app":"monitor"} 
+{"event":"monitor","at":1.583,"pending":0,"completed":0,"failed":0,"connection":"connecting","transport_sequence":0} 
+{"event":"monitor","at":1.645,"pending":0,"completed":0,"failed":0,"connection":"live","transport_sequence":3} 

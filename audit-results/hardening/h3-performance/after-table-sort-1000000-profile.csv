@@ -1,0 +1,9 @@
+"","total.time","total.pct","self.time","self.pct"
+"""measure""",0.05,100,0,0
+"""system.time""",0.05,100,0,0
+"""unname""",0.05,100,0,0
+"""gc""",0.045,90,0.045,90
+"""private$set_view""",0.005,10,0.005,10
+"""private$apply_sort""",0.005,10,0,0
+"""run""",0.005,10,0,0
+"""t$sort""",0.005,10,0,0

@@ -1,0 +1,27 @@
+Benchmark 1: showcase
+  Time (mean ± σ):      2.610 s ±  0.179 s    [User: 1.266 s, System: 0.141 s]
+  Range (min … max):    2.401 s …  2.822 s    5 runs
+ 
+Benchmark 2: analytics
+  Time (mean ± σ):      1.218 s ±  0.188 s    [User: 0.709 s, System: 0.087 s]
+  Range (min … max):    1.034 s …  1.502 s    5 runs
+ 
+Benchmark 3: monitor
+  Time (mean ± σ):      1.875 s ±  0.123 s    [User: 0.822 s, System: 0.125 s]
+  Range (min … max):    1.740 s …  2.051 s    5 runs
+ 
+Benchmark 4: rtop-baseline
+  Time (mean ± σ):      2.737 s ±  0.232 s    [User: 2.400 s, System: 0.066 s]
+  Range (min … max):    2.467 s …  3.063 s    5 runs
+ 
+Benchmark 5: rtop-candidate
+  Time (mean ± σ):      2.833 s ±  0.027 s    [User: 2.529 s, System: 0.067 s]
+  Range (min … max):    2.805 s …  2.867 s    5 runs
+ 
+Summary
+  analytics ran
+    1.54 ± 0.26 times faster than monitor
+    2.14 ± 0.36 times faster than showcase
+    2.25 ± 0.40 times faster than rtop-baseline
+    2.33 ± 0.36 times faster than rtop-candidate
+

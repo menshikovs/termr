@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "browser": "156.0.8078.74",
+  "checks": [
+    {
+      "case": "reactive-update",
+      "status": "PASS",
+      "expected": 61.66325481635975,
+      "actual": 61.66325481635975
+    },
+    {
+      "case": "source-reset",
+      "status": "PASS"
+    },
+    {
+      "case": "empty",
+      "status": "PASS"
+    },
+    {
+      "case": "NA-NaN-gap",
+      "status": "PASS"
+    },
+    {
+      "case": "stable-widget-and-ggplot",
+      "status": "PASS"
+    }
+  ],
+  "page_errors": [],
+  "closed_sessions": 4
+}

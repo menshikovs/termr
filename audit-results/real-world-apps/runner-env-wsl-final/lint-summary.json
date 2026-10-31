@@ -1,0 +1,24 @@
+{
+  "files": 35,
+  "findings": 4196,
+  "by_linter": {
+    "brace_linter": 154,
+    "commas_linter": 542,
+    "indentation_linter": 197,
+    "infix_spaces_linter": 445,
+    "line_length_linter": 1216,
+    "object_length_linter": 1,
+    "object_name_linter": 4,
+    "object_usage_linter": 2,
+    "paren_body_linter": 68,
+    "quotes_linter": 1248,
+    "semicolon_linter": 255,
+    "spaces_left_parentheses_linter": 64
+  },
+  "by_scope": {
+    "Phase E application/tool": 3175,
+    "pre-existing core (unchanged)": 1021
+  },
+  "errors": 0,
+  "policy": "Default lintr style findings retained; no mass-formatting of prior user changes."
+}

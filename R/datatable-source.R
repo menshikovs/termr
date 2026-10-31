@@ -75,3 +75,22 @@ table_source <- function(row_count, column_names, get_rows, sort = NULL,
 
 is_table_source <- function(x) inherits(x, "termr_table_source")
 
+table_source_type_signature <- function(x) {
+  prototype <- table_slice(x, integer())
+  attributes <- attributes(prototype)
+  attributes$names <- NULL
+  if (inherits(prototype, "sfc")) {
+    # These two geometry attributes describe the current slice's contents,
+    # not its geometry type or CRS.
+    attributes$bbox <- NULL
+    attributes$n_empty <- NULL
+  }
+  slots <- if (isS4(prototype)) {
+    slot_names <- methods::slotNames(prototype)
+    stats::setNames(lapply(slot_names, function(name) methods::slot(prototype, name)), slot_names)
+  } else {
+    NULL
+  }
+  list(typeof = typeof(prototype), attributes = attributes, slots = slots)
+}
+

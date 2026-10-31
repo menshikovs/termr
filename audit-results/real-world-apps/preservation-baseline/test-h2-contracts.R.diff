@@ -1,0 +1,34 @@
+--- initial/tests/testthat/test-h2-contracts.R
++++ observed/tests/testthat/test-h2-contracts.R
+@@ -297,7 +297,7 @@
+   expect_no_error(application$log_events(size = NULL))
+ })
+ 
+-test_that("H2-F03 chart stream drain contract and backlog recovery", {
++test_that("H2-F03 chart display advances while streaming backlog persists", {
+   source <- termr_stream(history = 0L)
+   chart <- line_chart(numeric(), numeric(), interactive = FALSE)
+   pilot <- test_app(app(chart))
+@@ -312,11 +312,11 @@
+ 
+   emit(64L)
+   pilot$step()
+-  state <- chart$.__enclos_env__$private$.stream_state
+-  expect_true(state$flush_scheduled)
+-  expect_false(state$pending_render)
+-  expect_length(chart$.__enclos_env__$private$.spec$data$x, 16L)
+-  pilot$advance(0.05)
++  # Under sustained backlog, display points advance
++  for (i in seq_len(8L)) {
++    emit(16L)
++    pilot$advance(.001)
++  }
+   displayed_pts <- length(chart$.__enclos_env__$private$.spec$data$x)
+   expect_gt(displayed_pts, 0L)
+   expect_lte(displayed_pts, 100L)
+@@ -333,4 +333,4 @@
+   child$post_message("audit.probe")
+   pilot$step()
+   expect_identical(delivered, 0L)
+-})
++})

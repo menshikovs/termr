@@ -1,0 +1,93 @@
+datatable-haven: .123.....4.56789.ab.....................................................................................................
+
+══ Failed ══════════════════════════════════════════════════════════════════════
+── 1. Failure ('test-datatable-haven.R:11:3'): labelled metadata exposes raw typ
+Expected `info$base_type[[1L]]` to be identical to "integer".
+Differences:
+`actual` is NULL
+`expected` is a character vector ('integer')
+
+
+── 2. Failure ('test-datatable-haven.R:12:3'): labelled metadata exposes raw typ
+Expected `info$variable_label[[1L]]` to be identical to "Participant sex".
+Differences:
+`actual` is NULL
+`expected` is a character vector ('Participant sex')
+
+
+── 3. Failure ('test-datatable-haven.R:13:3'): labelled metadata exposes raw typ
+Expected `info$value_labels[[1L]]` to be identical to `attr(source, "labels")`.
+Differences:
+`actual` is NULL
+`expected` is an integer vector (1, 2)
+
+
+── 4. Failure ('test-datatable-haven.R:19:3'): labelled metadata exposes raw typ
+Expected `info$editable[[1L]]` to be TRUE.
+Differences:
+`actual`:   FALSE
+`expected`: TRUE 
+
+
+── 5. Error ('test-datatable-haven.R:31:3'): raw and label display modes both re
+Error in `table_format_values(source, label_mode = "raw")`: unused argument (label_mode = "raw")
+Backtrace:
+    ▆
+ 1. └─testthat::expect_identical(...) at test-datatable-haven.R:31:3
+ 2.   └─testthat::quasi_label(enquo(object), label)
+ 3.     └─rlang::eval_bare(expr, quo_get_env(quo))
+
+── 6. Error ('test-datatable-haven.R:52:3'): integer, double and character label
+Error in `column(label_mode = "labels")`: unused argument (label_mode = "labels")
+Backtrace:
+    ▆
+ 1. └─termr::data_table(...) at test-datatable-haven.R:52:3
+ 2.   └─DataTable$new(...) at r_textualize/R/widget-datatable.R:2170:3
+ 3.     └─termr (local) initialize(...)
+ 4.       └─termr:::check_named_list(columns, "columns") at r_textualize/R/widget-datatable.R:165:7
+
+── 7. Error ('test-datatable-haven.R:85:3'): tagged NA tags, ordinary NA and NaN
+Error in `table_format_values(tagged, label_mode = "raw")`: unused argument (label_mode = "raw")
+Backtrace:
+    ▆
+ 1. └─testthat::expect_identical(...) at test-datatable-haven.R:85:3
+ 2.   └─testthat::quasi_label(enquo(object), label)
+ 3.     └─rlang::eval_bare(expr, quo_get_env(quo))
+
+── 8. Error ('test-datatable-haven.R:113:3'): SPSS exact and ranged user missing
+Error in `column(label_mode = "labels")`: unused argument (label_mode = "labels")
+Backtrace:
+    ▆
+ 1. └─termr::data_table(...) at test-datatable-haven.R:113:3
+ 2.   └─DataTable$new(...) at r_textualize/R/widget-datatable.R:2170:3
+ 3.     └─termr (local) initialize(...)
+ 4.       └─termr:::check_named_list(columns, "columns") at r_textualize/R/widget-datatable.R:165:7
+
+── 9. Error ('test-datatable-haven.R:147:3'): duplicate labels are rejected and 
+Error: Column "value" is read-only for this type.
+Backtrace:
+    ▆
+ 1. ├─testthat::expect_error(table$set_cell(1L, "value", "Same"), "ambiguous") at test-datatable-haven.R:147:3
+ 2. │ └─testthat:::expect_condition_matching_(...)
+ 3. │   └─testthat:::quasi_capture(...)
+ 4. │     ├─testthat (local) .capture(...)
+ 5. │     │ └─base::withCallingHandlers(...)
+ 6. │     └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
+ 7. └─table$set_cell(1L, "value", "Same")
+
+── 10. Failure ('test-datatable-haven.R:168:3'): empty, long and Unicode labelle
+Expected `empty_table$column_info()$value_labels[[1L]]` to be identical to `attr(empty, "labels")`.
+Differences:
+`actual` is NULL
+`expected` is an integer vector (1)
+
+  ... and 1 more
+
+
+Maximum number of 10 failures reached, some test results may be missing.
+
+══ DONE ════════════════════════════════════════════════════════════════════════
+Frustration is a natural part of programming :)
+Error:
+! Test failures.
+Execution halted

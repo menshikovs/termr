@@ -1,0 +1,14 @@
+During startup - Warning messages:
+1: Setting LC_COLLATE=C.UTF-8 failed 
+2: Setting LC_CTYPE=C.UTF-8 failed 
+3: Setting LC_MONETARY=C.UTF-8 failed 
+4: Setting LC_TIME=C.UTF-8 failed 
+Error in source(file.path("integration-apps", file, "app.R"), local = .GlobalEnv,  : 
+  integration-apps/02-shiny-visual-analytics/app.R:14:65: unexpected INCOMPLETE_STRING
+13:       ram = if (invalid) NA_real_ else 55 + offset + 4 * cos(state$sequence / 5),
+14:       empty = state$empty, label = if (state$source == 'alpha') '
+                                                                    ^
+Calls: phase_e_main -> source
+In addition: Warning message:
+In source(file.path("integration-apps", file, "app.R"), local = .GlobalEnv,  :
+  invalid input found on input connection 'integration-apps/02-shiny-visual-analytics/app.R'

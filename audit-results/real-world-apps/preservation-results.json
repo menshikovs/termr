@@ -1,0 +1,52 @@
+{
+  "status": "VERIFIED_WITH_OBSERVED_TEST_CHANGES",
+  "initial_files": 568,
+  "preserved_unchanged": 564,
+  "intentional_existing_change": [
+    ".Rbuildignore"
+  ],
+  "observed_test_changes": [
+    {
+      "file": "tests/testthat/test-h2-adversarial-security.R",
+      "initial_sha256": "3ddd9fa9c7a36c368c2c349fd4622bcb251f4e9219ae1a6d248b1151356e76dd",
+      "current_sha256": "f601b77927353c55345983a7a437a12a8de75743676c4c1280e35164535266cb",
+      "newline_only": true,
+      "action": "Current file retained. Origin not established; initial bytes and diff archived."
+    },
+    {
+      "file": "tests/testthat/test-h2-contracts.R",
+      "initial_sha256": "1d38abb1e092e52ba7c595fc93f064ce735fec60c13f200180ddf56a98b5eeee",
+      "current_sha256": "2ec77e12966e6c8b14e73990756240e048fed0e7b1922f3d7a61ef6042552115",
+      "newline_only": false,
+      "action": "Current file retained. Origin not established; initial bytes and diff archived."
+    },
+    {
+      "file": "tests/testthat/test-h2-state-machine.R",
+      "initial_sha256": "e37f71c8787694b90ff87f5fcfa674c87f3ad1cc82c6d1270f8b16e1b7702ff7",
+      "current_sha256": "a753b08dd51f12401adbef6d5364793f63c3afb607efabff3f2cd1db90a6ac78",
+      "newline_only": true,
+      "action": "Current file retained. Origin not established; initial bytes and diff archived."
+    }
+  ],
+  "head": "1b10370d1df50e54a63706673b150feaf7b04889",
+  "branch": "2.0-termr",
+  "upstream_clean": true,
+  "archives": [
+    {
+      "platform": "windows",
+      "sha256": "9162b568d39ccbd934879120361fef20822f785dda3b7db61eab44d4e920a34e",
+      "entries": 443,
+      "verified_source_files": 374,
+      "application_runtime_excluded": true
+    },
+    {
+      "platform": "wsl",
+      "sha256": "47c45a641f4aaded596b59ee202d43c4ea38d6420e58314f16dc8cca97064bea",
+      "entries": 443,
+      "verified_source_files": 374,
+      "application_runtime_excluded": true
+    }
+  ],
+  "installed_candidate_archive_r_files_verified": 105,
+  "public_api_and_core_unchanged": true
+}

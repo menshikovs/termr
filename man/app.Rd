@@ -13,7 +13,8 @@ app(
   stylesheet = NULL,
   theme = "default",
   debug = FALSE,
-  reduce_motion = NULL
+  reduce_motion = NULL,
+  inkr_stylesheet = NULL
 )
 }
 \arguments{
@@ -40,6 +41,10 @@ last event, repaint statistics)?}
 
 \item{reduce_motion}{Turn decorative animation off? \code{NULL} follows
 \code{\link[=motion_reduced]{motion_reduced()}}.}
+
+\item{inkr_stylesheet}{Optional inkr stylesheet text, a local file path, an
+inkr parsed AST, or an \code{ink_compiled_stylesheet}. Requires the optional
+package \code{inkr}; see \code{App$set_inkr_stylesheet()}.}
 }
 \value{
 An \link{App}. Start it with \code{\link[=run]{run()}}.

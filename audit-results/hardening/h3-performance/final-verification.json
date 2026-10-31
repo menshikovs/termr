@@ -1,0 +1,103 @@
+{
+  "status": {
+    "final-validation-ring\\focused-windows.exit": "0",
+    "final-validation-ring\\focused-wsl.exit": "0",
+    "final-validation-ring\\optional-free-windows.exit": "0",
+    "final-validation-ring\\optional-free-wsl.exit": "0",
+    "final-validation-ring\\full-windows.exit": "0",
+    "final-validation-ring\\full-wsl.exit": "0",
+    "final-validation-ring\\build-windows.exit": "0",
+    "final-validation-ring\\build-wsl.exit": "0",
+    "final-validation-ring\\check-windows.exit": "0",
+    "final-validation-ring\\check-wsl.exit": "0",
+    "final-validation-ring\\inventory-wsl.exit": "0",
+    "final-validation-ring\\resource-cycles-wsl.exit": "0",
+    "final-validation-ring\\pty-fixture-wsl-final.exit": "0",
+    "final-validation-ring\\pty-full-wsl.exit": "0",
+    "final-validation-ring\\pty-combined-wsl-repeat-1.exit": "0",
+    "final-validation-ring\\pty-combined-wsl-repeat-2.exit": "0",
+    "final-validation-ring\\pty-binary-wsl.exit": "0",
+    "h1-h2-baseline.exit": "0",
+    "before-core.exit": "0",
+    "after-core.exit": "0",
+    "before-broad.exit": "0",
+    "after-broad.exit": "0",
+    "before-events-profile.exit": "0",
+    "after-events.exit": "0",
+    "before-extra.exit": "0",
+    "after-extra.exit": "0",
+    "before-components.exit": "0",
+    "after-components.exit": "0",
+    "before-memory.exit": "0",
+    "after-memory.exit": "0",
+    "resource-cycles-windows.exit": "0",
+    "trace-copies.exit": "0",
+    "after-stream.exit": "0",
+    "paired-bridge.exit": "0",
+    "before-granular.exit": "0",
+    "after-granular.exit": "0",
+    "queue-lifetime-before-ring.exit": "0",
+    "queue-lifetime-after-ring.exit": "0",
+    "git-diff-check.exit": "0"
+  },
+  "datasets": {
+    "before-core.csv": {
+      "rows": 63,
+      "scenarios": 21
+    },
+    "before-broad.csv": {
+      "rows": 156,
+      "scenarios": 52
+    },
+    "before-events.csv": {
+      "rows": 18,
+      "scenarios": 6
+    },
+    "before-extra.csv": {
+      "rows": 93,
+      "scenarios": 31
+    },
+    "before-granular.csv": {
+      "rows": 30,
+      "scenarios": 10
+    },
+    "after-core.csv": {
+      "rows": 63,
+      "scenarios": 21
+    },
+    "after-broad.csv": {
+      "rows": 156,
+      "scenarios": 52
+    },
+    "after-events.csv": {
+      "rows": 18,
+      "scenarios": 6
+    },
+    "after-extra.csv": {
+      "rows": 93,
+      "scenarios": 31
+    },
+    "after-granular.csv": {
+      "rows": 30,
+      "scenarios": 10
+    }
+  },
+  "head_unchanged": true,
+  "branch": "2.0-termr",
+  "archives_verified": true,
+  "preservation": {
+    "initial_files": 567,
+    "unchanged": 559,
+    "permitted_changes": [
+      "docs/charts.md",
+      "docs/inkr-integration.md",
+      "R/app.R",
+      "R/chart-widget.R",
+      "R/event-queue.R",
+      "R/inkr-integration.R",
+      "tests/testthat/test-chart-streams.R",
+      "tests/testthat/test-h2-contracts.R"
+    ],
+    "unexpected": []
+  }
+}

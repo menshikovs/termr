@@ -1,0 +1,5 @@
+"","total.time","total.pct","self.time","self.pct"
+"""gc""",0.03,100,0.03,100
+"""measure""",0.03,100,0,0
+"""system.time""",0.03,100,0,0
+"""unname""",0.03,100,0,0

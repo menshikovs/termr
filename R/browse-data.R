@@ -35,8 +35,9 @@ data_browser <- function(data, title = deparse(substitute(data)), ...) {
   force(title)
   data <- as_table_data(data)
   title <- paste(title, collapse = " ")
-  n_missing <- sum(vapply(data, function(col) sum(is.na(col)), numeric(1)))
+  n_missing <- sum(vapply(data, function(col) sum(table_missing_mask(col)), numeric(1)))
   table <- data_table(data, id = "table", cursor = "cell", zebra = TRUE, ...)
+  active_geometry <- if (inherits(data, "sf")) attr(data, "sf_column", exact = TRUE) else NULL
   sort_state <- new.env()
   sort_state$column <- NULL
   sort_state$decreasing <- FALSE
@@ -48,7 +49,8 @@ data_browser <- function(data, title = deparse(substitute(data)), ...) {
   show_column <- function(app) {
     j <- table$cursor_column
     if (j < 1L) return(invisible())
-    info$data <- column_summary(data[[j]], names(data)[[j]])
+    name <- names(data)[[j]]
+    info$data <- column_summary(data[[j]], name, geometry_active = identical(name, active_geometry))
     app$query_one("#info-panel")$set(border_title = names(data)[[j]])
   }
   show_status <- function(app) {
@@ -105,7 +107,15 @@ data_browser <- function(data, title = deparse(substitute(data)), ...) {
     on("datatable.cell_selected", "#table", function(event, app) show_column(app)),
     on("datatable.row_activated", "#table", function(event, app) {
       row <- event$data$row
-      values <- lapply(data[row, , drop = FALSE], function(v) format_metric(v))
+      row_data <- data[row, , drop = FALSE]
+      values <- lapply(row_data, function(v) format_metric(v))
+      for (name in names(row_data)) {
+        if (table_type_handler(row_data[[name]])$id == "sfc") {
+          details <- table_geometry_details(row_data[[name]])
+          names(details) <- paste(name, names(details))
+          values <- c(values, details)
+        }
+      }
       app$push_screen(modal(key_value(values), title = paste("Row", row), width = 60))
     }),
     on("input.submitted", "#search", function(event, app) {
@@ -129,24 +139,56 @@ data_browser <- function(data, title = deparse(substitute(data)), ...) {
 search_rows <- function(data, query) {
   query <- trimws(query)
   if (!nzchar(query)) return(NULL)
+  if (nrow(data) == 0L) return(integer())
   q <- tolower(query)
   hit <- rep(FALSE, nrow(data))
+  chunk_size <- 5000L
   for (col in data) {
-    text <- if (is.factor(col)) as.character(col) else format(col, trim = TRUE)
-    hit <- hit | grepl(q, tolower(text), fixed = TRUE)
+    for (start in seq.int(1L, nrow(data), by = chunk_size)) {
+      rows <- seq.int(start, min(nrow(data), start + chunk_size - 1L))
+      text <- table_format_values(table_slice(col, rows))
+      hit[rows] <- hit[rows] | grepl(q, tolower(text), fixed = TRUE)
+    }
   }
   which(hit)
 }
 
-column_summary <- function(x, name) {
+column_summary <- function(x, name, geometry_active = FALSE) {
   out <- list(
     Type = paste(class(x), collapse = "/"),
-    Missing = sum(is.na(x)),
-    Unique = length(unique(x))
+    Missing = sum(table_missing_mask(x)),
+    Unique = if (is.list(x) || is.raw(x)) NA_integer_ else length(unique(x))
   )
-  if (is.numeric(x) && any(!is.na(x))) {
+  if (inherits(x, "sfc")) {
+    geometry <- table_geometry_metadata(x, active = geometry_active)
+    out[["Geometry type"]] <- geometry$geometry_type
+    out[["CRS"]] <- geometry$crs_label
+    out[["Dimensions"]] <- if (nzchar(geometry$dimensions)) geometry$dimensions else "Unknown"
+    out[["Geometry role"]] <- if (geometry$active) "Active" else "Additional"
+    out[["Precision"]] <- geometry$precision
+    bbox <- geometry$bbox
+    if (is.numeric(bbox) && length(bbox) && all(is.finite(bbox))) {
+      out[["Bounding box"]] <- paste(
+        paste(names(bbox), format(as.numeric(bbox), trim = TRUE)),
+        collapse = ", "
+      )
+    } else {
+      out[["Bounding box"]] <- "Unavailable"
+    }
+    out[["Summary"]] <- "Geometries are read-only; cells show bounded previews."
+  } else if (inherits(x, "integer64") && requireNamespace("bit64", quietly = TRUE)) {
+    counts <- sort(table(as.character(x), useNA = "no"), decreasing = TRUE)
+    for (k in seq_along(utils::head(counts, 3L))) {
+      top <- utils::head(counts, 3L)
+      out[[paste0("Top ", k)]] <- sprintf("%s (%d)", names(top)[[k]], top[[k]])
+    }
+  } else if (is.numeric(x) && !inherits(x, "integer64") && any(!table_missing_mask(x))) {
     q <- stats_quantiles(x)
     out <- c(out, list(Min = q[[1]], Median = q[[2]], Mean = mean(x, na.rm = TRUE), Max = q[[3]]))
+  } else if (is.raw(x) || inherits(x, "blob")) {
+    out$Summary <- "Binary values are shown as bounded hexadecimal previews."
+  } else if (is.list(x)) {
+    out$Summary <- "List values are summarized per cell and remain read-only."
   } else if (length(x)) {
     counts <- sort(table(x, useNA = "no"), decreasing = TRUE)
     top <- utils::head(counts, 3)

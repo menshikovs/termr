@@ -1,0 +1,53 @@
+[1] TRUE
+                package available version
+R6                   R6      TRUE   2.6.1
+processx       processx      TRUE   3.9.0
+ps                   ps      TRUE   1.9.3
+testthat       testthat      TRUE   3.3.2
+pkgload         pkgload      TRUE   1.5.3
+inkr               inkr      TRUE   0.1.0
+mirai             mirai      TRUE   2.7.3
+nanonext       nanonext      TRUE  1.10.4
+jsonlite       jsonlite      TRUE   2.0.0
+shiny             shiny      TRUE  1.10.0
+ggplot2         ggplot2      TRUE   4.0.2
+plotly           plotly      TRUE  4.10.4
+htmlwidgets htmlwidgets      TRUE   1.6.4
+covr               covr      TRUE   3.6.5
+lintr             lintr      TRUE 3.3.0.1
+profvis         profvis      TRUE   0.4.0
+bit64             bit64      TRUE 4.6.0.1
+units             units      TRUE   1.0.0
+haven             haven      TRUE   2.5.5
+vctrs             vctrs      TRUE   0.7.2
+DBI                 DBI      TRUE   1.2.3
+RSQLite         RSQLite      TRUE   2.4.6
+                                                                               library
+R6                                  /home/user001/R/x86_64-pc-linux-gnu-library/4.5/R6
+processx                      /home/user001/R/x86_64-pc-linux-gnu-library/4.5/processx
+ps                                  /home/user001/R/x86_64-pc-linux-gnu-library/4.5/ps
+testthat                      /home/user001/R/x86_64-pc-linux-gnu-library/4.5/testthat
+pkgload                        /home/user001/R/x86_64-pc-linux-gnu-library/4.5/pkgload
+inkr            /mnt/c/programming_pj/r_textualize/integration-apps/.deps/R-linux/inkr
+mirai          /mnt/c/programming_pj/r_textualize/integration-apps/.deps/R-linux/mirai
+nanonext    /mnt/c/programming_pj/r_textualize/integration-apps/.deps/R-linux/nanonext
+jsonlite                      /home/user001/R/x86_64-pc-linux-gnu-library/4.5/jsonlite
+shiny                                                    /usr/lib/R/site-library/shiny
+ggplot2                                                /usr/lib/R/site-library/ggplot2
+plotly                                                  /usr/lib/R/site-library/plotly
+htmlwidgets                                        /usr/lib/R/site-library/htmlwidgets
+covr                                                      /usr/lib/R/site-library/covr
+lintr                                                    /usr/lib/R/site-library/lintr
+profvis                                                /usr/lib/R/site-library/profvis
+bit64                                                    /usr/lib/R/site-library/bit64
+units                                                    /usr/lib/R/site-library/units
+haven                                                    /usr/lib/R/site-library/haven
+vctrs                                                    /usr/lib/R/site-library/vctrs
+DBI                                                        /usr/lib/R/site-library/DBI
+RSQLite                                                /usr/lib/R/site-library/RSQLite
+[1] "/usr/lib/R"
+[1] "/mnt/c/programming_pj/r_textualize/integration-apps/.deps/R-linux"
+[2] "/home/user001/R/x86_64-pc-linux-gnu-library/4.5"                  
+[3] "/usr/local/lib/R/site-library"                                    
+[4] "/usr/lib/R/site-library"                                          
+[5] "/usr/lib/R/library"                                               

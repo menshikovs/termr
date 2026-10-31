@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "seconds": {
+    "app_startup": 3.53,
+    "table_and_events": 7.137,
+    "chart_stream": 5.987,
+    "shiny_updates": 8.698,
+    "mirai_nanonext": 0.946
+  },
+  "interval_seconds": 0.01,
+  "parser_repairs": {
+    "shiny_updates.Rprof": {
+      "parser_error": "values must be length 4,\n but FUN(X[[51]]) result is length 0",
+      "continuations_joined": 12,
+      "derived_file": "shiny_updates-normalized.Rprof",
+      "samples_dropped": 0
+    }
+  },
+  "scope": "Parent-process sampled CPU/allocations; worker compute is not attributed to controller; timings include setup/cleanup"
+}

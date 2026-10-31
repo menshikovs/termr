@@ -1,0 +1,4 @@
+"rows","construction_ms","first_render_ms","first_render_alloc_bytes","scroll_40_down_ms","format_20_visible_cells_100x_ms","edit_cell_ms","edit_cell_alloc_bytes","data_size_bytes"
+100,0,360,27775568,1720,30,2.2,9824,1944
+10000,0,90,25931240,2390,50,4,89024,81144
+100000,0,180,25931240,2520,50,3.8,809024,801144

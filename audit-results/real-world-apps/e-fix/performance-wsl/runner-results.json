@@ -1,0 +1,16 @@
+[
+  {
+    "name": "profile",
+    "seconds": 45.869,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "benchmark",
+    "seconds": 69.201,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  }
+]

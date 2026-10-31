@@ -1,0 +1,53 @@
+{
+  "stage": "exit",
+  "pid": 2704,
+  "R": "R version 4.6.1 (2026-06-24 ucrt)",
+  "command": ["C:\\PROGRA~1\\R\\R-46~1.1\\bin\\x64\\Rterm.exe", "--no-echo", "--no-restore", "--file=integration-apps/run.R", "--args", "--app=analytics", "--mode=web"],
+  "cwd": "C:/programming_pj/r_textualize",
+  "lib_paths": ["C:/programming_pj/r_textualize/integration-apps/.deps/R-windows", "C:/Users/User001/AppData/Local/R/win-library/4.6", "C:/Program Files/R/R-4.6.1/library"],
+  "termr_loaded": true,
+  "packages": [
+    {
+      "package": "termr",
+      "loaded": true,
+      "version": "1.0.1",
+      "namespace_path": "C:/programming_pj/r_textualize"
+    },
+    {
+      "package": "inkr",
+      "loaded": false,
+      "version": null,
+      "namespace_path": null
+    },
+    {
+      "package": "mirai",
+      "loaded": false,
+      "version": null,
+      "namespace_path": null
+    },
+    {
+      "package": "nanonext",
+      "loaded": false,
+      "version": null,
+      "namespace_path": null
+    },
+    {
+      "package": "shiny",
+      "loaded": true,
+      "version": "1.14.0",
+      "namespace_path": "C:/programming_pj/r_textualize/integration-apps/.deps/R-windows/shiny"
+    },
+    {
+      "package": "ggplot2",
+      "loaded": true,
+      "version": "4.0.3",
+      "namespace_path": "C:/programming_pj/r_textualize/integration-apps/.deps/R-windows/ggplot2"
+    },
+    {
+      "package": "plotly",
+      "loaded": true,
+      "version": "4.12.1",
+      "namespace_path": "C:/programming_pj/r_textualize/integration-apps/.deps/R-windows/plotly"
+    }
+  ]
+}

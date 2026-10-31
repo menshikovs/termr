@@ -1,0 +1,21 @@
+{
+  "app": "showcase",
+  "command": "Rscript integration-apps/run.R --app=showcase --mode=terminal",
+  "loader_environment": "TERMR_USE_INSTALLED unset",
+  "platform": "linux",
+  "start": true,
+  "render": true,
+  "interact": true,
+  "status": "PASS",
+  "shutdown": true,
+  "exit_code": 0,
+  "expected_failure": false,
+  "reader_errors": [],
+  "event_log_read_retries": [
+    {
+      "path": "/mnt/c/programming_pj/r_textualize/audit-results/real-world-apps/e-fix/proof-wsl/terminal-gates/showcase/events.jsonl",
+      "errno": 61,
+      "attempt": 1
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+pkgload::load_all('.', quiet = TRUE)
+w <- label('one', classes = 'item')
+root <- vertical(w, classes = 'red')
+a <- app(root, inkr_stylesheet = '.red .item { color: red; } .blue .item { color: blue; }')
+str(termr:::inkr_style_for_widget(a, w))
+root$classes <- 'blue'
+str(termr:::inkr_style_for_widget(a, w))
+a$set_inkr_stylesheet('.item { color: green; }')
+str(termr:::inkr_style_for_widget(a, w))
+testthat::set_max_fails(Inf)
+testthat::test_local('.', filter = 'h3-performance-contracts', reporter = 'summary')

@@ -1,0 +1,4 @@
+warning: in the working copy of 'R/app.R', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'R/database-explorer.R', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'R/sql.R', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'R/style.R', CRLF will be replaced by LF the next time Git touches it

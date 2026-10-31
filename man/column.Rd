@@ -13,7 +13,8 @@ column(
   max_width = NULL,
   visible = TRUE,
   sortable = TRUE,
-  editable = NULL
+  editable = NULL,
+  label_mode = "raw"
 )
 }
 \arguments{
@@ -33,7 +34,12 @@ column(
 \item{sortable}{Can the table be sorted by this column?}
 
 \item{editable}{Can cells be edited (when the table is \code{editable})?
-\code{NULL}: yes for numeric, logical, character, factor and date columns.}
+\code{NULL}: yes for built-in typed adapters; unsupported objects and list
+columns stay read-only.}
+
+\item{label_mode}{How haven labelled values are displayed: \code{"raw"} shows
+stored values; \code{"labels"} shows a matching value label together with its
+raw value in brackets. This never changes the stored vector.}
 }
 \value{
 An object of class \code{termr_column}.

@@ -1,0 +1,11 @@
+"","total.time","total.pct","self.time","self.pct"
+"""measure""",0.025,100,0,0
+"""system.time""",0.025,100,0,0
+"""unname""",0.025,100,0,0
+"""gc""",0.02,80,0.02,80
+"""buffer$put_text""",0.005,20,0.005,20
+"""compose_frame""",0.005,20,0,0
+"""paint_tree""",0.005,20,0,0
+"""render_widget""",0.005,20,0,0
+"""run""",0.005,20,0,0
+"""widget$paint""",0.005,20,0,0

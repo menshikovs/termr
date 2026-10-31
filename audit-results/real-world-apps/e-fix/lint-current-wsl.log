@@ -1,0 +1,2 @@
+RUN lint 
+PASS lint 

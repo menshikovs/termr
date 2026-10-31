@@ -1,0 +1,11 @@
+[
+  {
+    "app": "rtop",
+    "status": "PASS",
+    "ready_ms": 1508.1675420001375,
+    "exit_status": 0,
+    "terminal_restored": true,
+    "events": 11,
+    "recording": "audit-results/real-world-apps/recording-rtop-final/rtop.cast"
+  }
+]

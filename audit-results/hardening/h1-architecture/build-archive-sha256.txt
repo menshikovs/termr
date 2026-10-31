@@ -1,0 +1,8 @@
+﻿
+
+Algorithm : SHA256
+Hash      : B8C61329FD88EBDFD6E03F6D51562984306E9626818D31142B5CAD5718FB7507
+Path      : C:\Users\User001\AppData\Local\Temp\termr-h1-validation\termr_1.0.1.tar.gz
+
+
+

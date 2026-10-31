@@ -1,0 +1,12 @@
+   rows construction_ms first_render_ms first_render_alloc_bytes
+    100               2             189                 27774872
+  10000               3              56                 25931240
+ 100000               2              55                 25931240
+ scroll_40_down_ms format_20_visible_cells_100x_ms edit_cell_ms
+              1074                              14         1.46
+               887                              14         1.50
+               894                              14         1.54
+ edit_cell_alloc_bytes data_size_bytes
+                  9824            1944
+                 89024           81144
+                809024          801144

@@ -23,10 +23,6 @@
 Widget <- R6::R6Class(
   "Widget",
   public = list(
-    #' @field id Unique identifier used by `#id` selectors, or `NULL`.
-    id = NULL,
-    #' @field classes Character vector of classes used by `.class` selectors.
-    classes = character(),
     #' @field help Optional help text (Markdown) shown on the help screen
     #'   (F1) while this widget or a descendant has focus.
     help = NULL,
@@ -51,8 +47,8 @@ Widget <- R6::R6Class(
       private$.handlers <- list()
       private$.bindings <- list()
       private$.actions <- list()
-      self$id <- validate_id(id)
-      self$classes <- parse_classes(classes)
+      private$.id <- validate_id(id)
+      private$.classes <- parse_classes(classes)
       check_flag(disabled)
       check_flag(visible)
       private$.state$disabled <- disabled
@@ -337,16 +333,14 @@ Widget <- R6::R6Class(
     #' @param ... Class names.
     add_class = function(...) {
       self$classes <- union(self$classes, parse_classes(c(...)))
-      bump_epoch()
-      self$invalidate()
+      invisible(self)
     },
 
     #' @description Remove classes.
     #' @param ... Class names.
     remove_class = function(...) {
       self$classes <- setdiff(self$classes, parse_classes(c(...)))
-      bump_epoch()
-      self$invalidate()
+      invisible(self)
     },
 
     #' @description Add a class if absent, remove it if present.
@@ -524,6 +518,9 @@ Widget <- R6::R6Class(
       theme <- NULL
       if (!is.null(app)) {
         st <- merge_styles(st, app$stylesheet_style(self, states))
+        if (!is.null(app$inkr_stylesheet)) {
+          st <- merge_styles(st, inkr_style_for_widget(app, self, states))
+        }
         theme <- app$theme
       }
       st <- merge_styles(st, flatten_style(private$.style, states))
@@ -609,6 +606,31 @@ Widget <- R6::R6Class(
       if (!missing(value)) stop("`type` is read-only.", call. = FALSE)
       class(self)[[1]]
     },
+    #' @field id Unique identifier used by `#id` selectors, or `NULL`.
+    id = function(value) {
+      if (missing(value)) return(private$.id)
+      new <- validate_id(value)
+      if (identical(private$.id, new)) return(invisible(self))
+      root <- widget_root(self)
+      others <- Filter(function(widget) !identical(widget, self), root$walk())
+      if (!is.null(new) && any(vapply(others, function(widget) identical(widget$id, new), logical(1)))) {
+        stop(sprintf("Duplicate widget id \"%s\": another widget in this screen already has it.", new), call. = FALSE)
+      }
+      private$.id <- new
+      bump_epoch()
+      self$invalidate()
+      invisible(self)
+    },
+    #' @field classes Character vector of classes used by `.class` selectors.
+    classes = function(value) {
+      if (missing(value)) return(private$.classes)
+      new <- parse_classes(value)
+      if (identical(private$.classes, new)) return(invisible(self))
+      private$.classes <- new
+      bump_epoch()
+      self$invalidate()
+      invisible(self)
+    },
     #' @field visible Is the widget shown? Hidden widgets take no space.
     visible = function(value) {
       if (missing(value)) return(private$.state$visible)
@@ -662,6 +684,8 @@ Widget <- R6::R6Class(
     .parent = NULL,
     .children = list(),
     .app = NULL,
+    .id = NULL,
+    .classes = character(),
     .state = NULL,
     .style = NULL,
     .default_style = NULL,
@@ -700,7 +724,7 @@ Widget <- R6::R6Class(
     # can have rules for any state, so with one present we say "no".
     same_layout_in = function(a, b) {
       app <- self$app
-      if (!is.null(app) && length(app$stylesheets)) return(FALSE)
+      if (!is.null(app) && (length(app$stylesheets) || !is.null(app$inkr_stylesheet))) return(FALSE)
       sig <- function(states) {
         st <- flatten_style(private$.default_style, states)
         st <- merge_styles(st, flatten_style(private$.style, states))

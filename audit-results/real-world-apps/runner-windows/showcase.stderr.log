@@ -1,0 +1,5 @@
+Error in eval(ei, envir) : 
+  Install the candidate into the project library first.
+Calls: source -> withVisible -> eval -> eval
+Execution halted
+

@@ -1,0 +1,136 @@
+
+R version 4.6.1 (2026-06-24 ucrt) -- "Happy Hop"
+Copyright (C) 2026 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(testthat)
+> library(termr)
+
+Attaching package: 'termr'
+
+The following object is masked from 'package:testthat':
+
+    watch
+
+> 
+> # TERMR_TEST_FILTER restricts the run to matching test files (used by the
+> # dedicated CI worker probe, which runs the bootstrap tests inside R CMD check).
+> filter <- Sys.getenv("TERMR_TEST_FILTER", unset = "")
+> test_check("termr", filter = if (nzchar(filter)) filter)
+structure(list(c(2L, 5L), structure(c(1L, 1L), levels = c("East", "North", "West"), 
+    class = "factor"), c(as.numeric("3.5"), as.numeric("2.75")), structure(c(as.numeric("20728"), 
+    as.numeric("20731")), class = "Date")), names = c("id", "region", "score", "day"), 
+    row.names = c(2L, 5L), class = "data.frame") 
+local({
+    .termr_data <- data
+    .termr_rows <- seq_len(nrow(.termr_data))
+    .termr_rows <- .termr_rows[!is.na(.termr_data[["region"]][.termr_rows]) & .termr_data[["region"]][.termr_rows] == 
+        "East"]
+    .termr_rows <- .termr_rows[order(.termr_data[["score"]][.termr_rows], decreasing = TRUE, 
+        na.last = TRUE, method = "radix")]
+    .termr_rows <- .termr_rows[c(1L, 2L)]
+    .termr_data[.termr_rows, c("id", "region", "score", "day"), drop = FALSE]
+}) 
+local({
+    .termr_data <- data
+    .termr_data[["score"]][[2L]] <- as.numeric("3.75")
+    .termr_data
+}) 
+Bye! You pressed 0 key(s).
+termr worker job shape: fn_env_chain=local>base>empty args_bytes=48 packages_count=0 rds_bytes=31998
+termr worker parent_before_read_rds: termr-job-3b1832d1588e.rds size=31998 object_bytes=2008
+termr worker parent_after_read_rds: termr-job-3b1832d1588e.rds
+[ FAIL 0 | WARN 0 | SKIP 128 | PASS 11470 ]
+
+══ Skipped tests (128) ═════════════════════════════════════════════════════════
+• DBI is not installed (1): 'test-sql.R:130:5'
+• On CRAN (31): 'test-accessibility.R:97:1', 'test-button.R:35:1',
+  'test-datatable.R:15:1', 'test-examples.R:42:1', 'test-examples2.R:6:3',
+  'test-examples2.R:44:3', 'test-grid.R:88:1', 'test-input.R:112:1',
+  'test-lifecycle.R:44:3', 'test-mirai-shutdown.R:2:3',
+  'test-process-view.R:4:3', 'test-process-view.R:24:3',
+  'test-process-view.R:35:3', 'test-process-view.R:52:3',
+  'test-process-view.R:65:3', 'test-treeview.R:26:1',
+  'test-widget-tree.R:64:1', 'test-widget-tree.R:81:1', 'test-workers.R:29:3',
+  'test-workers.R:62:3', 'test-workers2.R:6:3', 'test-workers2.R:40:3',
+  'test-workers2.R:56:3', 'test-workers2.R:74:3', 'test-workers2.R:91:3',
+  'test-workers2.R:106:3', 'test-workers2.R:130:3', 'test-workers2.R:148:3',
+  'test-workers2.R:162:3', 'test-workers2.R:174:3', 'test-workers2.R:219:3'
+• On Windows (1): 'test-terminal-posix.R:2:3'
+• Recipe Markdown is excluded from package builds; run this check from the
+  source checkout. (4): 'test-agent-recipes.R:17:3',
+  'test-agent-recipes.R:26:3', 'test-agent-recipes.R:38:3',
+  'test-agent-recipes.R:53:3'
+• optional typed packages are not installed (1):
+  'test-datatable-reproducible-code.R:221:3'
+• requireNamespace("inkr", quietly = TRUE) is TRUE (1):
+  'test-inkr-integration.R:11:3'
+• {DBI} is not installed (16): 'test-database-explorer.R:2:3',
+  'test-database-explorer.R:17:3', 'test-database-explorer.R:64:3',
+  'test-database-explorer.R:111:3', 'test-datatable-source-query.R:40:3',
+  'test-datatable-source-query.R:73:3', 'test-datatable-source-query.R:101:3',
+  'test-datatable-source-query.R:122:3', 'test-datatable-source-query.R:149:3',
+  'test-datatable-source-query.R:166:3', 'test-datatable-source-query.R:180:3',
+  'test-datatable-source-query.R:201:3', 'test-datatable-source.R:232:3',
+  'test-datatable-source.R:259:3', 'test-extensions-external.R:59:3',
+  'test-sql.R:84:3'
+• {arrow} is not installed (1): 'test-datatable-source-backends.R:14:3'
+• {bit64} is not installed (2): 'test-datatable-reproducible-code.R:179:3',
+  'test-datatable-typed.R:102:3'
+• {blob} is not installed (1): 'test-datatable-binary.R:65:3'
+• {dbplyr} is not installed (1): 'test-datatable-source-backends.R:2:3'
+• {dplyr} is not installed (1): 'test-datatable-typed.R:199:3'
+• {ggplot2} is not installed (1): 'test-plotly-live.R:79:3'
+• {haven} is not installed (11): 'test-datatable-haven.R:2:3',
+  'test-datatable-haven.R:27:3', 'test-datatable-haven.R:44:3',
+  'test-datatable-haven.R:77:3', 'test-datatable-haven.R:108:3',
+  'test-datatable-haven.R:142:3', 'test-datatable-haven.R:164:3',
+  'test-datatable-haven.R:176:3', 'test-datatable-haven.R:188:3',
+  'test-datatable-haven.R:214:3', 'test-datatable-reproducible-code.R:189:3'
+• {hms} is not installed (1): 'test-datatable-typed.R:91:3'
+• {mirai} is not installed (19): 'test-mirai-integration.R:2:3',
+  'test-mirai-integration.R:21:3', 'test-mirai-integration.R:48:3',
+  'test-mirai-integration.R:97:3', 'test-mirai.R:3:3', 'test-mirai.R:26:3',
+  'test-mirai.R:45:3', 'test-mirai.R:66:3', 'test-mirai.R:89:3',
+  'test-mirai.R:111:3', 'test-mirai.R:130:3', 'test-mirai.R:148:3',
+  'test-mirai.R:157:3', 'test-mirai.R:172:3', 'test-mirai.R:182:3',
+  'test-mirai.R:195:3', 'test-mirai.R:212:3', 'test-mirai.R:232:3',
+  'test-mirai.R:249:3'
+• {nanonext} is not installed (7): 'test-nanonext.R:46:3',
+  'test-nanonext.R:61:3', 'test-nanonext.R:90:3', 'test-nanonext.R:126:3',
+  'test-nanonext.R:153:3', 'test-nanonext.R:169:3', 'test-nanonext.R:213:3'
+• {plotly} is not installed (1): 'test-plotly-live.R:54:3'
+• {sf} is not installed (10): 'test-datatable-sf.R:2:3',
+  'test-datatable-sf.R:29:3', 'test-datatable-sf.R:50:3',
+  'test-datatable-sf.R:89:3', 'test-datatable-sf.R:109:3',
+  'test-datatable-sf.R:158:3', 'test-datatable-sf.R:184:3',
+  'test-datatable-sf.R:204:3', 'test-datatable-sf.R:223:3',
+  'test-datatable-sf.R:264:3'
+• {shiny} is not installed (8): 'test-monitor-live.R:137:3',
+  'test-plotly-live.R:90:3', 'test-shiny-process.R:2:3',
+  'test-shiny-streams.R:2:3', 'test-shiny-streams.R:36:3',
+  'test-shiny-streams.R:66:3', 'test-shiny-streams.R:94:3',
+  'test-shiny-streams.R:110:3'
+• {units} is not installed (9): 'test-datatable-reproducible-code.R:210:3',
+  'test-datatable-units.R:2:3', 'test-datatable-units.R:21:3',
+  'test-datatable-units.R:33:3', 'test-datatable-units.R:49:3',
+  'test-datatable-units.R:86:3', 'test-datatable-units.R:103:3',
+  'test-datatable-units.R:136:3', 'test-datatable-units.R:153:3'
+
+[ FAIL 0 | WARN 0 | SKIP 128 | PASS 11470 ]
+> 
+> proc.time()
+   user  system elapsed 
+ 115.57   23.54  144.90 

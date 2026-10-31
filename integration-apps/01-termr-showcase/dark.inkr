@@ -1,0 +1,4 @@
+.heading { color: bright-cyan; text-style: bold; }
+#status { color: cyan; }
+Button:focus { color: black; background: bright-cyan; }
+Button { color: white; }

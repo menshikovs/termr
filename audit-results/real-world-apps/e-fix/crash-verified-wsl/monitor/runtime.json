@@ -1,0 +1,53 @@
+{
+  "stage": "error",
+  "pid": 894,
+  "R": "R version 4.5.2 (2025-10-31)",
+  "command": ["/usr/lib/R/bin/exec/R", "--no-echo", "--no-restore", "--file=integration-apps/run.R", "--args", "--app=monitor", "--mode=terminal", "--scenario=crash"],
+  "cwd": "/mnt/c/programming_pj/r_textualize",
+  "lib_paths": ["/mnt/c/programming_pj/r_textualize/integration-apps/.deps/current-linux", "/mnt/c/programming_pj/r_textualize/integration-apps/.deps/R-linux", "/home/user001/R/x86_64-pc-linux-gnu-library/4.5", "/usr/local/lib/R/site-library", "/usr/lib/R/site-library", "/usr/lib/R/library"],
+  "termr_loaded": true,
+  "packages": [
+    {
+      "package": "termr",
+      "loaded": true,
+      "version": "1.0.1",
+      "namespace_path": "/mnt/c/programming_pj/r_textualize/integration-apps/.deps/current-linux/termr"
+    },
+    {
+      "package": "inkr",
+      "loaded": false,
+      "version": null,
+      "namespace_path": null
+    },
+    {
+      "package": "mirai",
+      "loaded": true,
+      "version": "2.7.3",
+      "namespace_path": "/mnt/c/programming_pj/r_textualize/integration-apps/.deps/R-linux/mirai"
+    },
+    {
+      "package": "nanonext",
+      "loaded": true,
+      "version": "1.10.4",
+      "namespace_path": "/mnt/c/programming_pj/r_textualize/integration-apps/.deps/R-linux/nanonext"
+    },
+    {
+      "package": "shiny",
+      "loaded": false,
+      "version": null,
+      "namespace_path": null
+    },
+    {
+      "package": "ggplot2",
+      "loaded": false,
+      "version": null,
+      "namespace_path": null
+    },
+    {
+      "package": "plotly",
+      "loaded": false,
+      "version": null,
+      "namespace_path": null
+    }
+  ]
+}

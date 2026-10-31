@@ -1,0 +1,5 @@
+{
+  "line_percent": 79.0439,
+  "optional_scope": "normal Linux libraries: excludes project-only inkr/mirai/nanonext",
+  "branch_coverage": "not measured by covr line instrumentation"
+}

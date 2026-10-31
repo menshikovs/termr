@@ -97,6 +97,8 @@ test_app <- function(app, width = 80L, height = 24L, color_mode = "truecolor") {
   Pilot$new(app, width, height, color_mode)
 }
 
+#' Internal headless app pilot
+#' @noRd
 Pilot <- R6::R6Class(
   "Pilot",
   public = list(
@@ -110,8 +112,13 @@ Pilot <- R6::R6Class(
       if (!inherits(app, "App")) stop("`app` must be an app or a widget.", call. = FALSE)
       self$app <- app
       self$driver <- HeadlessDriver$new(width, height, color_mode = color_mode)
+      startup_complete <- FALSE
+      on.exit(if (!startup_complete) {
+        try(private$app_private()$shutdown(), silent = TRUE)
+      }, add = TRUE)
       private$app_private()$start(self$driver)
       private$check_exit()
+      startup_complete <- TRUE
     },
 
     press = function(...) {

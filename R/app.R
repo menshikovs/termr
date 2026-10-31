@@ -45,8 +45,11 @@ App <- R6::R6Class(
     #'   to follow `options(termr.reduce_motion)` / the `TERMR_REDUCE_MOTION`
     #'   environment variable.
     #' @param debug Bind F12 to the debug overlay?
+    #' @param inkr_stylesheet Optional inkr stylesheet text, a local file path,
+    #'   parsed AST or compiled stylesheet. Requires the optional package `inkr`.
     initialize = function(..., bindings = list(), actions = list(), title = NULL, mouse = TRUE,
-                          stylesheet = NULL, theme = "default", debug = FALSE, reduce_motion = NULL) {
+                          stylesheet = NULL, theme = "default", debug = FALSE,
+                          reduce_motion = NULL, inkr_stylesheet = NULL) {
       check_flag(debug)
       if (!is.null(reduce_motion)) check_flag(reduce_motion)
       self$reduce_motion <- reduce_motion
@@ -56,6 +59,7 @@ App <- R6::R6Class(
         sheets <- if (is.list(stylesheet) && !inherits(stylesheet, "termr_stylesheet")) stylesheet else list(stylesheet)
         for (sheet in sheets) self$add_stylesheet(sheet)
       }
+      if (!is.null(inkr_stylesheet)) self$set_inkr_stylesheet(inkr_stylesheet)
       private$.mouse <- mouse
       private$.focus_target_marker <- new.env(parent = emptyenv())
       private$.queue <- EventQueue$new()
@@ -366,6 +370,43 @@ App <- R6::R6Class(
       invisible(self)
     },
 
+    #' @description Set or replace the optional [inkr](https://github.com/menshikovs/inkr)
+    #'   stylesheet. The input can be a file path, stylesheet text, a parsed
+    #'   `ink_stylesheet_ast`, or a compiled `ink_compiled_stylesheet`.
+    #' @param sheet An inkr stylesheet input.
+    set_inkr_stylesheet = function(sheet) {
+      prepared <- prepare_inkr_stylesheet(sheet)
+      private$.inkr_stylesheet <- prepared
+      private$.inkr_generation <- private$.inkr_generation + 1L
+      inkr_clear_widget_caches(self)
+      bump_epoch()
+      self$request_repaint()
+      invisible(self)
+    },
+
+    #' @description Remove the inkr stylesheet from this app.
+    clear_inkr_stylesheet = function() {
+      private$.inkr_stylesheet <- NULL
+      private$.inkr_generation <- private$.inkr_generation + 1L
+      inkr_clear_widget_caches(self)
+      bump_epoch()
+      self$request_repaint()
+      invisible(self)
+    },
+
+    #' @description Explain why an inkr property has its current value for a
+    #'   mounted widget. This calls inkr's public `ink_explain()` API.
+    #' @param widget A widget in this app.
+    #' @param property One of inkr's registered properties.
+    explain_inkr_style = function(widget, property) {
+      if (is.null(private$.inkr_stylesheet)) stop("This app has no inkr stylesheet.", call. = FALSE)
+      if (!is_widget(widget) || !identical(widget$app, self)) {
+        stop("`widget` must belong to this app.", call. = FALSE)
+      }
+      element <- inkr_element_for_widget(widget)
+      inkr_call("ink_explain", private$.inkr_stylesheet, element, property)
+    },
+
     #' @description The merged stylesheet rules that apply to a widget.
     #' @param widget A widget.
     #' @param states Its pseudo states.
@@ -550,6 +591,8 @@ App <- R6::R6Class(
     },
     #' @field stylesheets The stylesheets of the app.
     stylesheets = function(value) if (missing(value)) private$.stylesheets else read_only("stylesheets"),
+    #' @field inkr_stylesheet The current compiled inkr stylesheet, or `NULL`.
+    inkr_stylesheet = function(value) if (missing(value)) private$.inkr_stylesheet else read_only("inkr_stylesheet"),
     #' @field hovered The widget under the mouse pointer, or `NULL`.
     hovered = function(value) if (missing(value)) private$.hovered else read_only("hovered"),
     #' @field size Terminal size: `c(width =, height =)`.
@@ -605,6 +648,11 @@ App <- R6::R6Class(
     .theme = NULL,
     .mono = FALSE,
     .stylesheets = list(),
+    .inkr_stylesheet = NULL,
+    .inkr_generation = 0L,
+    .inkr_cache = new.env(hash = TRUE, parent = emptyenv()),
+    .inkr_cache_order = character(4096L),
+    .inkr_cache_next = 1L,
     .mouse = TRUE,
     .hovered = NULL,
     .mouse_down = NULL,
@@ -1017,6 +1065,7 @@ App <- R6::R6Class(
       if (!is.null(private$.debug) || !is.null(private$.event_log)) private$record_event(event, target)
       path <- if (event$bubbles) c(list(target), target$ancestors()) else list(target)
       for (node in path) {
+        if (!lifecycle_event && !identical(node$app, self)) next
         event$current <- node
         private$deliver(node, event)
         if (event$stopped) return(invisible())
@@ -1070,6 +1119,10 @@ App <- R6::R6Class(
 
     widget_unmounting = function(widget, dispose = TRUE) {
       removed <- widget$walk()
+      if (!is.null(private$.inkr_stylesheet)) {
+        inkr_release_widget_tree(widget)
+        inkr_reset_style_cache(self)
+      }
       if (dispose) {
         for (w in removed) widget_private(w)$cancel_timers()
         for (worker in private$.workers) {
@@ -1092,6 +1145,10 @@ App <- R6::R6Class(
     },
 
     screen_leaving = function(screen) {
+      if (!is.null(private$.inkr_stylesheet)) {
+        inkr_release_widget_tree(screen)
+        inkr_reset_style_cache(self)
+      }
       private$.focus$release(screen)
       private$.focus$lost <- FALSE
       private$.mouse_down <- NULL
@@ -1212,6 +1269,9 @@ default_app_bindings <- function() {
 #' @param mouse Enable mouse input (clicks, wheel, hover)?
 #' @param stylesheet A [stylesheet()], stylesheet text, a file path, or a
 #'   list of them.
+#' @param inkr_stylesheet Optional inkr stylesheet text, a local file path, an
+#'   inkr parsed AST, or an `ink_compiled_stylesheet`. Requires the optional
+#'   package `inkr`; see `App$set_inkr_stylesheet()`.
 #' @param reduce_motion Turn decorative animation off? `NULL` follows
 #'   [motion_reduced()].
 #' @param theme A [termr_theme()] or a built-in theme name (`"default"`,
@@ -1238,9 +1298,11 @@ default_app_bindings <- function() {
 #' )
 #' if (interactive()) run(hello)
 app <- function(..., bindings = list(), actions = list(), title = NULL, mouse = TRUE,
-                stylesheet = NULL, theme = "default", debug = FALSE, reduce_motion = NULL) {
+                stylesheet = NULL, theme = "default", debug = FALSE,
+                reduce_motion = NULL, inkr_stylesheet = NULL) {
   App$new(..., bindings = bindings, actions = actions, title = title, mouse = mouse,
-          stylesheet = stylesheet, theme = theme, debug = debug, reduce_motion = reduce_motion)
+          stylesheet = stylesheet, inkr_stylesheet = inkr_stylesheet, theme = theme,
+          debug = debug, reduce_motion = reduce_motion)
 }
 
 #' Run an application

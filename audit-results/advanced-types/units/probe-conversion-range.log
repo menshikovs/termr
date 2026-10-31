@@ -1,0 +1,10 @@
+udunits database from /usr/share/xml/udunits/udunits2.xml
+ud_convert args:
+function (x, from, to) 
+NULL
+km to m = Inf warnings:  
+[1] Inf
+m to km = 0 warnings:  
+[1] 0
+degF to degC = 3.552714e-14 warnings:  
+[1] 3.552714e-14

@@ -1,0 +1,42 @@
+{"event":"sample","at":1.59,"sequence":1} 
+{"event":"ready","at":1.782,"app":"showcase"} 
+{"event":"key","at":2.061,"key":"f2"} 
+{"event":"status","at":2.14,"message":"iris local/editable columns only"} 
+{"event":"source","at":2.144,"dataset":"iris","lazy":false,"rows":150} 
+{"event":"sample","at":2.406,"sequence":2} 
+{"event":"key","at":2.43,"key":"f11"} 
+{"event":"status","at":2.448,"message":"cars lazy/read-only 10000 rows"} 
+{"event":"source","at":2.455,"dataset":"cars","lazy":true,"rows":10000} 
+{"event":"key","at":2.526,"key":"f4"} 
+{"event":"status","at":2.548,"message":"Theme: light (inkr)"} 
+{"event":"theme","at":2.559,"theme":"light"} 
+{"event":"sample","at":2.677,"sequence":3} 
+{"event":"key","at":2.742,"key":"f11"} 
+{"event":"status","at":2.751,"message":"cars local/editable columns only"} 
+{"event":"source","at":2.754,"dataset":"cars","lazy":false,"rows":32} 
+{"event":"key","at":2.834,"key":"f5"} 
+{"event":"status","at":2.848,"message":"Filtered: 14 rows"} 
+{"event":"filter","at":2.861,"rows":14} 
+{"event":"key","at":2.938,"key":"f6"} 
+{"event":"cell-changed","at":3.148,"row":1,"column":"value","value":12.5} 
+{"event":"sample","at":3.215,"sequence":4} 
+{"event":"key","at":3.22,"key":"f7"} 
+{"event":"select","at":3.239} 
+{"event":"key","at":3.257,"key":"f8"} 
+{"event":"status","at":3.27,"message":"R value exact"} 
+{"event":"copy","at":3.296,"kind":"value","status":"exact"} 
+{"event":"key","at":3.566,"key":"f9"} 
+{"event":"status","at":3.64,"message":"R pipeline exact"} 
+{"event":"copy","at":3.651,"kind":"pipeline","status":"exact"} 
+{"event":"sample","at":3.712,"sequence":5} 
+{"event":"key","at":3.926,"key":"f12"} 
+{"event":"status","at":3.998,"message":"Selected stream point 2"} 
+{"event":"chart-selection","at":4.018,"index":2} 
+{"event":"key","at":4.095,"key":"shift+tab"} 
+{"event":"sample","at":4.152,"sequence":6} 
+{"event":"chart-tab","at":4.157,"index":2} 
+{"event":"chart-tab","at":4.227,"index":3} 
+{"event":"chart-tab","at":4.308,"index":4} 
+{"event":"chart-tab","at":4.375,"index":5} 
+{"event":"key","at":4.445,"key":"q"} 
+{"event":"stopped","at":4.47,"app":"showcase","dataset":"cars","rows":13,"samples":6,"subscribers":0,"closed":true} 

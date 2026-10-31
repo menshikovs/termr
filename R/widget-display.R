@@ -456,6 +456,19 @@ Metric <- R6::R6Class(
 )
 
 format_metric <- function(x) {
+  if (is.raw(x)) return(table_raw_preview(x))
+  if (inherits(x, "blob")) {
+    if (!length(x)) return("<blob[0]>")
+    if (length(x) > 1L) return(sprintf("<blob[%d]>", length(x)))
+    return(table_format_values(x)[[1L]])
+  }
+  if (is.list(x) && length(x) == 1L) {
+    value <- x[[1L]]
+    if (is.raw(value) || is.null(value) ||
+        (is.atomic(value) && length(value) == 1L && isTRUE(tryCatch(is.na(value), error = function(e) FALSE)))) {
+      return(table_format_values(x)[[1L]])
+    }
+  }
   if (is.null(x) || length(x) == 0L) return("")
   if (length(x) == 1L && is.na(x)) return("\u2014")
   if (is.numeric(x)) return(format(x, big.mark = ",", digits = 4, scientific = FALSE, trim = TRUE))

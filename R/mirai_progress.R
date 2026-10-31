@@ -4,16 +4,16 @@ mirai_prepare_job <- function(fn, args, packages, max_bytes) {
   capture$originals <- capture$copies <- capture$environments <- list()
   copy_value <- function(x, depth = 0L) {
     if (depth > 32L) stop("Task inputs exceed nesting limit 32.", call. = FALSE)
-    if (is.function(x)) return(removeSource(worker_copy_function(x, capture)))
+    if (is.function(x)) return(utils::removeSource(worker_copy_function(x, capture)))
     if (inherits(x, "formula")) return(worker_copy_formula(x, capture))
     if (is.list(x)) for (i in seq_along(x)) x[i] <- list(copy_value(x[[i]], depth + 1L))
     x
   }
-  fn <- removeSource(worker_copy_function(fn, capture))
+  fn <- utils::removeSource(worker_copy_function(fn, capture))
   args <- copy_value(args)
   for (env in capture$environments) for (name in ls(env, all.names = TRUE)) {
     value <- get(name, envir = env, inherits = FALSE)
-    if (is.function(value)) assign(name, removeSource(value), envir = env)
+    if (is.function(value)) assign(name, utils::removeSource(value), envir = env)
   }
   safe_value <- function(x, depth = 0L) {
     if (depth > 32L) stop("Task inputs exceed nesting limit 32.", call. = FALSE)

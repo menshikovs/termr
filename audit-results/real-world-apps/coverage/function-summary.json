@@ -1,0 +1,14 @@
+{
+  "core": {
+    "function_labels": 1735,
+    "hit_labels": 1527,
+    "percent": 88.01152737752162,
+    "definition": "Any instrumented expression hit per distinct (file, covr function label). Nested/anonymous/R6 labels may be grouped. Not branch or complete-path coverage."
+  },
+  "apps": {
+    "function_labels": 8,
+    "hit_labels": 7,
+    "percent": 87.5,
+    "definition": "Any instrumented expression hit per distinct (file, covr function label). Nested/anonymous/R6 labels may be grouped. Not branch or complete-path coverage."
+  }
+}

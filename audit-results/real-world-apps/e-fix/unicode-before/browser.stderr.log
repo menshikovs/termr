@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "C:\programming_pj\r_textualize\integration-apps\automation\browser-e2e.py", line 77, in <module>
+    args=parser.parse_args();run(args.url,ROOT/args.out)
+                             ~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\programming_pj\r_textualize\integration-apps\automation\browser-e2e.py", line 57, in run
+    assert '\u6771\u4eac' in page.locator('#source_status').inner_text(),page.locator('#source_status').inner_text()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Source: alpha | sequence: 6 | live | updated: 2026-10-31 19:52:10 | PP5QQ
+

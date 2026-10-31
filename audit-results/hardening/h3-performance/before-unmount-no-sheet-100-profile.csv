@@ -1,0 +1,9 @@
+"","total.time","total.pct","self.time","self.pct"
+"""measure""",0.02,100,0,0
+"""system.time""",0.02,100,0,0
+"""unname""",0.02,100,0,0
+"""gc""",0.015,75,0.015,75
+"""<Anonymous>""",0.005,25,0.005,25
+"""child$remove""",0.005,25,0,0
+"""private$detach""",0.005,25,0,0
+"""run""",0.005,25,0,0

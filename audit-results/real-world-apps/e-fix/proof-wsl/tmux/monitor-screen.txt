@@ -1,0 +1,18 @@
+
+
+
+
+
+
+
+
+
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Workers: 2 | pending jobs: 0 | transport:
+Throughput: 0 jobs/s | bounded history: 0
+
+
+
+Select a task; Enter opens details

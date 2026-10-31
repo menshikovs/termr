@@ -1,0 +1,21 @@
+{
+  "platform": ["Linux", "6.18.54.1-microsoft-standard-WSL2", "#1 SMP PREEMPT_DYNAMIC Tue Oct  6 19:13:07 UTC 2026", "LAPTOP-RBSL4FGN", "x86_64", "unknown", "user001", "user001"],
+  "app": "all",
+  "modes": ["process", "profile"],
+  "results": [
+    {
+      "name": "process",
+      "seconds": 10.231,
+      "status": "PASS",
+      "exit_code": 0,
+      "timeout": false
+    },
+    {
+      "name": "profile",
+      "seconds": 28.791,
+      "status": "FAIL",
+      "exit_code": 1,
+      "timeout": false
+    }
+  ]
+}

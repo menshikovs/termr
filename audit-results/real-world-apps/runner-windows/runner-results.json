@@ -1,0 +1,44 @@
+[
+  {
+    "name": "app-tests",
+    "seconds": 34.47,
+    "status": "FAIL",
+    "exit_code": 1,
+    "timeout": false
+  },
+  {
+    "name": "headless-showcase",
+    "seconds": 2.92,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "headless-analytics",
+    "seconds": 2.06,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "headless-monitor",
+    "seconds": 2.23,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "process",
+    "seconds": 72.65,
+    "status": "FAIL",
+    "exit_code": 1,
+    "timeout": false
+  },
+  {
+    "name": "browser",
+    "seconds": 0.58,
+    "status": "FAIL",
+    "exit_code": 1,
+    "timeout": false
+  }
+]

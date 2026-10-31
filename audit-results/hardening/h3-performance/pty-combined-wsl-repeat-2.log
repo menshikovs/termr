@@ -1,0 +1,12 @@
+testing installed termr 1.0.1
+PTY child: TERM='xterm-256color' COLORTERM='' TERM_PROGRAM='' tty_mode=controlling
+PASS combined-input app ready
+PASS one PTY write delivers text, Tab focus and Enter activation in order
+PASS combined Tab+Enter fires focus and press once
+PASS combined-input app exits normally
+PASS alternate screen disabled at exit
+PASS bracketed paste disabled at exit
+PASS mouse reporting disabled at exit
+PASS SGR mouse disabled at exit
+PASS cursor shown again
+all PTY checks passed

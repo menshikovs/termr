@@ -1,0 +1,9 @@
+{
+  "status": "Source: beta | sequence: 2 | live | updated: 2026-10-31 17:23:11 | Beta | EMPTY",
+  "agreement": "0 rows shared by ggplot2, Plotly and termr",
+  "traces": [
+    [],
+    []
+  ],
+  "errors": []
+}

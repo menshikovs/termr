@@ -1,0 +1,13 @@
+Benchmark 1: showcase (5 runs)
+                mean     ±       σ          min     …     max
+  Wall Time    1.399 s   ±   0.015 s      1.385 s   …   1.424 s
+ 
+Benchmark 2: analytics (5 runs)
+                mean     ±       σ          min     …     max
+  Wall Time    0.931 s   ±   0.013 s      0.917 s   …   0.947 s            -33.5%  (1.5x faster)
+ 
+Benchmark 3: monitor (5 runs)
+                mean     ±       σ          min     …     max
+  Wall Time    1.623 s   ±   0.048 s      1.587 s   …   1.706 s            +16.0%
+ 
+

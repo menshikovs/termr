@@ -26,3 +26,12 @@ tests/testthat/_snaps/*.new.md
 /audit-results/**/STOP*
 /audit-results/**/*pid*.txt
 /audit-results/git-prepublish-status.txt
+
+# Reproducible package staging and oversized local coverage state.
+/audit-results/**/build-src/
+/audit-results/**/package-source/
+/audit-results/**/package-stage/
+/audit-results/**/*-stage/
+/audit-results/**/termr/
+/audit-results/real-world-apps/coverage/core.rds
+/typescript

@@ -1,0 +1,8 @@
+units_lib <- readLines("audit-results/advanced-types/units/windows-units-lib.txt", warn = FALSE)
+if (length(units_lib)) .libPaths(setdiff(.libPaths(), units_lib[[1L]]))
+stopifnot(!requireNamespace("units", quietly = TRUE))
+pkgload::load_all(".", quiet = TRUE)
+table <- termr::data_table(data.frame(value = c(1, 2, NA_real_)), editable = TRUE)
+table$set_cell(1L, "value", "3.5")
+stopifnot(identical(table$data$value, c(3.5, 2, NA_real_)))
+cat("units unavailable; base DataTable construction and editing passed\n")

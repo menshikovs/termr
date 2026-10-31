@@ -1,0 +1,8 @@
+{"event":"analytics","at":1.331,"source":"alpha","sequence":1,"rows":1,"empty":false} 
+{"event":"ready","at":1.351,"app":"analytics"} 
+{"event":"analytics","at":1.463,"source":"alpha","sequence":2,"rows":2,"empty":false} 
+{"event":"analytics","at":1.807,"source":"beta","sequence":1,"rows":3,"empty":false} 
+{"event":"analytics","at":1.879,"source":"beta","sequence":2,"rows":0,"empty":true} 
+{"event":"analytics","at":1.966,"source":"beta","sequence":3,"rows":5,"empty":false} 
+{"event":"analytics","at":2.02,"source":"beta","sequence":4,"rows":6,"empty":false} 
+{"event":"stopped","at":2.076,"app":"analytics","source":"beta","sequence":4,"rows":6,"closed":true} 

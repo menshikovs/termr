@@ -1,0 +1,7 @@
+"file","context","test","nb","failed","skipped","error","warning","user","system","real","passed"
+"regressions-open.R","regressions-open","H1-F01 failed source replacement preserves the active source",2,1,FALSE,FALSE,0,0.13,0,0.14,1
+"regressions-open.R","regressions-open","H1-F02 an exact pipeline reproduces the displayed post-edit order",1,1,FALSE,FALSE,0,0.29,0.02,0.31,0
+"regressions-open.R","regressions-open","H1-F03 chart display advances while a bounded backlog persists",1,1,FALSE,FALSE,0,0.75,0.03,0.77,0
+"regressions-open.R","regressions-open","H1-F04 detached ancestors do not receive ordinary bubbled messages",1,1,FALSE,FALSE,0,0.11,0,0.11,0
+"regressions-open.R","regressions-open","H1-F08 an unmounted owned SQL connection is eventually released",1,0,TRUE,FALSE,0,0,0,0,0
+"regressions-open.R","regressions-open","H1-F09 log capacity rejects non-finite input before app startup",1,1,FALSE,FALSE,0,0.02,0,0,0

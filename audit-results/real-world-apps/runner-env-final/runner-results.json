@@ -1,0 +1,44 @@
+[
+  {
+    "name": "headless-showcase",
+    "seconds": 2.17,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "headless-analytics",
+    "seconds": 1.58,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "headless-monitor",
+    "seconds": 1.69,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "process",
+    "seconds": 8.16,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "browser",
+    "seconds": 8.79,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "lint",
+    "seconds": 8.83,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  }
+]

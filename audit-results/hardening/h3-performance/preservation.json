@@ -1,0 +1,15 @@
+{
+  "initial_files": 567,
+  "unchanged": 559,
+  "permitted_changes": [
+    "docs/charts.md",
+    "docs/inkr-integration.md",
+    "R/app.R",
+    "R/chart-widget.R",
+    "R/event-queue.R",
+    "R/inkr-integration.R",
+    "tests/testthat/test-chart-streams.R",
+    "tests/testthat/test-h2-contracts.R"
+  ],
+  "unexpected": []
+}

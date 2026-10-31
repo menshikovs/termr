@@ -1,0 +1,66 @@
+[
+  {
+    "tool": "python",
+    "platform": "Windows-11-10.0.26100-SP0",
+    "available": true,
+    "path": "C:\\Python314\\python.exe",
+    "on_path": true,
+    "version": "Python 3.14.4",
+    "exit": 0,
+    "installation": "pre-existing executable; no Phase E global installation"
+  },
+  {
+    "tool": "Rscript",
+    "platform": "Windows-11-10.0.26100-SP0",
+    "available": true,
+    "path": "C:\\Program Files\\R\\R-4.6.1\\bin\\Rscript.exe",
+    "on_path": false,
+    "version": "Rscript (R) version 4.6.1 (2026-06-24)",
+    "exit": 0,
+    "installation": "pre-existing executable; no Phase E global installation"
+  },
+  {
+    "tool": "hyperfine",
+    "platform": "Windows-11-10.0.26100-SP0",
+    "available": true,
+    "path": "C:\\Users\\User001\\AppData\\Local\\Microsoft\\WinGet\\Packages\\sharkdp.hyperfine_Microsoft.Winget.Source_8wekyb3d8bbwe\\hyperfine-v2.0.0-x86_64-pc-windows-msvc\\hyperfine.EXE",
+    "on_path": true,
+    "version": "hyperfine 2.0.0",
+    "exit": 0,
+    "installation": "pre-existing executable; no Phase E global installation"
+  },
+  {
+    "tool": "tmux",
+    "platform": "Windows-11-10.0.26100-SP0",
+    "available": true,
+    "path": "C:\\Users\\User001\\AppData\\Local\\Microsoft\\WinGet\\Packages\\arndawg.tmux-windows_Microsoft.Winget.Source_8wekyb3d8bbwe\\tmux.EXE",
+    "on_path": true,
+    "version": "tmux 3.6a-win32",
+    "exit": 0,
+    "installation": "pre-existing executable; no Phase E global installation"
+  },
+  {
+    "tool": "Expect",
+    "platform": "Windows-11-10.0.26100-SP0",
+    "available": false,
+    "path": null,
+    "on_path": false,
+    "installation": "pre-existing executable; no Phase E global installation"
+  },
+  {
+    "tool": "asciinema",
+    "platform": "Windows-11-10.0.26100-SP0",
+    "available": false,
+    "path": null,
+    "on_path": false,
+    "installation": "pre-existing executable; no Phase E global installation"
+  },
+  {
+    "tool": "pexpect",
+    "version": "4.9.0",
+    "path": "C:\\Users\\User001\\AppData\\Roaming\\Python\\Python314\\site-packages\\pexpect\\__init__.py",
+    "available": true,
+    "installation": "pre-existing Python package",
+    "platform": "Windows-11-10.0.26100-SP0"
+  }
+]

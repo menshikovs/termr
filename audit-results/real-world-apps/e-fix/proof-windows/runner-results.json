@@ -1,0 +1,58 @@
+[
+  {
+    "name": "api-audit",
+    "seconds": 2.07,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "terminal-gates",
+    "seconds": 34.39,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "browser-gates",
+    "seconds": 12,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "app-tests",
+    "seconds": 43.88,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "process",
+    "seconds": 7.25,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "lint",
+    "seconds": 16.42,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "profile",
+    "seconds": 56.89,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  },
+  {
+    "name": "benchmark",
+    "seconds": 24.1,
+    "status": "PASS",
+    "exit_code": 0,
+    "timeout": false
+  }
+]

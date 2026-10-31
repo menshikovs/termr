@@ -1,0 +1,13 @@
+{
+  "generated_at": "2026-10-31T18:19:59.019033+00:00",
+  "reports": 21,
+  "core_line_percent": 79.0439,
+  "app_line_percent": 92.0705,
+  "confirmed_core_fixes": 0,
+  "confirmed_application_defects_fixed": 1,
+  "open_backend_risk": "Windows native handle retention (P2)",
+  "final_windows_tasks": 7,
+  "final_wsl_tasks": 12,
+  "baseline_files": 568,
+  "preservation_status": "VERIFIED_WITH_OBSERVED_TEST_CHANGES"
+}

@@ -1,0 +1,8 @@
+--- initial/tests/testthat/test-h2-adversarial-security.R
++++ observed/tests/testthat/test-h2-adversarial-security.R
+@@ -140,4 +140,4 @@
+     res <- tryCatch(a$query(fuzz_sel), error = function(e) e)
+     testthat::expect_true(inherits(res, "error") || is.list(res))
+   }
+-})
++})

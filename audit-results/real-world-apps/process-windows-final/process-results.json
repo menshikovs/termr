@@ -1,0 +1,33 @@
+{
+  "quiet-exit": {
+    "status": "PASS"
+  },
+  "stderr-separate": {
+    "status": "PASS"
+  },
+  "nonzero-exit": {
+    "status": "PASS"
+  },
+  "timeout": {
+    "status": "PASS"
+  },
+  "owned-child-cleanup": {
+    "status": "FAIL",
+    "error": "Child ready timeout: \n\n\nCHILD\n 3876 \r\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n | "
+  },
+  "real-showcase": {
+    "status": "PASS"
+  },
+  "real-analytics": {
+    "status": "PASS"
+  },
+  "real-monitor": {
+    "status": "PASS"
+  },
+  "missing-optional-diagnostic": {
+    "status": "PASS"
+  },
+  "real-monitor-without-native-optionals": {
+    "status": "PASS"
+  }
+}

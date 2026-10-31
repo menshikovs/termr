@@ -1,0 +1,28 @@
+inkr-integration: ......SSSSSSSSSSSS
+
+══ Skipped ═════════════════════════════════════════════════════════════════════
+1. inkr declarations form a cascade layer above RTCSS and below inline style ('test-inkr-integration.R:19:3') - Reason: {inkr} is not installed
+
+2. inkr's typed built-in properties map into termr's style values ('test-inkr-integration.R:34:3') - Reason: {inkr} is not installed
+
+3. disabled is passed as a live inkr pseudo state ('test-inkr-integration.R:56:3') - Reason: {inkr} is not installed
+
+4. inkr registry defaults do not replace termr widget defaults ('test-inkr-integration.R:65:3') - Reason: {inkr} is not installed
+
+5. inkr inheritance and nested selectors follow the live widget tree ('test-inkr-integration.R:75:3') - Reason: {inkr} is not installed
+
+6. direct id and class assignment invalidates selector styles ('test-inkr-integration.R:99:3') - Reason: {inkr} is not installed
+
+7. inkr pseudo states refresh and are explainable ('test-inkr-integration.R:116:3') - Reason: {inkr} is not installed
+
+8. inkr sheets can switch themes without stale widget styles ('test-inkr-integration.R:137:3') - Reason: {inkr} is not installed
+
+9. inkr applies through native chart and typed DataTable widgets ('test-inkr-integration.R:151:3') - Reason: {inkr} is not installed
+
+10. stylesheet replacement is atomic and supports files and ASTs ('test-inkr-integration.R:165:3') - Reason: {inkr} is not installed
+
+11. transparent inkr backgrounds preserve the underlying paint ('test-inkr-integration.R:197:3') - Reason: {inkr} is not installed
+
+12. unsupported alpha colors fail with a focused message ('test-inkr-integration.R:206:3') - Reason: {inkr} is not installed
+
+══ DONE ════════════════════════════════════════════════════════════════════════

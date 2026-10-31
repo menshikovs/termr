@@ -1,0 +1,11 @@
+--- upstream/rtop.R
++++ compat/rtop.R
+@@ -12,7 +12,7 @@
+   stop("Package 'termr' is required. Install it with remotes::install_github('41929424/termr', ref = 'v1.0.1').", call. = FALSE)
+ }
+ installed_termr <- as.character(utils::packageVersion("termr"))
+-if (!identical(installed_termr, required_termr)) {
++if (!installed_termr %in% c(required_termr, "2.0.0")) {
+   stop(sprintf("rtop requires termr %s; found %s. Install the v1.0.1 tag.", required_termr, installed_termr), call. = FALSE)
+ }
+ 
